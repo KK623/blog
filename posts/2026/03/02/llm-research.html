@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 量化与部署最新进展 - 孙凯</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { font-size: 28px; margin-bottom: 10px; }
+    h2 { font-size: 22px; margin: 30px 0 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    h3 { font-size: 18px; margin: 20px 0 10px; }
+    .date { color: #888; font-size: 14px; margin-bottom: 30px; }
+    .author { color: #666; font-size: 14px; }
+    ul, ol { margin: 10px 0 10px 20px; }
+    li { margin: 5px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #f5f5f5; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
+    .back { margin-top: 40px; }
+    .back a { color: #0066cc; text-decoration: none; }
+    .back a:hover { text-decoration: underline; }
+    .highlight { background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LLM 量化与部署最新进展</h1>
+    <p class="date">2026-03-02 · 第 10 周</p>
+    <p class="author">调研人: Subagent</p>
+
+    <h2>摘要</h2>
+    <p>本报告聚焦于2026年2月下旬至3月初发布的大语言模型（LLM）量化、部署、低精度及蒸馏相关最新论文。</p>
+
+    <h2>一、量化技术最新进展</h2>
+
+    <h3>1.1 高效低比特量化</h3>
+    <ul>
+      <li><strong>pQuant</strong>: 解耦线性量化感知训练，用于构建高效的低比特语言模型</li>
+      <li><strong>NanoQuant</strong>: 亚1比特量化，突破1比特限制</li>
+      <li><strong>TernaryLM</strong>: 原生1比特量化 + 自适应层缩放</li>
+      <li><strong>RaBiT</strong>: 残差感知二值化训练，硬件友好的 matmul-free 推理</li>
+      <li><strong>BPDQ</strong>: 位平面分解量化，灵活位宽</li>
+    </ul>
+
+    <h3>1.2 量化与推理优化</h3>
+    <li><strong <ul>
+     >QTALE</strong>: 量化鲁棒的 Token 自适应层执行</li>
+      <li><strong>Astro</strong>: 激活引导结构化正则化，解决量化中的异常值问题</li>
+      <li><strong>MoBiQuant</strong>: Token 自适应弹性 LLM 的混合位量化</li>
+    </ul>
+
+    <h2>二、部署与推理优化</h2>
+
+    <h3>2.1 边缘端部署</h3>
+    <ul>
+      <li><strong>TOM</strong>: 三元只读存储器加速器，边缘设备部署</li>
+      <li><strong>Gemma3 NPU 部署</strong>: AMD Ryzen AI NPU 上的端到端部署</li>
+    </ul>
+
+    <h3>2.2 高效推理架构</h3>
+    <ul>
+      <li><strong>状态空间模型张量并行</strong>: 多 GPU 分布式推理</li>
+      <li><strong>SpeContext</strong>: 长上下文推理的投机上下文稀疏化</li>
+    </ul>
+
+    <h2>三、模型压缩与蒸馏</h2>
+    <ul>
+      <li><strong>UniComp</strong>: LLM 压缩的统一评估框架</li>
+      <li><strong>GradPruner</strong>: 梯度引导的层剪枝</li>
+      <li><strong>SlimMoE</strong>: MoE 模型的结构化压缩</li>
+    </ul>
+
+    <h2>四、总结与趋势</h2>
+    <div class="highlight">
+      <strong>当前研究热点：</strong>
+      <ol>
+        <li>超低比特量化 (1-bit、2-bit)</li>
+        <li>Token 自适应量化</li>
+        <li>边缘端部署 + 硬件协同</li>
+        <li>量化鲁棒性研究</li>
+        <li>多模态模型量化</li>
+      </ol>
+    </div>
+
+    <h3>技术路线对比</h3>
+    <table>
+      <tr><th>方向</th><th>代表工作</th><th>优势</th></tr>
+      <tr><td>1-bit 量化</td><td>TernaryLM, RaBiT</td><td>极致压缩</td></tr>
+      <tr><td>混合位量化</td><td>MoBiQuant</td><td>灵活性高</td></tr>
+      <tr><td>后训练量化</td><td>D²Quant, MatGPTQ</td><td>无需再训练</td></tr>
+      <tr><td>硬件部署</td><td>TOM, Gemma3 NPU</td><td>实际可用</td></tr>
+    </table>
+
+    <h3>下一步方向建议</h3>
+    <ul>
+      <li>关注 1-bit 量化在实际部署中的可行性</li>
+      <li>Token 级量化与推理系统的深度整合</li>
+      <li>MoE 模型的压缩与部署</li>
+      <li>长上下文场景下的效率优化</li>
+    </ul>
+
+    <div class="back">
+      <a href="../../../../">← 返回首页</a>
+    </div>
+  </div>
+</body>
+</html>
