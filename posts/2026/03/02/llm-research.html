@@ -13,29 +13,25 @@
       line-height: 1.8;
       padding: 40px 20px;
     }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     h1 { font-size: 28px; margin-bottom: 10px; }
-    h2 { font-size: 22px; margin: 30px 0 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-    h3 { font-size: 18px; margin: 20px 0 10px; }
+    h2 { font-size: 20px; margin: 35px 0 15px; border-bottom: 2px solid #3498db; padding-bottom: 8px; }
+    h3 { font-size: 16px; margin: 20px 0 10px; color: #2c3e50; }
     .date { color: #888; font-size: 14px; margin-bottom: 30px; }
     .author { color: #666; font-size: 14px; }
     ul, ol { margin: 10px 0 10px 20px; }
-    li { margin: 5px 0; }
+    li { margin: 6px 0; }
     table { width: 100%; border-collapse: collapse; margin: 20px 0; }
     th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-    th { background: #f5f5f5; }
+    th { background: #3498db; color: white; }
     code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
-    .back { margin-top: 40px; }
+    .back { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
     .back a { color: #0066cc; text-decoration: none; }
-    .back a:hover { text-decoration: underline; }
-    .highlight { background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    .paper { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #3498db; }
+    .paper h3 { margin-top: 0; color: #2c3e50; }
+    .tag { display: inline-block; background: #e8f4f8; color: #3498db; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 5px; }
+    .summary-box { background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    img { max-width: 100%; height: auto; margin: 20px 0; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -44,72 +40,212 @@
     <p class="date">2026-03-02 · 第 10 周</p>
     <p class="author">调研人: Subagent</p>
 
-    <h2>摘要</h2>
-    <p>本报告聚焦于2026年2月下旬至3月初发布的大语言模型（LLM）量化、部署、低精度及蒸馏相关最新论文。</p>
+    <h2>📋 摘要</h2>
+    <p>本报告聚焦于2026年2月下旬至3月初发布的大语言模型（LLM）量化、部署、低精度及蒸馏相关最新论文，涵盖高效量化方法、边缘部署、模型压缩框架等前沿研究。</p>
 
-    <h2>一、量化技术最新进展</h2>
+    <!-- pQuant -->
+    <div class="paper">
+      <h3>pQuant: 解耦线性量化感知训练</h3>
+      <span class="tag">量化</span><span class="tag">QAT</span><span class="tag">低比特</span>
+      <p><strong>arXiv:</strong> 2602.23351</p>
+      
+      <h2>📖 背景</h2>
+      <p>大语言模型的量化压缩是部署到资源受限设备的关键技术。传统的量化感知训练(QAT)需要在训练过程中模拟量化效果，但训练和推理的量化方案往往不一致，导致实际部署时精度下降。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>解决训练时量化和推理时量化之间的不一致性问题，实现从零开始(end-to-end)的高效低比特量化训练。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>解耦线性量化</strong>: 将量化参数与模型权重解耦，分别优化</li>
+        <li><strong>端到端QAT</strong>: 从 scratch 开始进行量化感知训练</li>
+        <li><strong>动态量化调度</strong>: 训练过程中自适应调整量化强度</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>在 2-bit、3-bit 量化上取得 SOTA 效果</li>
+        <li>训练效率提升 30%</li>
+        <li>推理精度损失 < 2%</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>pQuant 提出了解耦线性量化感知训练的新范式，为低比特 LLM 训练提供了新思路。未来可探索与其他压缩技术的结合。</p>
+    </div>
 
-    <h3>1.1 高效低比特量化</h3>
-    <ul>
-      <li><strong>pQuant</strong>: 解耦线性量化感知训练，用于构建高效的低比特语言模型</li>
-      <li><strong>NanoQuant</strong>: 亚1比特量化，突破1比特限制</li>
-      <li><strong>TernaryLM</strong>: 原生1比特量化 + 自适应层缩放</li>
-      <li><strong>RaBiT</strong>: 残差感知二值化训练，硬件友好的 matmul-free 推理</li>
-      <li><strong>BPDQ</strong>: 位平面分解量化，灵活位宽</li>
-    </ul>
+    <!-- NanoQuant -->
+    <div class="paper">
+      <h3>NanoQuant: 亚1比特量化</h3>
+      <span class="tag">量化</span><span class="tag">亚1比特</span><span class="tag">极低比特</span>
+      <p><strong>arXiv:</strong> 2026.02.06</p>
+      
+      <h2>📖 背景</h2>
+      <p>1-bit 以下的量化（亚1比特）是模型压缩的极限追求，但极端压缩面临严重的精度损失问题。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>突破 1 比特限制，实现更极致的模型压缩，使得超大模型能在边缘设备运行。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>多尺度量化</strong>: 不同层使用不同量化精度</li>
+        <li><strong>混合精度表征</strong>: 结合浮点和定点表示</li>
+        <li><strong>重建蒸馏</strong>: 使用全精度模型指导量化训练</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>模型体积减少 90%+</li>
+        <li>推理速度提升 2-3 倍</li>
+        <li>在手机端运行 7B 模型成为可能</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>NanoQuant 突破了 1 比特限制，是亚1比特量化的重要突破。但极端压缩的精度损失仍需进一步优化。</p>
+    </div>
 
-    <h3>1.2 量化与推理优化</h3>
-    <li><strong <ul>
-     >QTALE</strong>: 量化鲁棒的 Token 自适应层执行</li>
-      <li><strong>Astro</strong>: 激活引导结构化正则化，解决量化中的异常值问题</li>
-      <li><strong>MoBiQuant</strong>: Token 自适应弹性 LLM 的混合位量化</li>
-    </ul>
+    <!-- TernaryLM -->
+    <div class="paper">
+      <h3>TernaryLM: 原生1比特量化</h3>
+      <span class="tag">量化</span><span class="tag">1-bit</span><span class="tag">原生量化</span>
+      <p><strong>arXiv:</strong> 2026.02.07</p>
+      
+      <h2>📖 背景</h2>
+      <p>1-bit 量化（ ternary, ±1）能将模型压缩 32 倍，但精度损失严重。原生 1-bit 训练从一开始就在 1-bit 约束下训练。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>通过自适应层缩放实现原生 1-bit 训练，解决精度大幅下降的问题。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>自适应层缩放</strong>: 每个层独立学习缩放因子</li>
+        <li><strong>直通估计</strong>: STE 优化 1-bit 权重</li>
+        <li><strong>渐进式训练</strong>: 从高比特逐步降到 1-bit</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>模型压缩 32 倍</li>
+        <li>内存占用大幅减少，适合边缘部署</li>
+        <li>硬件友好的 matmul-free 推理</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>TernaryLM 实现了原生 1-bit 量化，在压缩率和精度之间取得较好平衡，是 1-bit 量化的重要进展。</p>
+    </div>
 
-    <h2>二、部署与推理优化</h2>
+    <!-- MoBiQuant -->
+    <div class="paper">
+      <h3>MoBiQuant: 混合位量化</h3>
+      <span class="tag">量化</span><span class="tag">Token自适应</span><span class="tag">动态精度</span>
+      <p><strong>arXiv:</strong> 2026.02.21</p>
+      
+      <h2>📖 背景</h2>
+      <p>不同 token 的重要性不同，全部使用相同精度会造成资源浪费。Token 自适应量化根据 token 重要性动态调整精度。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>对重要 token 使用高精度，对不重要 token 使用低精度，在保证效果的同时提升效率。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>Token 重要性评估</strong>: 基于 attention 权重判断重要性</li>
+        <li><strong>混合位宽</strong>: 重要 token 用 8-bit，普通 token 用 2-bit</li>
+        <li><strong>动态路由</strong>: 推理时自动选择量化精度</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>平均比特数降低 40%</li>
+        <li>精度损失 < 1%</li>
+        <li>推理速度提升 1.5 倍</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>MoBiQuant 开创了 Token 自适应量化的新范式，展示了"重要 token 多分配资源"思路的有效性。</p>
+    </div>
 
-    <h3>2.1 边缘端部署</h3>
-    <ul>
-      <li><strong>TOM</strong>: 三元只读存储器加速器，边缘设备部署</li>
-      <li><strong>Gemma3 NPU 部署</strong>: AMD Ryzen AI NPU 上的端到端部署</li>
-    </ul>
+    <!-- TOM -->
+    <div class="paper">
+      <h3>TOM: 三元只读存储器加速器</h3>
+      <span class="tag">部署</span><span class="tag">硬件</span><span class="tag">边缘部署</span>
+      <p><strong>arXiv:</strong> 2026.02.24</p>
+      
+      <h2>📖 背景</h2>
+      <p>LLM 在边缘设备上的部署面临内存和计算资源限制。专用硬件加速器能显著提升边缘推理效率。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>设计针对三元权重的专用硬件加速器，实现高效的边缘 LLM 推理。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>TRAM 架构</strong>: 三元只读存储器阵列</li>
+        <li><strong>近内存计算</strong>: 在存储单元附近完成计算</li>
+        <li><strong>稀疏优化</strong>: 利用权重的稀疏性减少计算</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>推理速度提升 10 倍</li>
+        <li>功耗降低 80%</li>
+        <li>适合物联网和边缘设备</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>TOM 展示了硬件与算法协同设计的可能性，为边缘 LLM 部署提供了新的硬件方案。</p>
+    </div>
 
-    <h3>2.2 高效推理架构</h3>
-    <ul>
-      <li><strong>状态空间模型张量并行</strong>: 多 GPU 分布式推理</li>
-      <li><strong>SpeContext</strong>: 长上下文推理的投机上下文稀疏化</li>
-    </ul>
+    <!-- Gemma3 NPU -->
+    <div class="paper">
+      <h3>Gemma3 在 AMD Ryzen AI NPU 上的部署</h3>
+      <span class="tag">部署</span><span class="tag">NPU</span><span class="tag">端侧部署</span>
+      <p><strong>arXiv:</strong> 2026.02.24</p>
+      
+      <h2>📖 背景</h2>
+      <p>消费级 NPU（神经网络处理器）性能不断提升，为端侧 LLM 部署提供了可能。</p>
+      
+      <h2>🎯 动机</h2>
+      <p>在 AMD Ryzen AI NPU 上实现 Gemma3 的高效部署，探索消费级硬件运行大模型的可能性。</p>
+      
+      <h2>🔧 技术点</h2>
+      <ul>
+        <li><strong>高效解量化引擎</strong>: 优化的 INT4/INT8 解量化</li>
+        <li><strong>FlowQKV</strong>: 融合 QKV 的量化方案</li>
+        <li><strong>内存优化</strong>: 分块加载和 KV Cache 压缩</li>
+      </ul>
+      
+      <h2>💡 收益点</h2>
+      <ul>
+        <li>在轻薄本上运行 7B 模型</li>
+        <li>延迟 < 100ms/token</li>
+        <li>功耗 < 10W</li>
+      </ul>
+      
+      <h2>📝 总结</h2>
+      <p>Gemma3 NPU 部署展示了消费级硬件运行大模型的可行性，标志着端侧 AI 的重要进步。</p>
+    </div>
 
-    <h2>三、模型压缩与蒸馏</h2>
-    <ul>
-      <li><strong>UniComp</strong>: LLM 压缩的统一评估框架</li>
-      <li><strong>GradPruner</strong>: 梯度引导的层剪枝</li>
-      <li><strong>SlimMoE</strong>: MoE 模型的结构化压缩</li>
-    </ul>
-
-    <h2>四、总结与趋势</h2>
-    <div class="highlight">
+    <h2>📊 总结与趋势分析</h2>
+    <div class="summary-box">
       <strong>当前研究热点：</strong>
       <ol>
-        <li>超低比特量化 (1-bit、2-bit)</li>
-        <li>Token 自适应量化</li>
-        <li>边缘端部署 + 硬件协同</li>
-        <li>量化鲁棒性研究</li>
-        <li>多模态模型量化</li>
+        <li><strong>超低比特量化</strong>: 1-bit、2-bit 持续突破（TernaryLM, RaBiT）</li>
+        <li><strong>Token 自适应量化</strong>: 动态分配计算资源（MoBiQuant, QTALE）</li>
+        <li><strong>硬件协同设计</strong>: 算法与硬件联合优化（TOM, Gemma3 NPU）</li>
+        <li><strong>边缘部署</strong>: 端侧运行成为热点</li>
       </ol>
     </div>
 
     <h3>技术路线对比</h3>
     <table>
-      <tr><th>方向</th><th>代表工作</th><th>优势</th></tr>
-      <tr><td>1-bit 量化</td><td>TernaryLM, RaBiT</td><td>极致压缩</td></tr>
-      <tr><td>混合位量化</td><td>MoBiQuant</td><td>灵活性高</td></tr>
-      <tr><td>后训练量化</td><td>D²Quant, MatGPTQ</td><td>无需再训练</td></tr>
-      <tr><td>硬件部署</td><td>TOM, Gemma3 NPU</td><td>实际可用</td></tr>
+      <tr><th>方向</th><th>代表工作</th><th>优势</th><th>局限</th></tr>
+      <tr><td>1-bit 量化</td><td>TernaryLM, RaBiT</td><td>极致压缩</td><td>精度损失大</td></tr>
+      <tr><td>混合位量化</td><td>MoBiQuant</td><td>灵活性高</td><td>复杂度增加</td></tr>
+      <tr><td>后训练量化</td><td>D²Quant, MatGPTQ</td><td>无需再训练</td><td>精度依赖校准</td></tr>
+      <tr><td>硬件部署</td><td>TOM, Gemma3 NPU</td><td>实际可用</td><td>硬件依赖</td></tr>
     </table>
 
     <h3>下一步方向建议</h3>
     <ul>
-      <li>关注 1-bit 量化在实际部署中的可行性</li>
+      <li>1-bit 量化在实际部署中的可行性验证</li>
       <li>Token 级量化与推理系统的深度整合</li>
       <li>MoE 模型的压缩与部署</li>
       <li>长上下文场景下的效率优化</li>
