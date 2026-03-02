@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">pQuant: 解耦线性量化感知训练</text>
+  
+  <!-- Input -->
+  <rect x="50" y="150" width="120" height="60" rx="8" fill="#3498db"/>
+  <text x="110" y="185" text-anchor="middle" fill="white" font-size="14">Input</text>
+  <text x="110" y="205" text-anchor="middle" fill="white" font-size="12">Weights</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M180 180 L250 180" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- Branch 1: 1-bit -->
+  <rect x="260" y="120" width="160" height="80" rx="8" fill="#e74c3c"/>
+  <text x="340" y="155" text-anchor="middle" fill="white" font-size="14" font-weight="bold">1-bit Branch</text>
+  <text x="340" y="175" text-anchor="middle" fill="white" font-size="11">Dominant</text>
+  <text x="340" y="190" text-anchor="middle" fill="white" font-size="11">(+1/-1)</text>
+  
+  <!-- Branch 2: High-precision -->
+  <rect x="260" y="220" width="160" height="80" rx="8" fill="#27ae60"/>
+  <text x="340" y="255" text-anchor="middle" fill="white" font-size="14" font-weight="bold">HP Branch</text>
+  <text x="340" y="275" text-anchor="middle" fill="white" font-size="11">High Precision</text>
+  <text x="340" y="290" text-anchor="middle" fill="white" font-size="11">(8-bit)</text>
+  
+  <!-- Arrow to merge -->
+  <path d="M430 180 L500 180" stroke="#2c3e50" stroke-width="2" fill="none"/>
+  
+  <!-- Output -->
+  <rect x="510" y="150" width="120" height="60" rx="8" fill="#9b59b6"/>
+  <text x="570" y="185" text-anchor="middle" fill="white" font-size="14">Output</text>
+  
+  <!-- Key insight box -->
+  <rect x="650" y="130" width="130" height="100" rx="8" fill="#fff8e1" stroke="#f39c12" stroke-width="2"/>
+  <text x="715" y="155" text-anchor="middle" font-size="12" font-weight="bold" fill="#f39c12">Key Innovation</text>
+  <text x="715" y="175" text-anchor="middle" font-size="10" fill="#333">Parameter</text>
+  <text x="715" y="188" text-anchor="middle" font-size="10" fill="#333">Democratization</text>
+  <text x="715" y="201" text-anchor="middle" font-size="10" fill="#333">Effect</text>
+  <text x="715" y="218" text-anchor="middle" font-size="9" fill="#666">→ Split into</text>
+  <text x="715" y="231" text-anchor="middle" font-size="9" fill="#666">2 branches</text>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2c3e50"/>
+    </marker>
+  </defs>
+</svg>

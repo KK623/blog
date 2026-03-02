@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350">
+  <!-- Background -->
+  <rect width="800" height="350" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#2c3e50">MoBiQuant: Token 自适应混合位量化</text>
+  
+  <!-- Input tokens -->
+  <rect x="30" y="100" width="80" height="50" rx="5" fill="#3498db"/>
+  <text x="70" y="130" text-anchor="middle" fill="white" font-size="12">Token</text>
+  
+  <!-- Importance scoring -->
+  <rect x="140" y="90" width="100" height="70" rx="8" fill="#f39c12"/>
+  <text x="190" y="120" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Importance</text>
+  <text x="190" y="138" text-anchor="middle" fill="white" font-size="11">Scoring</text>
+  <text x="190" y="152" text-anchor="middle" fill="white" font-size="10">(Attention)</text>
+  
+  <!-- Router -->
+  <rect x="270" y="95" width="80" height="60" rx="8" fill="#9b59b6"/>
+  <text x="310" y="125" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Router</text>
+  <text x="310" y="143" text-anchor="middle" fill="white" font-size="10">Dynamic</text>
+  
+  <!-- High bit path -->
+  <rect x="380" y="50" width="120" height="55" rx="8" fill="#27ae60"/>
+  <text x="440" y="75" text-anchor="middle" fill="white" font-size="12" font-weight="bold">8-bit</text>
+  <text x="440" y="92" text-anchor="middle" fill="white" font-size="11">Important</text>
+  <text x="440" y="105" text-anchor="middle" fill="white" font-size="10">Tokens</text>
+  
+  <!-- Low bit path -->
+  <rect x="380" y="140" width="120" height="55" rx="8" fill="#e74c3c"/>
+  <text x="440" y="165" text-anchor="middle" fill="white" font-size="12" font-weight="bold">2-bit</text>
+  <text x="440" y="182" text-anchor="middle" fill="white" font-size="11">Normal</text>
+  <text x="440" y="195" text-anchor="middle" fill="white" font-size="10">Tokens</text>
+  
+  <!-- Output -->
+  <rect x="530" y="100" width="80" height="50" rx="5" fill="#1abc9c"/>
+  <text x="570" y="130" text-anchor="middle" fill="white" font-size="12">Output</text>
+  
+  <!-- Benefits box -->
+  <rect x="640" y="80" width="140" height="90" rx="8" fill="#e8f8f5" stroke="#1abc9c" stroke-width="2"/>
+  <text x="710" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#1abc9c">Benefits</text>
+  <text x="710" y="118" text-anchor="middle" font-size="10" fill="#333">• Avg bits ↓40%</text>
+  <text x="710" y="133" text-anchor="middle" font-size="10" fill="#333">• Speed ↑1.5x</text>
+  <text x="710" y="148" text-anchor="middle" font-size="10" fill="#333">• Quality &lt;1% loss</text>
+  <text x="710" y="163" text-anchor="middle" font-size="9" fill="#666">Important→more bits</text>
+  
+  <!-- Arrows -->
+  <path d="M320 125 L375 77" stroke="#2c3e50" stroke-width="1.5" fill="none" stroke-dasharray="4"/>
+  <path d="M320 125 L375 167" stroke="#2c3e50" stroke-width="1.5" fill="none" stroke-dasharray="4"/>
+  <path d="M500 77 L525 125" stroke="#2c3e50" stroke-width="1.5" fill="none"/>
+  <path d="M500 167 L525 125" stroke="#2c3e50" stroke-width="1.5" fill="none"/>
+</svg>

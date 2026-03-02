@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320">
+  <!-- Background -->
+  <rect width="800" height="320" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="22" font-weight="bold" fill="#2c3e50">TOM: 三元只读存储器加速器</text>
+  <text x="400" y="50" text-anchor="middle" font-size="12" fill="#666">Ternary Read-only Memory Accelerator</text>
+  
+  <!-- Traditional vs TOM comparison -->
+  
+  <!-- Traditional -->
+  <rect x="50" y="80" width="200" height="180" rx="10" fill="#fff" stroke="#ddd" stroke-width="2"/>
+  <text x="150" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#e74c3c">Traditional Flow</text>
+  
+  <rect x="70" y="125" width="160" height="35" rx="5" fill="#ecf0f1"/>
+  <text x="150" y="147" text-anchor="middle" font-size="11">Load from DRAM</text>
+  
+  <text x="150" y="175" text-anchor="middle" font-size="14" fill="#999">↓ Energy intensive</text>
+  
+  <rect x="70" y="195" width="160" height="35" rx="5" fill="#ecf0f1"/>
+  <text x="150" y="217" text-anchor="middle" font-size="11">Compute</text>
+  
+  <!-- Arrow -->
+  <text x="275" y="180" text-anchor="middle" font-size="20">→</text>
+  
+  <!-- TOM -->
+  <rect x="310" y="80" width="200" height="180" rx="10" fill="#fff" stroke="#27ae60" stroke-width="3"/>
+  <text x="410" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#27ae60">TOM Architecture</text>
+  
+  <rect x="330" y="125" width="160" height="35" rx="5" fill="#d5f4e6"/>
+  <text x="410" y="147" text-anchor="middle" font-size="11">TRAM Array</text>
+  
+  <text x="410" y="175" text-anchor="middle" font-size="14" fill="#27ae60">↓ Near-memory</text>
+  
+  <rect x="330" y="195" width="160" height="35" rx="5" fill="#d5f4e6"/>
+  <text x="410" y="217" text-anchor="middle" font-size="11">Compute-in-Memory</text>
+  
+  <!-- Benefits -->
+  <rect x="540" y="90" width="140" height="160" rx="10" fill="#fff8e1" stroke="#f39c12" stroke-width="2"/>
+  <text x="610" y="115" text-anchor="middle" font-size="13" font-weight="bold" fill="#f39c12">Results</text>
+  
+  <text x="610" y="140" text-anchor="middle" font-size="18" font-weight="bold" fill="#e74c3c">10x</text>
+  <text x="610" y="155" text-anchor="middle" font-size="10" fill="#333">Faster</text>
+  
+  <text x="610" y="180" text-anchor="middle" font-size="18" font-weight="bold" fill="#27ae60">80%</text>
+  <text x="610" y="195" text-anchor="middle" font-size="10" fill="#333">Less Power</text>
+  
+  <text x="610" y="220" text-anchor="middle" font-size="18" font-weight="bold" fill="#3498db">Small</text>
+  <text x="610" y="235" text-anchor="middle" font-size="10" fill="#333">Area</text>
+  
+  <!-- Key tech -->
+  <rect x="50" y="280" width="700" height="30" rx="5" fill="#ecf0f1"/>
+  <text x="400" y="300" text-anchor="middle" font-size="11" fill="#333">Key: Ternary weights (+1, 0, -1) stored directly in memory → Compute happens in RAM array</text>
+</svg>
