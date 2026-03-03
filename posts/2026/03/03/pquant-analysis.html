@@ -239,7 +239,19 @@
 
       <h2>4. 实验结果</h2>
 
-      <h3>4.1 困惑度对比(WikiText2, 1.3B模型)</h3>
+      <h3>4.1 性能对比图</h3>
+      <p><img src="../../images/pquant-comparison.png" alt="pQuant Performance Comparison" style="max-width:100%;border-radius:8px;"></p>
+      <p style="color:#666;font-size:14px;">图1：1.3B模型在WikiText2上的困惑度 vs 比特宽度对比</p>
+
+      <h3>4.2 敏感性分析图</h3>
+      <p><img src="../../images/pquant-sensitivity.png" alt="Sensitivity Analysis" style="max-width:100%;border-radius:8px;"></p>
+      <p style="color:#666;font-size:14px;">图2：参数敏感性分布对比（FP16 vs 1-bit）</p>
+
+      <h3>4.3 架构图</h3>
+      <p><img src="../../images/pquant-architecture.png" alt="pQuant Architecture" style="max-width:100%;border-radius:8px;"></p>
+      <p style="color:#666;font-size:14px;">图3：pQuant 解耦线性层架构</p>
+
+      <h3>4.4 困惑度对比(WikiText2, 1.3B模型)</h3>
       <table>
         <tr>
           <th>方法</th>
