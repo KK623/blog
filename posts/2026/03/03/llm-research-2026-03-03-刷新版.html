@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 量化/部署/低精度/蒸馏 文献调研 (刷新版) | 孙凯</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .post-header {
+      margin-bottom: 40px;
+    }
+    .post-date {
+      color: #888;
+      font-size: 14px;
+    }
+    h2 {
+      font-size: 22px;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+    h3 {
+      font-size: 18px;
+      margin: 30px 0 15px;
+      color: #444;
+    }
+    p {
+      margin-bottom: 16px;
+    }
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #f4f4f4;
+    }
+    blockquote {
+      border-left: 4px solid #0066cc;
+      padding-left: 16px;
+      margin: 20px 0;
+      color: #666;
+    }
+    .paper-section {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      margin: 24px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .paper-title {
+      font-size: 20px;
+      color: #0066cc;
+      margin-bottom: 12px;
+    }
+    .arxiv-link {
+      display: inline-block;
+      background: #b31b1b;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .arxiv-link:hover {
+      background: #9a1515;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM 量化/部署/低精度/蒸馏 文献调研 (刷新版)</h1>
+      <p class="subtitle">大语言模型压缩技术深度解析</p>
+    </header>
+    
+    <div class="nav">
+      <a href="../../../../index.html">← 返回首页</a>
+      <a href="../../02/03/pquant-analysis.html">← 上一页</a>
+    </div>
+
+    <div class="post-header">
+      <p class="post-date">2026年3月3日</p>
+    </div>
+
+    <p>本文档整理了大语言模型(LLM)量化、部署、低精度推理和知识蒸馏领域的最新研究进展,涵盖4篇代表性论文的详细分析。</p>
+
+    <h2>📚 论文列表</h2>
+
+    <div class="paper-section">
+      <h3 class="paper-title">1. QLoRA: Efficient Finetuning of Quantized LLMs</h3>
+      <a href="https://arxiv.org/abs/2305.14314" target="_blank" class="arXiv-link">arXiv:2305.14314</a>
+      
+      <h4>论文基本信息</h4>
+      <ul>
+        <li><strong>完整标题</strong>: QLoRA: Efficient Finetuning of Quantized LLMs</li>
+        <li><strong>作者</strong>: Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, Luke Zettlemoyer (华盛顿大学)</li>
+        <li><strong>发表时间</strong>: 2023年5月24日 (NeurIPS 2023)</li>
+      </ul>
+
+      <h4>研究背景</h4>
+      <p>大语言模型的参数规模从数十亿到数千亿不等,这给部署和微调带来了巨大的计算和内存挑战。传统的16位全参数微调需要配备大量GPU的高性能计算集群,普通研究人员和中小企业难以承担。量化技术虽然能减少模型大小,但在微调过程中如何保持量化模型的性能一直是一个难题。</p>
+
+      <h4>研究动机</h4>
+      <p>作者希望解决的核心痛点是:如何在消费级GPU(如单张48GB显存的游戏显卡)上微调超大规模语言模型(65B参数)?之前的方法要么需要昂贵的计算资源,要么在量化后微调会导致性能大幅下降。QLoRA旨在实现"量化微调",即在保持量化模型的同时进行高效微调。</p>
+
+      <h4>核心技术点</h4>
+      <p>QLoRA提出了三项创新技术来减少内存占用而不损失性能:</p>
+      <ol>
+        <li><strong>4位NormalFloat (NF4)数据类型</strong>: 这是一种信息论最优的数据类型,专门为正态分布的权重设计。相比标准的INT4量化,NF4能更好地保留权重的信息。</li>
+        <li><strong>双重量化(Double Quantization)</strong>: 对量化常数进行二次量化,将平均内存占用从每参数0.4位降低到0.2位。</li>
+        <li><strong>分页优化器(Paged Optimizers)</strong>: 使用CPU内存来管理梯度动量,避免GPU显存峰值溢出。</li>
+        <li><strong>LoRA微调</strong>: 在冻结的量化模型上添加低秩适配器,只更新少量参数。</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li><strong>Vicuna基准测试</strong>: QLoRA微调的Guanaco模型在Vicuna基准上达到ChatGPT性能的99.3%</li>
+        <li><strong>内存效率</strong>: 65B参数模型可以在单张48GB GPU上进行微调</li>
+        <li><strong>微调时间</strong>: 只需24小时即可完成微调</li>
+      </ul>
+
+      <h4>收益点</h4>
+      <ul>
+        <li>将大模型微调的硬件门槛从数据中心级GPU降低到消费级GPU</li>
+        <li>使得中小企业和个人研究者也能参与大模型微调</li>
+        <li>保持了与16位全参数微调相当的性能水平</li>
+      </ul>
+
+      <h4>局限性/未来工作</h4>
+      <p>目前主要在LLaMA和T5模型上验证,其他模型架构的兼容性待验证。未来可以探索更极端的量化(如2-3位)和更高效的LoRA变体。</p>
+
+      <h4>总结</h4>
+      <p>QLoRA通过NF4量化、双重量化和分页优化器三项创新,实现了在单张消费级GPU上微调65B参数大模型的能力,将大模型微调的门槛降低了10倍以上。</p>
+    </div>
+
+    <div class="paper-section">
+      <h3 class="paper-title">2. GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers</h3>
+      <a href="https://arxiv.org/abs/2210.17323" target="_blank" class="arXiv-link">arXiv:2210.17323</a>
+      
+      <h4>论文基本信息</h4>
+      <ul>
+        <li><strong>完整标题</strong>: GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers</li>
+        <li><strong>作者</strong>: Elias Frantar, Saleh Ashkboos, Torsten Hoefler, Dan Alistarh (IST Austria, 维也纳大学)</li>
+        <li><strong>发表时间</strong>: 2022年10月 (ICLR 2023)</li>
+      </ul>
+
+      <h4>研究背景</h4>
+      <p>生成式预训练Transformer(如GPT、OPT)展现出卓越的性能,但其巨大的计算和存储成本严重限制了实际应用。即使是推理,175B参数的模型也可能需要多块高性能GPU,这对于大多数应用场景来说是不可行的。</p>
+
+      <h4>研究动机</h4>
+      <p>作者希望解决的核心问题是:如何在几小时内将175B参数的大模型量化到3-4位,同时保持几乎无损的精度?</p>
+
+      <h4>核心技术点</h4>
+      <ol>
+        <li><strong>近似二阶信息</strong>: 使用Hessian矩阵的逆来衡量每个权重对模型精度的重要性</li>
+        <li><strong>分层量化</strong>: 按层处理权重,每层独立优化</li>
+        <li><strong>误差补偿</strong>: 在量化过程中累积量化误差,并将其分配到后续未量化的权重上</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li><strong>量化时间</strong>: 175B参数模型仅需约4 GPU小时</li>
+        <li><strong>推理加速</strong>: A100上3.25倍,A6000上4.5倍</li>
+        <li><strong>首次实现</strong>: 首次在单块GPU内执行175B参数模型推理</li>
+      </ul>
+
+      <h4>总结</h4>
+      <p>GPTQ通过巧妙的二阶误差补偿机制,实现了在4小时内将175B参数大模型量化到3-4位且精度损失极小的突破。</p>
+    </div>
+
+    <div class="paper-section">
+      <h3 class="paper-title">3. AWQ: Activation-aware Weight Quantization for LLM Compression</h3>
+      <a href="https://arxiv.org/abs/2306.00978" target="_blank" class="arXiv-link">arXiv:2306.00978</a>
+      
+      <h4>论文基本信息</h4>
+      <ul>
+        <li><strong>完整标题</strong>: AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration</li>
+        <li><strong>作者</strong>: Haotian Tang, Ji Lin, Wei-Ming Chen等 (MIT, 微软)</li>
+        <li><strong>发表时间</strong>: 2023年6月 (MLSys 2024最佳论文奖)</li>
+      </ul>
+
+      <h4>研究背景</h4>
+      <p>大语言模型的端侧部署日益重要,可以降低云服务成本并保护用户隐私。然而,模型参数过大和硬件资源有限给部署带来了严峻挑战。</p>
+
+      <h4>研究动机</h4>
+      <p>作者发现LLM中并非所有权重都同等重要——只保护1%的关键权重就能大幅降低量化误差。关键问题是:如何识别这些重要权重?答案是应该看激活值分布,而不是权重分布。</p>
+
+      <h4>核心技术点</h4>
+      <ol>
+        <li><strong>激活感知权重识别</strong>: 通过分析激活值分布找出重要权重通道</li>
+        <li><strong>数学推导保护</strong>: 放大关键权重通道可以减少量化误差</li>
+        <li><strong>不依赖反向传播</strong>: 泛化性强,不会过拟合校准集</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li><strong>推理加速</strong>: 桌面和移动GPU上比FP16实现快3倍以上</li>
+        <li><strong>首次实现</strong>: 在移动GPU上运行70B Llama-2模型</li>
+        <li><strong>MLSys 2024最佳论文奖</strong></li>
+      </ul>
+
+      <h4>总结</h4>
+      <p>AWQ通过激活感知的方式识别和保护关键权重,实现了4位量化下对模型精度影响极小的突破。</p>
+    </div>
+
+    <div class="paper-section">
+      <h3 class="paper-title">4. TinyBERT: Distilling BERT for Natural Language Understanding</h3>
+      <a href="https://arxiv.org/abs/1909.10351" target="_blank" class="arXiv-link">arXiv:1909.10351</a>
+      
+      <h4>论文基本信息</h4>
+      <ul>
+        <li><strong>完整标题</strong>: TinyBERT: Distilling BERT for Natural Language Understanding</li>
+        <li><strong>作者</strong>: Yichun Yin, Chenguang Wang等 (华为诺亚方舟实验室)</li>
+        <li><strong>发表时间</strong>: 2019年9月 (EMNLP 2020)</li>
+      </ul>
+
+      <h4>研究背景</h4>
+      <p>BERT等预训练语言模型在NLP任务上取得了突破性进展,但这些模型通常参数众多,计算成本高,难以部署到资源受限的设备上。</p>
+
+      <h4>核心技术点</h4>
+      <ol>
+        <li><strong>Transformer蒸馏方法</strong>: 专门为Transformer架构设计的蒸馏损失函数</li>
+        <li><strong>两阶段学习框架</strong>: 预训练阶段蒸馏 + 任务特定阶段蒸馏</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li><strong>TinyBERT-4L</strong>: 参数量仅为BERT-base的13.3%,推理速度提升9.4倍</li>
+        <li><strong>性能保持</strong>: 在GLUE基准上达到BERT-base性能的96.8%</li>
+      </ul>
+
+      <h4>总结</h4>
+      <p>TinyBERT通过专门为Transformer设计的两阶段蒸馏方法,成功将BERT压缩到1/7.5大小同时保持96.8%的性能。</p>
+    </div>
+
+    <h2>📊 总结对比</h2>
+
+    <table>
+      <tr>
+        <th>论文</th>
+        <th>核心方法</th>
+        <th>压缩比</th>
+        <th>精度保持</th>
+      </tr>
+      <tr>
+        <td>QLoRA</td>
+        <td>4位NF4 + LoRA微调</td>
+        <td>4x</td>
+        <td>99.3% vs ChatGPT</td>
+      </tr>
+      <tr>
+        <td>GPTQ</td>
+        <td>二阶量化</td>
+        <td>4-8x</td>
+        <td><1% 损失</td>
+      </tr>
+      <tr>
+        <td>AWQ</td>
+        <td>激活感知量化</td>
+        <td>4x</td>
+        <td>SOTA</td>
+      </tr>
+      <tr>
+        <td>TinyBERT</td>
+        <td>两阶段蒸馏</td>
+        <td>7.5x</td>
+        <td>96.8%</td>
+      </tr>
+    </table>
+
+    <h2>🔭 未来方向</h2>
+    <ul>
+      <li>更极端的量化(1-2位)</li>
+      <li>KV Cache量化</li>
+      <li>端到端量化训练</li>
+      <li>硬件协同设计</li>
+      <li>多模态模型量化</li>
+    </ul>
+
+    <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;">
+
+    <p style="color: #888; font-size: 14px;">
+      <em>本文档将持续更新,欢迎提交Issue或PR补充最新论文。</em>
+    </p>
+
+  </div>
+</body>
+</html>
