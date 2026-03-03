@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 (2026-03-03)</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; background: #f5f5f5; }
+        .paper { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        h2 { color: #007bff; margin-top: 0; }
+        .meta { color: #666; font-size: 0.9em; }
+        .section { margin: 15px 0; }
+        .section h3 { color: #333; font-size: 1.1em; margin-bottom: 8px; }
+        .background { background: #e8f4fd; padding: 10px; border-left: 3px solid #007bff; }
+        .motivation { background: #fff3e0; padding: 10px; border-left: 3px solid #ff9800; }
+        .tech { background: #e8f5e9; padding: 10px; border-left: 3px solid #4caf50; }
+        .benefits { background: #fce4ec; padding: 10px; border-left: 3px solid #e91e63; }
+        .summary { background: #f3e5f5; padding: 10px; border-left: 3px solid #9c27b0; }
+        .arxiv-link { display: inline-block; background: #007bff; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin: 10px 0; }
+        .arxiv-link:hover { background: #0056b3; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .date { color: #666; }
+        img { max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }
+        .authors { color: #555; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 LLM 量化/部署/蒸馏文献调研</h1>
+        <span class="date">2026-03-03 21:24 | 周次: 第10周</span>
+    </div>
+    
+    <p>本期带来4篇关于LLM量化、部署和蒸馏的最新研究。</p>
+
+    <!-- 论文 1: KDFlow -->
+    <div class="paper">
+        <h2>1. KDFlow: 高效知识蒸馏框架</h2>
+        <p class="meta">arXiv: <a href="https://arxiv.org/abs/2603.01875v1">2603.01875v1</a> | 发表: 2026-03-02</p>
+        <p class="authors">作者: Songming Zhang, Xue Zhang, Tong Zhang, Bojie Hu, Yufeng Chen, Jinan Xu</p>
+        
+        <a class="arxiv-link" href="https://arxiv.org/abs/2603.01875v1" target="_blank">查看论文 →</a>
+        
+        <div class="section">
+            <h3>📖 背景</h3>
+            <div class="background">
+                知识蒸馏(KD)是压缩大型语言模型(LLM)的关键技术。然而，现有的蒸馏框架在使用同构训练后端(如FSDP和DeepSpeed)处理教师和学生模型时，存在训练效率不佳的问题。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>💡 动机</h3>
+            <div class="motivation">
+                教师模型主要负责推理(只读)，而学生模型需要进行梯度更新(读写)。用同一个后端处理两者是一种资源浪费。此外，跨进程传输完整logits会带来高通信开销。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <div class="tech">
+                1. <strong>解耦架构</strong>: 教师推理使用SGLang，学生训练使用FSDP2<br>
+                2. <strong>零拷贝数据传输</strong>: 仅传输教师的隐藏状态，在学生端重新计算logits<br>
+                3. <strong>跨分词器蒸馏支持</strong>: 通过可扩展API支持不同分词器间的KD<br>
+                4. <strong>离线和在线蒸馏</strong>: 同时支持两种蒸馏范式
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <div class="benefits">
+                • 训练速度提升 <strong>1.44× 到 6.36×</strong><br>
+                • 显著降低通信成本<br>
+                • 用户友好的API设计
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>✅ 总结</h3>
+            <div class="summary">
+                KDFlow通过解耦教师-学生架构，利用SGLang进行高效推理和FSDP2进行训练，实现了LLM蒸馏的效率突破。该工作为知识蒸馏提供了一个高效、易用的新范式。
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文 2: FreeAct -->
+    <div class="paper">
+        <h2>2. FreeAct: 激活解耦的LLM量化</h2>
+        <p class="meta">arXiv: <a href="https://arxiv.org/abs/2603.01776v1">2603.01776v1</a> | 发表: 2026-03-02</p>
+        <p class="authors">作者: Xiaohao Liu, Xiaobo Xia, Manyi Zhang, Ji-Fu Li, Xianzhi Yu, Fei Shen, Xiu Su, See-Kiong Ng, Tat-Seng Chua</p>
+        
+        <a class="arxiv-link" href="https://arxiv.org/abs/2603.01776v1" target="_blank">查看论文 →</a>
+        
+        <div class="section">
+            <h3>📖 背景</h3>
+            <div class="background">
+                量化是减轻LLM内存和计算开销的关键技术。现有的基于变换的方法通过使用正交矩阵将特征空间投影到更平滑的流形上，但通常强制执行一对一的静态变换约束。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>💡 动机</h3>
+            <div class="motivation">
+                在扩散LLM(dLLM)和多模态LLM(MLLM)中，不同token类型(如图像token vs 文本token)表现出不同的分布。静态的一对一变换无法适应这种动态激活差异。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <div class="tech">
+                1. <strong>放松静态约束</strong>: 将一对一约束放松以适应动态激活差异<br>
+                2. <strong>激活侧变换解耦</strong>: 利用激活的秩亏性质，分配token特定的变换矩阵<br>
+                3. <strong>权重侧统一变换</strong>: 保持权重的静态统一变换<br>
+                4. <strong>扩展解空间</strong>: 推导出超越简单逆矩阵的解空间
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <div class="benefits">
+                • 性能提升最高达 <strong>5.3%</strong><br>
+                • 适用于dLLM和MLLM<br>
+                • 更灵活的处理不同token类型
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>✅ 总结</h3>
+            <div class="summary">
+                FreeAct通过解耦激活变换和权重变换，实现了更灵活的LLM量化。该方法利用激活的秩亏性质，在扩散LLM和多模态LLM上取得了显著的性能提升。
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文 3: 6G Tiny LLM -->
+    <div class="paper">
+        <h2>3. 6G网络中微型语言模型扩展研究</h2>
+        <p class="meta">arXiv: <a href="https://arxiv.org/abs/2603.02156v1">2603.02156v1</a> | 发表: 2026-03-02</p>
+        <p class="authors">作者: Mohamed Amine Ferrag, Abderrahmane Lakas, Merouane Debbah</p>
+        
+        <a class="arxiv-link" href="https://arxiv.org/abs/2603.02156v1" target="_blank">查看论文 →</a>
+        
+        <div class="section">
+            <h3>📖 背景</h3>
+            <div class="background">
+                6G网络正在向AI原生系统演进，需要在边缘基础设施上部署语义推理能力。大型LLM计算资源需求大，难以在边缘设备上部署。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>💡 动机</h3>
+            <div class="motivation">
+                需要找出在边缘设备上实现最佳性能/资源平衡的模型规模。研究compact语言模型在网络级语义推理中的系统性评估。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <div class="tech">
+                1. <strong>标准化基准6G-Bench</strong>: 30个跨5个能力域的决策任务<br>
+                2. <strong>模型规模评估</strong>: 从135M到7B<br>
+                3. <strong>Edge Score指标</strong>: 归一化准确性/延迟/内存占用<br>
+                4. <strong>稳定性分析</strong>: 识别1-1.5B范围的稳定性转变
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <div class="benefits">
+                • <strong>最佳部署规模: 1.5B-3B参数</strong><br>
+                • 准确性扩展: 135M的0.224到7B的0.707<br>
+                • 边缘效率最优
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>✅ 总结</h3>
+            <div class="summary">
+                研究发现在1-1.5B参数范围存在明显的稳定性转变。超过3B后收益递减。中等规模模型(约1.5-3B)在确定性和计算效率之间实现最佳平衡。
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文 4: LLM-as-Annotator -->
+    <div class="paper">
+        <h2>4. LLM作为标注器的轻量级模型训练</h2>
+        <p class="meta">arXiv: <a href="https://arxiv.org/abs/2603.01778v1">2603.01778v1</a> | 发表: 2026-03-02</p>
+        <p class="authors">作者: Nils Constantin Hellwig, Jakob Fehle, Udo Kruschwitz, Christian Wolff</p>
+        
+        <a class="arxiv-link" href="https://arxiv.org/abs/2603.01778v1" target="_blank">查看论文 →</a>
+        
+        <div class="section">
+            <h3>📖 背景</h3>
+            <div class="background">
+                基于方面的情感分析(ABSA)任务需要手动标注数据，成本高且耗时。虽然可以使用LLM生成标注，但直接使用LLM进行推理计算资源消耗大。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>💡 动机</h3>
+            <div class="motivation">
+                如何在保持性能的同时大幅降低计算成本？利用LLM生成的标注来微调轻量级模型是一个有前途的方向。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <div class="tech">
+                1. <strong>LLM标注生成</strong>: 使用50个标注示例进行上下文学习<br>
+                2. <strong>轻量级模型微调</strong>: 在LLM生成的标注上训练小型模型<br>
+                3. <strong>TASD和ASQP任务</strong>: 在复杂ABSA任务上评估<br>
+                4. <strong>低资源场景</strong>: 验证在少量标注数据下的性能
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <div class="benefits">
+                • ASQP任务F1达<strong>49.85</strong> (接近Gemma-3-27B的51.10)<br>
+                • 显著降低计算资源需求<br>
+                • 能源效率大幅提升
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>✅ 总结</h3>
+            <div class="summary">
+                LA-ABSA方法通过使用LLM生成的标注来微调轻量级模型，在低资源场景下取得了接近大型ICL提示的性能，同时大幅降低了计算和能源开销。
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <p style="text-align: center; color: #666;">
+        <em>本报告由 Jarvis 自动生成 | 发布于 2026-03-03 21:24</em>
+    </p>
+</body>
+</html>
