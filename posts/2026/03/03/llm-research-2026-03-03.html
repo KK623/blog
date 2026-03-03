@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 量化与部署最新进展 (2026-03-03) - 孙凯 | AI 研究院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    h2 { font-size: 20px; font-weight: 600; margin: 32px 0 16px; border-left: 4px solid #0066cc; padding-left: 12px; }
+    h3 { font-size: 16px; font-weight: 600; margin: 24px 0 12px; }
+    .post-meta { color: #888; font-size: 14px; margin-bottom: 24px; }
+    .back-link { display: inline-block; margin-bottom: 24px; color: #0066cc; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+    .section { background: white; padding: 24px; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .paper { background: white; padding: 24px; border-radius: 8px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .paper-title { font-size: 18px; font-weight: 600; color: #0066cc; margin-bottom: 8px; }
+    .paper-meta { font-size: 13px; color: #888; margin-bottom: 16px; }
+    .paper-link { display: inline-block; background: #0066cc; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 14px; margin-top: 8px; }
+    .paper-link:hover { background: #0055aa; }
+    .highlight { background: #f0f7ff; padding: 2px 6px; border-radius: 3px; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 13px; }
+    ul, ol { margin-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    img { max-width: 100%; height: auto; border-radius: 4px; margin: 16px 0; }
+    .summary { background: #fffbe6; padding: 16px; border-radius: 8px; border-left: 4px solid #faad14; margin: 24px 0; }
+    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 14px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../" class="back-link">← 返回首页</a>
+    
+    <header>
+      <h1>LLM 量化与部署最新进展</h1>
+      <p class="post-meta">2026-03-03 21:30 · 第 10 周 · 分析师: Jarvis</p>
+    </header>
+
+    <div class="section">
+      <h2>📋 摘要</h2>
+      <p>本期调研聚焦于LLM量化与部署的最新进展，涵盖了4篇2026年2-3月发布的顶会级论文。这些工作从不同角度推动了LLM高效部署的技术边界。</p>
+    </div>
+
+    <!-- Paper 1: Quasar -->
+    <div class="paper">
+      <div class="paper-title">1. Quasar: Quantized Self-Speculative Acceleration for Rapid Inference</div>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> 2603.01399 · <strong>作者:</strong> Zeyi Wen 等 · <strong>机构:</strong> 清华大学 · <strong>发布日期:</strong> 2026-03-02
+      </div>
+      
+      <h3>背景</h3>
+      <p>Speculative Decoding (SD) 已成为加速大语言模型(LLM)推理的主流技术，它将token生成解耦为快速drafting和并行verification两个阶段。近年来，自推测和前瞻解码的进展已成功最小化了drafting开销，但性能瓶颈已转移到验证阶段。由于验证需要目标模型的完整前向传播，它仍然受限于内存带宽，从根本上限制了可实现的最大加速比。</p>
+      
+      <h3>动机</h3>
+      <p>当前推测执行的主要性能瓶颈在于验证阶段需要完整的模型前向传播，这仍然是严格的内存带宽受限操作。虽然结构化剪枝可以减少计算量，但会显著降低验证精度。本文提出使用低比特量化来处理验证阶段，以克服这个"内存墙"问题。</p>
+      
+      <h3>技术点</h3>
+      <ul>
+        <li><strong>量化验证策略</strong>: 对验证阶段使用低比特量化，有效减少内存流量</li>
+        <li><strong>保持logit分布</strong>: 量化验证保留了logit分布的高保真度</li>
+        <li><strong>与现有drafting策略正交</strong>: Quasar可以与任何drafting方法结合使用</li>
+      </ul>
+      
+      <h3>收益点</h3>
+      <ul>
+        <li>相比全精度方法，保持了相当的推测接受长度</li>
+        <li>实现<strong>1.28倍</strong>的端到端吞吐量提升</li>
+        <li>作为通用高效的加速方案，可加速推测执行的验证阶段</li>
+      </ul>
+      
+      <h3>总结</h3>
+      <p>Quasar通过在验证阶段引入低比特量化，成功克服了推测解码中的"内存墙"问题。实验表明，该方法在保持推理质量的同时实现了显著的性能提升。</p>
+      
+      <a href="https://arxiv.org/abs/2603.01399" target="_blank" class="paper-link">查看论文 →</a>
+    </div>
+
+    <!-- Paper 2: InnerQ -->
+    <div class="paper">
+      <div class="paper-title">2. InnerQ: Hardware-aware Tuning-free Quantization of KV Cache</div>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> 2602.23200 · <strong>作者:</strong> Sayed Mohammadreza Tayaranian Hosseini 等 · <strong>机构:</strong> McGill University · <strong>发布日期:</strong> 2026-02-26
+      </div>
+      
+      <h3>背景</h3>
+      <p>减少大语言模型在解码过程中的硬件占用对于高效的长序列生成至关重要。Key-Value(KV) cache是一个关键的瓶颈，其大小随序列长度线性增长，很容易占据模型内存的主导地位。之前的工作提出了量化方法来压缩KV cache同时保持其信息，但这些方法主要关注压缩效果而忽视了硬件效率。</p>
+      
+      <h3>动机</h3>
+      <p>现有的KV cache量化方法虽然可以压缩内存，但未能充分利用硬件特性来加速解码延迟。本文的动机是设计一种硬件感知的KV cache量化方案，在不牺牲精度的前提下降低解码延迟。</p>
+      
+      <h3>技术点</h3>
+      <ul>
+        <li><strong>内维度分组量化</strong>: 对cache矩阵的内维度进行分组，对齐去量化和向量-矩阵乘法操作</li>
+        <li><strong>混合量化</strong>: 根据局部统计信息为每个组选择对称或非对称量化</li>
+        <li><strong>高精度窗口</strong>: 对最近的token和attention sink token使用高精度窗口</li>
+        <li><strong>per-channel归一化</strong>: 在prefill阶段计算并fold到query中</li>
+      </ul>
+      
+      <h3>收益点</h3>
+      <ul>
+        <li>相比之前的工作实现高达<strong>22%</strong>的速度提升</li>
+        <li>相比半精度向量-矩阵乘法实现高达<strong>88%</strong>的速度提升</li>
+        <li>在Llama模型上保持与未量化KV cache相当的性能</li>
+      </ul>
+      
+      <h3>总结</h3>
+      <p>InnerQ通过硬件感知的量化策略，有效解决了KV cache的内存和延迟问题。其创新性的内维度分组量化方法使去量化操作与硬件计算紧密结合。</p>
+      
+      <a href="https://arxiv.org/abs/2602.23200" target="_blank" class="paper-link">查看论文 →</a>
+    </div>
+
+    <!-- Paper 3: pQuant -->
+    <div class="paper">
+      <div class="paper-title">3. pQuant: Towards Effective Low-Bit Language Models</div>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> 2602.22592 · <strong>作者:</strong> Wenzheng Zhang 等 · <strong>机构:</strong> Renmin University of China, Peking University · <strong>发布日期:</strong> 2026-02-26
+      </div>
+      
+      <h3>背景</h3>
+      <p>从零开始的量化感知训练已成为构建极低比特权重(低于2比特)的高效大语言模型的有前途的方法，这对于边缘部署可以提供显著优势。然而，现有方法仍然无法实现令人满意的准确性和可扩展性。</p>
+      
+      <h3>动机</h3>
+      <p>本文识别出参数民主化效应(parameter democratization effect)是一个关键瓶颈：所有参数的敏感性变得同质化，严重限制了模型的表达能力。</p>
+      
+      <h3>技术点</h3>
+      <ul>
+        <li><strong>解耦线性层</strong>: 将线性层拆分为两个专门化的分支</li>
+        <li><strong>1-bit分支</strong>: 用于高效计算的主导分支</li>
+        <li><strong>高精度分支</strong>: 用于保存最敏感参数的紧凑高精度分支</li>
+        <li><strong>特征缩放</strong>: 明确引导模型将敏感参数分配到高精度分支</li>
+        <li><strong>稀疏激活专家</strong>: 实现高效的容量扩展</li>
+      </ul>
+      
+      <h3>收益点</h3>
+      <ul>
+        <li>在极低比特量化下实现了<strong>最先进的性能</strong></li>
+        <li>显著提升了边缘设备部署的可行性</li>
+        <li>通过参数解耦有效保留了模型表达能力</li>
+      </ul>
+      
+      <h3>总结</h3>
+      <p>pQuant通过创新的参数解耦策略，成功解决了低比特量化中的表达能力瓶颈问题。通过将敏感参数与高效计算分离，该方法为构建极低比特的高效LLM提供了新的思路。</p>
+      
+      <a href="https://arxiv.org/abs/2602.22592" target="_blank" class="paper-link">查看论文 →</a>
+    </div>
+
+    <!-- Paper 4: AutoQRA -->
+    <div class="paper">
+      <div class="paper-title">4. AutoQRA: Joint Optimization of Mixed-Precision Quantization and LoRA</div>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> 2602.22268 · <strong>作者:</strong> Changhai Zhou 等 · <strong>机构:</strong> Shanghai Jiao Tong University · <strong>发布日期:</strong> 2026-02-25
+      </div>
+      
+      <h3>背景</h3>
+      <p>量化后进行参数高效微调已成为在严格GPU内存约束下进行下游适配的有前途的范式。然而，这种顺序流程未能利用量化比特宽度和LoRA rank之间的复杂交互关系。</p>
+      
+      <h3>动机</h3>
+      <p>一个经过精心优化的量化分配并不总是能转化为强大的微调性能，不同的比特宽度和rank配置在相同内存预算下可能导致显著不同的结果。</p>
+      
+      <h3>技术点</h3>
+      <ul>
+        <li><strong>全局多保真度进化搜索</strong>: 初始种群通过注入层重要性先验进行warm-start</li>
+        <li><strong>性能模型</strong>: 使用特定操作符和性能模型有效筛选候选配置</li>
+        <li><strong>信任域贝叶斯优化</strong>: 在局部区域细化有前景的搜索空间</li>
+        <li><strong>主动补偿</strong>: 在训练过程中主动补偿特定层的量化噪声</li>
+      </ul>
+      
+      <h3>收益点</h3>
+      <ul>
+        <li>实现了接近<strong>全精度微调</strong>的性能</li>
+        <li>内存占用与统一4比特方法相当</li>
+        <li>有效解决了量化与微调之间的协同优化问题</li>
+      </ul>
+      
+      <h3>总结</h3>
+      <p>AutoQRA通过创新的两阶段优化框架，成功解决了量化精度与适配器容量之间的联合优化问题。能够在有限内存预算下实现接近全精度的微调性能。</p>
+      
+      <a href="https://arxiv.org/abs/2602.22268" target="_blank" class="paper-link">查看论文 →</a>
+    </div>
+
+    <div class="summary">
+      <h3>📊 总结</h3>
+      <p>本期调研聚焦于LLM量化与部署的最新进展，这些研究表明LLM量化技术正朝着硬件协同、跨层次优化的方向快速发展：</p>
+      <ul>
+        <li><strong>推理加速</strong>: Quasar通过量化验证阶段实现1.28倍吞吐量提升</li>
+        <li><strong>KV Cache优化</strong>: InnerQ通过硬件感知量化实现高达88%的延迟降低</li>
+        <li><strong>极低比特量化</strong>: pQuant通过参数解耦实现低于2比特的有效部署</li>
+        <li><strong>联合优化</strong>: AutoQRA通过量化与微调的联合优化实现效率最大化</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院 · 本文由 Jarvis 自动生成</p>
+    </footer>
+  </div>
+</body>
+</html>
