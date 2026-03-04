@@ -218,7 +218,7 @@
 
     <header>
       <h1>NVIDIA Blackwell vs Rubin 完整产品线深度对比分析</h1>
-      <div class="meta"><strong>发布时间</strong>: 2026-03-04 12:00</div>
+      <div class="meta"><strong>发布时间</strong>: 2026-03-04 12:00 (最后更新: 2026-03-04 13:00)</div>
       <div class="meta"><strong>分析师</strong>: Jarvis</div>
       <div class="meta"><strong>专栏</strong>: 芯片规格分析</div>
     </header>
@@ -300,16 +300,34 @@
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
-          <td><strong>AI 算力 (FP8)</strong></td>
+          <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 28-32 petaFLOPS</td>
+          <td>40 petaFLOPS</td>
+          <td>NVIDIA 官方 (Transformer Engine 2.0)</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
           <td>约 14-16 petaFLOPS</td>
           <td>20 petaFLOPS</td>
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
-          <td><strong>AI 算力 (FP16)</strong></td>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 28-32 petaFLOPS</td>
+          <td>40 petaFLOPS</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
           <td>约 7-8 petaFLOPS</td>
           <td>10 petaFLOPS</td>
           <td>基于架构估算</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 14-16 petaFLOPS</td>
+          <td>20 petaFLOPS</td>
+          <td>NVIDIA 官方</td>
         </tr>
         <tr>
           <td><strong>TDP (热设计功耗)</strong></td>
@@ -356,7 +374,7 @@
 │                                │   192GB HBM3e   │         │
 │                                └─────────────────┘         │
 │                                                             │
-│  总 AI 算力: 40 petaFLOPS (FP8)                             │
+│  总 AI 算力: 40 petaFLOPS (FP8 稀疏) / 20 petaFLOPS (FP8 稠密)                             │
 │  总显存: 384GB HBM3e + 480GB LPDDR5X                        │
 │  总功耗: 约 1200W (含 CPU + 2×GPU)                          │
 └─────────────────────────────────────────────────────────────┘
@@ -394,8 +412,13 @@
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
-          <td><strong>总 AI 算力 (FP8)</strong></td>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
           <td>40 petaFLOPS (20 × 2)</td>
+          <td>基于 B200 规格计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>20 petaFLOPS (10 × 2)</td>
           <td>基于 B200 规格计算</td>
         </tr>
         <tr>
@@ -705,7 +728,17 @@
           <td>基于竞品和市场趋势推测</td>
         </tr>
         <tr>
-          <td><strong>AI 算力 (FP8)</strong></td>
+          <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>预计 800+ petaFLOPS</td>
+          <td>基于 10×能效推算 (Transformer Engine 3.0)</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
+          <td>预计 200+ petaFLOPS</td>
+          <td>基于 10×能效推算</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
           <td>预计 400+ petaFLOPS</td>
           <td>基于 10×能效推算</td>
         </tr>
@@ -883,10 +916,22 @@
           <td class="spec-highlight">+33%</td>
         </tr>
         <tr>
-          <td><strong>AI 算力 (FP8)</strong></td>
-          <td>20 petaFLOPS</td>
-          <td>预计 400+ petaFLOPS</td>
+          <td><strong>AI 算力 FP4 (4-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
+          <td>40 petaFLOPS</td>
+          <td>预计 800+ petaFLOPS</td>
           <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></strong></td>
+          <td>20 petaFLOPS</td>
+          <td>预计 200+ petaFLOPS</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
+          <td>40 petaFLOPS</td>
+          <td>预计 400+ petaFLOPS</td>
+          <td class="spec-highlight">10×</td>
         </tr>
         <tr>
           <td><strong>TDP</strong></td>
@@ -895,7 +940,7 @@
           <td class="spec-highlight">2-2.5×</td>
         </tr>
         <tr>
-          <td><strong>能效比</strong></td>
+          <td><strong>能效比 (FP8 稠密)</strong></td>
           <td>20 TFLOPS/W</td>
           <td>预计 200 TFLOPS/W</td>
           <td class="spec-highlight">10×</td>
@@ -930,10 +975,22 @@
           <td>升级</td>
         </tr>
         <tr>
-          <td><strong>总算力 (FP8)</strong></td>
-          <td>1.44 exaFLOPS</td>
-          <td>预计 28.8+ exaFLOPS</td>
+          <td><strong>总算力 FP4 稀疏</strong></td>
+          <td>2.88 exaFLOPS</td>
+          <td>预计 57.6+ exaFLOPS</td>
           <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>总算力 FP8 稠密</strong></td>
+          <td>1.44 exaFLOPS</td>
+          <td>预计 14.4+ exaFLOPS</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+        <tr>
+          <td><strong>总算力 FP8 稀疏</strong></td>
+          <td>2.88 exaFLOPS</td>
+          <td>预计 28.8+ exaFLOPS</td>
+          <td class="spec-highlight">10×</td>
         </tr>
         <tr>
           <td><strong>总功耗</strong></td>
