@@ -301,32 +301,32 @@
         </tr>
         <tr>
           <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
-          <td>约 28-32 petaFLOPS</td>
-          <td>40 petaFLOPS</td>
-          <td>NVIDIA 官方 (Transformer Engine 2.0)</td>
+          <td>约 9-10 petaFLOPS (估算)</td>
+          <td><strong>9 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / 行业分析</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
-          <td>约 14-16 petaFLOPS</td>
-          <td>20 petaFLOPS</td>
+          <td>约 3.5-4 petaFLOPS (估算)</td>
+          <td><strong>4.5 petaFLOPS</strong></td>
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
-          <td>约 28-32 petaFLOPS</td>
-          <td>40 petaFLOPS</td>
+          <td>约 7-8 petaFLOPS (估算)</td>
+          <td><strong>9 petaFLOPS</strong></td>
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
-          <td>约 7-8 petaFLOPS</td>
-          <td>10 petaFLOPS</td>
+          <td>约 1.75-2 petaFLOPS (估算)</td>
+          <td><strong>2.25 petaFLOPS</strong></td>
           <td>基于架构估算</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
-          <td>约 14-16 petaFLOPS</td>
-          <td>20 petaFLOPS</td>
+          <td>约 3.5-4 petaFLOPS (估算)</td>
+          <td><strong>4.5 petaFLOPS</strong></td>
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
@@ -347,6 +347,10 @@
           <td>Forbes / 行业分析</td>
         </tr>
       </table>
+
+      <div class="warning-box">
+        <p style="margin:0;"><strong>⚠️ 数据勘误说明 (2026-03-04 13:15)</strong>: 本报告已修正 B200 算力数据。此前版本误将 GB200 Superchip 算力当作 B200 单芯片算力。正确数据为：B200 FP8 稠密算力 4.5 petaFLOPS，稀疏算力 9 petaFLOPS。其他相关数据已同步修正。</p>
+      </div>
 
       <div class="note-box">
         <p style="margin:0;"><strong>注</strong>: B100 规格为行业分析师推测，NVIDIA 官方未正式公布详细规格。B200 为 Blackwell 系列旗舰型号，数据来源 NVIDIA GTC 2024 主题演讲及官方白皮书。</p>
@@ -374,7 +378,7 @@
 │                                │   192GB HBM3e   │         │
 │                                └─────────────────┘         │
 │                                                             │
-│  总 AI 算力: 40 petaFLOPS (FP8 稀疏) / 20 petaFLOPS (FP8 稠密)                             │
+│  总 AI 算力: <strong>9 petaFLOPS FP8 稀疏 / 4.5 petaFLOPS FP8 稠密</strong>                             │
 │  总显存: 384GB HBM3e + 480GB LPDDR5X                        │
 │  总功耗: 约 1200W (含 CPU + 2×GPU)                          │
 └─────────────────────────────────────────────────────────────┘
@@ -412,13 +416,18 @@
           <td>NVIDIA 官方</td>
         </tr>
         <tr>
+          <td><strong>总 AI 算力 FP4 稀疏</strong></td>
+          <td>18 petaFLOPS (9 × 2)</td>
+          <td>基于 B200 规格计算</td>
+        </tr>
+        <tr>
           <td><strong>总 AI 算力 FP8 稀疏</strong></td>
-          <td>40 petaFLOPS (20 × 2)</td>
+          <td>18 petaFLOPS (9 × 2)</td>
           <td>基于 B200 规格计算</td>
         </tr>
         <tr>
           <td><strong>总 AI 算力 FP8 稠密</strong></td>
-          <td>20 petaFLOPS (10 × 2)</td>
+          <td>9 petaFLOPS (4.5 × 2)</td>
           <td>基于 B200 规格计算</td>
         </tr>
         <tr>
@@ -458,7 +467,7 @@
 │  └─────────┘  └─────────┘  └─────────┘  └─────────┘        │
 │                                                             │
 │  总 GPU 显存: 1.5TB (192GB × 8)                            │
-│  总 AI 算力: 160 petaFLOPS (FP8)                           │
+│  总 AI 算力: <strong>72 petaFLOPS (FP8 稀疏) / 36 petaFLOPS (FP8 稠密)</strong>                           │
 │  总功耗: 约 8-10 kW                                        │
 │  形态: 双宽全高服务器 (10U+)                               │
 └─────────────────────────────────────────────────────────────┘
@@ -481,9 +490,14 @@
           <td>192GB × 8 (计算)</td>
         </tr>
         <tr>
-          <td><strong>总 AI 算力 (FP8)</strong></td>
-          <td>160 petaFLOPS</td>
-          <td>20 petaFLOPS × 8 (计算)</td>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>72 petaFLOPS (9 × 8)</td>
+          <td>基于 B200 规格计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>36 petaFLOPS (4.5 × 8)</td>
+          <td>基于 B200 规格计算</td>
         </tr>
         <tr>
           <td><strong>总功耗</strong></td>
@@ -637,7 +651,13 @@
         </tr>
         <tr>
           <td><strong>总 AI 算力 (FP8)</strong></td>
-          <td>1.44 exaFLOPS (20 petaFLOPS × 72)</td>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>648 petaFLOPS (9 petaFLOPS × 72)</td>
+          <td>计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>324 petaFLOPS (4.5 petaFLOPS × 72)</td>
           <td>计算</td>
         </tr>
         <tr>
@@ -729,17 +749,17 @@
         </tr>
         <tr>
           <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
-          <td>预计 800+ petaFLOPS</td>
+          <td>预计 180+ petaFLOPS</td>
           <td>基于 10×能效推算 (Transformer Engine 3.0)</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
-          <td>预计 200+ petaFLOPS</td>
+          <td>预计 45+ petaFLOPS</td>
           <td>基于 10×能效推算</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
-          <td>预计 400+ petaFLOPS</td>
+          <td>预计 90+ petaFLOPS</td>
           <td>基于 10×能效推算</td>
         </tr>
         <tr>
@@ -917,21 +937,21 @@
         </tr>
         <tr>
           <td><strong>AI 算力 FP4 (4-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
-          <td>40 petaFLOPS</td>
-          <td>预计 800+ petaFLOPS</td>
+          <td>9 petaFLOPS</td>
+          <td>预计 180+ petaFLOPS</td>
           <td class="spec-highlight">20×</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></strong></td>
-          <td>20 petaFLOPS</td>
-          <td>预计 200+ petaFLOPS</td>
-          <td class="spec-highlight">10×</td>
+          <td>4.5 petaFLOPS</td>
+          <td>预计 90+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
         </tr>
         <tr>
           <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
-          <td>40 petaFLOPS</td>
-          <td>预计 400+ petaFLOPS</td>
-          <td class="spec-highlight">10×</td>
+          <td>9 petaFLOPS</td>
+          <td>预计 180+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
         </tr>
         <tr>
           <td><strong>TDP</strong></td>
@@ -941,8 +961,8 @@
         </tr>
         <tr>
           <td><strong>能效比 (FP8 稠密)</strong></td>
-          <td>20 TFLOPS/W</td>
-          <td>预计 200 TFLOPS/W</td>
+          <td>4.5 TFLOPS/W (4.5 petaFLOPS / 1000W)</td>
+          <td>预计 45+ TFLOPS/W</td>
           <td class="spec-highlight">10×</td>
         </tr>
       </table>
@@ -975,22 +995,22 @@
           <td>升级</td>
         </tr>
         <tr>
-          <td><strong>总算力 FP4 稀疏</strong></td>
-          <td>2.88 exaFLOPS</td>
-          <td>预计 57.6+ exaFLOPS</td>
+          <td><strong>总 AI 算力 FP4 稀疏</strong></td>
+          <td>648 petaFLOPS (9 × 72)</td>
+          <td>预计 12.96+ exaFLOPS</td>
           <td class="spec-highlight">20×</td>
         </tr>
         <tr>
-          <td><strong>总算力 FP8 稠密</strong></td>
-          <td>1.44 exaFLOPS</td>
-          <td>预计 14.4+ exaFLOPS</td>
-          <td class="spec-highlight">10×</td>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>648 petaFLOPS (9 × 72)</td>
+          <td>预计 12.96+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
         </tr>
         <tr>
-          <td><strong>总算力 FP8 稀疏</strong></td>
-          <td>2.88 exaFLOPS</td>
-          <td>预计 28.8+ exaFLOPS</td>
-          <td class="spec-highlight">10×</td>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>324 petaFLOPS (4.5 × 72)</td>
+          <td>预计 6.48+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
         </tr>
         <tr>
           <td><strong>总功耗</strong></td>
