@@ -9,7 +9,7 @@ import sys
 import requests
 import argparse
 from urllib.parse import urljoin, urlparse
-from typing import List, Set
+from typing import List, Set, Optional
 import re
 
 class ImageDownloader:
