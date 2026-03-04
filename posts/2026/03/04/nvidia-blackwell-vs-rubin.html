@@ -508,6 +508,99 @@
         </tr>
       </table>
 
+      <h3>5.3 详细能效数据对比</h3>
+
+      <div class="highlight-box">
+        <p style="margin:0 0 15px;"><strong>核心结论</strong>: Rubin 实现了 10 倍能效提升，每瓦算力从 20 TFLOPS 跃升至 200 TFLOPS。</p>
+        <p style="margin:0;">虽然单机架功耗翻倍，但因性能提升超过 20 倍，整体电费成本反而更低，是大规模 AI 训练的更优选择。</p>
+      </div>
+
+      <h4>单芯片能效对比</h4>
+
+      <table>
+        <tr>
+          <th>能效指标</th>
+          <th>Blackwell B200</th>
+          <th>Rubin (估算)</th>
+          <th>提升</th>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 (FP8)</strong></td>
+          <td>20 petaFLOPS</td>
+          <td>400+ petaFLOPS (估算)</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>单芯片功耗</strong></td>
+          <td>约 1000W</td>
+          <td>约 2000W (估算)</td>
+          <td>2×</td>
+        </tr>
+        <tr>
+          <td><strong>能效比 (TFLOPS/W)</strong></td>
+          <td><strong>20 TFLOPS/W</strong></td>
+          <td><strong>200+ TFLOPS/W</strong></td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+        <tr>
+          <td><strong>通俗理解</strong></td>
+          <td>1瓦 = 20万亿次计算/秒</td>
+          <td>1瓦 = 200万亿次计算/秒</td>
+          <td>-</td>
+        </tr>
+      </table>
+
+      <h4>系统级能效对比 (NVL72 机架)</h4>
+
+      <table>
+        <tr>
+          <th>系统指标</th>
+          <th>Grace Blackwell NVL72</th>
+          <th>Vera Rubin NVL72</th>
+          <th>对比</th>
+        </tr>
+        <tr>
+          <td><strong>系统总功耗</strong></td>
+          <td>约 120 kW</td>
+          <td>约 240 kW</td>
+          <td>+100%</td>
+        </tr>
+        <tr>
+          <td><strong>系统总算力 (FP8)</strong></td>
+          <td>约 1.44 exaFLOPS<br>(72 × 20 petaFLOPS)</td>
+          <td>约 28.8+ exaFLOPS<br>(72 × 400+ petaFLOPS)</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>系统能效</strong></td>
+          <td>12 petaFLOPS/kW</td>
+          <td>120+ petaFLOPS/kW</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+        <tr>
+          <td><strong>年电费成本 (估算)</strong></td>
+          <td>约 $10-12万<br>(按$0.1/kWh)</td>
+          <td>约 $20-24万<br>(按$0.1/kWh)</td>
+          <td>+100%</td>
+        </tr>
+        <tr>
+          <td><strong>每美元电费产出算力</strong></td>
+          <td>基准</td>
+          <td>10倍</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+      </table>
+
+      <h4>能效提升的技术来源</h4>
+
+      <ol>
+        <li><strong>更先进制程</strong> - 从 4nm 升级到 3nm 级，晶体管密度和能效显著提升</li>
+        <li><strong>架构优化</strong> - 第三代 Transformer Engine 支持更低精度计算，减少无效功耗</li>
+        <li><strong>内存升级</strong> - HBM4 预计带来更高带宽和更低功耗</li>
+        <li><strong>全液冷散热</strong> - 100% 液冷允许芯片在更高功率下稳定运行，减少散热能耗损失</li>
+        <li><strong>CPU-GPU 协同优化</strong> - Vera CPU 专为 AI 负载设计，减少数据搬运功耗</li>
+      </ol>
+
       <h2>六、应用场景与市场定位</h2>
 
       <h3>6.1 Blackwell 适用场景</h3>
