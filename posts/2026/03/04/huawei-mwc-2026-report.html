@@ -217,7 +217,7 @@
 
     <main>
       <div class="highlight-box">
-        <p style="margin:0;"><strong>报告摘要</strong>: 华为在 MWC 2026 以 "Advancing All Intelligence（推进全面智能化）" 为主题，发布了一系列 AI-Centric Network 解决方案、U6GHz 全场景 5G-A 产品组合、SuperPoD 计算集群等核心产品。本报告全面梳理华为的技术主张、产品发布、战略布局及行业影响。</p>
+        <p style="margin:0;"><strong>报告摘要</strong>: 本报告基于 <strong>华为官方新闻稿</strong> 及行业权威媒体，全面梳理华为在 MWC 2026 的发布内容。华为以 "Advancing All Intelligence（推进全面智能化）" 为主题，发布了 U6GHz 全场景 5G-A 产品组合、AI-Centric Network 解决方案、SuperPoD 计算集群、NG WAN 架构等核心产品，并提出 "5G-A × AI" 战略，致力于在智能体互联网时代为运营商和行业客户提供领先的网络和计算基础设施。</p>
       </div>
 
       <h2>一、执行摘要</h2>
@@ -362,12 +362,85 @@
 
       <div class="product-card">
         <h4>Atlas 950 SuperPoD（AI 计算）</h4>
+        <table>
+          <tr>
+            <th>规格参数</th>
+            <th>数值</th>
+          </tr>
+          <tr>
+            <td>架构</td>
+            <td>"集群 + SuperPoD" 创新架构</td>
+          </tr>
+          <tr>
+            <td>互联技术</td>
+            <td>UnifiedBus 超级节点互联</td>
+          </tr>
+          <tr>
+            <td>单柜 NPU 数量</td>
+            <td>64 颗 NPU</td>
+          </tr>
+          <tr>
+            <td>最大扩展规模</td>
+            <td>8,192 颗 NPU</td>
+          </tr>
+          <tr>
+            <td>应用场景</td>
+            <td>大规模 AI 训练、高并发推理</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="product-card">
+        <h4>Atlas 850E</h4>
         <ul>
-          <li>面向 AI 计算场景</li>
-          <li>系统级架构创新</li>
-          <li>UnifiedBus 超级节点互联技术</li>
-          <li>支持万亿参数大模型</li>
+          <li>灵活部署于标准风冷数据中心</li>
+          <li>规模：8 ~ 1,024 颗 NPU</li>
+          <li>支持从小规模推理平滑扩展到集群级推理</li>
+          <li>确保业务敏捷性和快速服务部署</li>
         </ul>
+      </div>
+
+      <div class="product-card">
+        <h4>TaiShan 950 SuperPoD（通用计算）</h4>
+        <table>
+          <tr>
+            <th>规格参数</th>
+            <th>数值</th>
+          </tr>
+          <tr>
+            <td>延迟</td>
+            <td>百纳秒级（hundred-ns-level）</td>
+          </tr>
+          <tr>
+            <td>带宽</td>
+            <td>TB 级（TB-level）</td>
+          </tr>
+          <tr>
+            <td>内存</td>
+            <td>内存池化（memory pooling）</td>
+          </tr>
+          <tr>
+            <td>通信方式</td>
+            <td>内存语义通信（memory semantics communication）</td>
+          </tr>
+        </table>
+        <p style="margin-top:15px;"><strong>技术亮点</strong>：通过 load/store 操作实现跨节点高效数据传输，解决高延迟、数据迁移成本高、协同效率低等关键挑战。</p>
+      </div>
+
+      <div class="product-card">
+        <h4>开源开放生态</h4>
+        <ul>
+          <li><strong>openEuler</strong>：华为积极贡献领先的开源 OS 社区</li>
+          <li><strong>CANN 开源</strong>：算子库、加速库、图引擎、编程语言分层解耦开源</li>
+          <li><strong>支持开源项目</strong>：PyTorch、vLLM、SGLang、xLLM、verl、Triton、TileLang</li>
+          <li><strong>TaiShan 系列</strong>：TaiShan 200/500 覆盖高、中、低算力需求，集成 openEuler 和 BoostKit</li>
+        </ul>
+      </div>
+
+      <p><strong>发布者</strong>：华为计算产品线总裁 Seaway Zhang</p>
+
+      <div class="source-box">
+        <strong>信源</strong>: <a href="https://www.huawei.com/en/news/2026/3/mwc-superpod-ai" target="_blank">Huawei Official - SuperPoD AI Infrastructure</a> (2026-03-02)
       </div>
 
       <div class="product-card">
@@ -467,6 +540,52 @@
 
       <div class="source-box">
         <strong>信源</strong>: <a href="https://www.rcrwireless.com/20260303/network-infrastructure/huawei-ai-optical" target="_blank">RCR Wireless - Huawei AI Optical Roadmap</a> (2026-03-03)
+      </div>
+
+      <h3>2.6 NG WAN（下一代广域网）架构</h3>
+      <p>华为数据通信产品线总裁 Leon Wang 发布了 NG WAN 架构，聚焦三大方向帮助运营商在智能体互联网时代实现新增长。</p>
+
+      <div class="product-card">
+        <h4>多维感知@2H - 精准加密流量识别</h4>
+        <ul>
+          <li><strong>星络识别引擎（Xingluo Identification Engine）</strong>：业界首个加密流量识别引擎</li>
+          <li>加密流量识别准确率：<strong>超过 95%</strong></li>
+          <li>用户画像准确率：<strong>90%</strong></li>
+          <li>案例：泰国 AIS 借助该方案使英超直播套餐客户增长 <strong>3 倍</strong></li>
+        </ul>
+      </div>
+
+      <div class="product-card">
+        <h4>多维感知@2B - WAN 无损传输</h4>
+        <ul>
+          <li><strong>无损智能计算板</strong>：算力数据零丢包传输，保障计算效率</li>
+          <li><strong>星络无损算法</strong>：将训练推理数据转化为不可破解的高维向量</li>
+          <li>支持分布式协同训练推理、存算分离服务</li>
+          <li>案例：中国电信上海与华为共建智能算力网络，百公里远程推理计算效率达 <strong>95%</strong></li>
+        </ul>
+      </div>
+
+      <div class="product-card">
+        <h4>安全与韧性 - 内生网络安全</h4>
+        <ul>
+          <li><strong>智能内生安全板</strong>：实时检测设备文件、内存、进程、流量异常，即时识别阻断入侵</li>
+          <li><strong>智能韧性主控板</strong>：40 维知识图谱动态识别路由劫持，关键场景零路由劫持</li>
+          <li><strong>量子安全网络</strong>：Xsec 多点动态部署方案，量子专线部署效率提升 60%</li>
+          <li><strong>LPUI-Q 量子密钥分发板</strong>：业界首个内生 QKD 板，直接插入 NetEngine 8000 路由器，总投资降低 60%+</li>
+        </ul>
+      </div>
+
+      <div class="product-card">
+        <h4>网络自治 - NetMaster 智能大脑</h4>
+        <ul>
+          <li>模拟专家分析、策略制定、行动执行</li>
+          <li>实现从被动运维到主动运维的转变</li>
+          <li>7×24 小时网络保护</li>
+        </ul>
+      </div>
+
+      <div class="source-box">
+        <strong>信源</strong>: <a href="https://www.huawei.com/en/news/2026/3/mwc-ng-wan" target="_blank">Huawei Official - NG WAN Architecture</a> (2026-03-02)
       </div>
 
       <h2>三、高管演讲与战略解读</h2>
@@ -653,7 +772,17 @@
       </table>
 
       <h3>6.2 信源列表</h3>
+      
+      <p style="color:#c41e3a;font-weight:600;margin-bottom:15px;">📌 Tier 1 - 华为官方新闻稿</p>
       <ol>
+        <li><a href="https://www.huawei.com/en/news/2026/3/mwc-ai-centric-network" target="_blank">Huawei Official - AI-Centric Network Solutions for All Intelligence</a> (2026-03-02)</li>
+        <li><a href="https://www.huawei.com/en/news/2026/3/mwc-superpod-ai" target="_blank">Huawei Official - SuperPoD AI Infrastructure</a> (2026-03-02)</li>
+        <li><a href="https://www.huawei.com/en/news/2026/3/mwc-ng-wan" target="_blank">Huawei Official - NG WAN Architecture</a> (2026-03-02)</li>
+        <li><a href="https://carrier.huawei.com/en/minisite/events/mwc2026/" target="_blank">Huawei Official - MWC 2026 Event Page</a> (2026-03)</li>
+      </ol>
+
+      <p style="color:#0066cc;font-weight:600;margin:20px 0 15px;">📌 Tier 2 - 行业权威媒体</p>
+      <ol start="5">
         <li><a href="https://totaltele.com/huawei-launches-enhanced-ai-centric-network-solutions-for-all-intelligence-at-mwc-2026/" target="_blank">Total Telecom - Huawei AI-Centric Network</a> (2026-03-03)</li>
         <li><a href="https://www.rcrwireless.com/20260302/5g/huawei-agentic-internet-mwc-2026" target="_blank">RCR Wireless - Li Peng Keynote</a> (2026-03-02)</li>
         <li><a href="https://www.rcrwireless.com/20260303/network-infrastructure/huawei-ai-optical" target="_blank">RCR Wireless - Huawei AI Optical</a> (2026-03-03)</li>
