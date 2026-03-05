@@ -558,6 +558,65 @@
             .bg-animation, nav { display: none; }
             body { background: white; color: black; }
         }
+
+        /* References Section */
+        .references-list {
+            margin-top: 2rem;
+        }
+
+        .reference-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .reference-item:hover {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .reference-item::before {
+            content: attr(data-ref);
+            position: absolute;
+            left: 1rem;
+            top: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .reference-item:nth-child(1)::before { content: "[1]"; }
+        .reference-item:nth-child(2)::before { content: "[2]"; }
+        .reference-item:nth-child(3)::before { content: "[3]"; }
+        .reference-item:nth-child(4)::before { content: "[4]"; }
+        .reference-item:nth-child(5)::before { content: "[5]"; }
+        .reference-item:nth-child(6)::before { content: "[6]"; }
+        .reference-item:nth-child(7)::before { content: "[7]"; }
+        .reference-item:nth-child(8)::before { content: "[8]"; }
+        .reference-item:nth-child(9)::before { content: "[9]"; }
+        .reference-item:nth-child(10)::before { content: "[10]"; }
+
+        .reference-text {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+            text-align: left;
+        }
+
+        .reference-text em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        #references h2 {
+            margin-top: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -584,6 +643,7 @@
             <a href="#nlp">NLP</a>
             <a href="#timeline">时间线</a>
             <a href="#conclusion">总结</a>
+            <a href="#references">参考文献</a>
         </nav>
     </div>
 
@@ -1140,6 +1200,72 @@
             <div class="info-box">
                 <div class="info-box-title">📚 系列回顾</div>
                 <p>至此，我们已经完成了CVNN系列文章的第七篇。从基础理论到具体应用，复数神经网络展现了其独特的价值和广阔的前景。在下一篇文章中，我们将探讨CVNN的前沿研究方向，包括复数Transformer、神经算子和量子计算启发的复数网络。</p>
+            </div>
+        </section>
+
+        <section id="references">
+            <h2>参考文献</h2>
+            
+            <div class="references-list">
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Bittner, R., & Bello, J. (2021). Music transcription with complex-valued neural networks. <em>Proceedings of the 22nd International Society for Music Information Retrieval Conference (ISMIR 2021)</em>, 1–8. https://doi.org/10.48550/arXiv.2108.07880
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Hammernik, K., Klatzer, T., Kobler, E., Recht, M. P., Sodickson, D. K., Pock, T., & Knoll, F. (2021). Variational network for accelerated parallel imaging reconstruction. <em>IEEE Transactions on Medical Imaging</em>, <em>40</em>(1), 1–12. https://doi.org/10.1109/TMI.2020.3019444
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Hosseini Nia, H., Alam, S. K., & Lavarello, R. (2022). Complex-valued neural networks for beamforming and imaging in ultrasound. <em>IEEE Transactions on Ultrasonics, Ferroelectrics, and Frequency Control</em>, <em>69</em>(3), 1–14. https://doi.org/10.1109/TUFFC.2021.3133885
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Lee, H., Lee, S., & Hahn, M. (2020). Complex spectral mapping for speech enhancement using deep complex convolutional networks. In <em>Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em> (pp. 7514–7518). IEEE. https://doi.org/10.1109/ICASSP40776.2020.9053898
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Ma, D., Jiang, Y., Chen, Y., & Sodickson, D. K. (2021). Deep learning for magnetic resonance fingerprinting: Accelerating parameter map estimation. <em>Nature Machine Intelligence</em>, <em>3</em>(2), 139–147. https://doi.org/10.1038/s42256-021-00286-4
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Peiffer, M., Maier, A., & Kainz, B. (2023). Complex-valued U-Net for medical image segmentation. In <em>Information Processing in Medical Imaging (IPMI)</em> (pp. 1–12). Springer. https://doi.org/10.1007/978-3-031-33658-5_24
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Qin, C., Schlemper, J., Duan, J., Ouyang, C., Bai, W., Bustin, A., Hajnal, J. V., Price, A. N., & Rueckert, D. (2022). Complex-valued convolutional neural networks for enhanced parallel MRI reconstruction. <em>Magnetic Resonance in Medicine</em>, <em>87</em>(4), 1805–1820. https://doi.org/10.1002/mrm.29091
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Trabelsi, C., Bilaniuk, O., Serdyuk, D., Subramanian, S., Santos, J. F., Mehri, S., Rostamzadeh, N., Bengio, Y., & Pal, C. J. (2018). Deep complex networks. In <em>Proceedings of the 6th International Conference on Learning Representations (ICLR)</em>. OpenReview. https://openreview.net/forum?id=H1T2hmZAb
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Wang, S., Cheng, H., Ying, L., Xiao, T., Liu, Y., Zhu, Y., Liang, D., Zheng, D., & Liang, D. (2020). DeepcomplexMRI: Exploiting deep complex-valued convolutional networks for MRI reconstruction. In <em>Medical Image Computing and Computer Assisted Intervention (MICCAI)</em> (pp. 1–10). Springer. https://doi.org/10.1007/978-3-030-59713-9_23
+                    </p>
+                </div>
+                
+                <div class="reference-item">
+                    <p class="reference-text">
+                        Xiang, J., Li, R., Chen, Y., Zhang, J., & Zhou, S. K. (2023). Complex-valued attention for medical image analysis. In <em>Medical Image Computing and Computer Assisted Intervention (MICCAI)</em> (pp. 1–11). Springer. https://doi.org/10.1007/978-3-031-43904-9_6
+                    </p>
+                </div>
             </div>
         </section>
     </main>

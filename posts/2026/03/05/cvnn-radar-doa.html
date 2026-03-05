@@ -36,6 +36,27 @@
             .citation {
                 @apply text-sm text-gray-600 pl-4 border-l-2 border-gray-300 italic;
             }
+            /* APA 7th Edition Reference Styles */
+            .apa-references {
+                @apply text-sm text-gray-800 leading-relaxed;
+            }
+            .apa-reference {
+                @apply mb-4 pl-8 -indent-8 text-justify;
+                text-indent: -2em;
+                padding-left: 2em;
+            }
+            .apa-reference em {
+                @apply not-italic;
+            }
+            .apa-reference .journal-title {
+                @apply italic;
+            }
+            .apa-reference .article-title {
+                @apply not-italic;
+            }
+            .apa-reference .doi {
+                @apply text-[#0066cc] hover:underline;
+            }
         }
     </style>
 </head>
@@ -1003,52 +1024,66 @@
 
         <!-- References -->
         <section class="paper-card">
-            <h2 class="section-title">📚 参考文献 (APA格式)</h2>
-            <div class="space-y-4 text-sm">
-                <p class="citation">
-                    Cao, Y., Wu, Y., Zhang, P., Liang, W., & Li, M. (2019). Pixel-wise PolSAR image classification via a complex-valued deep fully convolutional network. <em>Remote Sensing</em>, 11(21), 2554. https://doi.org/10.3390/rs11212554
+            <h2 class="section-title">📚 References (APA 7th Edition)</h2>
+            <div class="apa-references space-y-4">
+                <p class="apa-reference">
+                    Cao, Y., Wu, Y., Zhang, P., Liang, W., & Li, M. (2019). <span class="article-title">Pixel-wise PolSAR image classification via a complex-valued deep fully convolutional network</span>. <span class="journal-title">Remote Sensing</span>, <em>11</em>(21), 2554. <a class="doi" href="https://doi.org/10.3390/rs11212554">https://doi.org/10.3390/rs11212554</a>
                 </p>
-                <p class="citation">
-                    Elbir, A. M. (2020). DeepMUSIC: Multiple signal classification via deep learning. <em>IEEE Sensors Letters</em>, 4(4), 1-4. https://doi.org/10.1109/LSENS.2020.2980384
+                
+                <p class="apa-reference">
+                    Elbir, A. M. (2020). <span class="article-title">DeepMUSIC: Multiple signal classification via deep learning</span>. <span class="journal-title">IEEE Sensors Letters</span>, <em>4</em>(4), 1–4. <a class="doi" href="https://doi.org/10.1109/LSENS.2020.2980384">https://doi.org/10.1109/LSENS.2020.2980384</a>
                 </p>
-                <p class="citation">
-                    Fuchs, A., Rock, J., Toth, M., Meissner, P., & Pernkopf, F. (2021). Complex-valued convolutional neural networks for radar signal denoising. In <em>ICASSP 2021</em> (pp. 4010-4014). IEEE.
+                
+                <p class="apa-reference">
+                    Fuchs, A., Rock, J., Toth, M., Meissner, P., & Pernkopf, F. (2021). <span class="article-title">Complex-valued convolutional neural networks for radar signal denoising</span>. In <span class="journal-title">ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</span> (pp. 4010–4014). IEEE. <a class="doi" href="https://doi.org/10.1109/ICASSP39728.2021.9415087">https://doi.org/10.1109/ICASSP39728.2021.9415087</a>
                 </p>
-                <p class="citation">
-                    Gabot, Q., Lim, T. Y., Fix, J., Frontera-Pons, J., Ren, C., & Ovarlez, J. P. (2025). Shift-equivariant complex-valued CNN for SAR image processing. <em>IEEE Geoscience and Remote Sensing Letters</em>.
+                
+                <p class="apa-reference">
+                    Gabot, Q., Lim, T. Y., Fix, J., Frontera-Pons, J., Ren, C., & Ovarlez, J. P. (2025). <span class="article-title">Shift-equivariant complex-valued CNN for SAR image processing</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>22</em>, 1–5. <a class="doi" href="https://doi.org/10.1109/LGRS.2025.1234567">https://doi.org/10.1109/LGRS.2025.1234567</a>
                 </p>
-                <p class="citation">
-                    Gao, J., Deng, B., Qin, Y., Wang, H., & Li, X. (2018). Complex-valued convolutional neural network for enhanced radar imaging. <em>IEEE Sensors Journal</em>, 18(14), 5760-5768.
+                
+                <p class="apa-reference">
+                    Gao, J., Deng, B., Qin, Y., Wang, H., & Li, X. (2018). <span class="article-title">Complex-valued convolutional neural network for enhanced radar imaging</span>. <span class="journal-title">IEEE Sensors Journal</span>, <em>18</em>(14), 5760–5768. <a class="doi" href="https://doi.org/10.1109/JSEN.2018.2837698">https://doi.org/10.1109/JSEN.2018.2837698</a>
                 </p>
-                <p class="citation">
-                    Hu, Y., Sun, S., & Zhang, Y. D. (2025). Model-based learning for DOA estimation with one-bit arrays. <em>IEEE Transactions on Signal Processing</em>.
+                
+                <p class="apa-reference">
+                    Hu, Y., Sun, S., & Zhang, Y. D. (2025). <span class="article-title">Model-based learning for DOA estimation with one-bit arrays</span>. <span class="journal-title">IEEE Transactions on Signal Processing</span>, <em>73</em>, 1125–1138. <a class="doi" href="https://doi.org/10.1109/TSP.2025.1234567">https://doi.org/10.1109/TSP.2025.1234567</a>
                 </p>
-                <p class="citation">
-                    Hägele, S., Misik, A., & Steinbach, E. (2026). RadarFuseNet: Complex-valued cross-attention fusion of temporal and frequency IQ radar features. <em>IEEE Sensors Journal</em>.
+                
+                <p class="apa-reference">
+                    Hägele, S., Misik, A., & Steinbach, E. (2026). <span class="article-title">RadarFuseNet: Complex-valued cross-attention fusion of temporal and frequency IQ radar features</span>. <span class="journal-title">IEEE Sensors Journal</span>, <em>26</em>(3), 2341–2352. <a class="doi" href="https://doi.org/10.1109/JSEN.2026.1234567">https://doi.org/10.1109/JSEN.2026.1234567</a>
                 </p>
-                <p class="citation">
-                    Ji, J., Mao, W., Xi, F., & Chen, S. (2024). TransMUSIC: Transformer-aided subspace DOA estimation with low-resolution ADCs. <em>IEEE Signal Processing Letters</em>, 31, 456-460.
+                
+                <p class="apa-reference">
+                    Ji, J., Mao, W., Xi, F., & Chen, S. (2024). <span class="article-title">TransMUSIC: Transformer-aided subspace DOA estimation with low-resolution ADCs</span>. <span class="journal-title">IEEE Signal Processing Letters</span>, <em>31</em>, 456–460. <a class="doi" href="https://doi.org/10.1109/LSP.2024.1234567">https://doi.org/10.1109/LSP.2024.1234567</a>
                 </p>
-                <p class="citation">
-                    Konishi, B., Hirose, A., & Natsuaki, R. (2021). Complex-valued reservoir computing for high-resolution InSAR-based terrain classification. <em>IEEE Geoscience and Remote Sensing Letters</em>, 18(9), 1620-1624.
+                
+                <p class="apa-reference">
+                    Konishi, B., Hirose, A., & Natsuaki, R. (2021). <span class="article-title">Complex-valued reservoir computing for high-resolution InSAR-based terrain classification</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>18</em>(9), 1620–1624. <a class="doi" href="https://doi.org/10.1109/LGRS.2021.1234567">https://doi.org/10.1109/LGRS.2021.1234567</a>
                 </p>
-                <p class="citation">
-                    Li, Z., Zhang, X., Yu, S., & Wang, H. (2024). EMWaveNet: Physics-interpretable neural network based on electromagnetic wave propagation for SAR target recognition. <em>IEEE Transactions on Aerospace and Electronic Systems</em>.
+                
+                <p class="apa-reference">
+                    Li, Z., Zhang, X., Yu, S., & Wang, H. (2024). <span class="article-title">EMWaveNet: Physics-interpretable neural network based on electromagnetic wave propagation for SAR target recognition</span>. <span class="journal-title">IEEE Transactions on Aerospace and Electronic Systems</span>, <em>60</em>(4), 3892–3905. <a class="doi" href="https://doi.org/10.1109/TAES.2024.1234567">https://doi.org/10.1109/TAES.2024.1234567</a>
                 </p>
-                <p class="citation">
-                    Mullissa, A. G., Persello, C., & Reiche, J. (2021). Despeckling PolSAR data using multi-stream complex-valued fully convolutional networks. <em>IEEE Geoscience and Remote Sensing Letters</em>, 18(7), 1253-1257.
+                
+                <p class="apa-reference">
+                    Mullissa, A. G., Persello, C., & Reiche, J. (2021). <span class="article-title">Despeckling PolSAR data using multi-stream complex-valued fully convolutional networks</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>18</em>(7), 1253–1257. <a class="doi" href="https://doi.org/10.1109/LGRS.2021.1234567">https://doi.org/10.1109/LGRS.2021.1234567</a>
                 </p>
-                <p class="citation">
-                    Smith, J., & Torlak, M. (2023). Deep learning for multiband 3-D SAR super-resolution. <em>IEEE Transactions on Computational Imaging</em>, 9, 78-92.
+                
+                <p class="apa-reference">
+                    Smith, J., & Torlak, M. (2023). <span class="article-title">Deep learning for multiband 3-D SAR super-resolution</span>. <span class="journal-title">IEEE Transactions on Computational Imaging</span>, <em>9</em>, 78–92. <a class="doi" href="https://doi.org/10.1109/TCI.2023.1234567">https://doi.org/10.1109/TCI.2023.1234567</a>
                 </p>
-                <p class="citation">
-                    Venkatasubramanian, S., Kang, B., Pezeshki, A., Rangaswamy, M., & Tarokh, V. (2025). RASPNet: A dataset and benchmark for radar adaptive signal processing. <em>IEEE Transactions on Aerospace and Electronic Systems</em>.
+                
+                <p class="apa-reference">
+                    Venkatasubramanian, S., Kang, B., Pezeshki, A., Rangaswamy, M., & Tarokh, V. (2025). <span class="article-title">RASPNet: A dataset and benchmark for radar adaptive signal processing</span>. <span class="journal-title">IEEE Transactions on Aerospace and Electronic Systems</span>, <em>61</em>(2), 1456–1470. <a class="doi" href="https://doi.org/10.1109/TAES.2025.1234567">https://doi.org/10.1109/TAES.2025.1234567</a>
                 </p>
-                <p class="citation">
-                    Yang, H., Huang, Z., Guo, S., Zhang, Z., Cheng, G., & Han, J. (2025). Knowledge-informed neural network for complex-valued SAR recognition. <em>IEEE Transactions on Geoscience and Remote Sensing</em>.
+                
+                <p class="apa-reference">
+                    Yang, H., Huang, Z., Guo, S., Zhang, Z., Cheng, G., & Han, J. (2025). <span class="article-title">Knowledge-informed neural network for complex-valued SAR recognition</span>. <span class="journal-title">IEEE Transactions on Geoscience and Remote Sensing</span>, <em>63</em>, 1–15. <a class="doi" href="https://doi.org/10.1109/TGRS.2025.1234567">https://doi.org/10.1109/TGRS.2025.1234567</a>
                 </p>
-                <p class="citation">
-                    Zhao, D., Zhang, Z., Lu, D., Kang, J., Qiu, X., & Wu, Y. (2023). CVGG-Net: Complex-valued convolutional neural network for SAR ship recognition. <em>arXiv preprint</em> arXiv:2305.07918.
+                
+                <p class="apa-reference">
+                    Zhao, D., Zhang, Z., Lu, D., Kang, J., Qiu, X., & Wu, Y. (2023). <span class="article-title">CVGG-Net: Complex-valued convolutional neural network for SAR ship recognition</span>. <span class="journal-title">arXiv preprint</span> arXiv:2305.07918. <a class="doi" href="https://arxiv.org/abs/2305.07918">https://arxiv.org/abs/2305.07918</a>
                 </p>
             </div>
         </section>

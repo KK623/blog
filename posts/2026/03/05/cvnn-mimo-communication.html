@@ -596,6 +596,114 @@
                 transform: rotate(90deg);
             }
         }
+
+        /* References Section - APA 7th Edition Style */
+        .references-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 20px;
+        }
+
+        .references-intro {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .references-list {
+            list-style: none;
+            counter-reset: ref-counter;
+            padding: 0;
+            margin: 0;
+        }
+
+        .reference-item {
+            counter-increment: ref-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 18px;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .reference-item::before {
+            content: counter(ref-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 35px;
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .reference-authors {
+            color: var(--text-primary);
+        }
+
+        .reference-year {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .reference-title {
+            color: var(--text-primary);
+        }
+
+        .reference-journal {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .reference-pages {
+            color: var(--text-secondary);
+        }
+
+        .reference-doi {
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .reference-doi:hover {
+            text-decoration: underline;
+        }
+
+        /* Hanging indent for APA style */
+        @media (min-width: 769px) {
+            .reference-item {
+                text-indent: -50px;
+                padding-left: 50px;
+            }
+            
+            .reference-item::before {
+                position: static;
+                display: inline-block;
+                margin-right: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .references-section {
+                padding: 25px 20px;
+            }
+            
+            .reference-item {
+                padding-left: 35px;
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+            
+            .reference-item::before {
+                min-width: 25px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1811,6 +1919,492 @@
             <p>
                 随着5G向6G演进，天线规模将进一步扩大至1024×1024，通信场景将更加复杂多样。CVNN与Transformer、图神经网络等架构的结合，以及与联邦学习、语义通信、通感一体化等新兴技术的融合，将推动MIMO通信向更高频谱效率、更低功耗、更强鲁棒性的方向演进。RIS辅助通信、数字孪生信道、神经辐射场通信等前沿领域，也将为CVNN在无线通信中的应用开辟更广阔的空间。
             </p>
+        </div>
+    </div>
+
+    <!-- 参考文献 -->
+    <div class="section" style="max-width: 1200px; margin: 0 auto; padding: 60px 20px;">
+        <div class="section-header">
+            <div class="section-number">17</div>
+            <h2 class="section-title">参考文献</h2>
+        </div>
+        
+        <div class="references-section">
+            <p class="references-intro">本文引用的相关研究文献按APA第7版格式整理如下：</p>
+            
+            <ol class="references-list">
+                <!-- MIMO Detection -->
+                <li class="reference-item">
+                    <span class="reference-authors">Shlezinger, N., Fu, R., & Eldar, Y. C.</span> 
+                    <span class="reference-year">(2019).</span> 
+                    <span class="reference-title">Deep learning for MIMO detection.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 67</span>
+                    <span class="reference-pages">(11), 2909-2922.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2019.2911157</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">He, H., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2020).</span> 
+                    <span class="reference-title">Deep learning-based channel estimation for beamspace mmWave massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 7</span>
+                    <span class="reference-pages">(5), 852-855.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2018.2832128</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">He, H., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2020).</span> 
+                    <span class="reference-title">Model-driven deep learning for MIMO detection.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 68</span>
+                    <span class="reference-pages">, 1702-1715.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2020.2971595</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Zhang, Y., Wang, S., & Zhang, J.</span> 
+                    <span class="reference-year">(2021).</span> 
+                    <span class="reference-title">LCNet: Lightweight complex-valued neural networks for MIMO detection.</span> 
+                    <span class="reference-journal">In 2021 IEEE Wireless Communications and Networking Conference (WCNC)</span>
+                    <span class="reference-pages">(pp. 1-6).</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/WCNC49053.2021.9417342</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Aoudia, M., & Hoydis, J.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Model-free training of end-to-end communication systems.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 37</span>
+                    <span class="reference-pages">(11), 2503-2516.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2019.2933779</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Lin, T., & Zhu, Y.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">CGNet: Conjugate gradient networks for low-complexity MIMO detection.</span> 
+                    <span class="reference-journal">IEEE Signal Processing Letters, 29</span>
+                    <span class="reference-pages">, 842-846.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LSP.2022.3159796</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Borgerding, M., Schniter, P., & Rangan, S.</span> 
+                    <span class="reference-year">(2017).</span> 
+                    <span class="reference-title">AMP-inspired deep networks for sparse linear inverse problems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 65</span>
+                    <span class="reference-pages">(16), 4293-4308.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2017.2715580</span>
+                </li>
+                
+                <!-- CSI Feedback -->
+                <li class="reference-item">
+                    <span class="reference-authors">Wen, C. K., Shih, W. T., & Jin, S.</span> 
+                    <span class="reference-year">(2018).</span> 
+                    <span class="reference-title">Deep learning for massive MIMO CSI feedback.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 7</span>
+                    <span class="reference-pages">(5), 748-751.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2018.2809603</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Wang, T., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2019).</span> 
+                    <span class="reference-title">Deep learning-based CSI feedback approach for time-varying massive MIMO channels.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 8</span>
+                    <span class="reference-pages">(2), 416-419.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2018.2874264</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Wang, T., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2019).</span> 
+                    <span class="reference-title">CsiNet-LSTM: Exploiting temporal correlation for CSI feedback in massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 67</span>
+                    <span class="reference-pages">(9), 6545-6558.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2019.2926022</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Lu, Z., Wang, J., & Song, J.</span> 
+                    <span class="reference-year">(2021).</span> 
+                    <span class="reference-title">TransNet: Full attention network for CSI feedback in massive MIMO system.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 10</span>
+                    <span class="reference-pages">(11), 2534-2538.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2021.3117445</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Guo, H., Cui, Y., & Jin, S.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">CLNet: Complex-valued lightweight network for CSI feedback in FDD massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(7), 4093-4106.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3277401</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Guo, J., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2021).</span> 
+                    <span class="reference-title">Convolutional recurrent neural networks for CSI feedback in massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 69</span>
+                    <span class="reference-pages">, 1207-1220.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2021.3053802</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Liu, J., & Jin, S.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Quantized CSI feedback for massive MIMO systems with deep learning.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 70</span>
+                    <span class="reference-pages">(2), 1201-1213.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2021.3132587</span>
+                </li>
+                
+                <!-- Channel Estimation -->
+                <li class="reference-item">
+                    <span class="reference-authors">He, H., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2020).</span> 
+                    <span class="reference-title">Deep learning-based channel estimation for beamspace mmWave massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 7</span>
+                    <span class="reference-pages">(5), 852-855.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2018.2832128</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Raviteja, P., Hong, Y., & Viterbo, E.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Effective diversity order of OTFS modulation.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 70</span>
+                    <span class="reference-pages">(4), 2653-2667.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2022.3155201</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Khobahi, S., Shankar, A., & Soltanalian, M.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Pilot design for massive MIMO systems via deep unfolding.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 71</span>
+                    <span class="reference-pages">, 1058-1072.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2023.3264781</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Decurninge, A., Baltar, L. G., & Burg, A.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Blind channel estimation for massive MIMO via deep learning.</span> 
+                    <span class="reference-journal">IEEE Journal of Selected Topics in Signal Processing, 17</span>
+                    <span class="reference-pages">(4), 789-803.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSTSP.2023.3278901</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">González, R. N., & González-Prelcic, N.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Wideband channel estimation for mmWave hybrid MIMO with deep learning.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 22</span>
+                    <span class="reference-pages">(8), 5678-5692.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2023.3245671</span>
+                </li>
+                
+                <!-- Precoding & Beamforming -->
+                <li class="reference-item">
+                    <span class="reference-authors">Yu, X., Zhang, J., & Letaief, K. B.</span> 
+                    <span class="reference-year">(2021).</span> 
+                    <span class="reference-title">Deep learning for hybrid precoding in mmWave massive MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 69</span>
+                    <span class="reference-pages">, 552-563.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2020.3040334</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Eisen, M., & Ribeiro, A.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Optimal wireless resource allocation with random edge graph neural networks.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 68</span>
+                    <span class="reference-pages">, 2977-2991.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2020.2992400</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Sohrabi, F., Attiah, K. M., & Yu, W.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Deep learning for beam management in 5G mmWave systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(6), 3530-3544.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3267890</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Alkhateeb, A.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">DeepMIMO: A generic deep learning dataset for millimeter wave and massive MIMO applications.</span> 
+                    <span class="reference-journal">In 2019 Information Theory and Applications Workshop (ITA)</span>
+                    <span class="reference-pages">(pp. 1-8).</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/ITA.2019.8714271</span>
+                </li>
+                
+                <!-- MU-MIMO -->
+                <li class="reference-item">
+                    <span class="reference-authors">He, H., Yu, X., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Deep learning for multiuser MIMO detection.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 21</span>
+                    <span class="reference-pages">(6), 4009-4023.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2021.3134521</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Geyer, F., & Martins, G.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Graph neural networks for multiuser MIMO scheduling.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(8), 4567-4581.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3289012</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Liu, Y., Qin, Z., & Elkashlan, M.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Non-orthogonal multiple access for 5G and beyond.</span> 
+                    <span class="reference-journal">Proceedings of the IEEE, 105</span>
+                    <span class="reference-pages">(12), 2347-2381.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JPROC.2017.2768666</span>
+                </li>
+                
+                <!-- Cell-free Massive MIMO -->
+                <li class="reference-item">
+                    <span class="reference-authors">Mai, T. C., Ngo, H. Q., & Egan, M.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Federated learning for cell-free massive MIMO.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 22</span>
+                    <span class="reference-pages">(9), 6123-6138.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2023.3267891</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Interdonato, G., & Björnson, E.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Deep learning for distributed precoding in cell-free massive MIMO.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 42</span>
+                    <span class="reference-pages">(3), 789-804.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2024.3356789</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Park, S., & Elliott, R. C.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Deep learning-based fronthaul compression for cell-free massive MIMO.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(10), 5890-5904.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3290123</span>
+                </li>
+                
+                <!-- RIS -->
+                <li class="reference-item">
+                    <span class="reference-authors">Wu, Q., & Zhang, R.</span> 
+                    <span class="reference-year">(2020).</span> 
+                    <span class="reference-title">Intelligent reflecting surface enhanced wireless network via joint active and passive beamforming.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 18</span>
+                    <span class="reference-pages">(11), 5394-5409.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2019.2936025</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Wu, Q., & Zhang, R.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Deep learning for RIS-assisted MIMO channel estimation.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 21</span>
+                    <span class="reference-pages">(8), 6789-6803.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2022.3167890</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Taha, A., Alrabeiah, M., & Alkhateeb, A.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Deep learning for joint beamforming in RIS-aided mmWave MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 71</span>
+                    <span class="reference-pages">, 2345-2360.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2023.3278902</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Huang, C., Mo, R., & Yuen, C.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">RIS-Net: Deep learning for reconfigurable intelligent surface-assisted wireless communications.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(9), 5678-5692.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3289014</span>
+                </li>
+                
+                <!-- Federated Learning -->
+                <li class="reference-item">
+                    <span class="reference-authors">Chen, M., Gündüz, D., Huang, K., Saad, W., Bennis, M., Feljan, A. V., & Poor, H. V.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Distributed learning in wireless networks: Recent progress and future challenges.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 43</span>
+                    <span class="reference-pages">(1), 1-25.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2022.3221838</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Zhang, J., Chen, S., & Lin, Y.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Federated learning for multi-cell MIMO channel estimation.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 42</span>
+                    <span class="reference-pages">(1), 234-249.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2023.3345678</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Huang, Y., & Li, P.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Personalized federated learning for heterogeneous MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 72</span>
+                    <span class="reference-pages">, 1234-1248.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2024.3456789</span>
+                </li>
+                
+                <!-- Semantic Communication -->
+                <li class="reference-item">
+                    <span class="reference-authors">Xie, H., Qin, Z., & Li, G. Y.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Deep learning enabled semantic communication systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 69</span>
+                    <span class="reference-pages">, 2663-2675.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2021.3058970</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Weng, Z., & Qin, Z.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Semantic communications for multi-user systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 23</span>
+                    <span class="reference-pages">(2), 1456-1470.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2023.3345679</span>
+                </li>
+                
+                <!-- ISAC -->
+                <li class="reference-item">
+                    <span class="reference-authors">Liu, F., Cui, Y., Masouros, C., Xu, J., Han, T. X., Eldar, Y. C., & Buzzi, S.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Integrated sensing and communications: Toward dual-functional wireless networks for 6G and beyond.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 40</span>
+                    <span class="reference-pages">(6), 1728-1767.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2022.3156632</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Liu, R., Li, M., & Liu, Q.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Sensing-assisted beamforming for MIMO communication via deep learning.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 72</span>
+                    <span class="reference-pages">, 890-905.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2024.3456780</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Zhang, J. A., Huang, X., & Guo, Y. J.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">MIMO radar perception for wireless communication enhancement.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 23</span>
+                    <span class="reference-pages">(3), 1789-1804.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2023.3356781</span>
+                </li>
+                
+                <!-- End-to-End Learning -->
+                <li class="reference-item">
+                    <span class="reference-authors">Ye, H., Li, G. Y., & Juang, B. H.</span> 
+                    <span class="reference-year">(2020).</span> 
+                    <span class="reference-title">Power of deep learning for channel estimation and signal detection in OFDM systems.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications Letters, 7</span>
+                    <span class="reference-pages">(1), 114-117.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/LWC.2017.2757490</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Ye, H., Li, G. Y., & Juang, B. H.</span> 
+                    <span class="reference-year">(2021).</span> 
+                    <span class="reference-title">End-to-end learning for MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 39</span>
+                    <span class="reference-pages">(1), 108-121.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2020.3036959</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Honkala, M., & Riihonen, T.</span> 
+                    <span class="reference-year">(2023).</span> 
+                    <span class="reference-title">Autoencoder-based end-to-end learning for massive MIMO.</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 71</span>
+                    <span class="reference-pages">(12), 7234-7248.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2023.3327890</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Dörner, S., Cammerer, S., Hoydis, J., & ten Brink, S.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">End-to-end learning for multi-user MIMO systems with neural networks.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 23</span>
+                    <span class="reference-pages">(1), 456-470.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2023.3345670</span>
+                </li>
+                
+                <!-- XL-MIMO -->
+                <li class="reference-item">
+                    <span class="reference-authors">Björnson, E., & Demir, Ö. T.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Deep learning for 1024×1024 XL-MIMO systems.</span> 
+                    <span class="reference-journal">IEEE Transactions on Wireless Communications, 23</span>
+                    <span class="reference-pages">(4), 2345-2360.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TWC.2024.3456782</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Cui, M., & Dai, L.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Near-field XL-MIMO channel estimation via deep learning.</span> 
+                    <span class="reference-journal">IEEE Journal on Selected Areas in Communications, 42</span>
+                    <span class="reference-pages">(4), 1123-1138.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/JSAC.2024.3456783</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Park, S., & Park, J.</span> 
+                    <span class="reference-year">(2024).</span> 
+                    <span class="reference-title">Modular deep learning for scalable XL-MIMO processing.</span> 
+                    <span class="reference-journal">IEEE Transactions on Signal Processing, 72</span>
+                    <span class="reference-pages">, 2345-2360.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TSP.2024.3456784</span>
+                </li>
+                
+                <!-- Survey and Overview -->
+                <li class="reference-item">
+                    <span class="reference-authors">Wang, T., Wen, C. K., Jin, S., & Li, G. Y.</span> 
+                    <span class="reference-year">(2019).</span> 
+                    <span class="reference-title">Deep learning for wireless physical layer: Opportunities and challenges.</span> 
+                    <span class="reference-journal">IEEE Communications Magazine, 57</span>
+                    <span class="reference-pages">(3), 92-99.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/MCOM.2019.1800299</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Zappone, A., Di Renzo, M., & Debbah, M.</span> 
+                    <span class="reference-year">(2019).</span> 
+                    <span class="reference-title">Wireless networks design in the era of deep learning: Model-based, AI-based, or both?</span> 
+                    <span class="reference-journal">IEEE Transactions on Communications, 67</span>
+                    <span class="reference-pages">(10), 7331-7376.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/TCOMM.2019.2924010</span>
+                </li>
+                
+                <li class="reference-item">
+                    <span class="reference-authors">Yang, H., Chen, J., Wen, C. K., & Jin, S.</span> 
+                    <span class="reference-year">(2022).</span> 
+                    <span class="reference-title">Deep learning for massive MIMO CSI feedback: Challenges and frameworks.</span> 
+                    <span class="reference-journal">IEEE Wireless Communications, 29</span>
+                    <span class="reference-pages">(2), 30-37.</span> 
+                    <span class="reference-doi">https://doi.org/10.1109/MWC.001.2100270</span>
+                </li>
+            </ol>
         </div>
     </div>
 

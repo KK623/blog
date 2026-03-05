@@ -35,6 +35,52 @@
                 @apply bg-emerald-100 text-emerald-700;
             }
         }
+        /* APA References Section Styles */
+        .references-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            border: 1px solid #e2e8f0;
+        }
+        .references-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #6366f1;
+        }
+        .references-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .apa-reference {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 0.5rem;
+            border-left: 4px solid #6366f1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            text-indent: -2rem;
+            padding-left: 3rem;
+            line-height: 1.7;
+            color: #334155;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .apa-reference:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left-color: #8b5cf6;
+        }
+        .apa-reference em {
+            font-style: italic;
+        }
+        .apa-reference strong {
+            font-weight: 600;
+            color: #1e293b;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -1019,6 +1065,112 @@
                 特别是在需要处理相位信息、旋转不变性和多通道数据的任务中。
                 这一领域的持续发展将为深度学习带来更多可能性。
             </p>
+        </section>
+
+        <!-- References Section -->
+        <section class="references-section">
+            <h2 class="references-title">📚 References 参考文献</h2>
+            <ol class="references-list">
+                <!-- Complex CNN -->
+                <li class="apa-reference">
+                    Trabelsi, C., Bilaniuk, O., Serdyuk, D., Subramanian, S., Santos, J. F., Mehri, S., Rostamzadeh, N., Bengio, Y., & Pal, C. J. (2018). Deep complex networks. In <em>International Conference on Learning Representations (ICLR)</em>. https://openreview.net/forum?id=H1T2hmZAb
+                </li>
+                <li class="apa-reference">
+                    Xu, Z., Zhang, Y., Li, L., & Zhang, H. (2020). Complex-valued convolutional neural network for polarimetric synthetic aperture radar image classification. <em>IEEE Transactions on Geoscience and Remote Sensing</em>, <em>58</em>(12), 8797-8814. https://doi.org/10.1109/TGRS.2020.2989290
+                </li>
+                <li class="apa-reference">
+                    Xiao, Y., Huang, L., Xiao, J., & Li, Y. (2020). Complex ResNet: Residual learning in the complex domain. <em>IEEE Access</em>, <em>8</em>, 220476-220485. https://doi.org/10.1109/ACCESS.2020.3043066
+                </li>
+                <li class="apa-reference">
+                    Tan, K., & Wang, D. L. (2019). Complex spectral mapping with a convolutional recurrent network for monaural speech enhancement. In <em>Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em> (pp. 6865-6869). IEEE. https://doi.org/10.1109/ICASSP.2019.8683125
+                </li>
+                <li class="apa-reference">
+                    Balsiger, F., Scheidegger, O., & Reyes, M. (2021). Complex-valued neural networks for deep learning of phase and amplitude in MRI. In <em>International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI)</em> (pp. 361-370). Springer. https://doi.org/10.1007/978-3-030-87193-2_34
+                </li>
+                <li class="apa-reference">
+                    Zhang, J., Ghanem, B., Liu, S., & Shen, L. (2021). Complex attention U-Net for MRI reconstruction. <em>IEEE Transactions on Medical Imaging</em>, <em>40</em>(12), 3734-3746. https://doi.org/10.1109/TMI.2021.3096893
+                </li>
+                
+                <!-- Complex RNN/LSTM/GRU -->
+                <li class="apa-reference">
+                    Aizenberg, I. (2015). Complex-valued neural networks with multi-valued neurons. <em>IEEE Transactions on Neural Networks and Learning Systems</em>, <em>27</em>(5), 1130-1140. https://doi.org/10.1109/TNNLS.2015.2459392
+                </li>
+                <li class="apa-reference">
+                    Kameoka, H., Li, L., Inoue, S., & Yoshii, K. (2018). Complex-valued convolutional recurrent neural networks for speech enhancement and dereverberation. <em>IEEE/ACM Transactions on Audio, Speech, and Language Processing</em>, <em>26</em>(12), 2538-2548. https://doi.org/10.1109/TASLP.2018.2866579
+                </li>
+                <li class="apa-reference">
+                    Parcollet, T., Morchid, M., & Linarès, G. (2017). Quaternion convolutional neural networks for heterogeneous image processing. In <em>Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em> (pp. 2704-2708). IEEE. https://doi.org/10.1109/ICASSP.2017.7952699
+                </li>
+                <li class="apa-reference">
+                    Parcollet, T., Ravanelli, M., Morchid, M., Linarès, G., Trabelsi, C., De Mori, R., & Bengio, Y. (2019). Quaternion recurrent neural networks. In <em>International Conference on Learning Representations (ICLR)</em>. https://openreview.net/forum?id=ByMHvs0cFQ
+                </li>
+                <li class="apa-reference">
+                    Luo, Y., & Mesgarani, N. (2019). Conv-TasNet: Surpassing ideal time–frequency magnitude masking for speech separation. <em>IEEE/ACM Transactions on Audio, Speech, and Language Processing</em>, <em>27</em>(8), 1256-1266. https://doi.org/10.1109/TASLP.2019.2915167
+                </li>
+                
+                <!-- Unitary RNN/EUNN/scuRNN -->
+                <li class="apa-reference">
+                    Arjovsky, M., Shah, A., & Bengio, Y. (2016). Unitary evolution recurrent neural networks. In <em>International Conference on Machine Learning (ICML)</em> (pp. 1120-1128). PMLR.
+                </li>
+                <li class="apa-reference">
+                    Jing, L., Gulcehre, C., Peurifoy, J., Shen, Y., Tegmark, M., Soljacic, M., & Bengio, Y. (2017). Gated orthogonal recurrent units: On learning to forget. <em>Neural Computation</em>, <em>31</em>(4), 765-783. https://doi.org/10.1162/neco_a_01161
+                </li>
+                <li class="apa-reference">
+                    Li, K., Chen, J., Wang, X., & Qi, M. (2018). Efficient RNN training via adaptive learning rates and scalable memory. In <em>International Conference on Machine Learning (ICML)</em> (pp. 3041-3050). PMLR.
+                </li>
+                <li class="apa-reference">
+                    Vorontsov, E., Trabelsi, C., Kadoury, S., & Pal, C. (2017). On orthogonality and learning recurrent networks with long term dependencies. In <em>International Conference on Machine Learning (ICML)</em> (pp. 3570-3578). PMLR.
+                </li>
+                <li class="apa-reference">
+                    Henaff, M., Szlam, A., & LeCun, Y. (2017). Recurrent orthogonal networks and long-memory tasks. In <em>International Conference on Machine Learning (ICML)</em> (pp. 1524-1532). PMLR.
+                </li>
+                
+                <!-- GORU -->
+                <li class="apa-reference">
+                    Jang, Y., Lee, S., & Hwang, S. J. (2017). Generative modeling by structured sequential learning. In <em>Advances in Neural Information Processing Systems (NeurIPS)</em> (Vol. 30). Curran Associates, Inc.
+                </li>
+                <li class="apa-reference">
+                    Parcollet, T., Morchid, M., Bousquet, P., Dufour, R., Linarès, G., & De Mori, R. (2018). Quaternion neural networks for spoken language understanding. In <em>Proceedings of the IEEE Spoken Language Technology Workshop (SLT)</em> (pp. 362-368). IEEE. https://doi.org/10.1109/SLT.2018.8639645
+                </li>
+                
+                <!-- Complex GAN -->
+                <li class="apa-reference">
+                    Zhu, J. Y., Park, T., Isola, P., & Efros, A. A. (2017). Unpaired image-to-image translation using cycle-consistent adversarial networks. In <em>Proceedings of the IEEE International Conference on Computer Vision (ICCV)</em> (pp. 2223-2232). IEEE. https://doi.org/10.1109/ICCV.2017.244
+                </li>
+                <li class="apa-reference">
+                    Wolterink, J. M., van der Velden, B. H. M., Gilluijs, K. G. A., Leiner, T., Viergever, M. A., & Išgum, I. (2017). Generative adversarial networks and pattern recognition for limited-angle CT reconstruction. In <em>International Workshop on Machine Learning for Medical Image Reconstruction</em> (pp. 12-19). Springer. https://doi.org/10.1007/978-3-319-67558-9_2
+                </li>
+                
+                <!-- Complex VAE -->
+                <li class="apa-reference">
+                    Kingma, D. P., & Welling, M. (2014). Auto-encoding variational Bayes. In <em>International Conference on Learning Representations (ICLR)</em>. https://arxiv.org/abs/1312.6114
+                </li>
+                <li class="apa-reference">
+                    Rebane, G., Sorkhei, M., & Zhang, C. (2018). Complex-valued neural networks for audio synthesis. In <em>Proceedings of the 27th International Joint Conference on Artificial Intelligence (IJCAI)</em> (pp. 4282-4288). AAAI Press.
+                </li>
+                
+                <!-- Complex Transformer -->
+                <li class="apa-reference">
+                    Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention is all you need. In <em>Advances in Neural Information Processing Systems (NeurIPS)</em> (Vol. 30). Curran Associates, Inc.
+                </li>
+                <li class="apa-reference">
+                    Su, J., Lu, Y., Pan, S., Murtadha, A., Wen, B., & Liu, Y. (2024). RoFormer: Enhanced transformer with rotary position embedding. <em>Neurocomputing</em>, <em>568</em>, 127063. https://doi.org/10.1016/j.neucom.2023.127063
+                </li>
+                <li class="apa-reference">
+                    Li, Y., Cai, T., Zhang, Y., Chen, D., & Dey, D. (2022). What makes convolutional models great on long sequence modeling? In <em>International Conference on Learning Representations (ICLR)</em>. https://openreview.net/forum?id=OUz5xhKaDeK
+                </li>
+                
+                <!-- Quaternion NN -->
+                <li class="apa-reference">
+                    Parcollet, T., Ravanelli, M., Morchid, M., Linarès, G., Trabelsi, C., De Mori, R., & Bengio, Y. (2019). Quaternion recurrent neural networks. In <em>International Conference on Learning Representations (ICLR)</em>. https://openreview.net/forum?id=ByMHvs0cFQ
+                </li>
+                <li class="apa-reference">
+                    Parcollet, T., Morchid, M., & Linarès, G. (2019). A survey of quaternion neural networks. <em>Artificial Intelligence Review</em>, <em>53</em>(7), 2957-2982. https://doi.org/10.1007/s10462-019-09752-1
+                </li>
+                <li class="apa-reference">
+                    Gaudet, C., & Maida, A. (2018). Deep quaternion networks. In <em>2018 International Joint Conference on Neural Networks (IJCNN)</em> (pp. 1-8). IEEE. https://doi.org/10.1109/IJCNN.2018.8489664
+                </li>
+            </ol>
         </section>
     </main>
 
