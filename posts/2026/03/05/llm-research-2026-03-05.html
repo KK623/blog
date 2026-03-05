@@ -3,39 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM 量化/部署/蒸馏文献调研 (2026-03-05) | 孙凯</title>
+  <title>LLM 量化/部署/低精度/蒸馏文献调研报告 (2026-03-05)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #fafafa;
       color: #333;
-      line-height: 1.8;
+      line-height: 1.6;
     }
     .container {
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto;
       padding: 60px 20px;
     }
     header {
       margin-bottom: 40px;
-      padding-bottom: 20px;
-      border-bottom: 2px solid #0066cc;
     }
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 600;
-      margin-bottom: 12px;
-      color: #1a1a1a;
+      margin-bottom: 8px;
     }
     .meta {
       color: #666;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #888;
       font-size: 14px;
     }
     .nav {
       display: flex;
       gap: 24px;
       margin-bottom: 40px;
+      flex-wrap: wrap;
     }
     .nav a {
       color: #0066cc;
@@ -44,335 +47,529 @@
     .nav a:hover {
       text-decoration: underline;
     }
-    h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 40px 0 20px;
-      color: #1a1a1a;
-    }
-    h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin: 30px 0 15px;
-      color: #333;
-    }
-    h4 {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 20px 0 10px;
-      color: #444;
-    }
-    p {
-      margin-bottom: 16px;
-    }
-    ul, ol {
-      margin-bottom: 16px;
-      padding-left: 24px;
-    }
-    li {
-      margin-bottom: 8px;
-    }
-    a {
-      color: #0066cc;
-    }
-    code {
+    .back-btn {
+      display: inline-block;
       background: #f0f0f0;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: "SF Mono", Monaco, monospace;
-      font-size: 14px;
+      color: #555;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+      margin-bottom: 24px;
     }
-    pre {
-      background: #f5f5f5;
-      padding: 16px;
-      border-radius: 8px;
-      overflow-x: auto;
-      margin-bottom: 16px;
+    .back-btn:hover {
+      background: #e0e0e0;
     }
-    .paper-card {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
+    .overview {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
       padding: 24px;
       margin-bottom: 32px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    .paper-title {
+    .overview h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .overview p {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.95;
+    }
+    .paper {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .paper h2 {
       font-size: 20px;
-      font-weight: 600;
       margin-bottom: 12px;
       color: #1a1a1a;
+      line-height: 1.4;
     }
-    .paper-meta {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-    .section-label {
+    .paper .arxiv {
       display: inline-block;
       background: #0066cc;
       color: white;
       padding: 4px 12px;
       border-radius: 4px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
       margin-bottom: 12px;
     }
-    .highlight-box {
+    .paper .arxiv:hover {
+      background: #0052a3;
+    }
+    .paper .meta-info {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section h3 {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .section p {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .section ul {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-left: 20px;
+    }
+    .section ul li {
+      margin-bottom: 4px;
+    }
+    .highlight {
+      background: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .summary-box {
       background: #f0f7ff;
-      border-left: 4px solid #0066cc;
+      border-radius: 8px;
       padding: 16px;
-      margin: 20px 0;
+      margin-top: 24px;
+    }
+    .summary-box h3 {
+      color: #0066cc;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .summary-box p {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .trends {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .trends h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+    .trend-section {
+      margin-bottom: 20px;
+    }
+    .trend-section h3 {
+      font-size: 15px;
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+    .trend-section ul {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-left: 20px;
+    }
+    .links-box {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+    .links-box h3 {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 12px;
+    }
+    .links-box ol {
+      color: #555;
+      font-size: 13px;
+      line-height: 2;
+      margin-left: 20px;
+    }
+    .links-box a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .links-box a:hover {
+      text-decoration: underline;
     }
     footer {
-      margin-top: 80px;
+      margin-top: 60px;
       padding-top: 40px;
       border-top: 1px solid #eee;
       color: #888;
       font-size: 14px;
     }
-    hr {
-      border: none;
-      border-top: 1px solid #e0e0e0;
-      margin: 40px 0;
-    }
   </style>
 </head>
 <body>
   <div class="container">
+    <header>
+      <h1>LLM 量化/部署/低精度/蒸馏文献调研报告</h1>
+      <p class="meta">2026-03-05 · 第 10 周 · 6 篇精选论文</p>
+      <p class="subtitle">关键词: LLM quantization, deployment, low-precision, distillation, pruning</p>
+    </header>
+    
     <nav class="nav">
       <a href="../../../">首页</a>
       <a href="../../">博客</a>
       <a href="https://github.com/KK623">GitHub</a>
     </nav>
 
-    <header>
-      <h1>LLM 量化/部署/低精度/蒸馏文献调研</h1>
-      <p class="meta">调研日期: 2026年3月5日 | 关键词: quantization, deployment, low-precision, distillation, pruning</p>
-    </header>
+    <a href="../../" class="back-btn">← 返回博客列表</a>
 
     <main>
-      <div class="highlight-box">
-        <p><strong>综述</strong>: 本次调研聚焦于大型语言模型（LLM）的量化、部署、低精度推理以及蒸馏/剪枝技术的最新研究进展。通过对arXiv上近期发表的论文进行系统梳理，我们精选了5篇具有代表性的工作，涵盖了推理加速、模型压缩、KV缓存优化、数据集蒸馏等多个关键方向。</p>
+      <div class="overview">
+        <h2>📋 综述</h2>
+        <p>本次调研聚焦于大型语言模型（LLM）的量化、部署、低精度推理以及蒸馏/剪枝技术的最新研究进展。通过对arXiv上近期发表的论文进行系统梳理，我们精选了 <strong>6篇</strong> 具有代表性的工作，涵盖了推理加速、模型压缩、KV缓存优化、数据集蒸馏、超低位宽量化训练等多个关键方向。</p>
       </div>
 
-      <hr>
-
-      <article class="paper-card">
-        <span class="section-label">推理加速</span>
-        <h2 class="paper-title">1. Speculative Speculative Decoding (SSD): 双层推测解码加速LLM推理</h2>
-        <div class="paper-meta">
-          论文: <a href="https://arxiv.org/abs/2603.03251" target="_blank">arXiv:2603.03251</a> | 
-          作者: Tanishq Kumar, Tri Dao, Avner May | 
-          发布时间: 2026年3月3日
+      <!-- Paper 1: SSD -->
+      <article class="paper">
+        <h2>1. Speculative Speculative Decoding (SSD): 双层推测解码加速LLM推理</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2603.03251" target="_blank">arXiv: 2603.03251</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Tanishq Kumar, Tri Dao, Avner May<br>
+          <strong>发布时间:</strong> 2026年3月3日
         </div>
-
-        <h4>背景</h4>
-        <p>自回归解码（Autoregressive decoding）的序列依赖性一直是LLM推理的瓶颈。推测解码（Speculative Decoding）通过使用快速草稿模型预测目标模型的下一个token，然后并行验证这些预测，已成为加速推理的标准方法。然而，传统推测解码本身也存在推测与验证之间的序列依赖问题。</p>
-
-        <h4>动机</h4>
-        <p>当验证过程进行时，草稿模型处于空闲状态。如果能在此期间让草稿模型预测可能的验证结果并预先准备相应的推测，就可以进一步消除草稿模型的开销，实现更高效的推理加速。</p>
-
-        <h4>技术点</h4>
-        <ul>
-          <li><strong>双层推测机制 (SSD)</strong>: 在验证进行的同时，让草稿模型预测可能的验证结果，并为这些结果预先准备推测</li>
-          <li><strong>Saguaro算法</strong>: 针对SSD的三个核心挑战（验证结果预测、推测预准备、结果匹配）提出的优化算法</li>
-          <li><strong>并行化解码</strong>: 将原本串行的推测-验证流程转化为并行执行，消除草稿模型等待时间</li>
-        </ul>
-
-        <h4>收益点</h4>
-        <ul>
-          <li>相比优化的推测解码基线，实现<strong>高达2倍加速</strong></li>
-          <li>相比自回归解码，实现<strong>高达5倍加速</strong></li>
-          <li>使用开源推理引擎即可实现，无需专用硬件支持</li>
-        </ul>
-
-        <h4>总结</h4>
-        <p>SSD通过创新的双层推测机制，进一步挖掘了推测解码的并行潜力，代表了LLM推理加速领域的重要进展。该方法在保持输出质量的同时显著提升了推理效率，对于需要低延迟LLM服务的应用场景具有重要意义。</p>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>自回归解码（Autoregressive decoding）的序列依赖性一直是LLM推理的瓶颈。推测解码（Speculative Decoding）通过使用快速草稿模型预测目标模型的下一个token，然后并行验证这些预测，已成为加速推理的标准方法。然而，传统推测解码本身也存在推测与验证之间的序列依赖问题。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>当验证过程进行时，草稿模型处于空闲状态。如果能在此期间让草稿模型预测可能的验证结果并预先准备相应的推测，就可以进一步消除草稿模型的开销，实现更高效的推理加速。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>双层推测机制 (SSD):</strong> 在验证进行的同时，让草稿模型预测可能的验证结果，并为这些结果预先准备推测</li>
+            <li><strong>Saguaro算法:</strong> 针对SSD的三个核心挑战（验证结果预测、推测预准备、结果匹配）提出的优化算法</li>
+            <li><strong>并行化解码:</strong> 将原本串行的推测-验证流程转化为并行执行，消除草稿模型等待时间</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>相比优化的推测解码基线，实现 <span class="highlight">高达2倍加速</span></li>
+            <li>相比自回归解码，实现 <span class="highlight">高达5倍加速</span></li>
+            <li>使用开源推理引擎即可实现，无需专用硬件支持</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>SSD通过创新的双层推测机制，进一步挖掘了推测解码的并行潜力，代表了LLM推理加速领域的重要进展。该方法在保持输出质量的同时显著提升了推理效率，对于需要低延迟LLM服务的应用场景具有重要意义。</p>
+        </div>
       </article>
 
-      <article class="paper-card">
-        <span class="section-label">量化与TinyML</span>
-        <h2 class="paper-title">2. Torus Embeddings: 面向TinyML的高效量化表示</h2>
-        <div class="paper-meta">
-          论文: <a href="https://arxiv.org/abs/2603.03135" target="_blank">arXiv:2603.03135</a> | 
-          作者: Dan Stowell | 
-          发布时间: 2026年3月3日
+      <!-- Paper 2: Torus Embeddings -->
+      <article class="paper">
+        <h2>2. Torus Embeddings: 面向TinyML的高效量化表示</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2603.03135" target="_blank">arXiv: 2603.03135</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Dan Stowell<br>
+          <strong>发布时间:</strong> 2026年3月3日
         </div>
-
-        <h4>背景</h4>
-        <p>深度学习嵌入通常表示为欧几里得空间中的无约束向量，或约束在超球面上。为了高效的大规模应用，这些表示需要被量化为整数形式。然而，大多数计算机中最高效的数值表示是带溢出的整数——这些整数向量对应的是（超）环面（torus）的拓扑结构，而非欧几里得空间或超球面，这种不匹配可能导致表示能力的浪费。</p>
-
-        <h4>动机</h4>
-        <p>现有的嵌入表示方法在进行量化时，往往没有充分考虑底层硬件的实际数值表示特性。作者希望探索一种与硬件整数表示天然契合的嵌入学习方法，以实现更高效的TinyML部署。</p>
-
-        <h4>技术点</h4>
-        <ul>
-          <li><strong>环面嵌入拓扑</strong>: 利用整数溢出的周期性特性，构建具有固有环面拓扑的表示空间</li>
-          <li><strong>归一化策略</strong>: 提出基于归一化的训练策略，确保训练稳定性和性能</li>
-          <li><strong>量化友好设计</strong>: 表示天然适配整数量化，无需复杂的量化后处理</li>
-          <li><strong>两种实现策略</strong>: 研究并比较了两种不同的环面嵌入构建方法</li>
-        </ul>
-
-        <h4>收益点</h4>
-        <ul>
-          <li>保持与标准超球面L2归一化相当的训练稳定性和性能</li>
-          <li>具有极佳的量化特性，便于嵌入式部署</li>
-          <li>为TinyML应用提供了简单高效的部署路径</li>
-          <li>可与常见深度学习框架轻松集成</li>
-        </ul>
-
-        <h4>总结</h4>
-        <p>Torus embeddings从硬件数值表示的角度重新审视了嵌入学习问题，提出了一种与整数溢出特性相契合的表示方法。虽然该方法在性能上不一定超越超球面嵌入，但其优异的量化特性使其成为TinyML和边缘部署场景的有力候选方案。</p>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>深度学习嵌入通常表示为欧几里得空间中的无约束向量，或约束在超球面上。为了高效的大规模应用，这些表示需要被量化为整数形式。然而，大多数计算机中最高效的数值表示是带溢出的整数——这些整数向量对应的是（超）环面（torus）的拓扑结构，而非欧几里得空间或超球面，这种不匹配可能导致表示能力的浪费。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>现有的嵌入表示方法在进行量化时，往往没有充分考虑底层硬件的实际数值表示特性。作者希望探索一种与硬件整数表示天然契合的嵌入学习方法，以实现更高效的TinyML部署。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>环面嵌入拓扑:</strong> 利用整数溢出的周期性特性，构建具有固有环面拓扑的表示空间</li>
+            <li><strong>归一化策略:</strong> 提出基于归一化的训练策略，确保训练稳定性和性能</li>
+            <li><strong>量化友好设计:</strong> 表示天然适配整数量化，无需复杂的量化后处理</li>
+            <li><strong>两种实现策略:</strong> 研究并比较了两种不同的环面嵌入构建方法</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>保持与标准超球面L2归一化相当的训练稳定性和性能</li>
+            <li>具有极佳的量化特性，便于嵌入式部署</li>
+            <li>为TinyML应用提供了简单高效的部署路径</li>
+            <li>可与常见深度学习框架轻松集成</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>Torus embeddings从硬件数值表示的角度重新审视了嵌入学习问题，提出了一种与整数溢出特性相契合的表示方法。虽然该方法在性能上不一定超越超球面嵌入，但其优异的量化特性使其成为TinyML和边缘部署场景的有力候选方案。</p>
+        </div>
       </article>
 
-      <article class="paper-card">
-        <span class="section-label">模型压缩与剪枝</span>
-        <h2 class="paper-title">3. Mamba-Shedder: SSM架构的模型压缩与剪枝</h2>
-        <div class="paper-meta">
-          论文: <a href="https://arxiv.org/abs/2501.17088" target="_blank">arXiv:2501.17088</a> | 
-          作者: J. Pablo Muñoz, Jinjie Yuan, Nilesh Jain | 
-          会议: NAACL 2025
+      <!-- Paper 3: Mamba-Shedder -->
+      <article class="paper">
+        <h2>3. Mamba-Shedder: SSM架构的模型压缩与剪枝</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2501.17088" target="_blank">arXiv: 2501.17088</a>
+        <div class="meta-info">
+          <strong>作者:</strong> J. Pablo Muñoz, Jinjie Yuan, Nilesh Jain<br>
+          <strong>会议:</strong> NAACL 2025<br>
+          <strong>发布时间:</strong> 2025年1月28日
         </div>
-
-        <h4>背景</h4>
-        <p>Transformer架构及其注意力机制是LLM成功的主要驱动力，但也存在效率问题。选择性结构化状态空间模型（SSM），如Mamba，被提出作为Transformer的高效替代方案。然而，关于SSM架构的模型压缩研究相对较少。</p>
-
-        <h4>动机</h4>
-        <p>随着Mamba等SSM模型在序列建模任务中展现出色性能，探索这些模型的压缩潜力变得重要。作者希望了解SSM模型对不同粒度组件移除的敏感性，以在保持精度的同时减小模型大小和计算开销。</p>
-
-        <h4>技术点</h4>
-        <ul>
-          <li><strong>多粒度敏感性分析</strong>: 系统研究了Mamba及其混合模型在不同粒度（层、模块、参数）上的组件移除敏感性</li>
-          <li><strong>结构化剪枝</strong>: 针对SSM特有的结构（选择机制、状态空间参数）设计剪枝策略</li>
-          <li><strong>冗余识别</strong>: 识别并消除对整体性能影响最小的冗余组件</li>
-          <li><strong>硬件感知优化</strong>: 代码开源，支持硬件感知的自动化机器学习</li>
-        </ul>
-
-        <h4>收益点</h4>
-        <ul>
-          <li>推理速度提升<strong>高达1.4倍</strong></li>
-          <li>显著减少模型大小和计算开销</li>
-          <li>在保持模型精度的同时实现效率提升</li>
-          <li>证明了SSM架构中存在可观的冗余度可供压缩</li>
-        </ul>
-
-        <h4>总结</h4>
-        <p>Mamba-Shedder首次系统探索了SSM架构的压缩潜力，证明了即使已经比Transformer更高效的Mamba模型，仍然存在显著的压缩空间。这项工作为SSM模型在资源受限环境中的应用铺平了道路。</p>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>Transformer架构及其注意力机制是LLM成功的主要驱动力，但也存在效率问题。选择性结构化状态空间模型（SSM），如Mamba，被提出作为Transformer的高效替代方案。然而，关于SSM架构的模型压缩研究相对较少。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>随着Mamba等SSM模型在序列建模任务中展现出色性能，探索这些模型的压缩潜力变得重要。作者希望了解SSM模型对不同粒度组件移除的敏感性，以在保持精度的同时减小模型大小和计算开销。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>多粒度敏感性分析:</strong> 系统研究了Mamba及其混合模型在不同粒度（层、模块、参数）上的组件移除敏感性</li>
+            <li><strong>结构化剪枝:</strong> 针对SSM特有的结构（选择机制、状态空间参数）设计剪枝策略</li>
+            <li><strong>冗余识别:</strong> 识别并消除对整体性能影响最小的冗余组件</li>
+            <li><strong>硬件感知优化:</strong> 代码开源，支持硬件感知的自动化机器学习</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>推理速度提升 <span class="highlight">高达1.4倍</span></li>
+            <li>显著减少模型大小和计算开销</li>
+            <li>在保持模型精度的同时实现效率提升</li>
+            <li>证明了SSM架构中存在可观的冗余度可供压缩</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>Mamba-Shedder首次系统探索了SSM架构的压缩潜力，证明了即使已经比Transformer更高效的Mamba模型，仍然存在显著的压缩空间。这项工作为SSM模型在资源受限环境中的应用铺平了道路。</p>
+        </div>
       </article>
 
-      <article class="paper-card">
-        <span class="section-label">KV缓存优化</span>
-        <h2 class="paper-title">4. HashEvict: 基于局部敏感哈希的KV缓存驱逐策略</h2>
-        <div class="paper-meta">
-          论文: <a href="https://arxiv.org/abs/2412.16187" target="_blank">arXiv:2412.16187</a> | 
-          作者: Minghui Liu, Tahseen Rabbani, et al. | 
-          发布时间: 2024年12月13日
+      <!-- Paper 4: HashEvict -->
+      <article class="paper">
+        <h2>4. HashEvict: 基于局部敏感哈希的KV缓存驱逐策略</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2412.16187" target="_blank">arXiv: 2412.16187</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Minghui Liu, Tahseen Rabbani, Tony O'Halloran, et al.<br>
+          <strong>发布时间:</strong> 2024年12月13日
         </div>
-
-        <h4>背景</h4>
-        <p>Transformer-based LLM使用KV缓存来存储过去token的键和值嵌入，显著加速了推理过程。然而，KV缓存会消耗大量GPU内存，限制了模型能够处理的上下文长度和批量大小。</p>
-
-        <h4>动机</h4>
-        <p>现有的KV缓存压缩策略通常需要计算注意力分数来决定哪些token应该被保留，这增加了计算开销。作者希望设计一种在注意力计算之前就能做出驱逐决策的方法，从而降低计算成本。</p>
-
-        <h4>技术点</h4>
-        <ul>
-          <li><strong>局部敏感哈希 (LSH)</strong>: 使用LSH快速定位与当前查询token余弦相似度低的缓存token</li>
-          <li><strong>预注意力驱逐</strong>: 在注意力计算之前完成驱逐决策，减少计算开销</li>
-          <li><strong>二进制结构</strong>: 在GPU内存中维护轻量级二进制结构，加速汉明距离计算</li>
-          <li><strong>动态替换</strong>: 每个解码步骤中，当前token的键值替换预期产生最低注意力分数的token</li>
-        </ul>
-
-        <h4>收益点</h4>
-        <ul>
-          <li>KV缓存压缩比例达到<strong>30%-70%</strong></li>
-          <li>在推理、多选、长上下文检索和摘要任务上保持高性能</li>
-          <li>显著降低内存消耗，支持更长上下文和更大批量</li>
-          <li>无需计算完整注意力即可做出驱逐决策</li>
-        </ul>
-
-        <h4>总结</h4>
-        <p>HashEvict通过创新的LSH-based预注意力驱逐策略，在不牺牲性能的前提下显著压缩了KV缓存。该方法特别适用于长上下文场景，为LLM的内存效率优化提供了新的思路。</p>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>Transformer-based LLM使用KV缓存来存储过去token的键和值嵌入，显著加速了推理过程。然而，KV缓存会消耗大量GPU内存，限制了模型能够处理的上下文长度和批量大小。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>现有的KV缓存压缩策略通常需要计算注意力分数来决定哪些token应该被保留，这增加了计算开销。作者希望设计一种在注意力计算之前就能做出驱逐决策的方法，从而降低计算成本。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>局部敏感哈希 (LSH):</strong> 使用LSH快速定位与当前查询token余弦相似度低的缓存token</li>
+            <li><strong>预注意力驱逐:</strong> 在注意力计算之前完成驱逐决策，减少计算开销</li>
+            <li><strong>二进制结构:</strong> 在GPU内存中维护轻量级二进制结构，加速汉明距离计算</li>
+            <li><strong>动态替换:</strong> 每个解码步骤中，当前token的键值替换预期产生最低注意力分数的token</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>KV缓存压缩比例达到 <span class="highlight">30%-70%</span></li>
+            <li>在推理、多选、长上下文检索和摘要任务上保持高性能</li>
+            <li>显著降低内存消耗，支持更长上下文和更大批量</li>
+            <li>无需计算完整注意力即可做出驱逐决策</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>HashEvict通过创新的LSH-based预注意力驱逐策略，在不牺牲性能的前提下显著压缩了KV缓存。该方法特别适用于长上下文场景，为LLM的内存效率优化提供了新的思路。</p>
+        </div>
       </article>
 
-      <article class="paper-card">
-        <span class="section-label">数据集蒸馏</span>
-        <h2 class="paper-title">5. 基于类感知条件互信息的数据集蒸馏</h2>
-        <div class="paper-meta">
-          论文: <a href="https://arxiv.org/abs/2412.09945" target="_blank">arXiv:2412.09945</a> | 
-          作者: Xinhao Zhong, Bin Chen, et al. | 
-          会议: ICLR 2025
+      <!-- Paper 5: CMI Dataset Distillation -->
+      <article class="paper">
+        <h2>5. 基于类感知条件互信息的数据集蒸馏</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2412.09945" target="_blank">arXiv: 2412.09945</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Xinhao Zhong, Bin Chen, Hao Fang, et al.<br>
+          <strong>会议:</strong> ICLR 2025<br>
+          <strong>发布时间:</strong> 2024年12月13日
         </div>
-
-        <h4>背景</h4>
-        <p>数据集蒸馏（Dataset Distillation, DD）旨在通过创建较小的合成数据集来最小化深度神经网络训练的时间和内存消耗，同时保持与完整真实数据集相似的性能。然而，现有方法往往导致合成数据集过于复杂，难以学习。</p>
-
-        <h4>动机</h4>
-        <p>当前的数据集蒸馏方法主要依赖特征相似性度量（如分布匹配），这可能将过多信息压缩到合成数据中。作者希望从信息论的角度评估数据集复杂度，并提出更有效的蒸馏方法。</p>
-
-        <h4>技术点</h4>
-        <ul>
-          <li><strong>条件互信息 (CMI)</strong>: 引入CMI来评估数据集的类感知复杂度</li>
-          <li><strong>复杂度约束蒸馏</strong>: 在最小化蒸馏损失的同时，通过最小化经验CMI来约束合成数据集的类感知复杂度</li>
-          <li><strong>通用正则化</strong>: 该方法可作为现有DD方法的通用正则化手段</li>
-          <li><strong>预训练特征空间</strong>: 利用预训练网络的特征空间计算CMI</li>
-        </ul>
-
-        <h4>收益点</h4>
-        <ul>
-          <li>提高数据集蒸馏的性能和训练效率</li>
-          <li>避免合成数据过度复杂化</li>
-          <li>可作为插件式正则化方法与现有DD方法结合</li>
-          <li>在多个基准数据集上验证有效</li>
-        </ul>
-
-        <h4>总结</h4>
-        <p>这项工作从信息论角度重新审视了数据集蒸馏问题，提出了基于条件互信息的新型蒸馏方法。该方法不仅能提升蒸馏性能，还能改善训练效率，为数据集蒸馏领域提供了新的理论视角和实践工具。</p>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>数据集蒸馏（Dataset Distillation, DD）旨在通过创建较小的合成数据集来最小化深度神经网络训练的时间和内存消耗，同时保持与完整真实数据集相似的性能。然而，现有方法往往导致合成数据集过于复杂，难以学习。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>当前的数据集蒸馏方法主要依赖特征相似性度量（如分布匹配），这可能将过多信息压缩到合成数据中。作者希望从信息论的角度评估数据集复杂度，并提出更有效的蒸馏方法。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>条件互信息 (CMI):</strong> 引入CMI来评估数据集的类感知复杂度</li>
+            <li><strong>复杂度约束蒸馏:</strong> 在最小化蒸馏损失的同时，通过最小化经验CMI来约束合成数据集的类感知复杂度</li>
+            <li><strong>通用正则化:</strong> 该方法可作为现有DD方法的通用正则化手段</li>
+            <li><strong>预训练特征空间:</strong> 利用预训练网络的特征空间计算CMI</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>提高数据集蒸馏的性能和训练效率</li>
+            <li>避免合成数据过度复杂化</li>
+            <li>可作为插件式正则化方法与现有DD方法结合</li>
+            <li>在多个基准数据集上验证有效</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>这项工作从信息论角度重新审视了数据集蒸馏问题，提出了基于条件互信息的新型蒸馏方法。该方法不仅能提升蒸馏性能，还能改善训练效率，为数据集蒸馏领域提供了新的理论视角和实践工具。</p>
+        </div>
       </article>
 
-      <hr>
+      <!-- Paper 6: StableQAT -->
+      <article class="paper">
+        <h2>6. StableQAT: 超低位宽稳定量化感知训练 ⭐</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2601.19320" target="_blank">arXiv: 2601.19320</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Tianyi Chen, et al.<br>
+          <strong>机构:</strong> Microsoft<br>
+          <strong>发布时间:</strong> 2026年1月27日<br>
+          <strong>代码:</strong> <a href="https://github.com/microsoft/StableQAT" target="_blank">github.com/microsoft/StableQAT</a>
+        </div>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>量化感知训练（QAT）是在严格内存和延迟约束下部署大模型的关键技术。然而，在超低位宽（2-4 bit）设置下实现稳定且稳健的优化仍然具有挑战性。基于直通估计器（STE）或软量化器的常见方法往往存在梯度不匹配、训练不稳定或计算开销高等问题。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>现有的QAT方法在超低位宽下容易出现训练崩溃或性能大幅下降。作者希望提出一种统一且高效的QAT框架，能够在极低比特设置下稳定训练，同时保持低计算开销。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <ul>
+            <li><strong>离散傅里叶分析:</strong> 从离散傅里叶分析的角度重新审视舍入操作，推导出新的梯度代理函数</li>
+            <li><strong>轻量级梯度代理:</strong> 提出比STE更平滑、有界且计算廉价的梯度代理函数族</li>
+            <li><strong>理论保证:</strong> 证明了STE实际上是该梯度代理函数族的一个特例，新方法严格推广了STE</li>
+            <li><strong>稳定训练:</strong> 在各种超参数选择下都表现出更稳定的QAT训练性能</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <ul>
+            <li>在 <span class="highlight">2-4 bit</span> 超低位宽下实现稳定高效的QAT训练</li>
+            <li>显著提升训练稳定性、鲁棒性</li>
+            <li>相比标准QAT技术性能更优</li>
+            <li>训练开销可忽略不计</li>
+            <li>代码已开源: https://github.com/microsoft/StableQAT</li>
+          </ul>
+        </div>
+        
+        <div class="summary-box">
+          <h3>总结</h3>
+          <p>StableQAT通过创新的离散傅里叶分析方法，为超低位宽量化感知训练提供了理论基础和实践工具。该方法在保持低计算开销的同时，显著提升了QAT的训练稳定性和性能，对于需要在极低精度下部署大模型的应用场景具有重要意义。</p>
+        </div>
+      </article>
 
-      <h2>📊 技术趋势总结</h2>
+      <!-- Trends Summary -->
+      <div class="trends">
+        <h2>📊 技术趋势总结</h2>
+        
+        <div class="trend-section">
+          <h3>量化与低精度</h3>
+          <ul>
+            <li><strong>硬件协同设计:</strong> Torus embeddings等研究开始关注硬件数值表示特性，推动量化技术向硬件友好方向发展</li>
+            <li><strong>TinyML需求增长:</strong> 面向边缘设备的低精度推理方案持续受到关注</li>
+            <li><strong>超低位宽QAT:</strong> StableQAT在2-4 bit极低位宽下实现了稳定的量化感知训练，为极限压缩提供了新的理论框架</li>
+          </ul>
+        </div>
+        
+        <div class="trend-section">
+          <h3>推理加速与部署</h3>
+          <ul>
+            <li><strong>推测解码进化:</strong> 从单层推测到双层推测（SSD），推理加速技术不断突破并行性极限</li>
+            <li><strong>KV缓存优化:</strong> HashEvict等研究通过智能缓存管理显著降低内存消耗，支持更长上下文</li>
+          </ul>
+        </div>
+        
+        <div class="trend-section">
+          <h3>模型压缩</h3>
+          <ul>
+            <li><strong>新架构压缩:</strong> Mamba-Shedder表明，即使是高效的SSM架构仍存在显著压缩空间</li>
+            <li><strong>多粒度剪枝:</strong> 从层级别到参数级别的细粒度剪枝策略成为趋势</li>
+          </ul>
+        </div>
+        
+        <div class="trend-section">
+          <h3>蒸馏技术</h3>
+          <ul>
+            <li><strong>数据集蒸馏:</strong> 从模型蒸馏扩展到数据集蒸馏，为高效训练开辟新途径</li>
+            <li><strong>信息论方法:</strong> 引入互信息等理论工具指导蒸馏过程</li>
+          </ul>
+        </div>
+        
+        <div class="trend-section">
+          <h3>训练稳定性</h3>
+          <ul>
+            <li><strong>梯度代理优化:</strong> StableQAT从离散傅里叶分析角度重新设计梯度代理函数，为超低位宽训练提供理论保证</li>
+            <li><strong>理论驱动:</strong> 越来越多的工作开始从理论角度解决量化训练中的不稳定问题</li>
+          </ul>
+        </div>
+      </div>
 
-      <h3>量化与低精度</h3>
-      <ul>
-        <li><strong>硬件协同设计</strong>: Torus embeddings等研究开始关注硬件数值表示特性，推动量化技术向硬件友好方向发展</li>
-        <li><strong>TinyML需求增长</strong>: 面向边缘设备的低精度推理方案持续受到关注</li>
-      </ul>
-
-      <h3>推理加速与部署</h3>
-      <ul>
-        <li><strong>推测解码进化</strong>: 从单层推测到双层推测（SSD），推理加速技术不断突破并行性极限</li>
-        <li><strong>KV缓存优化</strong>: HashEvict等研究通过智能缓存管理显著降低内存消耗，支持更长上下文</li>
-      </ul>
-
-      <h3>模型压缩</h3>
-      <ul>
-        <li><strong>新架构压缩</strong>: Mamba-Shedder表明，即使是高效的SSM架构仍存在显著压缩空间</li>
-        <li><strong>多粒度剪枝</strong>: 从层级别到参数级别的细粒度剪枝策略成为趋势</li>
-      </ul>
-
-      <h3>蒸馏技术</h3>
-      <ul>
-        <li><strong>数据集蒸馏</strong>: 从模型蒸馏扩展到数据集蒸馏，为高效训练开辟新途径</li>
-        <li><strong>信息论方法</strong>: 引入互信息等理论工具指导蒸馏过程</li>
-      </ul>
-
-      <hr>
-
-      <h2>🔗 论文链接汇总</h2>
-      <ol>
-        <li><a href="https://arxiv.org/abs/2603.03251" target="_blank">SSD - Speculative Speculative Decoding</a></li>
-        <li><a href="https://arxiv.org/abs/2603.03135" target="_blank">Torus Embeddings</a></li>
-        <li><a href="https://arxiv.org/abs/2501.17088" target="_blank">Mamba-Shedder</a></li>
-        <li><a href="https://arxiv.org/abs/2412.16187" target="_blank">HashEvict</a></li>
-        <li><a href="https://arxiv.org/abs/2412.09945" target="_blank">CMI Dataset Distillation</a></li>
-      </ol>
+      <!-- Links -->
+      <div class="links-box">
+        <h3>🔗 论文链接</h3>
+        <ol>
+          <li><a href="https://arxiv.org/abs/2603.03251" target="_blank">SSD - Speculative Speculative Decoding</a></li>
+          <li><a href="https://arxiv.org/abs/2603.03135" target="_blank">Torus Embeddings</a></li>
+          <li><a href="https://arxiv.org/abs/2501.17088" target="_blank">Mamba-Shedder</a></li>
+          <li><a href="https://arxiv.org/abs/2412.16187" target="_blank">HashEvict</a></li>
+          <li><a href="https://arxiv.org/abs/2412.09945" target="_blank">CMI Dataset Distillation</a></li>
+          <li><a href="https://arxiv.org/abs/2601.19320" target="_blank">StableQAT</a> (Microsoft)</li>
+        </ol>
+      </div>
     </main>
 
     <footer>
-      <p>© 2026 孙凯 · AI 研究院 | 报告生成时间: 2026-03-05</p>
+      <p>© 2026 孙凯 · AI 研究院 · 由 Jarvis 自动生成</p>
+      <p style="font-size: 12px; margin-top: 8px;">报告生成时间: 2026-03-05 · 调研工具: arXiv + Jina AI Reader</p>
     </footer>
   </div>
 </body>
