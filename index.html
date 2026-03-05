@@ -67,6 +67,28 @@
     .post-title a:hover {
       color: #0066cc;
     }
+    .expand-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .expand-btn:hover {
+      background: #e0e0e0;
+      color: #333;
+    }
+    .hidden-posts {
+      display: none;
+    }
+    .hidden-posts.expanded {
+      display: block;
+    }
     footer {
       margin-top: 80px;
       padding-top: 40px;
@@ -124,6 +146,7 @@
         <h2 class="post-title"><a href="posts/2026/03/04/ibm-mwc-2026-report.html">IBM MWC 2026 完整调研报告</a></h2>
       </article>
 
+      <div class="hidden-posts" id="mwc-more">
       <article class="post">
         <span class="post-date">2026-03-04 · 第 1 周 · KT</span>
         <h2 class="post-title"><a href="posts/2026/03/04/kt-mwc-2026-report.html">KT (韩国电信) MWC 2026 完整调研报告</a></h2>
@@ -138,6 +161,8 @@
         <span class="post-date">2026-03-04 · 第 1 周 · 中兴</span>
         <h2 class="post-title"><a href="posts/2026/03/04/zte-mwc-2026-report.html">中兴 MWC 2026 完整调研报告</a></h2>
       </article>
+      </div>
+      <button class="expand-btn" onclick="toggleSection('mwc-more', this)">显示更多 (3篇)</button>
 
       <p class="section-title" style="margin-top: 40px;">📚 LLM 量化/部署/蒸馏</p>
       
@@ -180,5 +205,18 @@
       <p>© 2026 孙凯 · AI 研究院</p>
     </footer>
   </div>
+
+  <script>
+    function toggleSection(id, btn) {
+      const section = document.getElementById(id);
+      if (section.classList.contains('expanded')) {
+        section.classList.remove('expanded');
+        btn.textContent = btn.textContent.replace('收起', '显示更多');
+      } else {
+        section.classList.add('expanded');
+        btn.textContent = btn.textContent.replace('显示更多', '收起');
+      }
+    }
+  </script>
 </body>
 </html>
