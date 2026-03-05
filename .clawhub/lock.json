@@ -4,6 +4,50 @@
     "academic-deep-research": {
       "version": "1.0.0",
       "installedAt": 1772374811178
+    },
+    "token-manager": {
+      "version": "1.2.0",
+      "installedAt": 1772417851344
+    },
+    "email-send": {
+      "version": "1.0.0",
+      "installedAt": 1772423461189
+    },
+    "browser-automation": {
+      "version": "1.0.1",
+      "installedAt": 1772424801474
+    },
+    "feishu-messaging": {
+      "version": "0.0.3",
+      "installedAt": 1772424807774
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1772424818390
+    },
+    "searxng-local-search": {
+      "version": "0.1.0",
+      "installedAt": 1772424825141
+    },
+    "file-search": {
+      "version": "1.0.0",
+      "installedAt": 1772424832765
+    },
+    "openclaw-xhs": {
+      "version": "1.0.1",
+      "installedAt": 1772605350776
+    },
+    "self-improving": {
+      "version": "1.1.3",
+      "installedAt": 1772605628220
+    },
+    "capability-evolver": {
+      "version": "1.23.0",
+      "installedAt": 1772605645191
+    },
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1772605649385
     }
   }
 }

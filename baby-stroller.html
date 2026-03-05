@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .header {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .header h1 { font-size: 28px; margin-bottom: 8px; }
+    .header p { font-size: 14px; opacity: 0.9; }
+    .list { padding: 20px; }
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border-left: 4px solid #3498db;
+    }
+    .item:nth-child(1) { border-left-color: #27ae60; }
+    .item:nth-child(2) { border-left-color: #9b59b6; }
+    .item:nth-child(3) { border-left-color: #e67e22; }
+    .item:nth-child(4) { border-left-color: #3498db; }
+    .item:nth-child(5) { border-left-color: #e74c3c; }
+    .item:nth-child(6) { border-left-color: #1abc9c; }
+    .num {
+      width: 30px;
+      height: 30px;
+      background: #2c3e50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .info { flex: 1; }
+    .name { font-weight: bold; font-size: 16px; color: #2c3e50; }
+    .feature { font-size: 13px; color: #7f8c8d; margin-top: 4px; }
+    .price {
+      font-weight: bold;
+      font-size: 18px;
+      color: #27ae60;
+    }
+    .footer {
+      background: #27ae60;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🍼 婴儿车推荐指南</h1>
+      <p>预算 2000-5000 | 适用 0-4岁</p>
+    </div>
+    <div class="list">
+      <div class="item">
+        <div class="num">1</div>
+        <div class="info">
+          <div class="name">UPPAbaby Cruz V2</div>
+          <div class="feature">⭐ 品质+保值首选</div>
+        </div>
+        <div class="price">~5000</div>
+      </div>
+      <div class="item">
+        <div class="num">2</div>
+        <div class="info">
+          <div class="name">Bugaboo Butterfly</div>
+          <div class="feature">轻便+避震好</div>
+        </div>
+        <div class="price">~4500</div>
+      </div>
+      <div class="item">
+        <div class="num">3</div>
+        <div class="info">
+          <div class="name">Bugaboo Cameleon 3 Plus</div>
+          <div class="feature">经典款耐用</div>
+        </div>
+        <div class="price">~5500</div>
+      </div>
+      <div class="item">
+        <div class="num">4</div>
+        <div class="info">
+          <div class="name">YOYO3</div>
+          <div class="feature">最轻便、登机神器</div>
+        </div>
+        <div class="price">~4500</div>
+      </div>
+      <div class="item">
+        <div class="num">5</div>
+        <div class="info">
+          <div class="name">Stokke Xplory X</div>
+          <div class="feature">颜值天花板</div>
+        </div>
+        <div class="price">~7000+</div>
+      </div>
+      <div class="item">
+        <div class="num">6</div>
+        <div class="info">
+          <div class="name">Bugaboo Fox2</div>
+          <div class="feature">舒适度天花板</div>
+        </div>
+        <div class="price">~7000+</div>
+      </div>
+    </div>
+    <div class="footer">
+      💡 首选推荐: UPPAbaby Cruz V2 或 Bugaboo Butterfly
+    </div>
+  </div>
+</body>
+</html>
