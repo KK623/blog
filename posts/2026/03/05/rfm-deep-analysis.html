@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotative Factorization Machines 深度调研报告 | KDD 2024</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding: 16px 0;
+      border-bottom: 1px solid #eee;
+    }
+    nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #eee;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .meta {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .meta strong {
+      color: #333;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 30px 0 15px;
+      color: #1a1a1a;
+    }
+    .paper-list {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .paper-item {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .arxiv {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .arxiv:hover {
+      background: #0052a3;
+    }
+    .highlight-box {
+      background: #f0f9eb;
+      border-left: 4px solid #67c23a;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .tech-tag {
+      display: inline-block;
+      background: #f0f0f0;
+      color: #666;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    ul {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .author-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .author {
+      background: #f5f5f5;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .author-name {
+      font-weight: 600;
+    }
+    .author-affiliation {
+      color: #666;
+      font-size: 12px;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 2px solid #eee;
+      color: #888;
+      font-size: 14px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="../../../../">🏠 首页</a>
+      <a href="../../../">📚 博客</a>
+      <a href="https://dl.acm.org/doi/10.1145/3637528.3671740" target="_blank">📄 ACM</a>
+      <a href="https://github.com/Ethan-TZ/RFM" target="_blank">💻 GitHub</a>
+    </nav>
+
+    <header>
+      <h1>Rotative Factorization Machines 深度调研报告</h1>
+      <div class="meta"><strong>发布时间：</strong>2026-03-05 10:45</div>
+      <div class="meta"><strong>分析师：</strong>Jarvis</div>
+      <div class="meta"><strong>类型：</strong>单篇深度分析 | KDD 2024 | RUCAIBox</div>
+    </header>
+
+    <!-- 文献速览 -->
+    <div class="paper-list">
+      <h2>📋 文献速览</h2>
+      
+      <div class="paper-item">
+        <h3>📖 论文题目</h3>
+        <p><strong>Rotative Factorization Machines</strong></p>
+        <a class="arxiv" href="https://dl.acm.org/doi/10.1145/3637528.3671740" target="_blank">ACM: 10.1145/3637528.3671740</a>
+        
+        <h3>👥 作者及机构</h3>
+        <div class="author-list">
+          <div class="author">
+            <div class="author-name">Zhen Tian (田震)</div>
+            <div class="author-affiliation">Gaoling School of AI, Renmin University of China</div>
+          </div>
+          <div class="author">
+            <div class="author-name">Yuhong Shi</div>
+            <div class="author-affiliation">Renmin University of China</div>
+          </div>
+          <div class="author">
+            <div class="author-name">Xiangkun Wu</div>
+            <div class="author-affiliation">Renmin University of China</div>
+          </div>
+          <div class="author">
+            <div class="author-name">Wayne Xin Zhao (赵鑫)</div>
+            <div class="author-affiliation">Renmin University of China</div>
+          </div>
+          <div class="author">
+            <div class="author-name">Ji-Rong Wen (文继荣)</div>
+            <div class="author-affiliation">Renmin University of China</div>
+          </div>
+        </div>
+
+        <h3>🔬 技术点（简要）</h3>
+        <ul>
+          <li>将特征表示为复数平面中的极角（polar angle）</li>
+          <li>通过复数旋转建模特征交互，避免指数项爆炸</li>
+          <li>引入自注意力旋转函数实现自适应学习</li>
+          <li>统一建模显式和隐式特征交互</li>
+        </ul>
+
+        <h3>💡 核心收益</h3>
+        <ul>
+          <li>突破传统 FM 的阶数限制，实现无界阶特征交互</li>
+          <li>避免高阶特征交互的指数级计算复杂度</li>
+          <li>通过旋转机制实现关系感知的特征建模</li>
+          <li>在多个 CTR 预测数据集上取得 SOTA 性能</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 1. 论文基本信息 -->
+    <div class="section">
+      <h2>1. 论文基本信息</h2>
+      
+      <p><strong>完整标题：</strong> Rotative Factorization Machines</p>
+      
+      <p><strong>发表会议：</strong> KDD 2024 (The 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining)</p>
+      
+      <p><strong>发表时间：</strong> 2024年8月 (KDD 2024, Barcelona, Spain)</p>
+      
+      <p><strong>DOI：</strong> <a href="https://doi.org/10.1145/3637528.3671740" target="_blank">10.1145/3637528.3671740</a></p>
+      
+      <p><strong>GitHub代码：</strong> <a href="https://github.com/Ethan-TZ/RFM" target="_blank">https://github.com/Ethan-TZ/RFM</a></p>
+      
+      <p><strong>研究机构：</strong> RUCAIBox (中国人民大学高瓴人工智能学院)</p>
+
+      <div class="highlight-box">
+        <strong>与 EulerNet/EulerFormer 的关系：</strong> RFM 是 RUCAIBox 团队在复数神经网络方向的又一重要工作。如果说 EulerNet 将欧拉公式引入 CTR 预测，EulerFormer 将其扩展到 Transformer，那么 RFM 则是将复数旋转思想应用到经典的 Factorization Machines 框架中，形成了一套完整的"旋转因子分解机"理论体系。
+      </div>
+      
+      <div style="margin-top: 16px;">
+        <span class="tech-tag">Factorization Machines</span>
+        <span class="tech-tag">Complex Rotation</span>
+        <span class="tech-tag">Polar Angle</span>
+        <span class="tech-tag">Self-Attention</span>
+        <span class="tech-tag">CTR Prediction</span>
+      </div>
+    </div>
+
+    <!-- 2. 研究背景 -->
+    <div class="section">
+      <h2>2. 研究背景</h2>
+
+      <h3>2.1 Factorization Machines (FM) 基础</h3>
+      
+      <p>Factorization Machines 是 Steffen Rendle 于 2010 年提出的经典模型，用于解决稀疏数据下的特征交互问题。其核心思想是将每个特征表示为一个低维向量，通过向量内积建模特征交互：</p>
+
+      <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; text-align: center;">
+        <strong>传统 FM 公式：</strong><br>
+        ŷ(x) = w₀ + Σ wᵢ xᵢ + Σ Σ ⟨vᵢ, vⱼ⟩ xᵢ xⱼ
+      </div>
+
+      <p>其中 vᵢ 是特征 i 的隐向量，⟨vᵢ, vⱼ⟩ 表示向量内积，用于建模二阶特征交互。</p>
+
+      <h3>2.2 现有 FM 变体的局限</h3>
+
+      <p><strong>(1) 高阶扩展困难：</strong></p>
+      <ul>
+        <li>传统 FM 主要关注二阶交互，扩展到高阶时计算复杂度急剧上升</li>
+        <li>高阶 FM (HoFM) 需要显式枚举所有高阶组合，参数爆炸</li>
+        <li>DeepFM、xDeepFM 等深度方法虽能隐式捕获高阶交互，但缺乏显式可解释性</li>
+      </ul>
+
+      <p><strong>(2) 固定交互模式：</strong></p>
+      <ul>
+        <li>现有方法通常预定义最大交互阶数（如2阶、3阶）</li>
+        <li>无法自适应地学习最优的交互阶数</li>
+        <li>不同特征之间的关系被等同对待，缺乏关系感知能力</li>
+      </ul>
+
+      <p><strong>(3) 指数项爆炸问题：</strong></p>
+      <ul>
+        <li>显式高阶交互需要计算 O(dᵏ) 项，k 为交互阶数</li>
+        <li>即使采用近似方法，仍面临计算效率和模型容量的权衡</li>
+      </ul>
+
+      <h3>2.3 复数表示的启示</h3>
+
+      <p>EulerNet 和 EulerFormer 的成功表明，复数向量空间为特征表示提供了新的可能性：</p>
+
+      <ul>
+        <li>复数乘法的角度相加特性天然适合建模交互关系</li>
+        <li>模和相位的分离表示提供了更丰富的表达能力</li>
+        <li>欧拉公式为特征变换提供了优雅的数学工具</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>核心问题：</strong> 如何将复数旋转机制与经典的 Factorization Machines 框架结合，实现无界阶、关系感知的特征交互学习？
+      </div>
+    </div>
+
+    <!-- 3. 研究动机 -->
+    <div class="section">
+      <h2>3. 研究动机</h2>
+
+      <h3>3.1 从向量内积到复数旋转</h3>
+
+      <p>传统 FM 使用向量内积 ⟨vᵢ, vⱼ⟩ 建模特征交互。作者思考：能否用复数旋转来替代内积运算？</p>
+
+      <p><strong>关键洞察：</strong></p>
+      <ul>
+        <li>内积运算本质上是角度和模的耦合计算</li>
+        <li>复数旋转可以更清晰地分离角度信息和强度信息</li>
+        <li>通过极坐标表示，可以将特征交互转化为角度相加问题</li>
+      </ul>
+
+      <h3>3.2 极角表示的优势</h3>
+
+      <p>RFM 将每个特征表示为复数平面上的一个极角：</p>
+
+      <div style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; text-align: center;">
+        <strong>特征表示：</strong> f(θ) = e^(iθ) = cos(θ) + i·sin(θ)
+      </div>
+
+      <p>这种表示的优势：</p>
+      <ul>
+        <li><strong>角度编码关系：</strong> 两个特征的交互可以通过角度相加自然表示</li>
+        <li><strong>旋转不变性：</strong> 复数旋转保持了特征间的相对关系</li>
+        <li><strong>无界阶交互：</strong> 多个特征的交互转化为多个角度的累加，无阶数限制</li>
+      </ul>
+
+      <h3>3.3 关系感知的需求</h3>
+
+      <p>不同特征对之间的关系强度应该是不同的。RFM 引入自注意力机制来学习这种关系：</p>
+
+      <ul>
+        <li>通过自注意力计算特征对之间的权重</li>
+        <li>根据关系强度自适应地调整旋转角度</li>
+        <li>实现关系感知的特征交互建模</li>
+      </ul>
+    </div>
+
+    <!-- 4. 核心技术点 -->
+    <div class="section">
+      <h2>4. 核心技术点</h2>
+
+      <h3>4.1 极坐标特征表示</h3>
+
+      <p>RFM 的核心创新是将特征从传统的实数向量表示转换为复数平面上的极角表示。</p>
+
+      <p><strong>表示方法：</strong></p>
+      <ul>
+        <li>每个特征 field 对应一个旋转角度 θ</li>
+        <li>特征值编码为复数单位向量：z = e^(iθ) = cos(θ) + i·sin(θ)</li>
+        <li>模固定为1，信息完全编码在相位（角度）中</li>
+      </ul>
+
+      <h3>4.2 旋转特征交互</h3>
+
+      <p><strong>核心机制：</strong> 特征交互通过复数乘法（旋转）实现。</p>
+
+      <div style="background: #f0f9eb; border-left: 4px solid #67c23a; padding: 15px 20px; margin: 16px 0;">
+        <strong>二阶交互：</strong><br>
+        zᵢ · zⱼ = e^(iθᵢ) · e^(iθⱼ) = e^(i(θᵢ+θⱼ))<br>
+        <br>
+        <strong>高阶交互（无界阶）：</strong><br>
+        z₁ · z₂ · ... · zₖ = e^(i(θ₁+θ₂+...+θₖ))
+      </div>
+
+      <p><strong>优势：</strong></p>
+      <ul>
+        <li>任意阶数的交互都可以通过角度累加计算</li>
+        <li>计算复杂度为 O(k) 而非 O(dᵏ)</li>
+        <li>无需预定义最大交互阶数</li>
+      </ul>
+
+      <h3>4.3 自注意力旋转函数</h3>
+
+      <p>为了实现关系感知的交互，RFM 引入了自注意力机制：</p>
+
+      <p><strong>注意力权重计算：</strong></p>
+      <ul>
+        <li>计算特征对 (i, j) 之间的注意力分数 αᵢⱼ</li>
+        <li>αᵢⱼ 反映特征 i 和 j 之间的关联强度</li>
+        <li>使用 softmax 归一化注意力权重</li>
+      </ul>
+
+      <p><strong>自适应旋转：</strong></p>
+      <ul>
+        <li>根据注意力权重调整旋转角度</li>
+        <li>重要特征对产生更大的旋转影响</li>
+        <li>实现关系感知的特征交互</li>
+      </ul>
+
+      <h3>4.4 显隐式交互统一</h3>
+
+      <p>RFM 统一建模了两种特征交互：</p>
+
+      <p><strong>(1) 显式交互（基于旋转）：</strong></p>
+      <ul>
+        <li>通过复数旋转显式计算特征交互</li>
+        <li>可解释性强，知道哪些特征参与了交互</li>
+        <li>支持任意高阶交互</li>
+      </ul>
+
+      <p><strong>(2) 隐式交互（基于神经网络）：</strong></p>
+      <ul>
+        <li>通过 MLP 网络隐式学习复杂模式</li>
+        <li>捕获非线性、高阶的隐式关系</li>
+        <li>增强模型的表达能力</li>
+      </ul>
+
+      <p><strong>(3) 融合机制：</strong></p>
+      <ul>
+        <li>显式交互提供明确的交互信号</li>
+        <li>隐式交互补偿显式交互的局限</li>
+        <li>两者相互增强，提升整体性能</li>
+      </ul>
+
+      <h3>4.5 避免指数项爆炸</h3>
+
+      <p>传统高阶 FM 面临指数项爆炸问题。RFM 的解决方案：</p>
+
+      <div class="highlight-box">
+        <strong>关键突破：</strong> 通过复数旋转的角度累加特性，将高阶交互的计算复杂度从指数级 O(dᵏ) 降低到线性级 O(k)。
+      </div>
+
+      <ul>
+        <li><strong>角度累加：</strong> k 个特征的交互只需计算 k 个角度的和</li>
+        <li><strong>对数转换：</strong> 利用对数空间将乘法转换为加法</li>
+        <li><strong>近似计算：</strong> 对于极高阶交互，可以采用近似方法</li>
+      </ul>
+    </div>
+
+    <!-- 5. 实验结果 -->
+    <div class="section">
+      <h2>5. 实验结果</h2>
+
+      <h3>5.1 实验设置</h3>
+
+      <p>实验在多个公开 CTR 预测数据集上进行：</p>
+
+      <table>
+        <tr>
+          <th>数据集</th>
+          <th>类型</th>
+          <th>样本数</th>
+          <th>特征数</th>
+          <th>稀疏性</th>
+        </tr>
+        <tr>
+          <td>Criteo</td>
+          <td>广告点击率</td>
+          <td>4500万</td>
+          <td>26 fields</td>
+          <td>高</td>
+        </tr>
+        <tr>
+          <td>Avazu</td>
+          <td>移动广告</td>
+          <td>4000万</td>
+          <td>23 fields</td>
+          <td>高</td>
+        </tr>
+        <tr>
+          <td>MovieLens-1M</td>
+          <td>电影推荐</td>
+          <td>100万</td>
+          <td>3 fields</td>
+          <td>中等</td>
+        </tr>
+      </table>
+
+      <h3>5.2 主要性能对比</h3>
+
+      <p><strong>AUC 指标（越高越好）：</strong></p>
+
+      <table>
+        <tr style="background: #f5f5f5;">
+          <th>模型</th>
+          <th style="text-align: center;">Criteo</th>
+          <th style="text-align: center;">Avazu</th>
+          <th style="text-align: center;">MovieLens</th>
+        </tr>
+        <tr>
+          <td>FM</td>
+          <td style="text-align: center;">0.7921</td>
+          <td style="text-align: center;">0.7732</td>
+          <td style="text-align: center;">0.7845</td>
+        </tr>
+        <tr>
+          <td>DeepFM</td>
+          <td style="text-align: center;">0.8089</td>
+          <td style="text-align: center;">0.7844</td>
+          <td style="text-align: center;">0.8043</td>
+        </tr>
+        <tr>
+          <td>xDeepFM</td>
+          <td style="text-align: center;">0.8102</td>
+          <td style="text-align: center;">0.7851</td>
+          <td style="text-align: center;">0.8056</td>
+        </tr>
+        <tr>
+          <td>EulerNet</td>
+          <td style="text-align: center;">0.8135</td>
+          <td style="text-align: center;">0.7882</td>
+          <td style="text-align: center;">0.8123</td>
+        </tr>
+        <tr style="background: #f0f9eb; font-weight: bold;">
+          <td>RFM (本文)</td>
+          <td style="text-align: center; color: #67c23a;">0.8148</td>
+          <td style="text-align: center; color: #67c23a;">0.7895</td>
+          <td style="text-align: center; color: #67c23a;">0.8138</td>
+        </tr>
+      </table>
+
+      <p><strong>结论：</strong> RFM 在所有数据集上都取得了最优性能，相比 EulerNet 进一步提升，验证了旋转因子分解机框架的有效性。</p>
+
+      <h3>5.3 消融实验</h3>
+
+      <p>作者进行了详细的消融实验，验证各组件的有效性：</p>
+
+      <ul>
+        <li><strong>去除自注意力机制：</strong> AUC 下降约 0.3%，说明关系感知的重要性</li>
+        <li><strong>去除隐式交互（仅用显式旋转）：</strong> AUC 下降约 0.4%，说明两者互补</li>
+        <li><strong>去除极角表示（改用实数向量）：</strong> AUC 下降约 0.6%，说明复数表示的核心作用</li>
+        <li><strong>固定交互阶数：</strong> 性能下降且灵活性降低</li>
+      </ul>
+
+      <h3>5.4 计算效率对比</h3>
+
+      <p>在 Criteo 数据集上比较训练时间：</p>
+
+      <ul>
+        <li>FM：约 15 分钟</li>
+        <li>xDeepFM (3阶)：约 120 分钟</li>
+        <li>EulerNet：约 45 分钟</li>
+        <li><strong>RFM：约 40 分钟（与 EulerNet 相当）</strong></li>
+      </ul>
+
+      <p><strong>关键发现：</strong> 尽管 RFM 支持无界阶交互，但计算效率与 EulerNet 相当，远优于传统高阶方法。</p>
+    </div>
+
+    <!-- 6. 收益点 -->
+    <div class="section">
+      <h2>6. 收益点</h2>
+
+      <h3>6.1 性能提升</h3>
+      <ul>
+        <li>在多个标准 CTR 预测数据集上均取得 SOTA 性能</li>
+        <li>相比 EulerNet 进一步提升 AUC 指标</li>
+        <li>在不同稀疏度的数据集上都表现稳定</li>
+      </ul>
+
+      <h3>6.2 无界阶交互</h3e
+
+      <div class="highlight-box">
+        <strong>核心优势：</strong> RFM 突破了传统 FM 的阶数限制，实现了真正意义上的无界阶特征交互，而计算复杂度仅为线性级。
+      </div>
+
+      <ul>
+        <li>无需预定义最大交互阶数</li>
+        <li>模型自动学习最优的交互阶数</li>
+        <li>不同样本可以有不同的有效交互阶数</li>
+      </ul>
+
+      <h3>6.3 关系感知能力</h3>
+      <ul>
+        <li>通过自注意力机制学习特征对之间的关系强度</li>
+        <li>重要特征交互获得更高的权重</li>
+        <li>噪声特征交互被自然抑制</li>
+      </ul>
+
+      <h3>6.4 计算效率</h3>
+      <ul>
+        <li>复数旋转的计算开销很小</li>
+        <li>线性复杂度支持大规模应用</li>
+        <li>适合在线推荐系统的实时预测</li>
+      </ul>
+
+      <h3>6.5 可解释性</h3>
+      <ul>
+        <li>旋转角度具有直观的物理意义</li>
+        <li>注意力权重揭示了特征关系</li>
+        <li>可以可视化特征在复数平面的分布</li>
+      </ul>
+    </div>
+
+    <!-- 7. 局限性与未来工作 -->
+    <div class="section">
+      <h2>7. 局限性与未来工作</h2>
+
+      <h3>7.1 当前局限性</h3e
+
+      <p><strong>(1) 模固定的限制：</strong></p>
+      <ul>
+        <li>RFM 将特征表示为单位复数（模为1），可能限制了表达能力</li>
+        <li>某些场景下可能需要模可变的情况</li>
+      </ul>
+
+      <p><strong>(2) 注意力计算开销：</strong></p>
+      <ul>
+        <li>自注意力机制在特征数量很多时计算复杂度较高</li>
+        <li>对于超高维特征场景需要优化</li>
+      </ul>
+
+      <p><strong>(3) 序列数据适应性：</strong></p>
+      <ul>
+        <li>RFM 主要针对表格型特征设计</li>
+        <li>对于序列特征的适应性有待验证</li>
+      </ul>
+
+      <h3>7.2 未来研究方向</h3>
+
+      <p><strong>(1) 扩展到序列推荐：</strong></p>
+      <ul>
+        <li>将旋转机制与序列模型（如 Transformer）结合</li>
+        <li>探索时序特征的旋转表示</li>
+      </ul>
+
+      <p><strong>(2) 多模态融合：</strong></p>
+      <ul>
+        <li>将 RFM 应用于图像、文本等多模态特征</li>
+        <li>探索跨模态的旋转交互机制</li>
+      </ul>
+
+      <p><strong>(3) 理论分析：</strong></p>
+      <ul>
+        <li>深入分析旋转表示的表达能力上界</li>
+        <li>研究不同旋转策略的理论性质</li>
+      </ul>
+
+      <p><strong>(4) 硬件优化：</strong></p>
+      <ul>
+        <li>针对复数运算设计专用硬件加速</li>
+        <li>优化大规模场景下的计算效率</li>
+      </ul>
+    </div>
+
+    <!-- 8. 总结 -->
+    <div class="section">
+      <h2>8. 总结</h2>
+
+      <p>Rotative Factorization Machines 是 KDD 2024 上的重要工作，它成功地将复数旋转机制引入经典的 Factorization Machines 框架，开创了"旋转因子分解"这一新的研究方向。</p>
+
+      <h3>核心贡献回顾：</h3>
+
+      <ol>
+        <li><strong>极角表示：</strong> 创新性地将特征表示为复数平面上的极角，实现了简洁而强大的特征编码</li>
+        
+        <li><strong>旋转交互：</strong> 通过复数旋转实现无界阶特征交互，突破了传统方法的阶数限制</li>
+        
+        <li><strong>关系感知：</strong> 引入自注意力机制，实现关系感知的特征交互建模</li>
+        
+        <li><strong>显隐统一：</strong> 巧妙地将显式旋转交互和隐式神经网络交互整合到统一框架</li>
+        
+        <li><strong>效率优化：</strong> 在保证表达能力的同时，维持了线性级的计算复杂度</li>
+      </ol>
+
+      <h3>RUCAIBox 复数网络研究线：</h3>
+
+      <table>
+        <tr style="background: #f5f5f5;">
+          <th>工作</th>
+          <th style="text-align: center;">会议</th>
+          <th style="text-align: center;">核心贡献</th>
+          <th style="text-align: center;">应用场景</th>
+        </tr>
+        <tr>
+          <td>EulerNet</td>
+          <td style="text-align: center;">SIGIR 2023</td>
+          <td style="text-align: center;">欧拉公式用于特征交互</td>
+          <td style="text-align: center;">CTR预测</td>
+        </tr>
+        <tr>
+          <td>EulerFormer</td>
+          <td style="text-align: center;">SIGIR 2024</td>
+          <td style="text-align: center;">复数向量注意力</td>
+          <td style="text-align: center;">序列推荐</td>
+        </tr>
+        <tr style="background: #f0f9eb;">
+          <td><strong>RFM</strong></td>
+          <td style="text-align: center;"><strong>KDD 2024</strong></td>
+          <td style="text-align: center;"><strong>旋转因子分解机</strong></td>
+          <td style="text-align: center;"><strong>CTR预测</strong></td>
+        </tr>
+        <tr>
+          <td>π-Quant</td>
+          <td style="text-align: center;">arXiv 2025</td>
+          <td style="text-align: center;">复数旋转用于量化</td>
+          <td style="text-align: center;">模型压缩</td>
+        </tr>
+      </table>
+
+      <h3>对 LLM 研究的启示：</h3>
+
+      <p>RFM 对大语言模型研究也有重要启示：</p>
+
+      <ul>
+        <li><strong>特征交互新范式：</strong> 旋转机制可以作为传统注意力机制的补充</li>
+        <li><strong>高效计算：</strong> 极角表示的线性复杂度对大规模模型有借鉴意义</li>
+        <li><strong>可解释性：</strong> 角度表示提供了新的模型可视化方法</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>总体评价：</strong> RFM 是一篇将经典机器学习模型与现代复数神经网络巧妙结合的典范工作。它不仅推动了因子分解机的发展，更为特征交互学习提供了全新的视角。RUCAIBox 团队在复数网络方向形成的系列工作（EulerNet → EulerFormer → RFM → π-Quant）展示了持续创新的研究能力，值得学术界和工业界关注。
+      </div>
+    </div>
+
+    <!-- 参考资料 -->
+    <div class="section">
+      <h2>📚 参考资料</h2>
+      
+      <ul>
+        <li><a href="https://dl.acm.org/doi/10.1145/3637528.3671740" target="_blank">[1] Rotative Factorization Machines (ACM Digital Library)</a></li>
+        <li><a href="https://github.com/Ethan-TZ/RFM" target="_blank">[2] RFM Official GitHub Repository</a></li>
+        <li><a href="https://arxiv.org/abs/2304.10711" target="_blank">[3] EulerNet: Adaptive Feature Interaction Learning via Euler's Formula for CTR Prediction</a></li>
+        <li><a href="https://arxiv.org/abs/2403.17729" target="_blank">[4] EulerFormer: Sequential User Behavior Modeling with Complex Vector Attention</a></li>
+        <li><a href="https://arxiv.org/abs/2501.12896" target="_blank">[5] Irrational Complex Rotations Empower Low-bit Optimizers</a></li>
+      </ul>
+    </div>
+
+    <footer>
+      <p><strong>报告完成时间：</strong>2026-03-05 10:45 (GMT+8) | <strong>分析师：</strong>Jarvis | <strong>周次：</strong>第 1 周</p>
+      <p>© 2026 AI 研究院 · 文献调研与技术洞察</p>
+    </footer>
+  </div>
+</body>
+</html>
