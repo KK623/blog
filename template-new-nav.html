@@ -1,0 +1,97 @@
+<!-- 
+  新导航系统模板示例
+  使用方法：复制此模板结构到现有文章
+-->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="category" content="llm">  <!-- 可选：分类标签，用于智能归类 -->
+  <meta name="tags" content="量化,部署,蒸馏">  <!-- 可选：标签 -->
+  <title>文章标题 | 孙凯</title>
+  
+  <style>
+    /* 基础样式 - 与原有文章保持一致 */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    /* 文章内容样式 */
+    .article-content {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    
+    h1 { font-size: 28px; font-weight: 600; margin-bottom: 16px; }
+    h2 { font-size: 22px; font-weight: 600; margin: 32px 0 16px; }
+    h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; }
+    p { margin-bottom: 16px; }
+    
+    /* 布局：主内容 + 侧边栏 */
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 24px;
+    }
+    
+    @media (max-width: 900px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: -1;
+      }
+    }
+    
+    /* 侧边栏 */
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
+  </style>
+  
+  <!-- 导航系统（会自动注入样式和HTML） -->
+  <script src="https://kk623.github.io/blog/js/navigation.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <!-- 主导航和面包屑会自动插入到这里 -->
+    
+    <div class="content-wrapper">
+      <article class="article-content">
+        <header>
+          <h1>文章标题</h1>
+          <p class="meta">
+            2026-03-05 · 第 X 周 · 分类：LLM 量化/部署
+          </p>
+        </header>
+        
+        <!-- 文章内容 -->
+        <h2>📋 摘要</h2>
+        <p>这里是文章摘要...</p>
+        
+        <h2>📖 正文</h2>
+        <p>这里是正文内容...</p>
+      </article>
+      
+      <aside class="sidebar">
+        <!-- 分类侧边栏会自动插入到这里 -->
+      <aside>
+    </div>
+  </div>
+</body>
+</html>
