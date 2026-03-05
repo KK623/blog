@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>博客 | 孙凯</title>
+  <title>博客 | AI 研究院</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -49,7 +49,11 @@
       margin-bottom: 20px;
     }
     .post {
-      margin-bottom: 24px;
+      margin-bottom: 32px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .post-date {
       font-size: 13px;
@@ -58,7 +62,7 @@
     .post-title {
       font-size: 18px;
       font-weight: 500;
-      margin: 4px 0;
+      margin: 8px 0;
     }
     .post-title a {
       color: #333;
@@ -67,21 +71,10 @@
     .post-title a:hover {
       color: #0066cc;
     }
-    .more-link {
+    .post-summary {
       font-size: 14px;
-      color: #0066cc;
-      cursor: pointer;
-      margin-top: 12px;
-      display: inline-block;
-    }
-    .more-link:hover {
-      text-decoration: underline;
-    }
-    .hidden-posts {
-      display: none;
-    }
-    .hidden-posts.show {
-      display: block;
+      color: #666;
+      margin-top: 8px;
     }
     footer {
       margin-top: 80px;
@@ -95,96 +88,40 @@
 <body>
   <div class="container">
     <header>
-      <h1>博客</h1>
-      <p class="subtitle">文献调研与技术洞察</p>
+      <h1>📚 博客</h1>
+      <p class="subtitle">AI 技术文献调研与深度分析</p>
     </header>
     
     <nav class="nav">
-      <a href="../">首页</a>
+      <a href="../../">首页</a>
       <a href="./">博客</a>
       <a href="https://github.com/KK623">GitHub</a>
     </nav>
 
     <main>
-      <p class="section-title">📱 MWC 2026 专栏</p>
-
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · Microsoft</span>
-        <h2 class="post-title"><a href="2026/03/04/microsoft-mwc-2026-report.html">Microsoft MWC 2026 完整调研报告</a></h2>
-      </article>
+      <p class="section-title">📅 2026年3月</p>
       
       <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · KT</span>
-        <h2 class="post-title"><a href="2026/03/04/kt-mwc-2026-report.html">KT MWC 2026 完整调研报告</a></h2>
-      </article>
-
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · IBM</span>
-        <h2 class="post-title"><a href="2026/03/04/ibm-mwc-2026-report.html">IBM MWC 2026 完整调研报告</a></h2>
-      </article>
-
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · 华为</span>
-        <h2 class="post-title"><a href="2026/03/04/huawei-mwc-2026-report.html">华为 MWC 2026 完整调研报告</a></h2>
-      </article>
-
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · 中兴</span>
-        <h2 class="post-title"><a href="2026/03/04/zte-mwc-2026-report.html">中兴 MWC 2026 完整调研报告</a></h2>
-      </article>
-
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周 · 中国移动</span>
-        <h2 class="post-title"><a href="2026/03/04/china-mobile-mwc-2026-report.html">中国移动 MWC 2026 完整调研报告</a></h2>
-      </article>
-
-      <p class="section-title" style="margin-top: 40px;">🔷 芯片分析</p>
-      
-      <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周</span>
-        <h2 class="post-title"><a href="2026/03/04/nvidia-blackwell-vs-rubin.html">NVIDIA Blackwell vs Rubin 架构深度对比分析</a></h2>
-      </article>
-
-      <p class="section-title" style="margin-top: 40px;">📚 LLM 量化/部署/蒸馏</p>
-      
-      <article class="post">
-        <span class="post-date">2026-03-05 · 第 1 周</span>
+        <span class="post-date">2026-03-05 · 第 2 周 · LLM</span>
         <h2 class="post-title"><a href="2026/03/05/llm-research-2026-03-05.html">LLM 量化/部署/低精度/蒸馏文献调研报告 (2026-03-05)</a></h2>
+        <p class="post-summary">6篇最新论文：SSD双层推测解码、Torus Embeddings、Mamba-Shedder剪枝、HashEvict缓存优化、CMI数据集蒸馏、StableQAT超低位宽量化</p>
       </article>
 
       <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周</span>
-        <h2 class="post-title"><a href="2026/03/04/llm-research-2026-03-04.html">LLM 量化与部署最新进展 (2026-03-04)</a></h2>
-      </article>
-
-      <article class="post">
-        <span class="post-date">2026-03-03 · 第 1 周</span>
-        <h2 class="post-title"><a href="2026/03/03/llm-research-2026-03-03.html">LLM 量化与部署最新进展 (2026-03-03)</a></h2>
-      </article>
-
-      <p class="section-title" style="margin-top: 40px;">🔬 CVNN 复数神经网络</p>
-      
-      <article class="post">
-        <span class="post-date">2026-03-05 · 第 10 周</span>
+        <span class="post-date">2026-03-05 · 第 1 周 · CVNN</span>
         <h2 class="post-title"><a href="2026/03/05/cvnn-research-2026-03-05.html">CVNN 复数神经网络文献调研报告 (2026-03-05)</a></h2>
+        <p class="post-summary">复数神经网络最新研究进展与技术分析</p>
       </article>
 
       <article class="post">
-        <span class="post-date">2026-03-04 · 第 1 周</span>
-        <h2 class="post-title"><a href="2026/03/04/cvnn-research-2026-03-04.html">复数神经网络(CVNN)文献调研报告 (2026-03-04)</a></h2>
+        <span class="post-date">2026-03-04 · 第 1 周 · 芯片</span>
+        <h2 class="post-title"><a href="2026/03/04/nvidia-blackwell-vs-rubin.html">NVIDIA Blackwell vs Rubin 架构深度对比分析</a></h2>
+        <p class="post-summary">最新GPU架构技术细节与性能对比</p>
       </article>
-
-      <div id="cvnn-more" class="hidden-posts">
-        <article class="post">
-          <span class="post-date">2026-03-03</span>
-          <h2 class="post-title"><a href="2026/03/03/cvnn-research-2026-03-03.html">复数神经网络(CVNN)文献调研报告 (2026-03-03)</a></h2>
-        </article>
-      </div>
-      <span class="more-link" onclick="document.getElementById('cvnn-more').classList.toggle('show'); this.textContent = document.getElementById('cvnn-more').classList.contains('show') ? '收起 ↑' : '更多 ↓';">更多 ↓</span>
     </main>
 
     <footer>
-      <p>© 2026 孙凯 · AI 研究院</p>
+      <p>© 2026 AI 研究院 · <a href="../../">返回首页</a></p>
     </footer>
   </div>
 </body>
