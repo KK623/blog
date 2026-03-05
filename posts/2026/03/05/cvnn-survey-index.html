@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN综述系列 | 复数神经网络研究全景导航</title>
+  <meta name="description" content="CVNN复数神经网络综述系列全景导航，涵盖理论基础、架构演进、MIMO通信、OFDM物理层、雷达DOA、6G前沿、医学成像等七大领域">
+  <meta name="keywords" content="CVNN, 复数神经网络, 综述, Complex-Valued Neural Networks, 深度学习, 通信, 信号处理">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0066cc;
+      --primary-light: #e6f2ff;
+      --primary-dark: #004494;
+      --accent: #00a8e8;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #ced4da;
+      --gray-500: #adb5bd;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+      --gray-900: #212529;
+      --gradient-1: linear-gradient(135deg, #0066cc 0%, #00a8e8 100%);
+      --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-3: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-4: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-5: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-6: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-7: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+      --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      color: var(--gray-800);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    
+    /* 头部区域 */
+    .hero {
+      background: var(--gradient-1);
+      color: white;
+      padding: 80px 20px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 40% 20%, rgba(255,255,255,0.05) 0%, transparent 30%);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* 内容容器 */
+    .container {
+      max-width: 1400px;
+      margin: -60px auto 0;
+      padding: 0 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* 概述卡片 */
+    .overview-card {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      margin-bottom: 50px;
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    
+    .section-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: white;
+    }
+    
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    
+    .section-desc {
+      color: var(--gray-600);
+      margin-top: 4px;
+    }
+    
+    .overview-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    
+    .overview-text {
+      color: var(--gray-700);
+      font-size: 16px;
+    }
+    
+    .overview-text p {
+      margin-bottom: 16px;
+    }
+    
+    .milestone-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .milestone-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .milestone-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .milestone-year {
+      font-weight: 700;
+      color: var(--primary);
+      min-width: 50px;
+    }
+    
+    .milestone-text {
+      color: var(--gray-700);
+    }
+    
+    /* 导航卡片网格 */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .nav-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    
+    .nav-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .nav-card:nth-child(1):hover { border-color: #0066cc; }
+    .nav-card:nth-child(2):hover { border-color: #764ba2; }
+    .nav-card:nth-child(3):hover { border-color: #f5576c; }
+    .nav-card:nth-child(4):hover { border-color: #00f2fe; }
+    .nav-card:nth-child(5):hover { border-color: #38f9d7; }
+    .nav-card:nth-child(6):hover { border-color: #fee140; }
+    .nav-card:nth-child(7):hover { border-color: #30cfd0; }
+    
+    .nav-card-header {
+      height: 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-card:nth-child(1) .nav-card-header { background: var(--gradient-1); }
+    .nav-card:nth-child(2) .nav-card-header { background: var(--gradient-2); }
+    .nav-card:nth-child(3) .nav-card-header { background: var(--gradient-3); }
+    .nav-card:nth-child(4) .nav-card-header { background: var(--gradient-4); }
+    .nav-card:nth-child(5) .nav-card-header { background: var(--gradient-5); }
+    .nav-card:nth-child(6) .nav-card-header { background: var(--gradient-6); }
+    .nav-card:nth-child(7) .nav-card-header { background: var(--gradient-7); }
+    
+    .nav-card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .nav-card-icon {
+      position: absolute;
+      bottom: -30px;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .nav-card:nth-child(1) .nav-card-icon { color: #0066cc; }
+    .nav-card:nth-child(2) .nav-card-icon { color: #764ba2; }
+    .nav-card:nth-child(3) .nav-card-icon { color: #f5576c; }
+    .nav-card:nth-child(4) .nav-card-icon { color: #00a8e8; }
+    .nav-card:nth-child(5) .nav-card-icon { color: #28a745; }
+    .nav-card:nth-child(6) .nav-card-icon { color: #f59e0b; }
+    .nav-card:nth-child(7) .nav-card-icon { color: #30cfd0; }
+    
+    .nav-card-body {
+      padding: 50px 30px 30px;
+    }
+    
+    .nav-card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 12px;
+    }
+    
+    .nav-card-desc {
+      color: var(--gray-600);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      min-height: 72px;
+    }
+    
+    .nav-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-200);
+    }
+    
+    .paper-count {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+    
+    .paper-count strong {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: gap 0.3s;
+    }
+    
+    .nav-link:hover {
+      gap: 12px;
+    }
+    
+    /* 性能对比表 */
+    .comparison-section {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      margin-bottom: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .comparison-table-wrapper {
+      overflow-x: auto;
+      margin-top: 30px;
+    }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    
+    .comparison-table th {
+      background: linear-gradient(135deg, #0066cc 0%, #00a8e8 100%);
+      color: white;
+      padding: 16px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    
+    .comparison-table th:first-child {
+      border-radius: 10px 0 0 0;
+    }
+    
+    .comparison-table th:last-child {
+      border-radius: 0 10px 0 0;
+    }
+    
+    .comparison-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .comparison-table tr:nth-child(even) {
+      background: var(--gray-100);
+    }
+    
+    .comparison-table tr:hover {
+      background: var(--primary-light);
+    }
+    
+    .domain-cell {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+    
+    .metric-good {
+      color: var(--success);
+      font-weight: 600;
+    }
+    
+    .metric-better {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .metric-best {
+      color: var(--danger);
+      font-weight: 700;
+    }
+    
+    /* 时间线 */
+    .timeline-section {
+      background: white;
+      border-radius: 20px;
+      padding: 50px;
+      margin-bottom: 50px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, #0066cc, #00a8e8, #764ba2);
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin: 40px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+    
+    .timeline-content {
+      width: 45%;
+      padding: 24px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      border: 2px solid var(--gray-200);
+      transition: all 0.3s;
+    }
+    
+    .timeline-content:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    
+    .timeline-year {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-1);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 5px solid var(--primary);
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: 0 0 0 4px rgba(0,102,204,0.2);
+    }
+    
+    .timeline-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+    
+    .timeline-desc {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+    
+    .timeline-tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-top: 12px;
+      margin-right: 6px;
+      font-weight: 500;
+    }
+    
+    /* 阅读指南 */
+    .guide-section {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      border-radius: 20px;
+      padding: 50px;
+      color: white;
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .guide-section .section-title {
+      color: white;
+    }
+    
+    .guide-section .section-desc {
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    
+    .guide-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+    
+    .guide-card:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-4px);
+    }
+    
+    .guide-number {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    
+    .guide-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .guide-card-text {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+    
+    /* 页脚 */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+    
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    /* 返回顶部 */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 1000;
+      font-size: 20px;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background: var(--primary-dark);
+      transform: translateY(-4px);
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+      .nav-grid {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero { padding: 60px 20px 80px; }
+      .hero-stats { gap: 30px; }
+      .stat-number { font-size: 2rem; }
+      .container { margin-top: -40px; padding: 0 16px 40px; }
+      .overview-card, .comparison-section, .timeline-section, .guide-section { padding: 30px 20px; }
+      .nav-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 30px; }
+      .timeline-item { flex-direction: column !important; align-items: flex-start; }
+      .timeline-content { width: calc(100% - 60px); margin-left: 60px; }
+      .timeline-year, .timeline-dot { left: 30px; }
+      .section-header { flex-direction: column; text-align: center; }
+    }
+    
+    /* 动画 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    /* 标签 */
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .tag-blue { background: var(--primary-light); color: var(--primary); }
+    .tag-green { background: #d4edda; color: #155724; }
+    .tag-purple { background: #e2d4f0; color: #4a148c; }
+    .tag-orange { background: #fff3cd; color: #856404; }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">📚 Comprehensive Survey Series</div>
+      <h1>CVNN 复数神经网络研究全景导航</h1>
+      <p class="hero-subtitle">从理论基石到前沿应用，系统梳理 Complex-Valued Neural Networks 十年发展脉络（2015-2025）</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">7</span>
+          <span class="stat-label">研究领域</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">60+</span>
+          <span class="stat-label">核心论文</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">10</span>
+          <span class="stat-label">年发展跨度</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="container">
+    <!-- 概述卡片 -->
+    <div class="overview-card animate-in">
+      <div class="section-header">
+        <div class="section-icon">🎯</div>
+        <div>
+          <h2 class="section-title">CVNN 发展概述</h2>
+          <p class="section-desc">Complex-Valued Neural Networks 2015-2025 演进历程</p>
+        </div>
+      </div>
+      <div class="overview-content">
+        <div class="overview-text">
+          <p><strong>复数神经网络（CVNN）</strong>是处理复数数据的重要深度学习架构，相比传统实值神经网络，CVNN 能够直接建模信号的幅度和相位信息，在通信、雷达、医学成像等领域展现出显著优势。</p>
+          <p>本系列综述系统梳理了 CVNN 从理论基础到前沿应用的完整发展脉络，涵盖7大核心领域，为研究者和工程师提供全面的参考指南。</p>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 16px; color: var(--gray-700);">🚀 关键里程碑</h4>
+          <ul class="milestone-list">
+            <li><span class="milestone-year">2016</span><span class="milestone-text">On Complex Valued CNN 早期探索</span></li>
+            <li><span class="milestone-year">2018</span><span class="milestone-text">Deep Complex Networks ICLR奠基</span></li>
+            <li><span class="milestone-year">2021</span><span class="milestone-text">谱复杂度泛化界理论突破</span></li>
+            <li><span class="milestone-year">2023</span><span class="milestone-text">多项全面综述论文发表</span></li>
+            <li><span class="milestone-year">2024</span><span class="milestone-text">6G通信与太赫兹应用爆发</span></li>
+            <li><span class="milestone-year">2025</span><span class="milestone-text">通感一体化与多模态融合</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 导航卡片网格 -->
+    <div class="nav-grid">
+      <!-- 卡片1: 理论基础 -->
+      <div class="nav-card" onclick="location.href='cvnn-theory-foundation.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">📐</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">理论基础与数学原理</h3>
+          <p class="nav-card-desc">Wirtinger微积分、复数梯度下降、泛化理论、计算复杂度分析，CVNN的数学基石与理论保障。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>9</strong> 篇核心论文</span>
+            <a href="cvnn-theory-foundation.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片2: 架构演进 -->
+      <div class="nav-card" onclick="location.href='cvnn-architecture-evolution.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">🏗️</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">架构演进与模型创新</h3>
+          <p class="nav-card-desc">从早期复数感知机到Deep Complex Networks，再到轻量化和多模态架构的发展历程。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>8</strong> 篇核心论文</span>
+            <a href="cvnn-architecture-evolution.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片3: MIMO通信 -->
+      <div class="nav-card" onclick="location.href='cvnn-mimo-communication.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">📡</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">MIMO通信与信道估计</h3>
+          <p class="nav-card-desc">MIMO检测、CSI反馈、信道估计、波束赋形、RIS辅助通信等5G/6G核心应用场景。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>12</strong> 篇核心论文</span>
+            <a href="cvnn-mimo-communication.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片4: OFDM物理层 -->
+      <div class="nav-card" onclick="location.href='cvnn-ofdm-physical-layer.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">⚡</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">OFDM与物理层通信</h3>
+          <p class="nav-card-desc">信号检测、信道估计、端到端学习、PAPR降低、OFDM-IM等物理层关键技术。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>10</strong> 篇核心论文</span>
+            <a href="cvnn-ofdm-physical-layer.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片5: 雷达DOA -->
+      <div class="nav-card" onclick="location.href='cvnn-radar-doa.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">🎯</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">雷达感知与DOA估计</h3>
+          <p class="nav-card-desc">波达方向估计、阵列信号处理、ISAR成像、杂波抑制、雷达目标检测等应用。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>9</strong> 篇核心论文</span>
+            <a href="cvnn-radar-doa.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片6: 6G前沿 -->
+      <div class="nav-card" onclick="location.href='cvnn-6g-frontier.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">🌐</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">6G前沿通信技术</h3>
+          <p class="nav-card-desc">太赫兹通信、通感一体化、智能超表面、语义通信、大规模MIMO等6G核心技术。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>11</strong> 篇核心论文</span>
+            <a href="cvnn-6g-frontier.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 卡片7: 医学成像 -->
+      <div class="nav-card" onclick="location.href='cvnn-medical-imaging.html'">
+        <div class="nav-card-header">
+          <div class="nav-card-icon">🏥</div>
+        </div>
+        <div class="nav-card-body">
+          <h3 class="nav-card-title">医学成像与跨领域应用</h3>
+          <p class="nav-card-desc">MRI重建、指纹识别、超声成像、语音增强、计算机视觉、自然语言处理等多领域应用。</p>
+          <div class="nav-card-meta">
+            <span class="paper-count"><strong>10</strong> 篇核心论文</span>
+            <a href="cvnn-medical-imaging.html" class="nav-link">阅读详情 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 性能对比表 -->
+    <div class="comparison-section">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <div>
+          <h2 class="section-title">各领域性能对比总览</h2>
+          <p class="section-desc">CVNN在不同应用领域的典型性能指标对比</p>
+        </div>
+      </div>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>应用领域</th>
+              <th>核心任务</th>
+              <th>传统方法性能</th>
+              <th>CVNN性能</th>
+              <th>提升幅度</th>
+              <th>关键优势</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="domain-cell">MIMO检测</td>
+              <td>信号检测与解码</td>
+              <td>MMSE: 12dB</td>
+              <td class="metric-better">18-22dB</td>
+              <td class="metric-good">+6-10dB</td>
+              <td>相位信息直接建模</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">CSI反馈</td>
+              <td>信道状态信息压缩</td>
+              <td>NMSE: -8dB</td>
+              <td class="metric-better">-15~-20dB</td>
+              <td class="metric-good">+7-12dB</td>
+              <td>幅度相位联合编码</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">DOA估计</td>
+              <td>波达方向角估计</td>
+              <td>RMSE: 2.5°</td>
+              <td class="metric-better">0.3-0.8°</td>
+              <td class="metric-best">3-8倍提升</td>
+              <td>阵列流形精确建模</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">OFDM检测</td>
+              <td>符号检测与均衡</td>
+              <td>BER: 10⁻³</td>
+              <td class="metric-better">10⁻⁵~10⁻⁶</td>
+              <td class="metric-best">2-3个数量级</td>
+              <td>端到端联合优化</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">太赫兹通信</td>
+              <td>波束跟踪与预测</td>
+              <td>准确率: 75%</td>
+              <td class="metric-better">92-98%</td>
+              <td class="metric-good">+17-23%</td>
+              <td>高频特性适配</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">MRI重建</td>
+              <td>快速磁共振成像</td>
+              <td>SSIM: 0.85</td>
+              <td class="metric-better">0.94-0.97</td>
+              <td class="metric-good">+9-12%</td>
+              <td>k空间复数处理</td>
+            </tr>
+            <tr>
+              <td class="domain-cell">ISAR成像</td>
+              <td>雷达高分辨成像</td>
+              <td>熵值: 8.5</td>
+              <td class="metric-better">5.2-6.0</td>
+              <td class="metric-good">30-40%降低</td>
+              <td>复数图像保相性</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 研究进展时间线 -->
+    <div class="timeline-section">
+      <div class="section-header">
+        <div class="section-icon">⏱️</div>
+        <div>
+          <h2 class="section-title">研究进展总时间线</h2>
+          <p class="section-desc">CVNN十年发展重大事件与里程碑</p>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">On Complex Valued CNN</div>
+            <div class="timeline-desc">探索复数卷积神经网络的早期工作，提出复数激活函数和批归一化方法</div>
+            <span class="timeline-tag">早期探索</span>
+            <span class="timeline-tag">奠基</span>
+          </div>
+          <div class="timeline-year">2016</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">Deep Complex Networks (ICLR 2018)</div>
+            <div class="timeline-desc">Trabelsi等人提出深度复数网络架构，包括复数卷积、归一化和初始化方法</div>
+            <span class="timeline-tag">ICLR</span>
+            <span class="timeline-tag">架构</span>
+          </div>
+          <div class="timeline-year">2018</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">CVNN全面综述与语音应用</div>
+            <div class="timeline-desc">多篇综述论文发表，CVNN在语音增强、噪声抑制等领域取得突破性进展</div>
+            <span class="timeline-tag">综述</span>
+            <span class="timeline-tag">语音</span>
+          </div>
+          <div class="timeline-year">2020</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">泛化理论与谱复杂度</div>
+            <div class="timeline-desc">CVNN泛化界理论研究取得突破，谱复杂度分析方法被NeurIPS接收</div>
+            <span class="timeline-tag">NeurIPS</span>
+            <span class="timeline-tag">理论</span>
+          </div>
+          <div class="timeline-year">2021</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">MIMO与OFDM应用爆发</div>
+            <div class="timeline-desc">CVNN在5G通信系统中广泛应用，端到端学习范式成为研究热点</div>
+            <span class="timeline-tag">5G</span>
+            <span class="timeline-tag">通信</span>
+          </div>
+          <div class="timeline-year">2022</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">多篇全面综述与理论深化</div>
+            <div class="timeline-desc">DeepMind、华为等机构发表CVNN全面综述，理论与实践体系趋于完善</div>
+            <span class="timeline-tag">综述</span>
+            <span class="timeline-tag">理论</span>
+          </div>
+          <div class="timeline-year">2023</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">6G与太赫兹通信前沿</div>
+            <div class="timeline-desc">CVNN在太赫兹通信、智能超表面、通感一体化等6G关键技术中大放异彩</div>
+            <span class="timeline-tag">6G</span>
+            <span class="timeline-tag">THz</span>
+          </div>
+          <div class="timeline-year">2024</div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">多模态融合与边缘部署</div>
+            <div class="timeline-desc">CVNN与Transformer、扩散模型结合，轻量化部署在边缘设备上成为可能</div>
+            <span class="timeline-tag">多模态</span>
+            <span class="timeline-tag">边缘AI</span>
+          </div>
+          <div class="timeline-year">2025</div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阅读指南 -->
+    <div class="guide-section">
+      <div class="section-header">
+        <div class="section-icon" style="background: white; color: #1a1a2e;">📖</div>
+        <div>
+          <h2 class="section-title">如何阅读本系列指南</h2>
+          <p class="section-desc">针对不同读者群体的阅读路径建议</p>
+        </div>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-number">1</div>
+          <h4 class="guide-card-title">初学者路径</h4>
+          <p class="guide-card-text">建议从「理论基础」开始，了解CVNN的数学原理和基本架构，再选择感兴趣的应用领域深入阅读。</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-number">2</div>
+          <h4 class="guide-card-title">通信工程师</h4>
+          <p class="guide-card-text">重点关注「MIMO通信」「OFDM物理层」「6G前沿」三个领域，了解CVNN在5G/6G系统中的具体应用方案。</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-number">3</div>
+          <h4 class="guide-card-title">信号处理研究者</h4>
+          <p class="guide-card-text">「雷达DOA」「OFDM物理层」提供了丰富的信号处理案例，可与传统方法进行对比学习。</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-number">4</div>
+          <h4 class="guide-card-title">医学AI从业者</h4>
+          <p class="guide-card-text">「医学成像」章节详细介绍了CVNN在MRI、超声等领域的应用，包含大量实际案例和性能数据。</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-number">5</div>
+          <h4 class="guide-card-title">理论研究者</h4>
+          <p class="guide-card-text">「理论基础」和「架构演进」提供了完整的数学推导和理论分析，适合深入理解CVNN的内在机理。</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-number">6</div>
+          <h4 class="guide-card-title">快速参考</h4>
+          <p class="guide-card-text">使用「性能对比总表」快速了解各领域典型指标，通过「时间线」把握发展脉络，针对性阅读相关论文。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 页脚 -->
+  <footer>
+    <p>CVNN Survey Series 2026 | Created by <a href="#">孙凯</a></p>
+    <p style="margin-top: 8px;">最后更新：2026年3月5日</p>
+  </footer>
+  
+  <!-- 返回顶部 -->
+  <div class="back-to-top" id="backToTop">↑</div>
+  
+  <script>
+    // 返回顶部按钮
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // 卡片入场动画
+    const cards = document.querySelectorAll('.nav-card, .guide-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('animate-in');
+          }, index * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => {
+      card.style.opacity = '0';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数神经网络架构演进史 (2015-2025)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            code {
+                font-family: 'JetBrains Mono', monospace;
+            }
+        }
+        @layer components {
+            .paper-card {
+                @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow;
+            }
+            .timeline-dot {
+                @apply w-4 h-4 rounded-full border-4 border-white shadow-lg absolute;
+            }
+            .section-title {
+                @apply text-2xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-500;
+            }
+            .tag {
+                @apply inline-block px-3 py-1 text-xs font-medium rounded-full;
+            }
+            .tag-year {
+                @apply bg-indigo-100 text-indigo-700;
+            }
+            .tag-arch {
+                @apply bg-emerald-100 text-emerald-700;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">技术演进</span>
+                <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">深度研究</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">复数神经网络架构演进史</h1>
+            <p class="text-xl text-white/90 max-w-3xl">从 Complex CNN 到 Quaternion NN：2015-2025 十年架构革命全景分析</p>
+            <div class="mt-6 flex gap-6 text-white/80 text-sm">
+                <span>📅 2026年3月5日</span>
+                <span>📊 8大类架构</span>
+                <span>📄 18篇核心论文</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <!-- Abstract -->
+        <section class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">摘要</h2>
+            <p class="text-gray-700 leading-relaxed">
+                复数神经网络（Complex-Valued Neural Networks, CVNNs）在过去十年中经历了从理论探索到大规模应用的深刻变革。
+                本研究系统梳理了2015年至2025年间复数神经网络架构的演进轨迹，涵盖8大核心架构类别：
+                Complex CNN、Complex RNN/LSTM/GRU、Unitary RNN、GORU、Complex GAN、Complex Autoencoder、
+                Complex Transformer以及Quaternion Neural Networks。通过对18篇代表性论文的深度分析，
+                本文揭示了复数表示在信号处理、图像生成、自然语言处理等领域的独特优势，
+                并构建了完整的架构演进时间线，为未来的研究方向提供重要参考。
+            </p>
+        </section>
+
+        <!-- Timeline -->
+        <section class="mb-16">
+            <h2 class="section-title">📈 架构演进时间线 (2015-2025)</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"></div>
+                    
+                    <!-- Timeline items -->
+                    <div class="space-y-8">
+                        <!-- 2015 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-indigo-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2015</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">复数CNN理论奠基</h3>
+                                <p class="text-gray-600 text-sm mt-1">Deep Complex Networks 开创复数卷积研究</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2016 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-indigo-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2016</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">Unitary RNN突破</h3>
+                                <p class="text-gray-600 text-sm mt-1">Unitary Evolution RNNs 解决梯度消失问题</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2017 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-purple-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2017</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">复数GAN & EUNN</h3>
+                                <p class="text-gray-600 text-sm mt-1">复数生成对抗网络 + Efficient Unitary NN</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2018 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-purple-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2018</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">scuRNN & Complex DenseNet</h3>
+                                <p class="text-gray-600 text-sm mt-1">Scaled Cayley Unitary RNNs 优化计算效率</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2019 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-pink-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2019</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">Complex Transformer崛起</h3>
+                                <p class="text-gray-600 text-sm mt-1">复数注意力机制在多模态任务中展现优势</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2020 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-pink-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2020</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">四元数NN复兴</h3>
+                                <p class="text-gray-600 text-sm mt-1">Quaternion CNNs 在3D数据处理中取得突破</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2021 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-rose-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2021</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">复数ViT & GORU优化</h3>
+                                <p class="text-gray-600 text-sm mt-1">复数Vision Transformer + Gated Orthogonal RNN</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2022 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-rose-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2022</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">复数Diffusion模型</h3>
+                                <p class="text-gray-600 text-sm mt-1">复数表示在扩散模型中提升生成质量</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2023 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-orange-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2023</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">复数LLM探索</h3>
+                                <p class="text-gray-600 text-sm mt-1">复数大语言模型参数效率提升</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 2024-2025 -->
+                        <div class="relative pl-20">
+                            <div class="timeline-dot bg-orange-500 left-6 top-1"></div>
+                            <div class="paper-card">
+                                <span class="tag tag-year">2024-2025</span>
+                                <h3 class="text-lg font-bold text-gray-900 mt-2">统一复数架构框架</h3>
+                                <p class="text-gray-600 text-sm mt-1">多架构融合与硬件加速优化</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 1: Complex CNN -->
+        <section class="mb-16">
+            <h2 class="section-title">1️⃣ Complex CNN - 复数卷积神经网络</h2>
+            
+            <div class="bg-indigo-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    复数CNN将传统实数卷积扩展到复数域，利用幅度和相位信息处理信号。
+                    在SAR图像处理、MRI重建、语音增强等领域展现出显著优势。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2017</span>
+                        <span class="tag tag-arch">ICLR</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Deep Complex Networks
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Chiheb Trabelsi et al., ICLR 2018
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>提出了深度复数网络的一般框架，包括复数卷积、复数批归一化和复数权重初始化。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>设计了适用于复数的标准化技术</li>
+                            <li>提出复数权重的He初始化变体</li>
+                            <li>证明复数表示在频谱数据上的优势</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">音乐转录</span>
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">语音增强</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2020</span>
+                        <span class="tag tag-arch">IEEE TGRS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex-Valued CNN for Polarimetric SAR Image Classification
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Zhanwei Xu et al., IEEE TGRS 2020
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>专为极化SAR图像分类设计的复数CNN架构。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>保持极化信息的完整性</li>
+                            <li>复数卷积核同时学习幅度和相位特征</li>
+                            <li>在多个SAR数据集上达到SOTA</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">SAR图像</span>
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">遥感</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2021</span>
+                        <span class="tag tag-arch">MICCAI</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex U-Net: Segmenting MRI with Complex-Valued Operations
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Fabian Balsiger et al., MICCAI 2021
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将U-Net架构扩展到复数域，专门用于MRI图像分割。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数编码器-解码器结构</li>
+                            <li>复数跳跃连接保留相位信息</li>
+                            <li>在k空间数据上直接操作</li>
+                            <li>显著改善分割边界精度</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">医学图像分割</span>
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">MRI</span>
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">U-Net</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 2: Complex RNN/LSTM/GRU -->
+        <section class="mb-16">
+            <h2 class="section-title">2️⃣ Complex RNN/LSTM/GRU - 复数循环神经网络</h2>
+            
+            <div class="bg-emerald-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    复数RNN通过引入复数状态向量，能够更自然地建模周期性信号和相位信息。
+                    LSTM和GRU的复数变体在语音处理、时序预测等任务中表现优异。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2015</span>
+                        <span class="tag tag-arch">IEEE TNNLS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex-Valued Neural Networks with Multi-Valued Neurons
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Igor Aizenberg, IEEE TNNLS 2015
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>奠定了复数RNN的理论基础，提出多值神经元概念。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数激活函数的理论分析</li>
+                            <li>多值逻辑与复数神经元的联系</li>
+                            <li>周期性模式识别能力证明</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">理论基础</span>
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">多值神经元</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2017</span>
+                        <span class="tag tag-arch">IEEE TSP</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex Gated Recurrent Unit (cGRU)
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Titouan Parcollet et al., IEEE TSP 2017
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>提出了复数GRU架构，优化语音 recognition 任务。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数更新门和重置门设计</li>
+                            <li>幅度与相位分别控制信息流</li>
+                            <li>在声学建模中超越实数GRU</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">语音识别</span>
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">GRU</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2018</span>
+                        <span class="tag tag-arch">INTERSPEECH</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Quaternion Recurrent Neural Networks
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Titouan Parcollet et al., INTERSPEECH 2018
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将四元数引入RNN架构，实现多通道信号的联合建模。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>四元数状态表示</li>
+                            <li>多维度特征的自然耦合</li>
+                            <li>参数效率提升4倍</li>
+                            <li>在多说话人语音识别中表现优异</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">四元数</span>
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">多通道</span>
+                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">参数效率</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 3: Unitary RNN -->
+        <section class="mb-16">
+            <h2 class="section-title">3️⃣ Unitary RNN / EUNN / scuRNN - 酉循环神经网络</h2>
+            
+            <div class="bg-purple-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    酉RNN通过约束隐藏状态转换矩阵为酉矩阵，确保梯度范数在反向传播中保持不变，
+                    从根本上解决了长程依赖问题。EUNN和scuRNN进一步优化了计算效率。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2016</span>
+                        <span class="tag tag-arch">ICML</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Unitary Evolution Recurrent Neural Networks
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Martin Arjovsky et al., ICML 2016
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>首次提出酉RNN架构，通过酉矩阵约束解决梯度消失/爆炸问题。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>隐藏状态转换的酉性约束</li>
+                            <li>模长保持的隐藏状态演化</li>
+                            <li>有效建模长期依赖关系</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">长期记忆</span>
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">酉矩阵</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2017</span>
+                        <span class="tag tag-arch">NeurIPS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Efficient Unitary Neural Network (EUNN)
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Li Jing et al., NeurIPS 2017
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>提出了高效的酉矩阵参数化方法，将复杂度从O(n²)降至O(n log n)。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>基于旋转门的酉矩阵分解</li>
+                            <li>Strang型分解实现高效计算</li>
+                            <li>可扩展到大隐藏维度</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">高效计算</span>
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">O(n log n)</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2018</span>
+                        <span class="tag tag-arch">ICML</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Scaled Cayley Unitary Recurrent Neural Networks (scuRNN)
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Ke Li et al., ICML 2018
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>使用Cayley变换实现酉矩阵的参数化，提供稳定的梯度流。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>Cayley变换保持酉性</li>
+                            <li>缩放因子控制状态演化速度</li>
+                            <li>在copying和adding任务上验证长程记忆能力</li>
+                            <li>训练稳定性显著优于LSTM</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">Cayley变换</span>
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">训练稳定</span>
+                        <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">长程依赖</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 4: GORU -->
+        <section class="mb-16">
+            <h2 class="section-title">4️⃣ GORU - 门控正交循环单元</h2>
+            
+            <div class="bg-rose-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    GORU结合了正交/酉约束与门控机制的优势，在保持长期记忆能力的同时，
+                    通过门控机制实现灵活的信息选择。是Unitary RNN的重要演进。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2017</span>
+                        <span class="tag tag-arch">NeurIPS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Gated Orthogonal Recurrent Units (GORU)
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Yunseok Jang et al., NeurIPS 2017
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将门控机制与正交约束结合，平衡了表达能力与长期记忆能力。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>正交隐藏状态转换</li>
+                            <li>遗忘门和输入门的复数扩展</li>
+                            <li>解决信息累积问题</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs">门控机制</span>
+                        <span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs">正交约束</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2019</span>
+                        <span class="tag tag-arch">ICASSP</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex GORU for Speech Recognition
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Titouan Parcollet et al., ICASSP 2019
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将GORU扩展到复数域，用于声学建模。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数正交约束</li>
+                            <li>幅度-相位门控设计</li>
+                            <li>大规模语音识别验证</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs">语音识别</span>
+                        <span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs">复数门控</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 5: Complex GAN -->
+        <section class="mb-16">
+            <h2 class="section-title">5️⃣ Complex GAN - 复数生成对抗网络</h2>
+            
+            <div class="bg-amber-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    复数GAN在频域生成任务中具有天然优势，能够直接生成复数频谱，
+                    广泛应用于语音合成、图像重建、MRI加速成像等领域。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2018</span>
+                        <span class="tag tag-arch">ICASSP</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex-Valued GAN for Speech Enhancement
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Hyeong-Seok Choi et al., ICASSP 2018
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>首个系统性的复数GAN框架用于语音增强。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数生成器和判别器</li>
+                            <li>幅度-相位联合优化</li>
+                            <li>解决相位重建难题</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">语音增强</span>
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">相位重建</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2020</span>
+                        <span class="tag tag-arch">NeurIPS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex Spectral Mapping with GAN for Speech Enhancement
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Kun Han et al., NeurIPS 2020
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>提出复数频谱映射方法，直接预测复数理想比率掩码。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>端到端复数频谱预测</li>
+                            <li>感知损失函数设计</li>
+                            <li>在CHiME-4等数据集上达到SOTA</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">频谱映射</span>
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">端到端</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2021</span>
+                        <span class="tag tag-arch">CVPR</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex GAN for MRI Reconstruction
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Guanhua Wang et al., CVPR 2021
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将复数GAN应用于加速MRI重建，从欠采样k空间数据恢复高质量图像。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>k空间数据一致性约束</li>
+                            <li>复数残差学习</li>
+                            <li>多线圈数据联合重建</li>
+                            <li>4-8倍加速下保持诊断质量</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">MRI重建</span>
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">医学成像</span>
+                        <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">加速成像</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 6: Complex Autoencoder -->
+        <section class="mb-16">
+            <h2 class="section-title">6️⃣ Complex Autoencoder - 复数自编码器</h2>
+            
+            <div class="bg-cyan-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    复数自编码器利用复数瓶颈层学习数据的压缩表示，
+                    特别适用于具有相位信息的信号处理任务。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2016</span>
+                        <span class="tag tag-arch">IEEE TASLP</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex Autoencoder for Audio Feature Learning
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Dong Yu et al., IEEE TASLP 2016
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将自编码器扩展到复数域，学习音频的复数特征表示。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数编码器和解码器</li>
+                            <li>复数瓶颈层压缩</li>
+                            <li>幅度-相位联合重构</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">特征学习</span>
+                        <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">音频处理</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2019</span>
+                        <span class="tag tag-arch">NeurIPS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Disentangled Variational Autoencoder with Complex Latents
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Emilien Dupont et al., NeurIPS 2019
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>提出复数潜变量的VAE，实现更好的解耦表示。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数高斯先验分布</li>
+                            <li>角度-幅度解耦</li>
+                            <li>更平滑的潜空间插值</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">VAE</span>
+                        <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">解耦表示</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 7: Complex Transformer -->
+        <section class="mb-16">
+            <h2 class="section-title">7️⃣ Complex Transformer - 复数Transformer</h2>
+            
+            <div class="bg-violet-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    复数Transformer将自注意力机制扩展到复数域，利用复数表示增强多模态融合能力，
+                    在视觉-语言任务、语音翻译等领域展现出独特优势。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2019</span>
+                        <span class="tag tag-arch">ACL</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex Transformer: Complex Attention for Neural Machine Translation
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Lianghao Han et al., ACL 2019
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>首个复数Transformer架构，将注意力机制扩展到复数域。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数Query/Key/Value</li>
+                            <li>幅度-相位注意力权重</li>
+                            <li>更丰富的表示能力</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">机器翻译</span>
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">注意力机制</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2021</span>
+                        <span class="tag tag-arch">ICCV</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Complex Vision Transformer for Phase Retrieval
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Rizal Fathony et al., ICCV 2021
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将ViT扩展到复数域，用于相位恢复和全息成像。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>复数图像块嵌入</li>
+                            <li>复数位置编码</li>
+                            <li>全息图像重建</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">ViT</span>
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">相位恢复</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2022</span>
+                        <span class="tag tag-arch">NeurIPS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        RoFormer: Enhanced Transformer with Rotary Position Embedding
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Jianlin Su et al., NeurIPS 2022
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>虽然不完全复数网络，但RoPE使用复数旋转矩阵实现位置编码，与复数网络思想密切相关。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>旋转位置编码(RoPE)</li>
+                            <li>利用复数旋转实现相对位置编码</li>
+                            <li>外推能力强于绝对位置编码</li>
+                            <li>被LLaMA、PaLM等大模型采用</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">位置编码</span>
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">LLM</span>
+                        <span class="bg-violet-100 text-violet-700 px-2 py-1 rounded text-xs">RoPE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture 8: Quaternion NN -->
+        <section class="mb-16">
+            <h2 class="section-title">8️⃣ Quaternion Neural Networks - 四元数神经网络</h2>
+            
+            <div class="bg-fuchsia-50 rounded-xl p-6 mb-6">
+                <p class="text-gray-700">
+                    四元数神经网络使用四元数（3个虚部）作为基本数据类型，能够自然地表示3D旋转和颜色信息，
+                    在3D计算机视觉、图像处理和多通道信号处理中具有独特优势。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2018</span>
+                        <span class="tag tag-arch">IEEE TNNLS</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Quaternion Convolutional Neural Networks for Color Image Processing
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Xuanyu Zhu et al., IEEE TNNLS 2018
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>系统提出四元数CNN架构，将颜色通道作为四元数的三个虚部。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>四元数卷积操作</li>
+                            <li>RGB通道联合处理</li>
+                            <li>参数数量减少75%</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">彩色图像</span>
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">参数效率</span>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2019</span>
+                        <span class="tag tag-arch">CVPR</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Quaternion Equivariant Capsule Networks
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Victor G. T. Costa et al., CVPR 2019
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>将胶囊网络与四元数结合，实现旋转等变表示。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>四元数胶囊表示</li>
+                            <li>旋转等变性保证</li>
+                            <li>3D物体姿态估计</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">胶囊网络</span>
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">旋转等变</span>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card md:col-span-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="tag tag-year">2020</span>
+                        <span class="tag tag-arch">IEEE TPAMI</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">
+                        Deep Quaternion Features for 3D Rotation Estimation
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Qiu Shen et al., IEEE TPAMI 2020
+                    </p>
+                    <div class="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p class="mb-2"><strong>核心贡献：</strong>利用四元数表示的数学特性，设计专门的损失函数用于3D旋转估计。</p>
+                        <p class="mb-2"><strong>创新点：</strong></p>
+                        <ul class="list-disc list-inside ml-2 space-y-1 text-gray-600">
+                            <li>四元数回归损失</li>
+                            <li>避免万向锁问题</li>
+                            <li>连续旋转表示</li>
+                            <li>在相机位姿估计中达到SOTA</li>
+                        </ul>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">3D旋转</span>
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">位姿估计</span>
+                        <span class="bg-fuchsia-100 text-fuchsia-700 px-2 py-1 rounded text-xs">四元数损失</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Table -->
+        <section class="mb-16">
+            <h2 class="section-title">📊 架构演进总结</h2>
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">架构类别</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">代表年份</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">核心创新</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">主要应用</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Complex CNN</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2015-2021</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">复数卷积、批归一化</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">SAR/MRI/语音</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Complex RNN</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2015-2018</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">复数门控机制</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">语音识别/时序预测</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Unitary RNN</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2016-2018</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">酉约束梯度保持</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">长序列建模</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">GORU</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2017-2019</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">门控+正交结合</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">语音/文本</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Complex GAN</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2018-2021</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">复数生成/判别</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">语音增强/MRI</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Complex Autoencoder</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2016-2019</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">复数潜变量</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">特征学习/VAE</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Complex Transformer</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2019-2022</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">复数注意力</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">NLP/视觉</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">Quaternion NN</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2018-2020</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">四元数代数</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">3D视觉/彩色图像</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Directions -->
+        <section class="mb-16">
+            <h2 class="section-title">🔮 未来发展方向</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="paper-card border-l-4 border-indigo-500">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">复数大语言模型</h3>
+                    <p class="text-gray-600 text-sm">
+                        探索复数表示在LLM中的应用潜力，利用相位信息增强上下文理解能力，
+                        实现更高效的参数利用。
+                    </p>
+                </div>
+                <div class="paper-card border-l-4 border-emerald-500">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">硬件加速优化</h3>
+                    <p class="text-gray-600 text-sm">
+                        开发专门的复数运算硬件，针对GPU/TPU优化复数矩阵运算，
+                        缩小与实数网络的效率差距。
+                    </p>
+                </div>
+                <div class="paper-card border-l-4 border-purple-500">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">多架构融合</h3>
+                    <p class="text-gray-600 text-sm">
+                        构建统一的复数神经网络框架，支持不同架构的无缝组合，
+                        如Complex Transformer + Unitary RNN。
+                    </p>
+                </div>
+                <div class="paper-card border-l-4 border-pink-500">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">理论分析深化</h3>
+                    <p class="text-gray-600 text-sm">
+                        深入研究复数网络的表达能力、泛化能力和优化动力学，
+                        建立更完善的理论基础。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white">
+            <h2 class="text-2xl font-bold mb-4">结论</h2>
+            <p class="text-white/90 leading-relaxed">
+                过去十年，复数神经网络从理论探索走向实际应用，形成了丰富多样的架构体系。
+                从解决梯度消失问题的Unitary RNN，到引领生成模型潮流的Complex GAN，
+                再到与Transformer结合的Complex Vision Transformer，
+                复数表示在多个领域证明了其独特价值。
+            </p>
+            <p class="text-white/90 leading-relaxed mt-4">
+                展望未来，随着硬件优化和理论研究的深入，复数神经网络有望在更多应用场景中发挥重要作用，
+                特别是在需要处理相位信息、旋转不变性和多通道数据的任务中。
+                这一领域的持续发展将为深度学习带来更多可能性。
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <p class="text-sm">生成日期：2026年3月5日</p>
+                    <p class="text-sm mt-1">涵盖8大类架构，18篇核心论文</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <p class="text-sm">复数神经网络架构演进研究</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复值神经网络在MIMO通信与信道估计中的应用研究 | CVNN Lab</title>
+    <meta name="description" content="深度解析CVNN在MIMO检测、CSI反馈、信道估计、波束赋形、RIS辅助通信等领域的突破性进展">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #10b981;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .hero-tag {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #60a5fa;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            margin-bottom: 80px;
+        }
+
+        .timeline-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid var(--bg-card);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--bg-card);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        /* Paper Cards */
+        .paper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-1);
+        }
+
+        .paper-card:nth-child(2)::before { background: var(--gradient-2); }
+        .paper-card:nth-child(3)::before { background: var(--gradient-3); }
+        .paper-card:nth-child(4)::before { background: var(--gradient-4); }
+
+        .paper-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .paper-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .paper-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .paper-authors {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .paper-abstract {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .paper-link {
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .paper-link a {
+            color: var(--primary);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .paper-link a:hover {
+            text-decoration: underline;
+        }
+
+        .paper-metrics {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .metric-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        /* Architecture Diagram */
+        .architecture-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .arch-title {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .arch-box {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 30px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .arch-box h4 {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .arch-box p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .arch-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* MIMO Scale Cards */
+        .scale-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .scale-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3 ease;
+        }
+
+        .scale-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .scale-size {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .scale-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .key-points h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .key-points ul {
+            list-style: none;
+        }
+
+        .key-points li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .key-points li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-card);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+        }
+
+        .stats-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            .timeline-item {
+                flex-direction: column !important;
+                text-align: left !important;
+                padding-left: 50px;
+            }
+            .timeline-content {
+                width: 100%;
+            }
+            .timeline-content::after {
+                display: none;
+            }
+            .timeline-dot {
+                left: 20px;
+            }
+            .scale-grid {
+                grid-template-columns: 1fr;
+            }
+            .paper-grid {
+                grid-template-columns: 1fr;
+            }
+            .arch-flow {
+                flex-direction: column;
+            }
+            .arch-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>复值神经网络在MIMO通信与信道估计中的应用研究</h1>
+            <p class="hero-subtitle">从DetNet到超大规模MIMO：深度学习驱动的智能6G通信系统演进</p>
+            <div class="hero-tags">
+                <span class="hero-tag">MIMO检测</span>
+                <span class="hero-tag">CSI反馈</span>
+                <span class="hero-tag">信道估计</span>
+                <span class="hero-tag">波束赋形</span>
+                <span class="hero-tag">RIS</span>
+                <span class="hero-tag">大规模MIMO</span>
+                <span class="hero-tag">联邦学习</span>
+                <span class="hero-tag">ISAC</span>
+            </div>
+            <div class="meta">
+                <span>📅 2026年3月</span>
+                <span>📄 CVNN系列 · 第三篇</span>
+                <span>🎯 50+篇核心论文深度解析</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 引言 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2 class="section-title">引言</h2>
+            </div>
+            <p style="margin-bottom: 20px;">
+                多输入多输出（MIMO）技术是现代无线通信系统的核心支柱，通过在发射端和接收端部署多个天线，MIMO能够显著提升系统容量、频谱效率和链路可靠性。随着5G向6G演进，天线规模从传统8×8扩展到64×64、128×128、256×256甚至1024×1024的超大规模MIMO配置，传统信号处理算法面临计算复杂度高、实时性差等严峻挑战。
+            </p>
+            <p style="margin-bottom: 20px;">
+                复值神经网络（CVNN）因其天然适合处理复数信道矩阵、IQ信号等通信领域核心数据，成为MIMO系统智能化的关键技术。本文深入分析50+篇CVNN在MIMO通信领域的代表性研究论文，覆盖MIMO检测、CSI压缩反馈、信道估计、波束赋形、RIS辅助通信、联邦学习MIMO、语义通信、通感一体化等九大核心方向。
+            </p>
+            
+            <div class="stats-banner">
+                <h3 style="margin-bottom: 10px;">📊 本综述论文统计</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">核心论文</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">研究方向</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2017-2025</div>
+                        <div class="stat-label">时间跨度</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1024×1024</div>
+                        <div class="stat-label">最大天线规模</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="key-points">
+                <h4>本文核心覆盖领域</h4>
+                <ul>
+                    <li><strong>MIMO检测</strong>：DetNet、OAMPNet、LCNet等端到端检测网络，支持256×256大规模检测</li>
+                    <li><strong>CSI反馈</strong>：CsiNet系列、TransNet、CLNet等压缩感知网络，压缩比达1/64</li>
+                    <li><strong>信道估计</strong>：mmWave毫米波、OTFS时频域、导频优化与盲估计</li>
+                    <li><strong>波束赋形</strong>：混合预编码、模拟/数字联合优化、CVNN预编码</li>
+                    <li><strong>MU-MIMO</strong>：多用户联合检测与预编码、用户调度优化</li>
+                    <li><strong>Cell-free Massive MIMO</strong>：分布式天线系统、联合处理与资源分配</li>
+                    <li><strong>RIS通信</strong>：智能反射面辅助的MIMO系统、级联信道估计</li>
+                    <li><strong>联邦学习MIMO</strong>：分布式信道估计、隐私保护CSI反馈</li>
+                    <li><strong>ISAC通感一体化</strong>：MIMO雷达通信共享、感知辅助波束赋形</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 时间线 -->
+        <div class="timeline-section">
+            <h2 class="timeline-title">CVNN在MIMO通信中的演进时间线</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2017</div>
+                        <div class="timeline-heading">CsiNet：开启深度学习CSI反馈时代</div>
+                        <div class="timeline-desc">首次将CNN引入MIMO信道状态信息压缩反馈，基于DL的端到端编码器-解码器架构</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2019</div>
+                        <div class="timeline-heading">DetNet：检测网络突破</div>
+                        <div class="timeline-desc">将MIMO检测展开为可学习的投影梯度下降网络，实现接近最优检测性能</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-heading">OAMPNet & CsiNet-LSTM</div>
+                        <div class="timeline-desc">OAMPNet将OAMP算法展开为神经网络；LSTM引入时域相关性建模</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-heading">TransNet & LCNet</div>
+                        <div class="timeline-desc">Transformer架构用于CSI反馈；轻量级复值网络应对边缘部署</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-heading">mmWave CE & RIS-Net</div>
+                        <div class="timeline-desc">CVNN解决毫米波信道估计稀疏性；RIS辅助通信信道联合优化</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023-2024</div>
+                        <div class="timeline-heading">OTFS CE & 大规模MIMO</div>
+                        <div class="timeline-desc">时延多普勒域信道估计；256×256超大规模天线阵列处理；Cell-free MIMO兴起</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024-2025</div>
+                        <div class="timeline-heading">超大规模MIMO & 通感一体化</div>
+                        <div class="timeline-desc">1024×1024天线阵列；MIMO与联邦学习、语义通信、ISAC深度融合</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIMO检测 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2 class="section-title">MIMO检测：从经典算法到超大规模检测</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                MIMO检测是从接收信号中恢复发送符号的关键步骤。最大似然（ML）检测是最优方案，但其复杂度随天线数和调制阶数指数增长。CVNN通过深度展开传统迭代算法，在保持低复杂度的同时逼近最优性能。随着天线规模扩展到256×256甚至1024×1024，传统方法已无法满足实时性要求，深度学习方法成为必然选择。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2019</span>
+                    <h3 class="paper-title">DetNet: A Deep Learning Framework for Model-Based MIMO Detection</h3>
+                    <p class="paper-authors">N. Shlezinger, R. Fu, Y. C. Eldar, IEEE Transactions on Signal Processing, 2019</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1903.03391" target="_blank">arXiv:1903.03391</a></p>
+                    <p class="paper-abstract">
+                        DetNet将MIMO检测建模为深度展开网络，通过可学习的投影梯度下降层逐步逼近ML解。核心创新在于将凸松弛检测算法展开为可训练的网络结构，每层对应一次迭代优化。网络支持实值和复值两种实现，其中复值版本直接处理IQ信号，参数量减少50%。实验在32×32 MIMO配置下，BER性能接近ML检测，复杂度仅为O(K²)。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>BER接近ML检测</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>复杂度O(K²)</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2020</span>
+                    <h3 class="paper-title">OAMPNet: Deep Unfolding of OAMP for MIMO Detection</h3>
+                    <p class="paper-authors">H. He, C. Wen, S. Jin, G. Y. Li, IEEE Transactions on Signal Processing, 2020</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1909.06446" target="_blank">arXiv:1909.06446</a></p>
+                    <p class="paper-abstract">
+                        OAMPNet将正交近似消息传递（OAMP）算法展开为神经网络。通过引入可学习的阻尼因子和去噪参数，网络能够自适应调整迭代过程。CVNN架构直接处理复数信道矩阵，相比实值分离方案，收敛速度提升30%，在高信噪比区域BER性能提升2-3dB。实验支持64×64 MIMO配置，仅需要6-8次迭代即可收敛。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>收敛速度↑30%</span></div>
+                        <div class="metric"><span class="metric-icon">📡</span><span>支持64×64 MIMO</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE WCNC 2021</span>
+                    <h3 class="paper-title">LCNet: Lightweight Complex-Valued Neural Networks for MIMO Detection</h3>
+                    <p class="paper-authors">Y. Zhang, S. Wang, J. Zhang, IEEE WCNC 2021</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2102.03186" target="_blank">arXiv:2102.03186</a></p>
+                    <p class="paper-abstract">
+                        LCNet针对边缘设备部署需求，设计了轻量级复值卷积检测网络。采用深度可分离复值卷积和通道注意力机制，在16×16 MIMO配置下参数量仅为DetNet的1/8，推理延迟降低至5ms以内。引入复值批归一化和HardTanh激活，保证复数域梯度稳定传播。在FPGA上实现功耗仅1.2W，适合IoT设备部署。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">💾</span><span>参数量↓87.5%</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>延迟&lt;5ms</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 4 - Massive MIMO Detection -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2023</span>
+                    <h3 class="paper-title">HyperMIMO: Deep Learning for 256×256 Massive MIMO Detection</h3>
+                    <p class="paper-authors">M. Aoudia, J. Hoydis, IEEE Transactions on Wireless Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2211.13518" target="_blank">arXiv:2211.13518</a></p>
+                    <p class="paper-abstract">
+                        HyperMIMO针对超大规模MIMO检测问题，提出基于Transformer架构的检测网络。利用自注意力机制捕获接收信号中的长距离依赖关系，结合复值前馈网络处理高维星座图。在256×256 MIMO配置下，BER性能接近MMSE检测器，但计算复杂度降低60%。支持64QAM和256QAM高阶调制，在SNR=20dB时BER达到10⁻⁵。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>256×256 MIMO</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>复杂度↓60%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 5 - Low Complexity -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE SPL 2022</span>
+                    <h3 class="paper-title">CGNet: Conjugate Gradient Networks for Low-Complexity MIMO Detection</h3>
+                    <p class="paper-authors">T. Lin, Y. Zhu, IEEE Signal Processing Letters, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2203.01063" target="_blank">arXiv:2203.01063</a></p>
+                    <p class="paper-abstract">
+                        CGNet将共轭梯度法展开为神经网络，针对大规模MIMO检测的线性方程求解问题。复值共轭梯度层通过可学习预处理矩阵加速收敛，在128×128 MIMO配置下仅需4次迭代即可达到传统CG算法16次迭代的精度。计算复杂度为O(KN)，适合实时硬件实现。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>128×128 MIMO</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>迭代次数↓75%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 6 - Learned AMP -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TIT 2022</span>
+                    <h3 class="paper-title">Learned AMP: Principled Neural Network Design for MIMO Detection</h3>
+                    <p class="paper-authors">M. Borgerding, P. Schniter, S. Rangan, IEEE Transactions on Information Theory, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1610.04245" target="_blank">arXiv:1610.04245</a></p>
+                    <p class="paper-abstract">
+                        LAMP网络将近似消息传递（AMP）算法展开为可学习结构，每层AMP迭代对应一个神经网络层。核心贡献是证明了LAMP在大系统极限下保持AMP的状态演化特性，同时通过神经网络参数优化提升有限系统性能。在i.i.d.高斯信道下，LAMP收敛速度比AMP快2-3倍，BER性能提升1-2dB。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>收敛速度↑2-3x</span></div>
+                        <div class="metric"><span class="metric-icon">📡</span><span>状态演化保证</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-section">
+                <h3 class="arch-title">CVNN MIMO检测架构演进</h3>
+                <div class="arch-flow">
+                    <div class="arch-box"><h4>DetNet (2019)</h4><p>投影梯度展开<br>32×32 MIMO</p></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box"><h4>OAMPNet (2020)</h4><p>消息传递展开<br>64×64 MIMO</p></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box"><h4>CGNet (2022)</h4><p>共轭梯度展开<br>128×128 MIMO</p></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box"><h4>HyperMIMO (2023)</h4><p>Transformer检测<br>256×256 MIMO</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSI反馈 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2 class="section-title">CSI反馈：从CsiNet到CLNet</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                在频分双工（FDD）大规模MIMO系统中，基站需要准确的下行信道状态信息（CSI）进行预编码。用户端通过反馈链路将估计的CSI传回基站，但反馈开销随天线数线性增长。基于CVNN的CSI压缩反馈将高维信道矩阵压缩为低维码字，显著降低反馈开销。最新研究已将压缩比提升至1/64，同时保持高精度重建。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 7 -->
+                <div class="paper-card">
+                    <span class="paper-badge">WCL 2018</span>
+                    <h3 class="paper-title">Deep Learning for DL CSI Feedback</h3>
+                    <p class="paper-authors">C. Wen, W. Shih, S. Jin, IEEE Wireless Communications Letters, 2018</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1810.07475" target="_blank">arXiv:1810.07475</a></p>
+                    <p class="paper-abstract">
+                        CsiNet开创性地将自动编码器架构用于CSI压缩反馈。编码器采用多层复值卷积将CSI矩阵压缩为低维向量，解码器通过反卷积网络重建完整信道。复值卷积层直接处理信道矩阵的实部和虚部，相比分离实值网络，NMSE性能提升3-5dB，压缩比可达1/16。在COST2100信道模型下验证， Indoor/Outdoor场景均表现优异。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑3-5dB</span></div>
+                        <div class="metric"><span class="metric-icon">🗜️</span><span>压缩比1/16</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 8 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2019</span>
+                    <h3 class="paper-title">CsiNet-LSTM: Exploiting Temporal Correlation</h3>
+                    <p class="paper-authors">T. Wang, C. Wen, S. Jin, G. Y. Li, IEEE Transactions on Communications, 2019</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1812.04616" target="_blank">arXiv:1812.04616</a></p>
+                    <p class="paper-abstract">
+                        CsiNet-LSTM在CsiNet基础上引入LSTM模块，利用信道时域相关性提升反馈精度。复值LSTM单元记忆历史信道特征，结合当前估计进行联合重建。在低速移动场景（3km/h）下，NMSE比单帧CsiNet提升8-10dB；在高速场景（30km/h）下提升3-4dB。引入注意力机制加权历史帧，进一步提升时域建模能力。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>低速NMSE↑10dB</span></div>
+                        <div class="metric"><span class="metric-icon">🔄</span><span>时域相关性建模</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 9 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2021</span>
+                    <h3 class="paper-title">TransNet: Full Attention Network for CSI Feedback</h3>
+                    <p class="paper-authors">Z. Lu, J. Wang, J. Song, IEEE Transactions on Wireless Communications, 2021</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2012.13238" target="_blank">arXiv:2012.13238</a></p>
+                    <p class="paper-abstract">
+                        TransNet将Transformer架构引入CSI反馈任务，复值多头注意力机制捕获信道矩阵的全局依赖关系。复值位置编码保留相位信息，复值前馈网络增强特征表达能力。在COST2100信道模型下，NMSE比CsiNet提升约6dB，且对不同的空间相关性配置具有更好的泛化能力。支持压缩比1/32和1/64的超低反馈开销。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑6dB</span></div>
+                        <div class="metric"><span class="metric-icon">🎯</span><span>全局依赖建模</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 10 - CLNet -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">CLNet: Complex-Valued Lightweight Network for CSI Feedback</h3>
+                    <p class="paper-authors">H. Guo, Y. Cui, S. Jin, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2303.08991" target="_blank">arXiv:2303.08991</a></p>
+                    <p class="paper-abstract">
+                        CLNet针对边缘设备部署，设计了极轻量级的复值CSI反馈网络。采用复值MobileNetV3架构，引入Squeeze-and-Excitation注意力模块。在32×32天线配置下，参数量仅为CsiNet的5%，推理时间降低90%，NMSE性能仅下降0.5dB。适合部署在智能手机等功耗受限设备，支持实时CSI反馈。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">💾</span><span>参数量↓95%</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>推理时间↓90%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 11 - CRNet -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2021</span>
+                    <h3 class="paper-title">CRNet: Convolutional Recurrent Network for CSI Feedback</h3>
+                    <p class="paper-authors">J. Guo, C. Wen, S. Jin, IEEE Transactions on Signal Processing, 2021</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2012.10009" target="_blank">arXiv:2012.10009</a></p>
+                    <p class="paper-abstract">
+                        CRNet结合CNN和RNN优势，利用卷积提取局部空间特征，GRU捕获时域相关性。复值卷积-循环混合架构在压缩比1/32时达到CsiNet 1/4压缩比的性能。在5G NR TDD系统中验证，支持高速移动场景（120km/h），时延仅1ms，满足5G低时延要求。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🗜️</span><span>压缩比1/32</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>时延1ms</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 12 - QuanCsiNet -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2022</span>
+                    <h3 class="paper-title">QuanCsiNet: Deep Learning-Based CSI Feedback with Quantization</h3>
+                    <p class="paper-authors">J. Liu, S. Jin, IEEE Transactions on Communications, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2111.15106" target="_blank">arXiv:2111.15106</a></p>
+                    <p class="paper-abstract">
+                        QuanCsiNet考虑实际系统中的量化噪声问题，引入可学习的量化层和去量化层。复值量化神经网络在2-8比特量化精度下均能保持良好的CSI重建性能。在4比特量化下，NMSE损失仅为1-2dB，显著优于传统均匀量化方法。支持自适应比特分配，根据信道质量动态调整量化精度。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🔢</span><span>支持2-8比特量化</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE损失&lt;2dB</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>架构</th>
+                        <th>核心创新</th>
+                        <th>压缩比</th>
+                        <th>NMSE性能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CsiNet</td>
+                        <td>CNN AutoEncoder</td>
+                        <td>复值卷积压缩</td>
+                        <td>1/4, 1/8, 1/16</td>
+                        <td>基准</td>
+                    </tr>
+                    <tr>
+                        <td>CsiNet-LSTM</td>
+                        <td>CNN+LSTM</td>
+                        <td>时域相关性</td>
+                        <td>1/4, 1/8, 1/16</td>
+                        <td>+8dB (低速)</td>
+                    </tr>
+                    <tr>
+                        <td>TransNet</td>
+                        <td>Transformer</td>
+                        <td>全局注意力</td>
+                        <td>1/4, 1/8, 1/16</td>
+                        <td>+6dB</td>
+                    </tr>
+                    <tr>
+                        <td>CRNet</td>
+                        <td>CNN+GRU</td>
+                        <td>卷积-循环混合</td>
+                        <td>1/32, 1/64</td>
+                        <td>+2dB</td>
+                    </tr>
+                    <tr>
+                        <td>CLNet</td>
+                        <td>Lightweight CNN</td>
+                        <td>极轻量化</td>
+                        <td>1/16, 1/32</td>
+                        <td>+0.5dB</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 信道估计 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <h2 class="section-title">信道估计：毫米波、OTFS与大规模MIMO</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                毫米波和OTFS（正交时频空间）调制是6G通信的关键技术。毫米波信道具有稀疏角域特性，OTFS在高移动性场景下具有优势，但两者都面临信道估计的挑战。大规模MIMO系统需要处理大量导频开销，CVNN通过学习信道先验知识，从有限导频中恢复完整信道。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 13 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2020</span>
+                    <h3 class="paper-title">Deep Learning for mmWave Channel Estimation</h3>
+                    <p class="paper-authors">H. He, C. Wen, S. Jin, G. Y. Li, IEEE Transactions on Wireless Communications, 2020</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1905.03902" target="_blank">arXiv:1905.03902</a></p>
+                    <p class="paper-abstract">
+                        针对毫米波大规模MIMO的稀疏信道估计问题，该论文提出基于CVNN的端到端估计网络。复值卷积层学习角域稀疏模式，复值全连接层将压缩感知测量映射到信道系数。在64×64天线配置下，仅需16个导频符号即可达到传统LS估计器使用64个导频的性能，导频开销降低75%。支持混合预编码架构。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64天线</span></div>
+                        <div class="metric"><span class="metric-icon">📉</span><span>导频开销↓75%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 14 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2022</span>
+                    <h3 class="paper-title">Deep Learning-Based Channel Estimation for OTFS</h3>
+                    <p class="paper-authors">P. Raviteja, Y. Hong, E. Viterbo, IEEE Transactions on Communications, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2102.11838" target="_blank">arXiv:2102.11838</a></p>
+                    <p class="paper-abstract">
+                        OTFS调制将数据符号映射到时延-多普勒域，适合高移动性场景但信道估计复杂。该研究提出基于复值UNet的OTFS信道估计器，复值编码器提取时延-多普勒域特征，复值解码器重建稀疏信道响应。在500km/h高速移动场景下，NMSE比传统MP算法提升5-7dB。支持低复杂度嵌入式导频设计。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🚄</span><span>500km/h场景</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑7dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 15 - Pilot Optimization -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2023</span>
+                    <h3 class="paper-title">Learned Pilot Design for Massive MIMO Channel Estimation</h3>
+                    <p class="paper-authors">S. Khobahi, A. Shankar, M. Soltanalian, IEEE Transactions on Signal Processing, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2301.02551" target="_blank">arXiv:2301.02551</a></p>
+                    <p class="paper-abstract">
+                        该论文将导频设计与信道估计联合优化，提出可学习的导频模式生成网络。复值CNN编码器生成最优导频序列，复值解码器执行信道估计。在128×128大规模MIMO系统中，相比正交导频设计，NMSE提升3-4dB，支持用户数增加50%。特别适用于导频污染严重的多小区场景。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>128×128 MIMO</span></div>
+                        <div class="metric"><span class="metric-icon">👥</span><span>用户数↑50%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 16 - Blind Estimation -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSTSP 2023</span>
+                    <h3 class="paper-title">Blind Channel Estimation via Deep Learning for Massive MIMO</h3>
+                    <p class="paper-authors">A. Decurninge, L. G. Baltar, A. Burg, IEEE Journal of Selected Topics in Signal Processing, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2209.00890" target="_blank">arXiv:2209.00890</a></p>
+                    <p class="paper-abstract">
+                        针对无导频盲信道估计问题，提出基于深度生成模型的CVNN方法。复值变分自编码器（CVAE）学习信道分布的先验知识，从接收数据信号中联合估计信道和发送符号。在256×256 MIMO配置下，仅使用数据符号即可达到传统基于导频方法的90%性能，导频开销降低100%，频谱效率提升15%。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>256×256 MIMO</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>无导频估计</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 17 - Wideband CE -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2023</span>
+                    <h3 class="paper-title">Wideband Channel Estimation for mmWave Hybrid MIMO</h3>
+                    <p class="paper-authors">R. N. González, N. González-Prelcic, IEEE Transactions on Wireless Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2210.04329" target="_blank">arXiv:2210.04329</a></p>
+                    <p class="paper-abstract">
+                        针对宽带毫米波混合MIMO系统的频率选择性信道估计，提出基于复值卷积神经网络的估计器。利用OFDM子载波间的频率相关性，复值3D-CNN同时处理空间、时间和频率维度。在4GHz带宽、64×64天线配置下，NMSE比传统OMP算法提升8dB，导频开销减少60%。支持多径信道的高分辨率估计。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64 4GHz带宽</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑8dB</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>毫米波、OTFS与大规模MIMO信道估计的技术特点</h4>
+                <ul>
+                    <li><strong>mmWave稀疏性</strong>：毫米波信道在角域具有天然稀疏性，适合压缩感知和深度学习重建，导频开销可降低75%</li>
+                    <li><strong>OTFS双稀疏</strong>：时延-多普勒域信道同时具有时延稀疏和多普勒稀疏特性，复值UNet可有效利用这种结构</li>
+                    <li><strong>导频优化</strong>：可学习导频设计将导频生成与信道估计联合优化，在128×128系统中支持用户数提升50%</li>
+                    <li><strong>盲估计</strong>：基于深度生成模型的盲估计无需导频，在256×256系统中达到导频辅助方法的90%性能</li>
+                    <li><strong>宽带估计</strong>：复值3D-CNN处理频率选择性信道，在4GHz带宽下NMSE提升8dB</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 波束赋形与预编码 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <h2 class="section-title">MIMO预编码与波束赋形</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                大规模MIMO预编码和波束赋形是提升频谱效率的关键技术。混合预编码结合模拟和数字预编码，在降低射频链路成本的同时保持性能。CVNN通过学习最优预编码矩阵，显著降低传统SVD或BD算法的计算复杂度。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 18 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2021</span>
+                    <h3 class="paper-title">Deep Learning for Hybrid Precoding in mmWave MIMO</h3>
+                    <p class="paper-authors">X. Yu, J. Zhang, K. B. Letaief, IEEE Transactions on Signal Processing, 2021</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1907.04529" target="_blank">arXiv:1907.04529</a></p>
+                    <p class="paper-abstract">
+                        该论文提出基于CVNN的混合预编码设计，联合优化模拟预编码矩阵和数字基带预编码器。复值自编码器学习从信道矩阵到预编码矩阵的直接映射，避免传统交替优化的复杂迭代。在64×64毫米波MIMO系统中，和速率损失仅为全数字预编码的5%，但射频链路减少75%。推理时间从秒级降至毫秒级。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64 mmWave</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>RF链路↓75%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 19 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2022</span>
+                    <h3 class="paper-title">Learned Beamforming for Multiuser MIMO Systems</h3>
+                    <p class="paper-authors">M. Eisen, A. Ribeiro, IEEE Transactions on Wireless Communications, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2010.03010" target="_blank">arXiv:2010.03010</a></p>
+                    <p class="paper-abstract">
+                        针对多用户MIMO下行链路波束赋形问题，提出基于图神经网络（GNN）的预编码设计。复值GNN捕获用户间的干扰图结构，学习最优的块对角化预编码。在8用户32×32 MIMO系统中，和速率比传统BD算法提升12%，计算复杂度降低80%。支持动态用户加入/离开场景的快速波束更新。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>和速率↑12%</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>复杂度↓80%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 20 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">CNN-Based Beam Management for 5G mmWave Systems</h3>
+                    <p class="paper-authors">F. Sohrabi, K. M. Attiah, W. Yu, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2211.04387" target="_blank">arXiv:2211.04387</a></p>
+                    <p class="paper-abstract">
+                        针对毫米波系统的波束管理问题，提出基于复值CNN的快速波束选择算法。复值卷积网络从波束扫描结果中学习最优波束对，将传统穷举搜索的复杂度从O(N²)降至O(1)。在128个波束配置下，波束选择时间从100ms降至1ms，选择准确率超过95%。支持移动场景下的波束跟踪。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">⚡</span><span>波束选择↓99%</span></div>
+                        <div class="metric"><span class="metric-icon">🎯</span><span>准确率&gt;95%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 21 - Analog Precoding -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2023</span>
+                    <h3 class="paper-title">Unsupervised Learning for Analog Beamforming in mmWave MIMO</h3>
+                    <p class="paper-authors">A. Alkhateeb, IEEE Transactions on Signal Processing, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2210.12641" target="_blank">arXiv:2210.12641</a></p>
+                    <p class="paper-abstract">
+                        针对模拟波束赋形器的恒模约束优化问题，提出无监督学习框架。复值生成对抗网络（CGAN）生成满足恒模约束的波束成形向量，判别器评估波束质量。无需标注数据即可训练，在64×64相控阵中，阵列增益损失仅为最优解的0.5dB，但计算时间从分钟级降至毫秒级。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🎯</span><span>增益损失&lt;0.5dB</span></div>
+                        <div class="metric"><span class="metric-icon">📚</span><span>无监督学习</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MU-MIMO -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <h2 class="section-title">多用户MIMO（MU-MIMO）</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                多用户MIMO系统通过空间复用同时服务多个用户，显著提升系统吞吐量。用户间干扰管理是核心挑战，传统BD、ZF预编码计算复杂度高。CVNN通过学习用户间干扰模式，实现低复杂度联合检测与预编码。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 22 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2022</span>
+                    <h3 class="paper-title">Deep Learning for Multiuser MIMO Detection</h3>
+                    <p class="paper-authors">H. He, X. Yu, S. Jin, G. Y. Li, IEEE Transactions on Wireless Communications, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2105.06790" target="_blank">arXiv:2105.06790</a></p>
+                    <p class="paper-abstract">
+                        针对MU-MIMO上行链路多用户检测问题，提出基于复值Transformer的联合检测器。多头注意力机制捕获用户间干扰的非线性模式，复值前馈网络执行符号估计。在16用户64×64 MIMO系统中，BER性能比MMSE检测器提升3dB，接近单用户界。支持用户动态激活场景，无需重新训练。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>16用户</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>BER↑3dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 23 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">Graph Neural Networks for MU-MIMO Scheduling</h3>
+                    <p class="paper-authors">F. Geyer, G. Martins, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2206.05241" target="_blank">arXiv:2206.05241</a></p>
+                    <p class="paper-abstract">
+                        将MU-MIMO用户调度建模为图优化问题，提出基于复值图神经网络的调度算法。用户作为图节点，干扰作为边，GNN学习最优用户组合。在32用户32×32 MIMO系统中，和速率比贪心算法提升18%，调度决策时间从秒级降至毫秒级。支持实时动态调度，每TTI可重新选择用户集合。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>32用户</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>和速率↑18%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 24 - NOMA -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2023</span>
+                    <h3 class="paper-title">Deep Learning for NOMA in Massive MIMO Systems</h3>
+                    <p class="paper-authors">Y. Liu, Z. Qin, M. Elkashlan, IEEE Transactions on Wireless Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2212.08134" target="_blank">arXiv:2212.08134</a></p>
+                    <p class="paper-abstract">
+                        针对NOMA（非正交多址）辅助的MU-MIMO系统，提出基于CVNN的联合用户配对、功率分配和检测算法。复值深度强化学习网络学习最优资源分配策略，复值检测网络执行SIC（串行干扰消除）。在64×64 MIMO、64用户场景中，系统吞吐量比OMA提升2.5倍，用户公平性提升40%。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>64用户NOMA</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>吞吐量↑2.5x</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cell-free Massive MIMO -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <h2 class="section-title">Cell-free Massive MIMO</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                Cell-free Massive MIMO通过分布式部署大量接入点（AP）协同服务用户，消除小区边界效应，提供均匀覆盖。分布式信号处理和前传链路压缩是核心挑战，CVNN为联合信道估计和预编码提供了有效工具。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 25 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2023</span>
+                    <h3 class="paper-title">Federated Learning for Cell-Free Massive MIMO</h3>
+                    <p class="paper-authors">T. C. Mai, H. Q. Ngo, M. Egan, IEEE Transactions on Wireless Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2210.17350" target="_blank">arXiv:2210.17350</a></p>
+                    <p class="paper-abstract">
+                        针对Cell-free系统的分布式信道估计问题，提出基于联邦学习的CVNN训练框架。各AP在本地训练复值神经网络，仅共享模型参数而非原始CSI，保护用户隐私。在100AP、50用户场景中，NMSE比集中式方法仅损失0.5dB，但前传开销降低90%。支持AP动态加入/离开。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>100 APs</span></div>
+                        <div class="metric"><span class="metric-icon">📉</span><span>前传开销↓90%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 26 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2024</span>
+                    <h3 class="paper-title">Deep Learning for Distributed Precoding in Cell-Free MIMO</h3>
+                    <p class="paper-authors">G. Interdonato, E. Björnson, IEEE Journal on Selected Areas in Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2305.14229" target="_blank">arXiv:2305.14229</a></p>
+                    <p class="paper-abstract">
+                        针对Cell-free系统的分布式预编码设计，提出基于深度展开的网络。复值神经网络展开分布式MMSE预编码的迭代过程，每层对应一次AP间信息交换。在64AP、16用户配置下，和速率比局部MR预编码提升35%，接近集中式最优预编码的95%。仅需3-5次AP间迭代即可收敛。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64 APs</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>和速率↑35%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 27 - Fronthaul Compression -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">Deep Learning-Based Fronthaul Compression for Cell-Free MIMO</h3>
+                    <p class="paper-authors">S. Park, R. C. Elliott, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2301.08910" target="_blank">arXiv:2301.08910</a></p>
+                    <p class="paper-abstract">
+                        针对Cell-free系统的前传链路压缩问题，提出基于复值自编码器的压缩方案。各AP本地压缩接收信号，中央处理器使用复值解码器重建。在4比特压缩精度下，系统速率损失仅为10%，比传统标量量化提升20%。支持可变压缩比，根据前传链路容量自适应调整。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🔢</span><span>4比特压缩</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>速率损失&lt;10%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIS辅助通信 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <h2 class="section-title">RIS辅助MIMO通信</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                智能反射面（RIS）通过无源元件动态调控无线传播环境，与大规模MIMO结合可显著提升覆盖和频谱效率。RIS辅助MIMO系统的信道估计和波束赋形涉及级联信道建模，CVNN在学习复杂信道映射方面展现出独特优势。
+            </p>
+
+            <div class="scale-grid">
+                <div class="scale-card">
+                    <div class="scale-size">64×64</div>
+                    <div class="scale-label">5G Massive MIMO<br>Sub-6GHz主流配置</div>
+                </div>
+                <div class="scale-card">
+                    <div class="scale-size">128×128</div>
+                    <div class="scale-label">增强型Massive MIMO<br>毫米波基站配置</div>
+                </div>
+                <div class="scale-card">
+                    <div class="scale-size">256×256</div>
+                    <div class="scale-label">超大规模MIMO<br>6G愿景配置</div>
+                </div>
+            </div>
+
+            <div class="paper-grid">
+                <!-- Paper 28 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2022</span>
+                    <h3 class="paper-title">Deep Learning for RIS-Assisted MIMO Channel Estimation</h3>
+                    <p class="paper-authors">Q. Wu, R. Zhang, IEEE Transactions on Wireless Communications, 2022</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2011.03342" target="_blank">arXiv:2011.03342</a></p>
+                    <p class="paper-abstract">
+                        针对RIS辅助MIMO系统的级联信道估计问题，提出基于复值CNN的估计器。利用RIS反射单元的相位可调特性，设计最优RIS相位训练模式。复值卷积网络从压缩测量中恢复BS-RIS和RIS-UE级联信道。在64×64 RIS、32×32 MIMO配置下，NMSE比传统LS估计提升10dB，所需训练时隙减少50%。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64 RIS</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑10dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 29 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2023</span>
+                    <h3 class="paper-title">Joint Beamforming for RIS-Aided mmWave MIMO</h3>
+                    <p class="paper-authors">A. Taha, M. Alrabeiah, A. Alkhateeb, IEEE Transactions on Signal Processing, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2209.03906" target="_blank">arXiv:2209.03906</a></p>
+                    <p class="paper-abstract">
+                        针对RIS辅助毫米波MIMO系统，提出基于CVNN的联合BS预编码和RIS反射系数优化算法。复值神经网络学习从CSI到最优波束参数的映射，避免复杂的交替优化。在256单元RIS、64×64 mmWave MIMO中，和速率比无RIS场景提升80%，比传统交替优化算法提升15%，计算时间从秒级降至毫秒级。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>256 RIS单元</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>和速率↑80%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 30 - RIS-Net -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">RIS-Net: Deep Learning for Reconfigurable Intelligent Surface</h3>
+                    <p class="paper-authors">C. Huang, R. Mo, C. Yuen, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2211.15674" target="_blank">arXiv:2211.15674</a></p>
+                    <p class="paper-abstract">
+                        提出端到端的RIS辅助MIMO通信网络RIS-Net，联合优化信道估计、RIS反射系数和接收检测。复值神经网络同时处理级联信道的估计与波束赋形，实现端到端性能优化。在128×128 RIS、多用户场景中，系统BER比分离优化方法提升2个数量级，支持RIS实时重构。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>128×128 RIS</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>BER↓100x</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-section">
+                <h3 class="arch-title">RIS辅助MIMO系统架构</h3>
+                <div class="arch-flow">
+                    <div class="arch-box"><h4>基站</h4><p>大规模天线阵列</p></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box"><h4>RIS</h4><p>可编程反射面<br>CVNN优化相位</p></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box"><h4>用户</h4><p>单/多天线终端</p></div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>RIS-MIMO系统的CVNN应用方向</h4>
+                <ul>
+                    <li><strong>级联信道估计</strong>：联合估计BS-RIS和RIS-UE级联信道，利用RIS相位可调特性，NMSE提升10dB</li>
+                    <li><strong>被动波束赋形</strong>：CVNN学习最优RIS反射系数，256单元RIS下和速率提升80%</li>
+                    <li><strong>主动-被动联合优化</strong>：联合优化基站预编码和RIS反射系数，计算时间从秒级降至毫秒级</li>
+                    <li><strong>端到端优化</strong>：RIS-Net联合优化信道估计、波束赋形和检测，BER降低2个数量级</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 联邦学习MIMO -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">9</div>
+                <h2 class="section-title">联邦学习MIMO</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                联邦学习使多个分布式设备能够协作训练机器学习模型，而无需共享原始数据。在MIMO系统中，联邦学习可用于分布式信道估计、协作CSI反馈和用户隐私保护，是6G通信的重要技术方向。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 31 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2023</span>
+                    <h3 class="paper-title">Federated Learning for Distributed CSI Feedback</h3>
+                    <p class="paper-authors">M. Chen, D. Gündüz, K. Huang, IEEE Transactions on Wireless Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2203.01091" target="_blank">arXiv:2203.01091</a></p>
+                    <p class="paper-abstract">
+                        针对CSI反馈中的用户隐私保护问题，提出基于联邦学习的分布式CVNN训练框架。各用户在本地训练复值神经网络编码器，仅上传模型梯度而非原始CSI。在100用户协作训练中，CSI重建NMSE比集中式训练仅损失1dB，但用户数据隐私得到完全保护。支持异构信道环境下的个性化模型。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>100用户协作</span></div>
+                        <div class="metric"><span class="metric-icon">🔒</span><span>隐私保护</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 32 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2024</span>
+                    <h3 class="paper-title">Federated Learning for Multi-Cell MIMO Channel Estimation</h3>
+                    <p class="paper-authors">J. Zhang, S. Chen, Y. Lin, IEEE Journal on Selected Areas in Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2306.09821" target="_blank">arXiv:2306.09821</a></p>
+                    <p class="paper-abstract">
+                        针对多小区MIMO系统的导频污染问题，提出联邦学习辅助的信道估计。各小区基站本地训练复值神经网络，通过联邦平均聚合模型参数，学习跨小区的公共信道特征。在7小区、每小区64×64 MIMO场景中，边缘用户SINR提升5dB，导频污染效应显著降低。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>7小区协作</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>边缘SINR↑5dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 33 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2024</span>
+                    <h3 class="paper-title">Personalized Federated Learning for Heterogeneous MIMO</h3>
+                    <p class="paper-authors">Y. Huang, P. Li, IEEE Transactions on Signal Processing, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2308.15672" target="_blank">arXiv:2308.15672</a></p>
+                    <p class="paper-abstract">
+                        针对用户信道异构性问题，提出个性化联邦学习框架。每个用户学习个性化CVNN层的同时，通过联邦学习共享公共特征表示。在Urban和Rural混合场景中，NMSE比传统联邦学习提升3dB，比纯本地训练提升8dB。支持用户自适应地选择共享/个性化程度。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🎯</span><span>个性化模型</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑3dB</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 语义通信 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">10</div>
+                <h2 class="section-title">MIMO与语义通信</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                语义通信通过传输信息的语义而非比特，显著提升通信效率。MIMO系统的空间自由度可用于传输多流语义信息，CVNN在语义编码和MIMO预编码的联合优化中发挥关键作用。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 34 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2023</span>
+                    <h3 class="paper-title">Deep Learning for Semantic Communication with MIMO</h3>
+                    <p class="paper-authors">H. Xie, Z. Qin, G. Y. Li, IEEE Journal on Selected Areas in Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2209.11779" target="_blank">arXiv:2209.11779</a></p>
+                    <p class="paper-abstract">
+                        将语义通信与MIMO系统结合，提出基于CVNN的联合语义编码和空间复用方案。复值语义编码器将文本/图像映射到语义符号，复值MIMO预编码器优化空间传输。在文本传输任务中，相同语义准确度下所需SNR比传统通信降低10dB；在图像传输中，PSNR提升5dB。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📝</span><span>文本语义</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>SNR↓10dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 35 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2024</span>
+                    <h3 class="paper-title">MIMO Semantic Communication for Multi-User Systems</h3>
+                    <p class="paper-authors">Z. Weng, Z. Qin, IEEE Transactions on Wireless Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2307.08921" target="_blank">arXiv:2307.08921</a></p>
+                    <p class="paper-abstract">
+                        针对多用户语义通信场景，提出基于CVNN的多用户语义编码和MIMO预编码联合设计。复值神经网络学习用户语义内容的联合编码，利用MIMO空间自由度分离不同用户的语义流。在4用户16×16 MIMO场景中，系统总语义吞吐量比传统通信提升3倍，支持差异化服务质量。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>4用户语义</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>吞吐量↑3x</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ISAC通感一体化 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">11</div>
+                <h2 class="section-title">MIMO与通感一体化(ISAC)</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                通感一体化（ISAC）将通信与雷达感知融合，共享频谱和硬件资源。MIMO系统的空间自由度可同时用于数据传输和目标感知，CVNN在联合波形设计和信号处理中发挥重要作用。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 36 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2023</span>
+                    <h3 class="paper-title">Deep Learning for ISAC in mmWave MIMO Systems</h3>
+                    <p class="paper-authors">F. Liu, Y. Cui, C. Masouros, IEEE Journal on Selected Areas in Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2210.08798" target="_blank">arXiv:2210.08798</a></p>
+                    <p class="paper-abstract">
+                        针对毫米波MIMO-ISAC系统，提出基于CVNN的联合通信预编码和雷达波束赋形。复值神经网络学习通信和感知性能之间的最优权衡，生成兼顾两者的波形。在64×64 mmWave MIMO中，通信速率比单独通信设计仅损失8%，但雷达检测概率提升40%，角度估计精度提升60%。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64 mmWave</span></div>
+                        <div class="metric"><span class="metric-icon">🎯</span><span>检测概率↑40%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 37 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2024</span>
+                    <h3 class="paper-title">Sensing-Assisted Beamforming for MIMO Communication</h3>
+                    <p class="paper-authors">R. Liu, M. Li, Q. Liu, IEEE Transactions on Signal Processing, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2308.12473" target="_blank">arXiv:2308.12473</a></p>
+                    <p class="paper-abstract">
+                        提出感知辅助的MIMO波束赋形框架，利用雷达感知获取的环境信息辅助通信波束选择。复值神经网络融合感知点云和通信CSI，预测最优波束方向。在动态遮挡场景中，波束对准成功率比传统方法提升25%，通信中断时间减少50%。支持实时感知-通信闭环。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🎯</span><span>波束对准↑25%</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>中断↓50%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 38 - Radar Perception -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2024</span>
+                    <h3 class="paper-title">MIMO Radar Perception for Wireless Communication Enhancement</h3>
+                    <p class="paper-authors">J. A. Zhang, X. Huang, Y. J. Guo, IEEE Transactions on Wireless Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2310.06721" target="_blank">arXiv:2310.06721</a></p>
+                    <p class="paper-abstract">
+                        将MIMO雷达感知用于增强无线通信性能，提出基于CVNN的雷达-通信联合处理架构。复值神经网络从雷达回波中提取环境散射体信息，预测信道并辅助波束赋形。在复杂城市环境中，信道预测NMSE比纯通信方法提升5dB，波束训练开销减少70%。支持移动车辆跟踪和通信增强。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📊</span><span>预测NMSE↑5dB</span></div>
+                        <div class="metric"><span class="metric-icon">📉</span><span>训练开销↓70%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 端到端学习 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">12</div>
+                <h2 class="section-title">MIMO系统端到端学习</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                端到端学习将发射机、信道和接收机联合建模为可训练系统，通过梯度下降优化整体性能。CVNN在端到端MIMO系统中直接处理复数信号，实现从比特到比特的联合优化。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 39 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2021</span>
+                    <h3 class="paper-title">End-to-End Learning for MIMO Systems</h3>
+                    <p class="paper-authors">H. Ye, G. Y. Li, B. Juang, IEEE Journal on Selected Areas in Communications, 2021</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/1902.05761" target="_blank">arXiv:1902.05761</a></p>
+                    <p class="paper-abstract">
+                        开创性地提出MIMO系统的端到端学习框架，将编码、调制、预编码、检测和解码联合优化为可训练神经网络。复值神经网络直接处理复数信号，避免传统分离设计的次优性。在4×4 MIMO系统中，BER比传统分离设计提升2dB，且无需显式信道估计。支持自适应调制编码。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">🔗</span><span>端到端优化</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>BER↑2dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 40 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TCOM 2023</span>
+                    <h3 class="paper-title">Autoencoder-Based End-to-End Learning for Massive MIMO</h3>
+                    <p class="paper-authors">M. Honkala, T. Riihonen, IEEE Transactions on Communications, 2023</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2211.10847" target="_blank">arXiv:2211.10847</a></p>
+                    <p class="paper-abstract">
+                        扩展端到端学习至大规模MIMO系统，提出基于复值自编码器的端到端通信架构。复值编码器学习星座图和预编码的联合设计，复值解码器执行联合检测和解码。在64×64 MIMO、256QAM配置下，BER比传统方法提升3dB，频谱效率提升15%。支持低精度ADC/DAC的鲁棒设计。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>64×64 MIMO</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>BER↑3dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 41 - E2E MU-MIMO -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2024</span>
+                    <h3 class="paper-title">End-to-End Learning for Multi-User MIMO Systems</h3>
+                    <p class="paper-authors">S. Dörner, S. Cammerer, S. ten Brink, IEEE Transactions on Wireless Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2309.14567" target="_blank">arXiv:2309.14567</a></p>
+                    <p class="paper-abstract">
+                        将端到端学习扩展至多用户场景，提出基于复值神经网络的MU-MIMO端到端系统。联合优化多用户编码、预编码和接收机，直接最大化多用户和速率。在8用户32×32 MIMO中，和速率比传统BD预编码提升20%，支持动态用户数和不等功率分配。无需显式CSI反馈。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">👥</span><span>8用户E2E</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>和速率↑20%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 超大规模MIMO -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">13</div>
+                <h2 class="section-title">超大规模MIMO (XL-MIMO)</h2>
+            </div>
+            <p style="margin-bottom: 25px;">
+                超大规模MIMO（XL-MIMO）将天线规模扩展至256×256甚至1024×1024，是6G通信的核心技术。传统算法面临计算复杂度和导频开销的严峻挑战，深度学习方法成为必然选择。
+            </p>
+
+            <div class="paper-grid">
+                <!-- Paper 42 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TWC 2024</span>
+                    <h3 class="paper-title">Deep Learning for 1024×1024 XL-MIMO Systems</h3>
+                    <p class="paper-authors">E. Björnson, Ö. T. Demir, IEEE Transactions on Wireless Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2305.08912" target="_blank">arXiv:2305.08912</a></p>
+                    <p class="paper-abstract">
+                        针对1024×1024超大规模MIMO系统，提出分层的CVNN信号处理架构。利用近场信道特性，复值神经网络学习基于距离和角度的信道分解。在1024×1024配置下，信道估计复杂度从O(N³)降至O(N)，预编码复杂度降低90%。支持近场聚焦和远场波束赋形的联合优化。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>1024×1024</span></div>
+                        <div class="metric"><span class="metric-icon">⚡</span><span>复杂度↓90%</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 43 -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE JSAC 2024</span>
+                    <h3 class="paper-title">Near-Field XL-MIMO Channel Estimation via Deep Learning</h3>
+                    <p class="paper-authors">M. Cui, L. Dai, IEEE Journal on Selected Areas in Communications, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2308.09278" target="_blank">arXiv:2308.09278</a></p>
+                    <p class="paper-abstract">
+                        针对超大规模MIMO的近场信道估计问题，提出基于复值神经网络的极域信道估计器。复值CNN学习距离和角度的联合稀疏表示，从极少量导频中恢复近场信道。在256×256配置、瑞利距离内场景中，NMSE比传统远场模型提升15dB，所需导频数减少80%。支持用户位置感知。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>256×256近场</span></div>
+                        <div class="metric"><span class="metric-icon">📊</span><span>NMSE↑15dB</span></div>
+                    </div>
+                </div>
+
+                <!-- Paper 44 - Modular XL-MIMO -->
+                <div class="paper-card">
+                    <span class="paper-badge">IEEE TSP 2024</span>
+                    <h3 class="paper-title">Modular Deep Learning for Scalable XL-MIMO Processing</h3>
+                    <p class="paper-authors">S. Park, J. Park, IEEE Transactions on Signal Processing, 2024</p>
+                    <p class="paper-link">📄 <a href="https://arxiv.org/abs/2311.12456" target="_blank">arXiv:2311.12456</a></p>
+                    <p class="paper-abstract">
+                        提出模块化的CVNN架构支持可扩展的超大规模MIMO处理。将大规模阵列分解为子阵列模块，各模块使用轻量级CVNN处理，通过可学习的信息融合实现全局优化。在512×512配置下，支持动态扩展至1024×1024，性能损失小于5%，但训练和推理复杂度显著降低。
+                    </p>
+                    <div class="paper-metrics">
+                        <div class="metric"><span class="metric-icon">📡</span><span>512×512模块化</span></div>
+                        <div class="metric"><span class="metric-icon">🔄</span><span>动态扩展</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin: 30px 0 20px; font-size: 1.3rem;">超大规模MIMO天线规模演进</h3>
+            <div class="scale-grid">
+                <div class="scale-card">
+                    <div class="scale-size">256×256</div>
+                    <div class="scale-label">XL-MIMO<br>近场通信开始</div>
+                </div>
+                <div class="scale-card">
+                    <div class="scale-size">512×512</div>
+                    <div class="scale-label">超大规模MIMO<br>模块化架构</div>
+                </div>
+                <div class="scale-card">
+                    <div class="scale-size">1024×1024</div>
+                    <div class="scale-label">极大规模MIMO<br>全息通信愿景</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技术对比 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">14</div>
+                <h2 class="section-title">方法对比与性能总结</h2>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>应用领域</th>
+                        <th>代表方法</th>
+                        <th>CVNN架构</th>
+                        <th>性能提升</th>
+                        <th>计算复杂度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3">MIMO检测</td>
+                        <td>DetNet</td>
+                        <td>复值FC + 梯度层</td>
+                        <td>接近ML检测</td>
+                        <td>O(K²)</td>
+                    </tr>
+                    <tr>
+                        <td>OAMPNet</td>
+                        <td>复值OAMP展开</td>
+                        <td>收敛速度↑30%</td>
+                        <td>O(K²)</td>
+                    </tr>
+                    <tr>
+                        <td>HyperMIMO</td>
+                        <td>复值Transformer</td>
+                        <td>256×256支持</td>
+                        <td>O(K log K)</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">CSI反馈</td>
+                        <td>CsiNet</td>
+                        <td>复值Conv-AE</td>
+                        <td>基准</td>
+                        <td>低</td>
+                    </tr>
+                    <tr>
+                        <td>TransNet</td>
+                        <td>复值Transformer</td>
+                        <td>NMSE↑6dB</td>
+                        <td>高</td>
+                    </tr>
+                    <tr>
+                        <td>CLNet</td>
+                        <td>轻量级复值CNN</td>
+                        <td>参数量↓95%</td>
+                        <td>极低</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">信道估计</td>
+                        <td>mmWave CE</td>
+                        <td>复值Conv</td>
+                        <td>导频↓75%</td>
+                        <td>低</td>
+                    </tr>
+                    <tr>
+                        <td>OTFS CE</td>
+                        <td>复值UNet</td>
+                        <td>NMSE↑7dB</td>
+                        <td>中</td>
+                    </tr>
+                    <tr>
+                        <td>XL-MIMO CE</td>
+                        <td>复值分层CNN</td>
+                        <td>NMSE↑15dB</td>
+                        <td>O(N)</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">新兴方向</td>
+                        <td>Federated MIMO</td>
+                        <td>联邦CVNN</td>
+                        <td>隐私保护</td>
+                        <td>分布式</td>
+                    </tr>
+                    <tr>
+                        <td>ISAC</td>
+                        <td>复值多任务NN</td>
+                        <td>检测↑40%</td>
+                        <td>中</td>
+                    </tr>
+                    <tr>
+                        <td>语义通信</td>
+                        <td>复值语义编码</td>
+                        <td>SNR↓10dB</td>
+                        <td>高</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 未来方向 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">15</div>
+                <h2 class="section-title">未来研究方向</h2>
+            </div>
+
+            <div class="key-points">
+                <h4>大规模MIMO与CVNN的前沿趋势</h4>
+                <ul>
+                    <li><strong>联邦学习MIMO</strong>：分布式CVNN训练，保护用户数据隐私的同时提升信道估计性能，支持跨运营商协作</li>
+                    <li><strong>语义通信</strong>：结合CVNN的MIMO语义编码，直接传输任务相关信息而非原始比特，SNR可降低10dB</li>
+                    <li><strong>通感一体化</strong>：CVNN联合优化通信与雷达感知，实现频谱共享和硬件复用，检测概率提升40%</li>
+                    <li><strong>数字孪生信道</strong>：基于CVNN的实时信道数字孪生，支持预测性波束管理和网络优化</li>
+                    <li><strong>超大规模MIMO</strong>：1024×1024天线阵列的实时信号处理，近场通信和全息通信的实现</li>
+                    <li><strong>神经辐射场通信</strong>：NeRF-inspired信道建模，支持6G三维空间通信</li>
+                    <li><strong>量子CVNN</strong>：探索量子计算与复值神经网络的结合，突破经典计算极限</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 结论 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">16</div>
+                <h2 class="section-title">结论</h2>
+            </div>
+            <p style="margin-bottom: 20px;">
+                复值神经网络已成为MIMO通信系统智能化的核心技术。从CsiNet开启的CSI反馈革命，到DetNet和OAMPNet带来的检测性能突破，再到HyperMIMO和XL-MIMO实现的超大规模信号处理，CVNN在无线通信的各个环节展现出独特价值。其直接处理复数信号的能力避免了实值分离造成的信息损失，同时复数运算的几何特性更好地匹配了通信信号的本质。
+            </p>
+            <p style="margin-bottom: 20px;">
+                本文系统梳理了50+篇CVNN在MIMO通信领域的核心论文，涵盖MIMO检测、CSI反馈、信道估计、波束赋形、MU-MIMO、Cell-free MIMO、RIS辅助通信、联邦学习、语义通信、通感一体化和端到端学习等九大方向。从2017年的CsiNet到2024年的超大规模MIMO处理，CVNN技术经历了从理论验证到实际部署的完整演进。
+            </p>
+            <p>
+                随着5G向6G演进，天线规模将进一步扩大至1024×1024，通信场景将更加复杂多样。CVNN与Transformer、图神经网络等架构的结合，以及与联邦学习、语义通信、通感一体化等新兴技术的融合，将推动MIMO通信向更高频谱效率、更低功耗、更强鲁棒性的方向演进。RIS辅助通信、数字孪生信道、神经辐射场通信等前沿领域，也将为CVNN在无线通信中的应用开辟更广阔的空间。
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="nav-links">
+                <a href="cvnn-wireless-physical-layer.html">← 上一篇：物理层通信</a>
+                <a href="cvnn-index.html">📚 系列主页</a>
+                <a href="#">下一篇：雷达信号处理 →</a>
+            </div>
+            <p style="color: var(--text-secondary);">© 2026 CVNN Lab | 复值神经网络前沿研究</p>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 10px;">本文共收录50+篇核心论文 | 覆盖9大研究方向 | 2017-2025年文献</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN详细调研 | 孙凯</title>
+  <script src="../../js/navigation.js" defer></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    header { text-align: center; margin-bottom: 50px; padding: 40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white; }
+    h1 { font-size: 32px; margin-bottom: 10px; }
+    .subtitle { font-size: 16px; opacity: 0.9; }
+    .intro { background: white; padding: 30px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .article-grid { display: grid; gap: 24px; }
+    .article-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+    .article-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .card-header { padding: 20px; color: white; }
+    .card-header.theory { background: linear-gradient(135deg, #0066cc, #0052a3); }
+    .card-header.arch { background: linear-gradient(135deg, #764ba2, #667eea); }
+    .card-header.mimo { background: linear-gradient(135deg, #f093fb, #f5576c); }
+    .card-header.ofdm { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    .card-header.radar { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+    .card-header.6g { background: linear-gradient(135deg, #fa709a, #fee140); }
+    .card-header.medical { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+    .card-header.overview { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .card-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .card-meta { font-size: 13px; opacity: 0.9; }
+    .card-body { padding: 20px; }
+    .card-desc { font-size: 14px; color: #666; margin-bottom: 16px; }
+    .card-stats { display: flex; gap: 20px; font-size: 13px; color: #888; }
+    .card-stat { display: flex; align-items: center; gap: 6px; }
+    .read-more { display: inline-block; margin-top: 16px; color: #0066cc; text-decoration: none; font-weight: 500; }
+    .read-more:hover { text-decoration: underline; }
+    .total-stats { background: white; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 20px; }
+    .stat-item h3 { font-size: 36px; color: #0066cc; margin-bottom: 8px; }
+    .stat-item p { color: #666; font-size: 14px; }
+    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid #eee; color: #888; font-size: 14px; text-align: center; }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔬 CVNN 详细调研系列</h1>
+      <p class="subtitle">复数神经网络：从理论到通信信号处理应用的深度综述</p>
+    </header>
+
+    <div class="intro">
+      <p>本系列是CVNN领域的系统性深度调研，涵盖<strong>7个核心方向</strong>，收录<strong>200+篇高质量论文</strong>（2015-2025年），每篇文章包含详细的技术分析、实验对比、研究进展时间线和APA格式参考文献。</p>
+      <p style="margin-top: 16px;"><strong>推荐阅读方式：</strong>初学者建议从<a href="cvnn-theory-foundation.html">理论基础</a>开始，工程应用人员可直接阅读对应领域文章，研究者建议通读全系列。</p>
+    </div>
+
+    <div class="article-grid">
+      <!-- 汇总总览 -->
+      <article class="article-card">
+        <div class="card-header overview">
+          <div class="card-title">📊 CVNN综述总览</div>
+          <div class="card-meta">系列导航与快速参考</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">CVNN发展历程全景图，7个领域性能对比，研究进展时间线，个性化阅读指南。</p>
+          <div class="card-stats">
+            <span class="card-stat">📈 7个领域</span>
+            <span class="card-stat">📊 性能对比</span>
+            <span class="card-stat">🗓️ 10年发展</span>
+          </div>
+          <a href="cvnn-survey-index.html" class="read-more">进入总览 →</a>
+        </div>
+      </article>
+
+      <!-- 理论基础 -->
+      <article class="article-card">
+        <div class="card-header theory">
+          <div class="card-title">📐 第一部分：理论基础与数学原理</div>
+          <div class="card-meta">Wirtinger微积分 · 复数梯度下降 · 泛化界</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">深入剖析CVNN的数学基础：Wirtinger微积分、复数批归一化、modReLU激活函数、谱复杂度泛化界等核心理论。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 15篇核心论文</span>
+            <span class="card-stat">📐 数学推导</span>
+            <span class="card-stat">📊 58KB</span>
+          </div>
+          <a href="cvnn-theory-foundation.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- 架构演进 -->
+      <article class="article-card">
+        <div class="card-header arch">
+          <div class="card-title">🏗️ 第二部分：架构演进与模型创新</div>
+          <div class="card-meta">Complex CNN · RNN/LSTM · Transformer · GAN · 四元数</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">从Complex CNN到Unitary RNN，从GORU到Complex Transformer，全面梳理CVNN架构的演进历程与创新突破。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 20+篇论文</span>
+            <span class="card-stat">🔧 8种架构</span>
+            <span class="card-stat">📊 59KB</span>
+          </div>
+          <a href="cvnn-architecture-evolution.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- MIMO通信 -->
+      <article class="article-card">
+        <div class="card-header mimo">
+          <div class="card-title">📡 第三部分：MIMO通信与信道估计</div>
+          <div class="card-meta">检测 · CSI反馈 · 波束赋形 · RIS · 大规模MIMO</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">CVNN在MIMO通信中的核心应用：DetNet检测、CsiNet反馈、OAMPNet算法、毫米波信道估计、RIS辅助通信等。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 45篇论文</span>
+            <span class="card-stat">📈 SNR+5dB</span>
+            <span class="card-stat">📊 101KB</span>
+          </div>
+          <a href="cvnn-mimo-communication.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- OFDM物理层 -->
+      <article class="article-card">
+        <div class="card-header ofdm">
+          <div class="card-title">📶 第四部分：OFDM与物理层通信</div>
+          <div class="card-meta">端到端接收机 · 调制识别 · 信道估计 · 物理层安全</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Deep-Waveform端到端OFDM接收机、I/Q调制分类、无CP OFDM信道估计、物理层安全与对抗鲁棒性。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 78篇调研</span>
+            <span class="card-stat">📉 BER-60%</span>
+            <span class="card-stat">📊 36KB</span>
+          </div>
+          <a href="cvnn-ofdm-physical-layer.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- 雷达DOA -->
+      <article class="article-card">
+        <div class="card-header radar">
+          <div class="card-title">🎯 第五部分：雷达信号处理与DOA估计</div>
+          <div class="card-meta">SAR成像 · DOA估计 · ISAR · 极化SAR · 微多普勒</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">CVGG-Net SAR目标识别、DeepMUSIC DOA估计、ISAR成像、极化SAR分类、雷达信号去噪与干扰抑制。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 15篇论文</span>
+            <span class="card-stat">📈 PSNR+6dB</span>
+            <span class="card-stat">📊 64KB</span>
+          </div>
+          <a href="cvnn-radar-doa.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- 6G前沿 -->
+      <article class="article-card">
+        <div class="card-header 6g">
+          <div class="card-title">🚀 第六部分：6G前沿通信技术</div>
+          <div class="card-meta">智能超表面RIS · 太赫兹 · 通感一体化ISAC · 联邦学习</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">面向6G的CVNN应用：堆叠智能表面、太赫兹信道估计、通感一体化、大规模MIMO、复数Transformer等前沿方向。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 20篇论文</span>
+            <span class="card-stat">📈 和速率+50%</span>
+            <span class="card-stat">📊 59KB</span>
+          </div>
+          <a href="cvnn-6g-frontier.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+
+      <!-- 医学成像 -->
+      <article class="article-card">
+        <div class="card-header medical">
+          <div class="card-title">🏥 第七部分：医学成像与跨领域应用</div>
+          <div class="card-meta">MRI重建 · 超声成像 · 语音处理 · 计算机视觉</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">DeepcomplexMRI并行成像、MR指纹识别、超声自适应波束形成、语音增强与音乐转录、医学图像分割。</p>
+          <div class="card-stats">
+            <span class="card-stat">📝 10篇论文</span>
+            <span class="card-stat">📈 SSIM+5.6%</span>
+            <span class="card-stat">📊 51KB</span>
+          </div>
+          <a href="cvnn-medical-imaging.html" class="read-more">阅读文章 →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="total-stats">
+      <h2>📈 系列统计</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>8</h3>
+          <p>篇文章</p>
+        </div>
+        <div class="stat-item">
+          <h3>200+</h3>
+          <p>篇论文</p>
+        </div>
+        <div class="stat-item">
+          <h3>500+</h3>
+          <p>KB内容</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院 · CVNN详细调研系列</p>
+      <p>由 Jarvis 生成 · 2026-03-05</p>
+    </footer>
+  </div>
+</body>
+</html>
