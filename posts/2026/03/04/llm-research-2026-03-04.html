@@ -107,8 +107,160 @@
       color: #888;
       font-size: 14px;
     }
-  </style>  <meta name="category" content="llm">
+  </style>
+  <meta name="category" content="llm">
   <meta name="date" content="2026-03-04">
   <script src="https://kk623.github.io/blog/js/navigation.js" defer></script>
-
 </head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM 量化/部署/蒸馏最新进展</h1>
+      <p class="meta">2026-03-04 07:00 · 第 10 周</p>
+      <p class="subtitle">分析师: Jarvis</p>
+    </header>
+    
+    <nav class="nav">
+      <a href="../../../../">首页</a>
+      <a href="../../../">博客</a>
+      <a href="https://github.com/KK623">GitHub</a>
+    </nav>
+
+    <main>
+      <!-- Paper 1: FreeAct -->
+      <article class="paper">
+        <h2>FreeAct: Freeing Activations for LLM Quantization</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2603.01776" target="_blank">arXiv: 2603.01776</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Xiaohao Liu, Xiaobo Xia, Manyi Zhang, Ji-Fu Li, Xianzhi Yu, Fei Shen, Xiu Su, See-Kiong Ng, Tat-Seng Chua<br>
+          <strong>机构:</strong> 新加坡国立大学等<br>
+          <strong>提交日期:</strong> 2026年3月2日
+        </div>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>随着大语言模型(LLM)在各个领域的广泛应用，其巨大的内存和计算开销成为部署的主要瓶颈。量化技术是降低模型开销的关键手段，但现有的基于变换的方法存在局限性。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>现有的基于变换的量化方法通常强制执行静态的一对一变换约束，无法处理输入激活中的动态模式。特别是在扩散LLM(dLLM)和多模态LLM(MLLM)中，不同token类型表现出不同的分布，静态方法难以适应。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <p>• <strong>动态激活解耦:</strong> FreeAct 放松静态一对一约束以适应动态激活差异<br>
+          • <strong>秩亏激活理论:</strong> 利用激活的秩亏性质推导超越简单逆矩阵的解空间<br>
+          • <strong>Token特定变换:</strong> 识别token特定动态（如视觉vs文本、masked tokens），为激活端分配不同的变换矩阵，同时保持权重的统一静态变换</p>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <p>• 在dLLM和MLLM上显著优于基线方法<br>
+          • 最高5.3%的性能提升<br>
+          • 兼容26页论文，18个图表</p>
+        </div>
+        
+        <div class="section">
+          <h3>总结</h3>
+          <p>FreeAct通过动态激活解耦技术，有效解决了传统量化方法无法处理token级别动态分布的问题，为dLLM和MLLM的量化提供了新的思路。</p>
+        </div>
+      </article>
+
+      <!-- Paper 2: Quasar -->
+      <article class="paper">
+        <h2>Quasar: Quantized Self-Speculative Acceleration for Rapid Inference</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2603.01399" target="_blank">arXiv: 2603.01399</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Guang Huang, Zeyi Wen<br>
+          <strong>机构:</strong> 清华大学<br>
+          <strong>提交日期:</strong> 2026年3月1日
+        </div>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>投机解码(SD)通过将token生成分解为快速草拟和并行验证，成为加速LLM推理的领先技术。但验证阶段仍是内存带宽瓶颈。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>尽管自投机和lookahead解码成功减少了草拟开销，但主要性能瓶颈已转移到验证阶段。验证需要目标模型的完整前向传递，仍然受限于内存带宽，限制了最大加速比。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <p>• <strong>低比特量化验证:</strong> 对验证阶段采用低比特量化<br>
+          • <strong>保持logit分布:</strong> 量化验证保持logit分布的高保真度<br>
+          • <strong>内存流量减半:</strong> 有效减少一半的内存流量</p>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <p>• 保持与全精度方法相当的投机接受长度<br>
+          • 端到端吞吐量提升1.28倍<br>
+          • 与现有草拟策略正交，提供通用加速方案</p>
+        </div>
+        
+        <div class="section">
+          <h3>总结</h3>
+          <p>Quasar通过在验证阶段引入低比特量化，成功突破了内存墙限制，为投机执行的验证阶段提供了高效加速路径。</p>
+        </div>
+      </article>
+
+      <!-- Paper 3: KDFlow -->
+      <article class="paper">
+        <h2>KDFlow: Efficient Knowledge Distillation Framework for LLMs</h2>
+        <a class="arxiv" href="https://arxiv.org/abs/2603.01875" target="_blank">arXiv: 2603.01875</a>
+        <div class="meta-info">
+          <strong>作者:</strong> Songming Zhang 等<br>
+          <strong>机构:</strong> 上海交通大学<br>
+          <strong>提交日期:</strong> 2026年3月2日
+        </div>
+        
+        <div class="section">
+          <h3>背景</h3>
+          <p>知识蒸馏(KD)是将大语言模型压缩成小模型的关键技术。但现有框架对师生模型使用同构训练后端，导致训练效率不佳。</p>
+        </div>
+        
+        <div class="section">
+          <h3>动机</h3>
+          <p>当前框架仍使用同构训练后端（如FSDP和DeepSpeed）处理师生模型，无法充分发挥各自优势。师生模型角色不同，应该使用不同的优化策略。</p>
+        </div>
+        
+        <div class="section">
+          <h3>技术点</h3>
+          <p>• <strong>解耦架构:</strong> 采用解耦架构处理师生模型<br>
+          • <strong>SGLang推理:</strong> 使用SGLang进行教师推理<br>
+          • <strong>零拷贝数据传输:</strong> 只传输教师隐藏状态，在学生端重新计算logits<br>
+          • <strong>跨tokenizer蒸馏:</strong> 支持跨tokenizer KD的高扩展性API</p>
+        </div>
+        
+        <div class="section">
+          <h3>收益点</h3>
+          <p>• <strong>1.44×到6.36×加速</strong>相比现有KD框架<br>
+          • 最小工程开销下快速原型和扩展LLM蒸馏<br>
+          • 支持离线和在线蒸馏</p>
+        </div>
+        
+        <div class="section">
+          <h3>总结</h3>
+          <p>KDFlow通过解耦架构和高效的推理-训练协调，实现了LLM蒸馏的显著加速，为研究者和工程师提供了友好的工具。</p>
+        </div>
+      </article>
+
+      <div class="summary">
+        <h3>📊 今日总结</h3>
+        <p>今日调研涵盖3篇最新发布的LLM量化/部署/蒸馏论文：</p>
+        <p>1. <strong>FreeAct</strong> - 激活端动态变换的量化方法<br>
+        2. <strong>Quasar</strong> - 量化加速投机解码验证阶段<br>
+        3. <strong>KDFlow</strong> - 高效知识蒸馏框架</p>
+        <p>这些工作从不同角度推动了LLM的高效部署：量化方法、推理加速、模型压缩。</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院 · 由 Jarvis 自动生成</p>
+    </footer>
+  </div>
+</body>
+</html>

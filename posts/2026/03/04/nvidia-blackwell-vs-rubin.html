@@ -207,8 +207,978 @@
       h3 { font-size: 18px; }
       .container { padding: 20px 16px; }
     }
-  </style>  <meta name="category" content="chip">
+  </style>
+  <meta name="category" content="chip">
   <meta name="date" content="2026-03-04">
   <script src="https://kk623.github.io/blog/js/navigation.js" defer></script>
-
 </head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="../../../../">← 返回首页</a>
+      <a href="../../../">博客列表</a>
+    </nav>
+
+    <header>
+      <h1>NVIDIA Blackwell vs Rubin 完整产品线深度对比分析</h1>
+      <div class="meta"><strong>发布时间</strong>: 2026-03-04 12:00 (最后更新: 2026-03-04 13:00)</div>
+      <div class="meta"><strong>分析师</strong>: Jarvis</div>
+      <div class="meta"><strong>专栏</strong>: 芯片规格分析</div>
+    </header>
+
+    <main>
+      <div class="highlight-box">
+        <p style="margin:0;"><strong>报告摘要</strong>: 本报告详细对比 NVIDIA Blackwell 和 Rubin 两代 AI 芯片架构的完整产品线，包括 GPU 单芯片、Superchip、HGX/DGX 服务器及 NVL72 机架系统的规格、算力、功耗、价格等关键指标，并标注数据来源和发布时间线。</p>
+      </div>
+
+      <!-- 第一部分：Blackwell 产品线 -->
+      <h2>第一部分：NVIDIA Blackwell 产品线详解</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2024年3月</div>
+          <p>NVIDIA GTC 2024 发布 Blackwell 架构</p>        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2024年底</div>
+          <p>Blackwell GPU 开始量产出货</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2025年</div>
+          <p>GB200 NVL72 机架系统大规模部署</p>
+        </div>
+      </div>
+
+      <h3>1.1 Blackwell GPU 单芯片规格</h3>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>B100 (推测)</th>
+          <th>B200</th>
+          <th>数据来源</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2024年</td>
+          <td>2024年</td>
+          <td>NVIDIA GTC 2024</td>
+        </tr>
+        <tr>
+          <td><strong>架构代号</strong></td>
+          <td colspan="2">Blackwell</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>制程工艺</strong></td>
+          <td colspan="2">TSMC 4NP (4nm 定制版)</td>
+          <td>TechInsights</td>
+        </tr>
+        <tr>
+          <td><strong>晶体管数量</strong></td>
+          <td>约 1,600-1,800亿</td>
+          <td>2080亿</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>Die 尺寸</strong></td>
+          <td>约 750 mm²</td>
+          <td>约 814 mm²</td>
+          <td>半导体分析机构</td>
+        </tr>
+        <tr>
+          <td><strong>显存类型</strong></td>
+          <td colspan="2">HBM3e (8Hi 堆叠)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>显存容量</strong></td>
+          <td>约 144-160GB</td>
+          <td>192GB</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>显存带宽</strong></td>
+          <td>约 6-7 TB/s</td>
+          <td>8 TB/s</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 10 petaFLOPS (估算)</td>
+          <td><strong>20 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
+          <td>约 5 petaFLOPS (估算)</td>
+          <td><strong>10 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 5 petaFLOPS (估算)</td>
+          <td><strong>10 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
+          <td>约 2.5 petaFLOPS (估算)</td>
+          <td><strong>5 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>约 2.5 petaFLOPS (估算)</td>
+          <td><strong>5 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP16 (16-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
+          <td>约 1.25 petaFLOPS (估算)</td>
+          <td><strong>2.5 petaFLOPS</strong></td>
+          <td>NVIDIA 官方 / GB200 Superchip ÷ 2</td>
+        </tr>
+        <tr>
+          <td><strong>TDP (热设计功耗)</strong></td>
+          <td>约 700W</td>
+          <td>1000W</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>封装形式</strong></td>
+          <td colspan="2">TSV 硅通孔 + CoWoS-L</td>
+          <td>TSMC</td>
+        </tr>
+        <tr>
+          <td><strong>单芯片价格</strong></td>
+          <td>约 $30,000-40,000</td>
+          <td>约 $40,000-50,000</td>
+          <td>Forbes / 行业分析</td>
+        </tr>
+      </table>
+
+      <div class="warning-box">
+        <p style="margin:0;"><strong>⚠️ 数据勘误说明 (2026-03-04 13:30)</strong>: 本报告已修正 B200 算力数据。根据 NVIDIA 官方 GB200 NVL72 规格表，单颗 B200 算力为：FP8 稠密 5 petaFLOPS、稀疏 10 petaFLOPS；FP4 稠密 10 petaFLOPS、稀疏 20 petaFLOPS。此前版本数据有误，现已全部修正。</p>
+      </div>
+
+      <div class="note-box">
+        <p style="margin:0;"><strong>注</strong>: B100 规格为行业分析师推测，NVIDIA 官方未正式公布详细规格。B200 为 Blackwell 系列旗舰型号，数据来源 NVIDIA GTC 2024 主题演讲及官方白皮书。</p>
+      </div>
+
+      <h3>1.2 GB200 Grace Blackwell Superchip</h3>
+
+      <p>GB200 是将 <strong>1颗 Grace CPU</strong> 和 <strong>2颗 B200 GPU</strong> 通过 NVLink-C2C 技术封装在一起的超级芯片。</p>
+
+      <div class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│              GB200 Grace Blackwell Superchip                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────┐         ┌─────────────────┐           │
+│  │   Grace CPU     │◄───────►│     B200 GPU    │           │
+│  │   (72核 ARM)    │ NVLink  │   (第1颗 GPU)   │           │
+│  │   480GB LPDDR5X │ C2C     │   192GB HBM3e   │           │
+│  └─────────────────┘         └─────────────────┘           │
+│           ▲                           │                    │
+│           │                           │                    │
+│           │                    ┌─────────────────┐         │
+│           │                    │     B200 GPU    │         │
+│           └────────────────────│   (第2颗 GPU)   │         │
+│                                │   192GB HBM3e   │         │
+│                                └─────────────────┘         │
+│                                                             │
+│  总 AI 算力: <strong>20 petaFLOPS FP8 稀疏 / 10 petaFLOPS FP8 稠密</strong>                             │
+│  总显存: 384GB HBM3e + 480GB LPDDR5X                        │
+│  总功耗: 约 1200W (含 CPU + 2×GPU)                          │
+└─────────────────────────────────────────────────────────────┘
+      </div>
+
+      <table>
+        <tr>
+          <th>组件</th>
+          <th>规格</th>
+          <th>数据来源</th>
+        </tr>
+        <tr>
+          <td><strong>CPU</strong></td>
+          <td>NVIDIA Grace (72核 Arm Neoverse V2)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>CPU 内存</strong></td>
+          <td>480GB LPDDR5X ( ECC)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>GPU</strong></td>
+          <td>2× B200 GPU</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>GPU 显存</strong></td>
+          <td>384GB HBM3e (192GB × 2)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>CPU-GPU 互联</strong></td>
+          <td>NVLink-C2C (900GB/s)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稀疏</strong></td>
+          <td>40 petaFLOPS (20 × 2)</td>
+          <td>NVIDIA 官方 (GB200 Superchip)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稠密</strong></td>
+          <td>20 petaFLOPS (10 × 2)</td>
+          <td>NVIDIA 官方 (GB200 Superchip)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>20 petaFLOPS (10 × 2)</td>
+          <td>NVIDIA 官方 (GB200 Superchip)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>10 petaFLOPS (5 × 2)</td>
+          <td>NVIDIA 官方 (GB200 Superchip)</td>
+        </tr>
+        <tr>
+          <td><strong>Superchip TDP</strong></td>
+          <td>约 1200W (CPU ~300W + 2×GPU ~1000W)</td>
+          <td>行业分析 / 部分数据来自 NVIDIA Newsroom</td>
+        </tr>
+      </table>
+
+      <div class="note-box">
+        <p style="margin:0;"><strong>注</strong>: GB200 Superchip TDP 数据存在不同来源，NVIDIA Newsroom 提及约 450W 可能指特定配置或仅 CPU 部分。此处采用行业分析师普遍认可的约 1200W 总功耗估算。</p>
+      </div>
+
+      <h3>1.3 HGX B200 平台规格</h3>
+
+      <p>HGX (Hopper/Blackwell GPU eXtended) 是 NVIDIA 面向服务器 OEM 厂商推出的参考设计平台，采用标准化 8-GPU 配置。</p>
+
+      <div class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                   HGX B200 8-GPU 平台                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
+│  │ B200    │  │ B200    │  │ B200    │  │ B200    │        │
+│  │ GPU 1   │  │ GPU 2   │  │ GPU 3   │  │ GPU 4   │        │
+│  │ 192GB   │  │ 192GB   │  │ 192GB   │  │ 192GB   │        │
+│  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘        │
+│       │            │            │            │             │
+│       └────────────┴────────────┴────────────┘             │
+│                    NVLink Switch (4颗)                      │
+│       ┌────────────┬────────────┬────────────┐             │
+│       │            │            │            │             │
+│  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐        │
+│  │ B200    │  │ B200    │  │ B200    │  │ B200    │        │
+│  │ GPU 5   │  │ GPU 6   │  │ GPU 7   │  │ GPU 8   │        │
+│  │ 192GB   │  │ 192GB   │  │ 192GB   │  │ 192GB   │        │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘        │
+│                                                             │
+│  总 GPU 显存: 1.5TB (192GB × 8)                            │
+│  总 AI 算力: <strong>80 petaFLOPS FP8 稀疏 / 40 petaFLOPS FP8 稠密</strong>                           │
+│  总功耗: 约 8-10 kW                                        │
+│  形态: 双宽全高服务器 (10U+)                               │
+└─────────────────────────────────────────────────────────────┘
+      </div>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>HGX B200</th>
+          <th>说明/来源</th>
+        </tr>
+        <tr>
+          <td><strong>GPU 数量</strong></td>
+          <td>8× B200 GPU</td>
+          <td>NVIDIA 标准配置</td>
+        </tr>
+        <tr>
+          <td><strong>总显存容量</strong></td>
+          <td>1.5TB HBM3e</td>
+          <td>192GB × 8 (计算)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>80 petaFLOPS (10 × 8)</td>
+          <td>基于 B200 规格计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>40 petaFLOPS (5 × 8)</td>
+          <td>基于 B200 规格计算</td>
+        </tr>
+        <tr>
+          <td><strong>总功耗</strong></td>
+          <td>约 8-10 kW</td>
+          <td>基于 GPU TDP 估算 (8×1000W + 系统)</td>
+        </tr>
+        <tr>
+          <td><strong>服务器形态</strong></td>
+          <td>10U-12U 机架式</td>
+          <td>行业标准配置</td>
+        </tr>
+        <tr>
+          <td><strong>互联方案</strong></td>
+          <td>NVLink 5 + NVLink Switch</td>
+          <td>全 8 GPU 互联</td>
+        </tr>
+        <tr>
+          <td><strong>网络接口</strong></td>
+          <td>8× 400GbE 或 8× NDR 400G InfiniBand</td>
+          <td>典型配置 (OEM 可定制)</td>
+        </tr>
+        <tr>
+          <td><strong>系统价格</strong></td>
+          <td>约 $30-40万</td>
+          <td>行业估算 (含 8×GPU + 服务器)</td>
+        </tr>
+      </table>
+
+      <h3>1.4 DGX B200 / GB200 系统规格</h3>
+
+      <p>DGX (Deep Learning GPU eXtreme) 是 NVIDIA 推出的完整 AI 超级计算机系统，包含 GPU、CPU、存储、网络和软件栈。</p>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>DGX B200</th>
+          <th>DGX GB200</th>
+          <th>说明/来源</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2024年</td>
+          <td>2024-2025年</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>GPU 配置</strong></td>
+          <td>8× B200 GPU</td>
+          <td>16× B200 GPU + 8× Grace CPU</td>
+          <td>8× GB200 Superchip</td>
+        </tr>
+        <tr>
+          <td><strong>总 GPU 显存</strong></td>
+          <td>1.5TB HBM3e</td>
+          <td>3.1TB HBM3e + 3.8TB LPDDR5X</td>
+          <td>计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 (FP8)</strong></td>
+          <td>160 petaFLOPS</td>
+          <td>320 petaFLOPS</td>
+          <td>计算</td>
+        </tr>
+        <tr>
+          <td><strong>系统功耗</strong></td>
+          <td>约 10-12 kW</td>
+          <td>约 18-20 kW</td>
+          <td>估算</td>
+        </tr>
+        <tr>
+          <td><strong>系统价格</strong></td>
+          <td>约 $40-50万</td>
+          <td>约 $80-100万</td>
+          <td>行业估算 (NVIDIA 未公开定价)</td>
+        </tr>
+      </table>
+
+      <div class="note-box">
+        <p style="margin:0;"><strong>注</strong>: DGX 系统价格 NVIDIA 官方未公开，以上为行业分析师估算。DGX GB200 为高端配置，集成更多 Superchip。</p>
+      </div>
+
+      <h3>1.5 GB200 NVL72 机架系统规格</h3>
+
+      <p>NVL72 是 NVIDIA 推出的完整机架级 AI 超级计算机，将 36 个 GB200 Superchip (72 GPU + 36 CPU) 集成在一个机架中。</p>
+
+      <div class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                   GB200 NVL72 机架系统                       │
+├─────────────────────────────────────────────────────────────┤
+│  机架尺寸: 标准 19英寸 42U 机架                             │
+│  重量: 约 1.5 吨                                            │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  计算层 (18个计算托盘)                               │   │
+│  │  ├── 每个托盘: 2× GB200 Superchip                    │   │
+│  │  │              = 2× Grace CPU + 4× B200 GPU         │   │
+│  │  └── 总计: 36× Grace CPU + 72× B200 GPU              │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                          │                                  │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  NVLink 交换机层 (9个 NVLink Switch)                 │   │
+│  │  └── 实现 72 GPU 全互联 (无阻塞全对全通信)            │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                          │                                  │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  网络层                                             │   │
+│  │  ├── BlueField-3 DPU (每节点)                       │   │
+│  │  └── 外部互联: NDR 400G InfiniBand / 400GbE          │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  散热: 液冷 + 风冷混合 (冷板液冷 GPU/CPU)                   │
+│  总芯片数: 864颗 (含 GPU/CPU/DPU/网络芯片)                  │
+└─────────────────────────────────────────────────────────────┘
+      </div>
+
+      <table>
+        <tr>
+          <th>系统规格</th>
+          <th>GB200 NVL72</th>
+          <th>数据来源</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2024年3月 (GTC 2024)</td>
+          <td>NVIDIA GTC 2024</td>
+        </tr>
+        <tr>
+          <td><strong>出货时间</strong></td>
+          <td>2024年底-2025年</td>
+          <td>NVIDIA 财报 / 新闻</td>
+        </tr>
+        <tr>
+          <td><strong>GPU 数量</strong></td>
+          <td>72× B200 GPU</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>CPU 数量</strong></td>
+          <td>36× Grace CPU</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>总 GPU 显存</strong></td>
+          <td>13.8TB HBM3e (192GB × 72)</td>
+          <td>计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 CPU 内存</strong></td>
+          <td>17.3TB LPDDR5X (480GB × 36)</td>
+          <td>计算</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 (FP8)</strong></td>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稀疏</strong></td>
+          <td>1,440 petaFLOPS (20 × 72)</td>
+          <td>NVIDIA 官方 (GB200 NVL72)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稠密</strong></td>
+          <td>720 petaFLOPS (10 × 72)</td>
+          <td>NVIDIA 官方 (GB200 NVL72)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>720 petaFLOPS (10 × 72)</td>
+          <td>NVIDIA 官方 (GB200 NVL72)</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>360 petaFLOPS (5 × 72)</td>
+          <td>NVIDIA 官方 (GB200 NVL72)</td>
+        </tr>
+        <tr>
+          <td><strong>总功耗</strong></td>
+          <td>约 120 kW (满载)</td>
+          <td>NVIDIA / CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>系统重量</strong></td>
+          <td>约 1.5 吨</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>散热方案</strong></td>
+          <td>液冷 (GPU/CPU) + 风冷 (系统)</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>系统价格</strong></td>
+          <td>约 $280-300万美元</td>
+          <td>Futurum Group / 行业分析</td>
+        </tr>
+        <tr>
+          <td><strong>年电费 (估算)</strong></td>
+          <td>约 $10-12万 (@$0.1/kWh)</td>
+          <td>计算</td>
+        </tr>
+      </table>
+
+      <!-- 第二部分：Rubin 产品线 -->
+      <h2>第二部分：NVIDIA Rubin 产品线详解</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2026年1月</div>
+          <p>CES 2026 Jensen Huang 宣布 Rubin 进入全面生产</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026年下半年</div>
+          <p>Vera Rubin 系统开始出货</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2027年</div>
+          <p>Meta 计划部署 Vera Rubin 到数据中心</p>
+        </div>
+      </div>
+
+      <h3>2.1 Rubin GPU 单芯片规格</h3>
+
+      <div class="warning-box">
+        <p style="margin:0;"><strong>⚠️ 数据声明</strong>: Rubin 架构尚未正式发布，以下规格基于 NVIDIA 公开信息、行业分析师预测及 CNBC 等媒体报道整理，具体参数以 NVIDIA 官方发布为准。</p>
+      </div>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>Rubin R100 (预测)</th>
+          <th>数据来源/说明</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2026年下半年 (预计)</td>
+          <td>NVIDIA CES 2026 / CNBC</td>
+        </tr>
+        <tr>
+          <td><strong>架构代号</strong></td>
+          <td>Rubin</td>
+          <td>NVIDIA 官方命名</td>
+        </tr>
+        <tr>
+          <td><strong>制程工艺</strong></td>
+          <td>预计 TSMC 3nm 或 N3E</td>
+          <td>行业分析 / 制程演进</td>
+        </tr>
+        <tr>
+          <td><strong>晶体管数量</strong></td>
+          <td>预计 3000亿+ (未公布)</td>
+          <td>基于制程和架构推测</td>
+        </tr>
+        <tr>
+          <td><strong>显存类型</strong></td>
+          <td>预计 HBM4</td>
+          <td>行业预测</td>
+        </tr>
+        <tr>
+          <td><strong>显存容量</strong></td>
+          <td>预计 256GB+ (未公布)</td>
+          <td>基于竞品和市场趋势推测</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP4 (4-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>预计 180+ petaFLOPS</td>
+          <td>基于 10×能效推算 (Transformer Engine 3.0)</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></td>
+          <td>预计 45+ petaFLOPS</td>
+          <td>基于 10×能效推算</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)</strong><br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></td>
+          <td>预计 90+ petaFLOPS</td>
+          <td>基于 10×能效推算</td>
+        </tr>
+        <tr>
+          <td><strong>TDP (单芯片)</strong></td>
+          <td>预计 2000-2500W (2-die)</td>
+          <td>基于系统功耗推算</td>
+        </tr>
+      </table>
+
+      <h3>2.2 Vera CPU 规格</h3>
+
+      <p>Vera 是 NVIDIA 新一代自研 Arm 架构 CPU，专为 AI 负载优化设计。</p>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>Vera CPU (预测)</th>
+          <th>数据来源/说明</th>
+        </tr>
+        <tr>
+          <td><strong>架构</strong></td>
+          <td>Arm 架构 (Neoverse 衍生)</td>
+          <td>NVIDIA 官方提及</td>
+        </tr>
+        <tr>
+          <td><strong>核心数</strong></td>
+          <td>预计 72+ 核</td>
+          <td>基于 Grace 升级推测</td>
+        </tr>
+        <tr>
+          <td><strong>内存支持</strong></td>
+          <td>预计 LPDDR6 或 HBM4</td>
+          <td>行业预测</td>
+        </tr>
+        <tr>
+          <td><strong>制造工艺</strong></td>
+          <td>预计 TSMC 3nm</td>
+          <td>行业分析</td>
+        </tr>
+      </table>
+
+      <h3>2.3 Vera Rubin NVL72 机架系统规格</h3>
+
+      <p>Vera Rubin NVL72 是 NVIDIA 下一代旗舰 AI 超级计算机，相比 Blackwell 实现 10 倍能效提升。</p>
+
+      <div class="architecture-diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                  Vera Rubin NVL72 机架系统                   │
+├─────────────────────────────────────────────────────────────┤
+│  发布时间: 2026年下半年 (预计)                              │
+│  重量: 近 2 吨 (比 Blackwell 重 33%)                        │
+│  组件总数: 130万个 (来自 80+ 供应商)                        │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  计算层 (18个计算托盘)                               │   │
+│  │  ├── 每个托盘: 2× Vera Rubin Superchip               │   │
+│  │  │              = 2× Vera CPU + 4× Rubin GPU         │   │
+│  │  └── 总计: 36× Vera CPU + 72× Rubin GPU              │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  散热: 100% 液冷 (行业首创 - 无风扇设计)                    │
+│  总芯片数: 约 1,300颗 (含 GPU/CPU/控制芯片)                 │
+└─────────────────────────────────────────────────────────────┘
+      </div>
+
+      <table>
+        <tr>
+          <th>系统规格</th>
+          <th>Vera Rubin NVL72</th>
+          <th>数据来源</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2026年下半年</td>
+          <td>NVIDIA CES 2026 / CNBC</td>
+        </tr>
+        <tr>
+          <td><strong>出货时间</strong></td>
+          <td>2026年 H2 - 2027年</td>
+          <td>NVIDIA 官方</td>
+        </tr>
+        <tr>
+          <td><strong>GPU 数量</strong></td>
+          <td>72× Rubin GPU</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>CPU 数量</strong></td>
+          <td>36× Vera CPU</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>总芯片数</strong></td>
+          <td>约 1,300颗</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>总功耗</strong></td>
+          <td>约 240 kW (是 Blackwell 的 2倍)</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>系统重量</strong></td>
+          <td>近 2 吨</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>散热方案</strong></td>
+          <td>100% 液冷 (无风扇设计)</td>
+          <td>NVIDIA / CNBC</td>
+        </tr>
+        <tr>
+          <td><strong>模块化设计</strong></td>
+          <td>Superchip 可插拔 (秒级维护)</td>
+          <td>CNBC 报道</td>
+        </tr>
+        <tr>
+          <td><strong>系统价格</strong></td>
+          <td>约 $350-400万美元</td>
+          <td>Futurum Group 估算</td>
+        </tr>
+        <tr>
+          <td><strong>能效比提升</strong></td>
+          <td>10 倍 (相比 Blackwell)</td>
+          <td>NVIDIA 官方声明</td>
+        </tr>
+      </table>
+
+      <h3>2.4 Rubin 产品线已知客户</h3>
+
+      <ul>
+        <li><strong>Meta</strong> - 计划 2027 年部署到数据中心 (CNBC)</li>
+        <li><strong>OpenAI</strong> - 已宣布采用 (Reuters)</li>
+        <li><strong>Anthropic</strong> - 已宣布采用</li>
+        <li><strong>Amazon</strong> - AWS 计划部署</li>
+        <li><strong>Google</strong> - Google Cloud 计划部署</li>
+        <li><strong>Microsoft</strong> - Azure 计划部署</li>
+      </ul>
+
+      <!-- 第三部分：对比分析 -->
+      <h2>第三部分：Blackwell vs Rubin 全面对比</h2>
+
+      <h3>3.1 单芯片对比</h3>
+
+      <table>
+        <tr>
+          <th>规格参数</th>
+          <th>B200 (Blackwell)</th>
+          <th>Rubin R100 (预测)</th>
+          <th>变化</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2024年</td>
+          <td>2026年下半年</td>
+          <td>+2.5年</td>
+        </tr>
+        <tr>
+          <td><strong>制程工艺</strong></td>
+          <td>TSMC 4NP (4nm)</td>
+          <td>预计 TSMC 3nm</td>
+          <td class="spec-highlight">更先进</td>
+        </tr>
+        <tr>
+          <td><strong>晶体管数量</strong></td>
+          <td>2080亿</td>
+          <td>预计 3000亿+</td>
+          <td class="spec-highlight">+50%</td>
+        </tr>
+        <tr>
+          <td><strong>显存容量</strong></td>
+          <td>192GB HBM3e</td>
+          <td>预计 256GB+ HBM4</td>
+          <td class="spec-highlight">+33%</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP4 (4-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
+          <td>20 petaFLOPS</td>
+          <td>预计 400+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP4 (4-bit)<br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></strong></td>
+          <td>10 petaFLOPS</td>
+          <td>预计 200+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稀疏 (Sparse)</span></strong></td>
+          <td>10 petaFLOPS</td>
+          <td>预计 200+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>AI 算力 FP8 (8-bit)<br><span style="font-size:12px;color:#666;">稠密 (Dense)</span></strong></td>
+          <td>5 petaFLOPS</td>
+          <td>预计 100+ petaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>TDP</strong></td>
+          <td>1000W</td>
+          <td>预计 2000-2500W</td>
+          <td class="spec-highlight">2-2.5×</td>
+        </tr>
+        <tr>
+          <td><strong>能效比 (FP8 稠密)</strong></td>
+          <td>5 TFLOPS/W (5 petaFLOPS / 1000W)</td>
+          <td>预计 50+ TFLOPS/W</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+      </table>
+
+      <h3>3.2 机架系统对比 (NVL72)</h3>
+
+      <table>
+        <tr>
+          <th>系统规格</th>
+          <th>GB200 NVL72</th>
+          <th>Vera Rubin NVL72</th>
+          <th>变化</th>
+        </tr>
+        <tr>
+          <td><strong>发布时间</strong></td>
+          <td>2024年底-2025年</td>
+          <td>2026年下半年</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>GPU 数量</strong></td>
+          <td>72× B200</td>
+          <td>72× Rubin</td>
+          <td>相同</td>
+        </tr>
+        <tr>
+          <td><strong>CPU 数量</strong></td>
+          <td>36× Grace</td>
+          <td>36× Vera</td>
+          <td>升级</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稀疏</strong></td>
+          <td>1,440 petaFLOPS (20 × 72)</td>
+          <td>预计 28.8+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP4 稠密</strong></td>
+          <td>720 petaFLOPS (10 × 72)</td>
+          <td>预计 14.4+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稀疏</strong></td>
+          <td>720 petaFLOPS (10 × 72)</td>
+          <td>预计 14.4+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>总 AI 算力 FP8 稠密</strong></td>
+          <td>360 petaFLOPS (5 × 72)</td>
+          <td>预计 7.2+ exaFLOPS</td>
+          <td class="spec-highlight">20×</td>
+        </tr>
+        <tr>
+          <td><strong>总功耗</strong></td>
+          <td>约 120 kW</td>
+          <td>约 240 kW</td>
+          <td>2×</td>
+        </tr>
+        <tr>
+          <td><strong>系统重量</strong></td>
+          <td>约 1.5 吨</td>
+          <td>近 2 吨</td>
+          <td>+33%</td>
+        </tr>
+        <tr>
+          <td><strong>散热方案</strong></td>
+          <td>液冷 + 风冷</td>
+          <td>100% 液冷</td>
+          <td class="spec-highlight">全液冷</td>
+        </tr>
+        <tr>
+          <td><strong>系统价格</strong></td>
+          <td>约 $280-300万</td>
+          <td>约 $350-400万</td>
+          <td>+25%</td>
+        </tr>
+        <tr>
+          <td><strong>年电费 (@$0.1/kWh)</strong></td>
+          <td>约 $10-12万</td>
+          <td>约 $20-24万</td>
+          <td>2×</td>
+        </tr>
+        <tr>
+          <td><strong>每美元电费产出算力</strong></td>
+          <td>基准</td>
+          <td>10倍</td>
+          <td class="spec-highlight">10×</td>
+        </tr>
+      </table>
+
+      <h3>3.3 产品线覆盖对比</h3>
+
+      <table>
+        <tr>
+          <th>产品层级</th>
+          <th>Blackwell 产品线</th>
+          <th>Rubin 产品线 (已知)</th>
+        </tr>
+        <tr>
+          <td><strong>单芯片</strong></td>
+          <td>B100, B200</td>
+          <td>Rubin R100 (预计)</td>
+        </tr>
+        <tr>
+          <td><strong>Superchip</strong></td>
+          <td>GB200 (Grace + 2×B200)</td>
+          <td>Vera Rubin (Vera + 2×Rubin)</td>
+        </tr>
+        <tr>
+          <td><strong>服务器平台</strong></td>
+          <td>HGX B200, DGX B200/GB200</td>
+          <td>预计 2026-2027 发布</td>
+        </tr>
+        <tr>
+          <td><strong>机架系统</strong></td>
+          <td>GB200 NVL72</td>
+          <td>Vera Rubin NVL72</td>
+        </tr>
+      </table>
+
+      <h3>3.4 购买建议总结</h3>
+
+      <div class="highlight-box">
+        <p style="margin:0 0 15px;"><strong>选择建议矩阵</strong>:</p>        <ul style="margin:0;">
+          <li><strong>急需部署 (2024-2025)</strong> → Blackwell (已量产)</li>
+          <li><strong>追求极致能效</strong> → 等 Rubin (10倍提升)</li>
+          <li><strong>电力受限数据中心</strong> → Rubin (每瓦产出更高)</li>
+          <li><strong>预算敏感</strong> → Blackwell (单价低 25%)</li>
+          <li><strong>训练万亿参数模型</strong> → Rubin (专为下一代设计)</li>
+        </ul>
+      </div>
+
+      <h2>附录：数据来源汇总</h2>
+
+      <table>
+        <tr>
+          <th>信源</th>
+          <th>文章/报告</th>
+          <th>日期</th>
+        </tr>
+        <tr>
+          <td>NVIDIA 官方</td>
+          <td>GTC 2024 Blackwell 架构发布</td>
+          <td>2024年3月</td>
+        </tr>
+        <tr>
+          <td>NVIDIA 官方</td>
+          <td>CES 2026 Vera Rubin 宣布</td>
+          <td>2026年1月</td>
+        </tr>
+        <tr>
+          <td>CNBC</td>
+          <td>Nvidia's new AI system Vera Rubin first look</td>
+          <td>2026年2月25日</td>
+        </tr>
+        <tr>
+          <td>NVIDIA Newsroom</td>
+          <td>Q4 FY2026 Financial Results</td>
+          <td>2026年2月</td>
+        </tr>
+        <tr>
+          <td>Forbes</td>
+          <td>Nvidia's Moat, Proven By A 6-Year-Old Chip</td>
+          <td>2026年2月27日</td>
+        </tr>
+        <tr>
+          <td>Futurum Group</td>
+          <td>Industry Analysis (via CNBC)</td>
+          <td>2026年2月</td>
+        </tr>
+      </table>
+
+      <div class="note-box">
+        <p style="margin:0;"><strong>报告说明</strong>: 本报告基于 NVIDIA 官方发布、权威媒体报道及行业分析师预测整理。Rubin 架构尚未正式发布，部分规格为预测值，以 NVIDIA 官方最终发布为准。数据截止日期 2026年3月4日。</p>
+      </div>
+
+    </main>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院 · 芯片规格分析专栏</p>
+      <p style="font-size:12px;margin-top:10px;">本报告由 AI 自动调研生成，基于公开资料整理。如有出入，请以官方发布为准。</p>
+    </footer>
+  </div>
+</body>
+</html>
