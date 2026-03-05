@@ -1,0 +1,289 @@
+<!-- 开源工具与框架 Section -->
+<section id="open-source-tools" class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">开源工具与框架</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        复数神经网络(CVNN)生态系统日益丰富，以下整理了当前主流的8个开源框架，按PyTorch、TensorFlow及其他工具进行分类。
+      </p>
+    </div>
+
+    <!-- PyTorch Ecosystem -->
+    <div class="mb-16">
+      <div class="flex items-center mb-8">
+        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">PyTorch 生态系统</h3>
+        <span class="ml-3 px-3 py-1 bg-orange-100 text-orange-700 text-sm font-medium rounded-full">推荐</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- torchcvnn -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-gray-900">torchcvnn</h4>
+                <p class="text-sm text-gray-500 mt-1">Victor Dhédin, Jérémie Levi (CentraleSupélec)</p>
+              </div>
+              <a href="https://github.com/torchcvnn/torchcvnn" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>基于PyTorch后端的复数神经网络库</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>提供复数值数据集（遥感、MRI）</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>支持复数卷积、批量归一化等</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>完整的复数值变换和层实现</li>
+            </ul>
+            <div class="bg-gray-900 rounded-lg p-3">
+              <code class="text-green-400 text-sm font-mono">pip install torchcvnn</code>
+            </div>
+            <a href="https://torchcvnn.github.io/torchcvnn/" target="_blank" class="inline-flex items-center mt-3 text-sm text-orange-600 hover:text-orange-700 font-medium">
+              查看文档 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- complexPyTorch -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-gray-900">complexPyTorch</h4>
+                <p class="text-sm text-gray-500 mt-1">wavefrontshaping团队</p>
+              </div>
+              <a href="https://github.com/wavefrontshaping/complexPyTorch" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>高级PyTorch复数神经网络工具箱</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>支持PyTorch 1.7+的complex64张量</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>提供复数卷积、池化、归一化层</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>支持Complex BatchNorm（Naive/Covariance）</li>
+            </ul>
+            <div class="bg-gray-900 rounded-lg p-3">
+              <code class="text-green-400 text-sm font-mono">pip install complexPyTorch</code>
+            </div>
+            <p class="text-xs text-gray-400 mt-3">引用: PhysRevX.11.021060</p>
+          </div>
+        </div>
+
+        <!-- complextorch -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-gray-900">complextorch</h4>
+                <p class="text-sm text-gray-500 mt-1">Josiah W. Smith, Ph.D.</p>
+              </div>
+              <a href="https://github.com/josiahwsmith10/complextorch" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>轻量级PyTorch复数神经网络包</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>专注信号处理、通信和雷达数据</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>高效实现线性、卷积和注意力模块</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>支持1D/2D/3D数据</li>
+            </ul>
+            <div class="bg-gray-900 rounded-lg p-3">
+              <code class="text-green-400 text-sm font-mono">pip install complextorch</code>
+            </div>
+            <p class="text-xs text-gray-400 mt-3">文档: Read the Docs + arXiv论文</p>
+          </div>
+        </div>
+
+        <!-- cplxmodule -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-gray-900">cplxmodule</h4>
+                <p class="text-sm text-gray-500 mt-1">Ivan Nazarov等研究者</p>
+              </div>
+              <a href="https://github.com/ivannz/cplxmodule" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>PyTorch扩展，支持复数层和激活函数</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>实现实数和复数的变分dropout</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>支持网络稀疏化和剪枝</li>
+              <li class="flex items-start"><span class="text-orange-500 mr-2">•</span>基于Wirtinger微积分</li>
+            </ul>
+            <div class="bg-gray-900 rounded-lg p-3">
+              <code class="text-green-400 text-sm font-mono">pip install cplxmodule</code>
+            </div>
+            <p class="text-xs text-gray-400 mt-3">依赖: numpy, torch, scipy</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TensorFlow Ecosystem -->
+    <div class="mb-16">
+      <div class="flex items-center mb-8">
+        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">TensorFlow 生态系统</h3>
+        <span class="ml-3 px-3 py-1 bg-yellow-100 text-yellow-700 text-sm font-medium rounded-full">⚠️ 维护状态</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- cvnn (NEGU93) -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-gray-900">cvnn</h4>
+                <p class="text-sm text-gray-500 mt-1">J. Agustin Barrachina (CentraleSupélec/ONERA)</p>
+              </div>
+              <a href="https://github.com/NEGU93/cvnn" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <div class="mb-3">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                已弃用（TF 2.16+不兼容）
+              </span>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-blue-500 mr-2">•</span>基于TensorFlow后端</li>
+              <li class="flex items-start"><span class="text-blue-500 mr-2">•</span>使用原生复数数据类型</li>
+              <li class="flex items-start"><span class="text-blue-500 mr-2">•</span>完整的Sequential和Functional API</li>
+              <li class="flex items-start"><span class="text-blue-500 mr-2">•</span>多种复数激活函数（cart_relu等）</li>
+            </ul>
+            <div class="bg-gray-900 rounded-lg p-3">
+              <code class="text-green-400 text-sm font-mono">pip install cvnn</code>
+            </div>
+            <a href="https://complex-valued-neural-networks.readthedocs.io/" target="_blank" class="inline-flex items-center mt-3 text-sm text-blue-600 hover:text-blue-700 font-medium">
+              查看文档 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Other Tools -->
+    <div class="mb-16">
+      <div class="flex items-center mb-8">
+        <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l-5.5 9h11z M12 5.84L13.93 9h-3.87z M17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5z M5 21.5h8v-8H5v8z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900">其他专用工具</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- CVNN-PolSAR -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="text-lg font-bold text-gray-900">CVNN-PolSAR</h4>
+              <a href="https://github.com/NEGU93/CVNN-PolSAR" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 mb-3">
+              极化SAR专用
+            </span>
+            <ul class="space-y-1 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>极化SAR图像分割</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>包含多种经典模型</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>支持多个标准数据集</li>
+            </ul>
+            <div class="bg-gray-50 rounded p-2">
+              <code class="text-gray-700 text-xs font-mono">git clone ...</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- ComplexCascadeNN -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="text-lg font-bold text-gray-900">ComplexCascadeNN</h4>
+              <a href="https://github.com/mit-ll/ComplexCascadeNN" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800 mb-3">
+              MATLAB
+            </span>
+            <ul class="space-y-1 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>MIT林肯实验室开发</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>Levenberg-Marquardt优化</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>复数分裂激活</li>
+            </ul>
+            <div class="bg-gray-50 rounded p-2">
+              <code class="text-gray-700 text-xs font-mono">MATLAB Toolbox</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Complex Networks -->
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100">
+          <div class="p-5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="text-lg font-bold text-gray-900">Deep Complex Networks</h4>
+              <a href="https://github.com/ChihebTrabelsi/deep_complex_networks" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 mb-3">
+              ICLR 2018 原始实现
+            </span>
+            <ul class="space-y-1 text-sm text-gray-600 mb-4">
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>Theano + Keras框架</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>奠基性论文实现</li>
+              <li class="flex items-start"><span class="text-purple-500 mr-2">•</span>多数据集实验验证</li>
+            </ul>
+            <div class="bg-gray-50 rounded p-2">
+              <code class="text-gray-700 text-xs font-mono">Theano/Keras</code>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Framework Selection Guide -->
+    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100">
+      <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+        <svg class="w-6 h-6 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        框架选择建议
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <h4 class="font-semibold text-gray-900 mb-2">PyTorch新项目</h4>
+          <p class="text-sm text-gray-600">推荐使用 <span class="font-mono text-orange-600 bg-orange-50 px-1 rounded">torchcvnn</span> 或 <span class="font-mono text-orange-600 bg-orange-50 px-1 rounded">complexPyTorch</span>，两者均维护活跃、文档完善。</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <h4 class="font-semibold text-gray-900 mb-2">研究用途</h4>
+          <p class="text-sm text-gray-600">如需网络稀疏化功能，选择 <span class="font-mono text-orange-600 bg-orange-50 px-1 rounded">cplxmodule</span>，支持贝叶斯剪枝和变分dropout。</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <h4 class="font-semibold text-gray-900 mb-2">TensorFlow遗留项目</h4>
+          <p class="text-sm text-gray-600">使用 <span class="font-mono text-blue-600 bg-blue-50 px-1 rounded">cvnn</span> 时需注意版本兼容性（TF 2.16+不兼容）。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

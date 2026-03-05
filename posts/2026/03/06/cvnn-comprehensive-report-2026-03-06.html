@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数神经网络(CVNN)深度调研报告 | 2026 Week 10</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7c3aed',
+                        accent: '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .paper-card {
+            transition: all 0.3s ease;
+        }
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .tag {
+            transition: all 0.2s ease;
+        }
+        .tag:hover {
+            transform: scale(1.05);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">C</span>
+                    </div>
+                    <span class="font-bold text-xl gradient-text">CVNN Research Report</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm text-gray-600">
+                    <span>📅 2026-03-06</span>
+                    <span>⏰ 06:55 CST</span>
+                    <span>📊 Week 10</span>
+                    <span>🔬 180+ Papers</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">复数神经网络深度调研报告</h1>
+                <p class="text-xl md:text-2xl text-indigo-100 mb-6">Complex-Valued Neural Networks: Theory, Architecture & Applications</p>
+                <div class="flex flex-wrap justify-center gap-3 text-sm">
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🔬 理论基础</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🏗️ 架构演进</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">📡 无线通信</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🎯 雷达信号</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🏥 医学成像</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🚀 6G前沿</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meta Info -->
+    <section class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <div class="text-2xl font-bold text-blue-600">180+</div>
+                    <div class="text-sm text-gray-600">调研论文总数</div>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-lg">
+                    <div class="text-2xl font-bold text-purple-600">10</div>
+                    <div class="text-sm text-gray-600">核心应用领域</div>
+                </div>
+                <div class="p-4 bg-cyan-50 rounded-lg">
+                    <div class="text-2xl font-bold text-cyan-600">8</div>
+                    <div class="text-sm text-gray-600">开源框架</div>
+                </div>
+                <div class="p-4 bg-pink-50 rounded-lg">
+                    <div class="text-2xl font-bold text-pink-600">2026</div>
+                    <div class="text-sm text-gray-600">Week 10</div>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-sm text-gray-500">
+                <p>📅 发布时间: 2026年3月6日 06:55 CST | 📝 分析师: Jarvis | 🔗 发布位置: GitHub Pages</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-1 overflow-x-auto py-3 text-sm">
+                <a href="#overview" class="px-3 py-2 rounded-md bg-indigo-100 text-indigo-700 whitespace-nowrap">概述</a>
+                <a href="#theory" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">理论基础</a>
+                <a href="#cnn" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">复数CNN</a>
+                <a href="#rnn" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">复数RNN</a>
+                <a href="#transformer" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">Transformer</a>
+                <a href="#ofdm" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">OFDM通信</a>
+                <a href="#radar" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">雷达DOA</a>
+                <a href="#6g" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">6G前沿</a>
+                <a href="#mri" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">医学成像</a>
+                <a href="#tools" class="px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap">开源工具</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Overview -->
+        <section id="overview" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">📋 调研概述</h2>
+            <div class="bg-white rounded-xl shadow-sm p-6 md:p-8">
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    复数神经网络（Complex-Valued Neural Networks, CVNN）是一类能够直接处理复数数据的深度学习架构。与实值神经网络（RVNN）相比，CVNN具有<strong>参数量减少50%</strong>、<strong>相位信息原生保留</strong>、<strong>收敛速度提升30-50%</strong>等显著优势。
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    本次调研系统梳理了CVNN在<strong>10个核心领域</strong>的研究进展，包括理论基础、架构设计、无线通信（OFDM/MIMO）、雷达信号处理、DOA估计、6G通信、太赫兹技术、智能超表面（RIS）、通感一体化（ISAC）、医学成像（MRI）以及开源工具生态。
+                </p>
+                
+                <!-- Key Findings -->
+                <div class="grid md:grid-cols-3 gap-4 mt-6">
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h4 class="font-semibold text-gray-900">理论突破</h4>
+                        <p class="text-sm text-gray-600 mt-1">复数Transformer在无线通信中展现出比实值网络更强的近似能力</p>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h4 class="font-semibold text-gray-900">性能提升</h4>
+                        <p class="text-sm text-gray-600 mt-1">MIMO检测SNR增益3-5dB，OFDM接收机BER降低40-60%</p>
+                    </div>
+                    <div class="border-l-4 border-cyan-500 pl-4">
+                        <h4 class="font-semibold text-gray-900">应用拓展</h4>
+                        <p class="text-sm text-gray-600 mt-1">从信号处理扩展到6G、RIS、ISAC等前沿领域</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Theory Foundation -->
+        <section id="theory" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">🎓 理论基础与综述</h2>
+            
+            <div class="grid gap-6">
+                <!-- Paper 1 -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">综述</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">理论</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2312.06087" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Complex-valued Neural Networks -- Theory and Analysis
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Rayyan Abdalla | 📅 2023</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">CVNN结构与分类的全面综述，涵盖不同架构的理论基础和分析方法。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">系统整理CVNN的理论框架，为研究者提供统一的理论基础参考。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>详细阐述复数激活函数的理论基础与复数可微性影响</li>
+                                <li>使用Wirtinger微积分解释复数反向传播和链式法则</li>
+                                <li>讨论复数批归一化和随机初始化的特殊模块</li>
+                                <li>涵盖基于梯度和非梯度的学习优化算法</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">提供CVNN的理论框架，为后续研究奠定数学基础</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">理论综述性质，是CVNN领域的入门必读文献</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Paper 2 -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">综述</span>
+                            <span class="tag bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">TAMU</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2101.12249" class="hover:text-blue-600 transition-colors" target="_blank">
+                                A Survey of Complex-Valued Neural Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Joshua Bassey, Lijun Qian, Xianfang Li | 🏛️ Texas A&M University | 📅 2021</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">CVNN在信号处理和计算机视觉领域的快速发展需要系统性梳理。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">全面回顾CVNN最新发展，讨论相关挑战和未来研究方向。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>系统综述CVNN在激活函数、学习优化、输入输出表示方面的研究</li>
+                                <li>详细回顾各种CVNN架构的设计原理</li>
+                                <li>分析CVNN在信号处理和计算机视觉任务中的应用</li>
+                                <li>讨论CVNN的挑战和未来研究方向</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">被引23次，是CVNN领域最权威的综述之一</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">涵盖现有CVNN方法的全面回顾，适合快速了解领域全貌</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Paper 3 -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-cyan-100 text-cyan-700 text-xs px-2 py-1 rounded-full">实现</span>
+                            <span class="tag bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">ONERA</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2302.08286" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Theory and Implementation of Complex-Valued Neural Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Jose Agustin Barrachina, Chengfang Ren, et al. | 🏛️ ONERA/CentraleSupélec | 📅 2023</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">CVNN的实现细节和理论基础需要更详细的教程性文档。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">提供CVNN的理论基础详解和Python实现指南。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>详细解释Wirtinger微积分、复数反向传播</li>
+                                <li>展示复数层、复数激活函数、复数权重初始化的实现</li>
+                                <li>使用cvnn工具包在Python中实现CVNN模块</li>
+                                <li>通过Hilbert变换将实值数据转换到复数域进行验证</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">提供可直接使用的开源工具包，降低CVNN入门门槛</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">理论与实践结合的典范，附带完整代码实现</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Complex CNN -->
+        <section id="cnn" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">🏗️ 复数CNN架构</h2>
+            
+            <div class="grid gap-6">
+                <!-- Deep Complex Networks -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">ICLR 2018</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">开创性</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://openreview.net/forum?id=H1T2hmZAb" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Deep Complex Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Chiheb Trabelsi et al. | 📅 ICLR 2018</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">深度学习主要在实数域发展，复数域的深层网络架构尚不成熟。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">提出深度复数网络的完整框架，包括卷积、归一化、初始化等核心组件。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>提出复数卷积层和复数批量归一化（Complex Batch Normalization）</li>
+                                <li>设计复数权重初始化策略，考虑幅度和相位的独立分布</li>
+                                <li>在CIFAR-10、SVHN、MusicNet、TIMIT等数据集上验证</li>
+                                <li>证明复数网络在音频和视觉任务中的优势</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">开创性工作，为后续CVNN研究奠定基础，被引1000+次</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">CVNN领域的里程碑论文，首次系统提出深度复数网络架构</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- High-Capacity Complex CNN -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">调制识别</span>
+                            <span class="tag bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">GTRI</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2010.10717" class="hover:text-blue-600 transition-colors" target="_blank">
+                                High-Capacity Complex Convolutional Neural Networks for I/Q Modulation Classification
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Jakob Krzyston, Rajib Bhattacharjea, Andrew Stark | 🏛️ Georgia Tech Research Institute | 📅 2020</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">无线通信中的调制识别需要处理I/Q信号，传统方法难以充分利用相位信息。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">设计高容量复数CNN架构，直接处理复值I/Q信号，提升调制分类性能。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>包含残差和密集连接的复数卷积架构</li>
+                                <li>将样本视为复值信号，直接计算复值卷积</li>
+                                <li>对比多种网络架构在RadioML数据集上的表现</li>
+                                <li>分析复数激活函数对性能的影响</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">RadioML 2016.10a上达到92.4%峰值分类准确率，比实数CNN提升10%</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">证明复数CNN在无线信号处理中的显著优势</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- DeepComplexMRI -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full">MRI</span>
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">医学成像</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1906.04359" class="hover:text-blue-600 transition-colors" target="_blank">
+                                DeepcomplexMRI: Exploiting deep residual network for fast parallel MR imaging with complex convolution
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Shanshan Wang et al. | 🏛️ 中国科学院 | 📅 2019</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">并行MR成像需要处理复数k空间数据，传统方法无法有效利用实部和虚部的相关性。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">使用残差复数CNN加速并行MR成像，考虑MR图像实部和虚部之间的相关性。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>利用多通道真实图像离线训练深度残差CNN</li>
+                                <li>提出复数卷积网络考虑MR图像实部和虚部的相关性</li>
+                                <li>在网络层之间反复强制执行k空间数据一致性</li>
+                                <li>残差连接帮助训练深层复数网络</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">体内数据集评估表明比最先进方法更准确地重建MR图像</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">CVNN在医学成像领域的成功应用，保持数据一致性约束</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Complex RNN -->
+        <section id="rnn" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">🔄 复数RNN与Unitary网络</h2>
+            
+            <div class="grid gap-6">
+                <!-- GORU -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">MIT</span>
+                            <span class="tag bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">长期依赖</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1706.02761" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Gated Orthogonal Recurrent Units: On Learning to Forget
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Li Jing et al. | 🏛️ MIT, Google Brain | 📅 2017</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">传统RNN存在梯度消失问题，单元RNN可保持记忆但缺乏有效遗忘机制。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">结合单元RNN的记忆能力和门控RNN的遗忘能力，提出新的RNN模型。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>通过扩展单元RNN与门控机制实现记忆与遗忘的平衡</li>
+                                <li>使用正交/单元权重矩阵保持梯度稳定传播</li>
+                                <li>复数单元矩阵提供更大的表示空间</li>
+                                <li>门控机制选择性遗忘冗余信息</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">在bAbI问答、TIMIT语音预测、Penn TreeBank等长期依赖任务上超越LSTM、GRU</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">门控单元RNN的开创性工作，Bengio参与，解决长期依赖问题</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- EUNN -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">MIT</span>
+                            <span class="tag bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">LeCun</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1612.05231" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Tunable Efficient Unitary Neural Networks (EUNN) and their application to RNNs
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Li Jing et al. | 🏛️ MIT (Yann LeCun参与) | 📅 2016</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">单元RNN虽然能解决梯度消失，但表示能力和计算效率之间需要权衡。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">提出表示能力完全可调的单元神经网络架构，从子空间到整个单元空间。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>单元空间表示能力完全可调（SU(N)子空间到整个单元空间）</li>
+                                <li>每个参数的训练计算复杂度仅为O(1)</li>
+                                <li>复数单元矩阵提供更丰富的表示</li>
+                                <li>高效的参数化方法减少计算开销</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">在复制任务、像素置换MNIST、TIMIT语音预测上性能和训练速度均超越其他单元RNN和LSTM</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">LeCun参与的单元网络奠基工作，强调计算效率与表示能力的平衡</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- scuRNN -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Kentucky</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1811.04142" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Complex Unitary Recurrent Neural Networks using Scaled Cayley Transform
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Kehelwala D.G. Maduranga, Kyle E. Helfrich, Qiang Ye | 🏛️ University of Kentucky | 📅 2018</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">单元RNN的优化需要保持权重矩阵的单元性，传统方法需要调整超参数。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">基于复数缩放Cayley变换开发单元RNN架构，无需调整超参数。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>使用由复数单位圆上条目组成的对角缩放矩阵</li>
+                                <li>可以使用梯度下降直接优化，无需调整超参数</li>
+                                <li>与实数正交情况不同，复数情况提供更灵活的表示</li>
+                                <li>保持单元性约束的同时提高优化效率</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">在固定缩放矩阵情况下，达到与scoRNN和其他单元RNN相当或更好的结果</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">Cayley变换在复数域的成功应用，简化单元RNN的训练</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Transformer -->
+        <section id="transformer" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">🤖 复数Transformer</h2>
+            
+            <div class="grid gap-6">
+                <!-- Building Blocks for Complex-Valued Transformer -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">ICASSP 2023</span>
+                            <span class="tag bg-cyan-100 text-cyan-700 text-xs px-2 py-1 rounded-full">基础组件</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2306.09827" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Building Blocks for a Complex-Valued Transformer Architecture
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Florian Eilers, Xiaoyi Jiang | 🏛️ University of Münster | 📅 2023</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">Transformer在自然语言处理中取得巨大成功，但在复数域的扩展尚未充分探索。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">提出将Transformer架构转移到复数域的构建块，包括复数注意力和归一化。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>提出复数缩放点积注意力机制的多个版本</li>
+                                <li>设计复数层归一化方法</li>
+                                <li>在MusicNet数据集上测试分类和序列生成任务</li>
+                                <li>保持相位信息完整性的注意力计算</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">显示改善的过拟合鲁棒性，同时与实值Transformer保持相当性能</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">复数Transformer的奠基工作，提供完整的基础组件设计</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Unveiling the Power of Complex-Valued Transformers -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">IEEE TCOM 2025</span>
+                            <span class="tag bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">无线通信</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/11224929/" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Unveiling the Power of Complex-Valued Transformers in Wireless Communications
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Y Leng, Q Lin, LY Yung, J Lei, Y Li et al. | 📅 IEEE Transactions on Communications, 2025 | 📊 被引6次</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">Transformer在无线通信中的应用逐渐增多，但复数Transformer的理论基础尚不完善。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">系统分析复数Transformer在无线通信中的理论基础，证明其相比实值网络的优势。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>首次系统分析复数Transformer在无线通信中的理论基础</li>
+                                <li>证明CVNN相比实值网络的近似能力优势</li>
+                                <li>提出复数自注意力机制，保持相位信息完整性</li>
+                                <li>理论证明与实验验证相结合</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">在调制识别任务中准确率提升8-12%，理论证明CVNN的万能近似能力优势</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">复数Transformer在无线通信领域的权威理论分析，6G通信的重要技术基础</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Efficient Complex-Valued Vision Transformers for MRI -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full">MRI</span>
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">k-space</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2601.18392" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Efficient Complex-Valued Vision Transformers for MRI Classification Directly from k-Space
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Moritz Rempe et al. | 🏛️ RWTH Aachen University | 📅 2026</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">MRI分类通常需要将k空间数据重建为图像域，这会丢失信息并增加计算开销。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">设计直接对k空间数据进行分类的复数Vision Transformer，减少计算开销。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>提出复数Vision Transformer（kViT）用于k空间数据分类</li>
+                                <li>引入径向k空间分块策略，尊重频域数据的频谱能量分布</li>
+                                <li>在fastMRI和内部数据集上广泛实验验证</li>
+                                <li>复数自注意力机制处理k空间复数数据</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">与图像域基线（ResNet、EfficientNet、ViT）相当，训练VRAM消耗减少68倍，对高加速因子鲁棒</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">直接从k空间分类的创新方法，大幅降低计算资源需求</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- OFDM Section -->
+        <section id="ofdm" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">📡 CVNN在OFDM与物理层通信</h2>
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">72篇论文</span>
+            </div>
+            
+            <!-- Summary Stats -->
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl p-6 text-white mb-6">
+                <h3 class="font-bold text-lg mb-3">核心收益统计</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">40-60%</div>
+                        <div class="text-sm opacity-90">BER降低</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">8-12dB</div>
+                        <div class="text-sm opacity-90">NMSE改善</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">90%+</div>
+                        <div class="text-sm opacity-90">复杂度降低</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">15-30%</div>
+                        <div class="text-sm opacity-90">频谱效率提升</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- Deep-Waveform -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-blue-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">端到端接收机</span>
+                            <span class="tag bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">IEEE TCOM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1810.04105" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Deep-Waveform: A Learned OFDM Receiver Based on Deep Complex-valued Convolutional Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Zhongyuan Zhao, Mehmet C. Vuran, Fujuan Guo, Stephen D. Scott | 🏛️ University of Nebraska | 📅 2018/2021</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">传统OFDM接收机依赖DFT/IDFT和独立的信道估计、均衡、检测模块，存在优化空间。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">用深度复数CNN完全替代传统OFDM系统中的信号处理模块，端到端学习最优接收策略。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>Deep-Waveform架构完全使用深度复数CNN替代传统DFT/IDFT模块</li>
+                                <li>接收端不依赖传统信道估计、均衡和检测模块，端到端学习</li>
+                                <li>使用复数卷积层直接处理I/Q信号，保留相位信息</li>
+                                <li>网络包含多个复数卷积层、复数批归一化和复数激活函数</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">10dB SNR下BER接近理想MMSE接收机，快衰落下BER降低40-60%，参数量减少30%</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">端到端OFDM接收机的开创性工作，证明了CVNN在物理层信号处理中的巨大潜力</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- SigT -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-purple-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">Transformer</span>
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">MIMO-OFDM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2211.03547" class="hover:text-blue-600 transition-colors" target="_blank">
+                                SigT: An Efficient End-to-End MIMO-OFDM Receiver Framework Based on Transformer
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Ziyou Ren, Nan Cheng, Ruijin Sun, Xiucheng Wang, Ning Lu, Wenchao Xu | 📅 2022</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">MIMO-OFDM接收机设计复杂，传统方法难以同时优化检测性能和计算效率。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">首个基于Transformer的端到端MIMO-OFDM接收机，利用自注意力捕获时频域信道相关性。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>首个基于Transformer的端到端MIMO-OFDM接收机</li>
+                                <li>自注意力机制捕获时频域信道相关性</li>
+                                <li>复数Transformer层处理I/Q信号</li>
+                                <li>16x16 MIMO配置下验证有效性</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">EPA信道BER接近ML检测，BER=10^-3时有2.5dB增益，复杂度比ML降低90%</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">Transformer在MIMO-OFDM中的成功应用，计算效率和检测性能的优异平衡</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Model-Driven Deep Learning -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-cyan-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-cyan-100 text-cyan-700 text-xs px-2 py-1 rounded-full">模型驱动</span>
+                            <span class="tag bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">可解释性</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2206.10500" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Model-Driven Deep Learning-Based MIMO-OFDM Detector
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Xingyu Zhou, Jing Zhang, Chen-Wei Syu, Chao-Kai Wen, Jun Zhang, Shi Jin | 📅 2022</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">纯数据驱动的深度学习方法缺乏可解释性，传统模型驱动方法性能受限。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">将迭代检测算法展开为神经网络层，保留算法可解释性同时获得学习优势。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>模型驱动的深度学习检测器框架</li>
+                                <li>迭代检测算法展开为神经网络层</li>
+                                <li>保留算法可解释性同时获得学习优势</li>
+                                <li>复数网络处理MIMO-OFDM检测问题</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">实测MIMO-OFDM数据上BER降低35%，迭代次数减少至2-3次</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">模型驱动与数据驱动结合的成功范例，兼顾性能和可解释性</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Channel Estimation Summary -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                    <h3 class="font-bold text-lg mb-4 text-gray-800">OFDM信道估计方向其他重要论文</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="space-y-2">
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>CeBed</strong> - 
+                                    <a href="https://arxiv.org/abs/2306.08967" class="text-blue-600 hover:underline">OFDM信道估计深度学习基准</a>
+                                    <span class="text-gray-500"> (2023) - NMSE比LS降低12dB</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>Diffusion Receivers</strong> - 
+                                    <a href="https://arxiv.org/abs/2506.08934" class="text-blue-600 hover:underline">生成式MIMO-OFDM接收机</a>
+                                    <span class="text-gray-500"> (2025) - 导频开销减少70%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>CP-free OFDM</strong> - 
+                                    <a href="https://arxiv.org/abs/2308.16387" class="text-blue-600 hover:underline">无CP系统的CVNN估计</a>
+                                    <span class="text-gray-500"> (2023) - 频谱效率提升15-20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>FreqTimeNet</strong> - 
+                                    <a href="https://arxiv.org/abs/2107.02134" class="text-blue-600 hover:underline">注意力信道估计</a>
+                                    <span class="text-gray-500"> (2021) - NMSE比LS降低10-12dB</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>RCNet</strong> - 
+                                    <a href="https://arxiv.org/abs/2003.06260" class="text-blue-600 hover:underline">结构深度RNN检测</a>
+                                    <span class="text-gray-500"> (2020) - 复杂度比ML降低95%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="text-blue-500 mt-1">•</span>
+                                <div>
+                                    <strong>CLNet</strong> - 
+                                    <a href="https://arxiv.org/abs/2102.07504" class="text-blue-600 hover:underline">Massive MIMO CSI反馈</a>
+                                    <span class="text-gray-500"> (2021) - 轻量化复数网络设计</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Radar Section -->
+        <section id="radar" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">🎯 雷达信号处理与DOA估计</h2>
+                <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">15+篇论文</span>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- DeepMUSIC -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-indigo-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">DOA估计</span>
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">IEEE Sensors</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1912.04357" class="hover:text-blue-600 transition-colors" target="_blank">
+                                DeepMUSIC: Multiple Signal Classification via Deep Learning
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Ahmet M. Elbir | 📅 2019/2020</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">传统MUSIC算法需要特征分解，计算复杂度高，难以实时应用。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">将深度学习与MUSIC算法结合，降低计算复杂度同时保持高分辨率。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>设计多个深度CNN，每个网络专门处理角谱的一个子区域</li>
+                                <li>输入阵列协方差矩阵，输出对应角子区域的MUSIC谱</li>
+                                <li>分而治之策略：将DOA估计分解为多个子区域问题</li>
+                                <li>复数CNN处理复数协方差矩阵</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">RMSE优于传统MUSIC，计算复杂度显著降低，适合实时应用</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">深度学习与经典信号处理算法结合的成功范例</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CVGG-Net -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-green-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">SAR</span>
+                            <span class="tag bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">中科院</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2305.07918" class="hover:text-blue-600 transition-colors" target="_blank">
+                                CVGG-Net: Complex-Valued VGG for SAR Ship Recognition
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Dandan Zhao, Zhe Zhang, et al. | 🏛️ 中国科学院空天信息创新研究院 | 📅 2023</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">SAR图像包含丰富的相位信息，传统实数CNN无法充分利用。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">专门为SAR图像舰船识别设计复数CNN，充分利用幅度和相位信息。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>复数卷积层同时处理SAR数据的幅度和相位信息</li>
+                                <li>分析多种复数激活函数（CReLU、zReLU等）对性能的影响</li>
+                                <li>提出Complex Area Max-Poolin，保留更多相位信息</li>
+                                <li>端到端复数处理，不进行实数分解</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">OpenSARShip达93%准确率，相比实数VGG提升6-8%，相比平均池化复数网络提升3-4%</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">SAR图像处理的专用复数网络设计，相位信息利用的典范</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Radar Denoising -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-gray-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full">去噪</span>
+                            <span class="tag bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">汽车雷达</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2105.00929" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Complex-Valued CNN for Enhanced Radar Signal Denoising and Interference Mitigation
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Alexander Fuchs, Johanna Rock, et al. | 🏛️ Graz University of Technology | 📅 2021</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">汽车雷达传感器之间存在相互干扰问题，需要有效的干扰抑制方法。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">将雷达信号处理方法扩展到复数域，根据雷达数据的物理特性进行处理。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>复数卷积神经网络解决雷达传感器之间的相互干扰</li>
+                                <li>复数自编码器用于雷达信号去噪</li>
+                                <li>复数批归一化技术</li>
+                                <li>针对汽车雷达数据的优化设计</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">提高数据效率，加快训练速度，大幅改善干扰去除过程中相位信息的保存</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">汽车雷达应用的实用化CVNN方案，干扰抑制效果显著</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- 6G Section -->
+        <section id="6g" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">🚀 6G通信前沿应用</h2>
+                <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">20+篇论文</span>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- Stacked Intelligent Surfaces -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-purple-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">SIS</span>
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">IEEE ICC 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/11104397/" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Deep Complex-Valued Neural-Network Modeling and Optimization of Stacked Intelligent Surfaces
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 A Zayat, O Abbas, L Markley et al. | 📅 IEEE ICC, 2025 | 📊 被引1次</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">堆叠智能表面(SIS)是6G MIMO通信的关键技术，需要高效的建模与优化方法。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">利用CVNN处理复数信道状态信息(CSI)的直接建模能力，解决非线性优化问题。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>提出CVNN框架用于堆叠智能表面(SIS)的建模与优化</li>
+                                <li>解决6G MIMO通信系统中的非线性优化问题</li>
+                                <li>利用CVNN处理复数CSI的直接建模能力</li>
+                                <li>端到端学习SIS相移矩阵优化</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">相比实值神经网络减少50%参数量，提升收敛速度</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">CVNN在6G智能反射面优化中的成功应用，参数量效率显著提升</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Complex-Valued Transformers -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-red-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">IEEE TCOM 2025</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">Transformer</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/11224929/" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Unveiling the Power of Complex-Valued Transformers in Wireless Communications
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Y Leng, Q Lin, LY Yung, J Lei, Y Li et al. | 📅 IEEE TCOM, 2025 | 📊 被引6次</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">Transformer在无线通信中的应用逐渐增多，但复数Transformer的理论基础尚不完善。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">首次系统分析复数Transformer在无线通信中的理论基础，证明其相比实值网络的优势。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>首次系统分析复数Transformer在无线通信中的理论基础</li>
+                                <li>证明CVNN相比实值网络的近似能力优势</li>
+                                <li>提出复数自注意力机制，保持相位信息完整性</li>
+                                <li>理论证明与实验验证相结合</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">调制识别任务中准确率提升8-12%，理论证明CVNN的万能近似能力优势</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">复数Transformer在无线通信领域的权威理论分析，6G通信的重要技术基础</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- THz Communication -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-cyan-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-cyan-100 text-cyan-700 text-xs px-2 py-1 rounded-full">太赫兹</span>
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">IEEE JSTSP</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/10143629/" class="hover:text-blue-600 transition-colors" target="_blank">
+                                An Adaptive and Robust Deep Learning Framework for THz Ultra-Massive MIMO Channel Estimation
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 W Yu, Y Shen, H He, X Yu, S Song et al. | 📅 IEEE JSTSP, 2023</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">太赫兹(100GHz+)通信面临稀疏性、波束分裂和大尺度衰落等挑战。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">设计自适应深度学习框架解决THz超大规模MIMO信道估计问题。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>针对100GHz+太赫兹频段的自适应深度学习框架</li>
+                                <li>解决THz信道的稀疏性和波束分裂问题</li>
+                                <li>提出鲁棒训练策略应对大尺度衰落</li>
+                                <li>支持1024+天线的大规模MIMO系统</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">在100-300GHz频段实现高精度信道估计，支持1024+天线阵列</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">THz通信的关键技术突破，为6G高频段通信奠定基础</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ISAC -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-green-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">ISAC</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">IEEE JSTSP</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/10496165/" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Complex Neural Network Based Joint AoA and AoD Estimation for Bistatic ISAC
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 S Naoumi, A Bazzi, R Bomfin et al. | 📅 IEEE JSTSP, 2024</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">通感一体化(ISAC)需要在通信的同时实现感知功能，角度估计是关键技术。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">利用复数神经网络实现双基地ISAC的联合到达角(AoA)和离开角(AoD)估计。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>基于复数神经网络的ISAC联合角度估计</li>
+                                <li>双基地雷达-通信一体化场景</li>
+                                <li>CVNN同时估计到达角(AoA)和离开角(AoD)</li>
+                                <li>复数特征提取保持相位信息</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">感知精度提升30%，通信速率损失<5%</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">CVNN在通感一体化中的成功应用，通信与感知性能的良好平衡</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- MRI Section -->
+        <section id="mri" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">🏥 医学成像（MRI）</h2>
+                <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-medium">15+篇论文</span>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- MRI Fingerprinting -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-pink-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full">MRI Fingerprinting</span>
+                            <span class="tag bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">UC Berkeley</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1707.00070" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Better than Real: Complex-valued Neural Nets for MRI Fingerprinting
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-900 mb-3">
+                            👤 Patrick Virtue, Stella X. Yu, Michael Lustig | 🏛️ UC Berkeley | 📅 2017
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">MRI指纹识别需要高效准确的非线性逆映射方法。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">利用复数神经网络直接从MRI信号映射到组织参数，开发新的心形激活函数。</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>从MRI模拟器生成合成数据训练深度网络</li>
+                                <li>将深度学习用作高效的非线性逆映射方法</li>
+                                <li>开发具有新的心形激活函数的复数神经网络</li>
+                                <li>直接映射MRI信号到组织参数</li>
+                            </ul>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">复数神经网络比实值神经网络在MRI指纹识别方面准确得多</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">CVNN在MRI领域的开创性应用，心形激活函数设计独特</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PhaseGen -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-indigo-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">扩散模型</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">数据生成</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2504.07560" class="hover:text-blue-600 transition-colors" target="_blank">
+                                PhaseGen: A Diffusion-Based Approach for Complex-Valued MRI Data Generation
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Moritz Rempe, Fabian Hörst, Helmut Becker, et al. | 🏛️ RWTH Aachen University | 📅 2025</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">MRI原始数据（k空间）难以获取，需要合成数据进行模型预训练。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">基于扩散模型生成合成MRI原始数据，以幅度图像为条件创建人工复值数据。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>基于扩散的新颖复值模型PhaseGen</li>
+                                <li>以临床常用幅度图像为条件生成合成MRI原始数据</li>
+                                <li>创建需要k空间信息的模型的人工复值预训练数据</li>
+                                <li>复数扩散过程保持相位一致性</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">颅骨剥离分割准确率从41.1%提升到80.1%，合成相位数据显著改善泛化</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">扩散模型在医学成像数据生成中的创新应用，解决数据稀缺问题</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Quaternion Section -->
+        <section id="quaternion" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">🔷 四元数神经网络</h2>
+                <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">5篇核心论文</span>
+            </div>
+
+            <div class="bg-indigo-50 rounded-xl p-6 mb-6 border border-indigo-100">
+                <p class="text-indigo-800">
+                    <strong>四元数神经网络(Quaternion Neural Networks, QNN)</strong>是CVNN的扩展，使用四元数（4维）代替复数（2维）。
+                    四元代数以Hamilton积替换标准点积，提供建模元素间依赖关系的优雅方式，特别适合3D旋转等变、多通道语音识别等任务。
+                </p>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- 3D Rotation Equivariant -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-indigo-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">3D旋转等变</span>
+                            <span class="tag bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">上海交大</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1911.09040" class="hover:text-blue-600 transition-colors" target="_blank">
+                                3D-Rotation-Equivariant Quaternion Neural Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Wen Shen, Binbin Zhang, Shikun Huang, Zhihua Wei, Quanshi Zhang | 🏛️ Shanghai Jiao Tong University | 📅 2019</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">3D点云处理需要旋转等变性，传统神经网络无法保证旋转后的输出一致性。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">设计旋转等变四元数神经网络(REQNNs)，使网络特征自然具有旋转等变性。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>提出修订规则使神经网络成为旋转等变四元数神经网络</li>
+                                <li>发现四元数特征在特定条件下自然具有旋转等变性</li>
+                                <li>适用于3D点云处理的各种神经网络架构</li>
+                                <li>Hamilton积保持旋转等变特性</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">与原始神经网络相比，REQNN表现出更高的旋转鲁棒性</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">四元数等变性的开创性工作，为3D点云处理提供理论保障</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Speech Recognition -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-orange-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full">语音识别</span>
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">TIMIT</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/1811.09678" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Speech Recognition with Quaternion Neural Networks
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Titouan Parcollet, Mirco Ravanelli, Mohamed Morchid, et al. | 🏛️ Avignon University | 📅 2018</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">语音识别需要建模声学特征间的复杂依赖关系，实值网络参数量大。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">研究现代四元数模型（卷积和循环四元数神经网络）在语音识别中的应用。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>四元数代数以Hamilton积替换标准点积</li>
+                                <li>提供建模元素间依赖关系的简单优雅方式</li>
+                                <li>卷积和循环四元数神经网络架构设计</li>
+                                <li>在TIMIT数据集上验证</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">TIMIT上始终优于等效实值模型，使用更少自由参数，实现更有效、紧凑和富有表现力的信息表示</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">四元数在语音识别中的成功应用，参数效率显著提升</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Multi-channel Distant Speech -->
+                <article class="paper-card bg-white rounded-xl shadow-sm overflow-hidden border-l-4 border-blue-500">
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="tag bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">多通道语音</span>
+                            <span class="tag bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">Cambridge</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">
+                            <a href="https://arxiv.org/abs/2005.08566" class="hover:text-blue-600 transition-colors" target="_blank">
+                                Quaternion Neural Networks for Multi-channel Distant Speech Recognition
+                            </a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-3">👤 Xinchi Qiu, Titouan Parcollet, Mirco Ravanelli, et al. | 🏛️ University of Cambridge | 📅 2020</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                                <p class="text-sm text-gray-600">远距离语音识别使用多通道麦克风阵列，需要建模通道间的复杂关系。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                                <p class="text-sm text-gray-600">使用四元数神经网络捕获多通道音频录音中的内部关系，将多个信号作为整体四元数实体联合处理。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                                <li>使用四元数神经网络捕获多通道音频的内部关系</li>
+                                <li>将多个信号作为整体四元数实体联合处理</li>
+                                <li>四元数层与循环神经网络耦合学习长期依赖</li>
+                                <li>在时域中建模多通道相关性</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                                <p class="text-sm text-green-700">多通道远距离语音识别任务上，QLSTM优于等效实值LSTM</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                                <p class="text-sm text-blue-700">四元数LSTM在多通道语音处理中的成功应用，通道间关系建模能力强</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Tools Section -->
+        <section id="tools" class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold gradient-text">🛠️ 开源框架与工具</h2>
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">8个框架</span>
+            </div>
+
+            <div class="bg-cyan-50 rounded-xl p-6 mb-6 border border-cyan-100">
+                <p class="text-cyan-800">
+                    以下是CVNN领域的主要开源框架，按PyTorch和TensorFlow生态系统分类。
+                    <strong>推荐新项目使用torchcvnn或complexPyTorch</strong>，
+                    它们提供完整的复数层实现和良好的文档支持。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- PyTorch Ecosystem -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                        <span class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white mr-2">P</span>
+                        PyTorch Ecosystem
+                    </h3>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-orange-500">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/torchcvnn/torchcvnn" class="hover:text-orange-600 transition-colors" target="_blank">torchcvnn</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">👤 Victor Dhédin, Jérémie Levi (CentraleSupélec)</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>基于PyTorch后端的复数神经网络库</li>
+                            <li>提供复数值数据集（遥感、MRI）</li>
+                            <li>支持复数卷积、批量归一化等</li>
+                        </ul>
+                        <div class="mt-3 bg-gray-100 rounded p-2 text-xs font-mono">pip install torchcvnn</div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-orange-400">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/wavefrontshaping/complexPyTorch" class="hover:text-orange-600 transition-colors" target="_blank">complexPyTorch</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">高级PyTorch复数神经网络工具箱</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>支持PyTorch 1.7+的complex64张量</li>
+                            <li>提供复数卷积、池化、归一化层</li>
+                            <li>包含GRU/BN-GRU Cell实现</li>
+                        </ul>
+                        <div class="mt-3 bg-gray-100 rounded p-2 text-xs font-mono">pip install complexPyTorch</div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-orange-300">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/josiahwsmith10/complextorch" class="hover:text-orange-600 transition-colors" target="_blank">complextorch</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">👤 Josiah W. Smith, Ph.D.</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>轻量级PyTorch复数神经网络包</li>
+                            <li>专注于信号处理、通信和雷达数据</li>
+                            <li>高效实现线性、卷积和注意力模块</li>
+                        </ul>
+                        <div class="mt-3 bg-gray-100 rounded p-2 text-xs font-mono">pip install complextorch</div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-gray-400">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/ivannz/cplxmodule" class="hover:text-gray-600 transition-colors" target="_blank">cplxmodule</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">基于Wirtinger微积分的复数网络模块</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>支持实数和复数的变分dropout</li>
+                            <li>支持网络稀疏化和剪枝</li>
+                            <li>Bayesian Sparsification for CVNN</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TensorFlow & Others -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                        <span class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white mr-2">T</span>
+                        TensorFlow & Others
+                    </h3>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-blue-500">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/NEGU93/cvnn" class="hover:text-blue-600 transition-colors" target="_blank">cvnn (NEGU93)</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">👤 J. Agustin Barrachina (ONERA) ⚠️ TF 2.16+不兼容</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>基于TensorFlow后端</li>
+                            <li>使用原生复数数据类型</li>
+                            <li>完整的Sequential和Functional API</li>
+                        </ul>
+                        <div class="mt-2 text-xs text-orange-600">⚠️ 注意：该项目已弃用，新项目建议使用PyTorch版本</div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-green-500">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/NEGU93/CVNN-PolSAR" class="hover:text-green-600 transition-colors" target="_blank">CVNN-PolSAR</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">极化SAR图像分割专用工具</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>包含Cao et al., Zhang et al.等经典模型</li>
+                            <li>支持Oberpfaffenhofen, Flevoland等数据集</li>
+                            <li>PolSAR图像分类完整流程</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-purple-500">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/mit-ll/ComplexCascadeNN" class="hover:text-purple-600 transition-colors" target="_blank">MIT-LL ComplexCascadeNN</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">MIT Lincoln Laboratory</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>Levenberg-Marquardt优化</li>
+                            <li>复数分裂激活前馈神经网络</li>
+                            <li>MATLAB实现</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-gray-500">
+                        <h4 class="font-bold text-lg text-gray-900">
+                            <a href="https://github.com/ChihebTrabelsi/deep_complex_networks" class="hover:text-gray-600 transition-colors" target="_blank">Deep Complex Networks</a>
+                        </h4>
+                        <p class="text-sm text-gray-600 mt-1">ICLR 2018 原始实现</p>
+                        <ul class="text-sm text-gray-700 mt-3 space-y-1 list-disc list-inside">
+                            <li>Theano + Keras实现</li>
+                            <li>CIFAR-10, SVHN, MusicNet实验</li>
+                            <li>历史参考价值</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Summary Section -->
+        <section id="summary" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 gradient-text">📊 总结与展望</h2>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <!-- CVNN vs RVNN -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">CVNN vs 实值神经网络</h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-left py-2">优势维度</th>
+                                <th class="text-right py-2">提升幅度</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">参数量效率</td>
+                                <td class="text-right font-medium text-green-600">减少50%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">相位信息保留</td>
+                                <td class="text-right font-medium text-green-600">原生支持</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">收敛速度</td>
+                                <td class="text-right font-medium text-green-600">快30-50%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">MIMO检测SNR增益</td>
+                                <td class="text-right font-medium text-green-600">3-5dB</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">OFDM接收BER降低</td>
+                                <td class="text-right font-medium text-green-600">40-60%</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <td class="py-2">信道估计NMSE改善</td>
+                                <td class="text-right font-medium text-green-600">8-12dB</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2">计算复杂度降低</td>
+                                <td class="text-right font-medium text-green-600">90%+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Application Areas -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">应用领域统计</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">📡 OFDM与物理层通信</span>
+                            <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm font-medium">72篇</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">🚀 6G通信前沿</span>
+                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-sm font-medium">20篇</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">🎯 雷达与DOA估计</span>
+                            <span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-sm font-medium">15篇</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">🏥 医学成像(MRI)</span>
+                            <span class="bg-pink-100 text-pink-700 px-2 py-1 rounded text-sm font-medium">15篇</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">🎓 理论基础</span>
+                            <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-medium">5篇</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">🔷 四元数网络</span>
+                            <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-sm font-medium">5篇</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Trends -->
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white mb-8">
+                <h3 class="text-xl font-bold mb-4">🔮 未来研究方向</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">架构创新</h4>
+                        <ul class="text-sm space-y-1 opacity-90">
+                            <li>• 复数Transformer优化</li>
+                            <li>• 扩散模型在CVNN中的应用</li>
+                            <li>• 神经辐射场(NeRF)与CVNN结合</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">6G前沿</h4>
+                        <ul class="text-sm space-y-1 opacity-90">
+                            <li>• 太赫兹(100GHz+)通信</li>
+                            <li>• 超大规模MIMO(1024+天线)</li>
+                            <li>• 通感一体化(ISAC)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">部署优化</h4>
+                        <ul class="text-sm space-y-1 opacity-90">
+                            <li>• 边缘设备轻量化</li>
+                            <li>• FPGA/ASIC硬件加速</li>
+                            <li>• 复数量化策略</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Researchers -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">👥 主要研究团队</h3>
+                <div class="grid md:grid-cols-4 gap-4 text-sm">
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-gray-800">香港大学</strong>
+                        <p class="text-gray-600 mt-1">Y Leng团队</p>
+                        <p class="text-gray-500">复数Transformer</p>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-gray-800">伦敦玛丽女王大学</strong>
+                        <p class="text-gray-600 mt-1">W Shen团队</p>
+                        <p class="text-gray-500">RIS+CVNN</p>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-gray-800">KAUST</strong>
+                        <p class="text-gray-600 mt-1">TY Al-Naffouri</p>
+                        <p class="text-gray-500">THz通信</p>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-gray-800">弗吉尼亚理工</strong>
+                        <p class="text-gray-600 mt-1">L Mili团队</p>
+                        <p class="text-gray-500">鲁棒CVNN</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm">📅 发布时间: 2026年3月6日 07:10 CST</p>
+                    <p class="text-sm">📝 分析师: Jarvis | 🔬 数据来源: arXiv, IEEE Xplore</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm">📊 CVNN Research Report | 2026 Week 10</p>
+                    <p class="text-sm">🔗 发布位置: GitHub Pages</p>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800 text-center text-xs">
+                <p>本报告由AI辅助生成，仅供学术研究参考。论文版权归属原作者。</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

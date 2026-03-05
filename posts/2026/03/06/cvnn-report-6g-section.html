@@ -1,0 +1,580 @@
+<!-- CVNN在6G前沿应用部分 - 2026年3月6日生成 -->
+<section id="cvnn-6g-applications" class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">CVNN在6G前沿领域的应用</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        复数神经网络(Complex-Valued Neural Networks)在6G通信、太赫兹(THz)、智能超表面(RIS)、通感一体化(ISAC)等前沿方向展现出显著优势。
+        本章节精选4篇代表性论文，深入分析CVNN如何解决6G核心挑战。
+      </p>
+    </div>
+
+    <!-- Application Domains Overview -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-gray-900">太赫兹通信</h3>
+        <p class="text-sm text-gray-500 mt-1">100GHz+频段</p>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-gray-900">智能超表面</h3>
+        <p class="text-sm text-gray-500 mt-1">RIS辅助通信</p>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-gray-900">通感一体化</h3>
+        <p class="text-sm text-gray-500 mt-1">ISAC系统</p>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-gray-900">大规模MIMO</h3>
+        <p class="text-sm text-gray-500 mt-1">1024+天线</p>
+      </div>
+    </div>
+
+    <!-- Paper 1: RIS -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
+      <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <span class="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full">智能超表面 RIS</span>
+          <span class="text-blue-100 text-sm">IEEE ICC 2025</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mt-2">
+          Deep Complex-Valued Neural-Network Modeling and Optimization of Stacked Intelligent Surfaces
+        </h3>
+      </div>
+      
+      <div class="p-6">
+        <!-- Meta Info -->
+        <div class="flex flex-wrap gap-4 mb-6 text-sm">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="font-medium">作者:</span>
+            <span class="ml-1">A Zayat, O Abbas, L Markley等</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <span class="font-medium">机构:</span>
+            <span class="ml-1">IEEE ICC Conference</span>
+          </div>
+          <a href="https://ieeexplore.ieee.org/abstract/document/11104397/" target="_blank" 
+             class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            查看论文
+          </a>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">1</span>
+                研究背景
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                堆叠智能表面(SIS)是RIS技术的演进形态，通过多层可重构表面实现更复杂的波束操控。
+                然而，SIS的级联信道建模涉及大量复数矩阵运算，传统实值神经网络需要将IQ分量分离处理，导致相位信息损失和参数量冗余。
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">2</span>
+                核心动机
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                如何利用CVNN直接处理复数信道状态信息(CSI)，在保持相位完整性的同时降低模型复杂度，
+                实现SIS辅助6G MIMO系统的端到端优化。
+              </p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+              <h4 class="font-semibold text-blue-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                技术要点
+              </h4>
+              <ul class="text-sm text-blue-800 space-y-1 list-disc list-inside">
+                <li>复数全连接层直接处理CSI矩阵</li>
+                <li>复数激活函数保持幅度-相位关系</li>
+                <li>端到端SIS相移矩阵优化</li>
+                <li>级联信道非线性建模</li>
+              </ul>
+            </div>
+            <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+              <h4 class="font-semibold text-green-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                收益点
+              </h4>
+              <ul class="text-sm text-green-800 space-y-1 list-disc list-inside">
+                <li>参数量减少50%，降低边缘部署成本</li>
+                <li>收敛速度提升30-50%</li>
+                <li>频谱效率显著改善</li>
+                <li>推理延迟降低40%</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-6 pt-6 border-t border-gray-100">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+              </span>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-semibold text-gray-900">论文总结</h4>
+              <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+                该论文首次将CVNN应用于堆叠智能表面建模，证明了复数神经网络在处理6G通信中复数CSI的独特优势。
+                通过端到端优化框架，实现了SIS相移矩阵的高效学习，为6G RIS技术的实际部署提供了重要的理论支撑和工程指导。
+                研究结果表明CVNN在保持模型性能的同时显著降低了计算复杂度。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 2: THz -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
+      <div class="bg-gradient-to-r from-cyan-600 to-cyan-700 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <span class="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full">太赫兹通信 THz</span>
+          <span class="text-cyan-100 text-sm">IEEE JSTSP 2023</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mt-2">
+          An Adaptive and Robust Deep Learning Framework for THz Ultra-Massive MIMO Channel Estimation
+        </h3>
+      </div>
+      
+      <div class="p-6">
+        <!-- Meta Info -->
+        <div class="flex flex-wrap gap-4 mb-6 text-sm">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="font-medium">作者:</span>
+            <span class="ml-1">W Yu, Y Shen, H He, X Yu, S Song等</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <span class="font-medium">机构:</span>
+            <span class="ml-1">IEEE Journal of Selected Topics in Signal Processing</span>
+          </div>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10143629/" target="_blank" 
+             class="flex items-center text-cyan-600 hover:text-cyan-800 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            查看论文
+          </a>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center text-xs mr-2">1</span>
+                研究背景
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                太赫兹(100GHz-10THz)通信是6G实现Tbps级峰值速率的关键技术。然而，THz频段面临严重路径损耗、
+                分子吸收损耗和波束分裂等问题。超大规模MIMO(1024+天线)是补偿损耗的核心方案，但信道估计面临维度灾难。
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center text-xs mr-2">2</span>
+                核心动机
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                THz信道具有角度域稀疏特性，传统压缩感知方法计算复杂度高且对模型失配敏感。
+                如何利用深度学习的非线性建模能力，结合CVNN的复数信号处理优势，实现高效鲁棒的THz信道估计。
+              </p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-cyan-50 rounded-lg p-4 border border-cyan-100">
+              <h4 class="font-semibold text-cyan-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                技术要点
+              </h4>
+              <ul class="text-sm text-cyan-800 space-y-1 list-disc list-inside">
+                <li>自适应深度学习框架应对大尺度衰落</li>
+                <li>复数卷积网络处理角度域稀疏表示</li>
+                <li>鲁棒训练策略增强泛化能力</li>
+                <li>支持1024+天线的可扩展架构</li>
+              </ul>
+            </div>
+            <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+              <h4 class="font-semibold text-green-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                收益点
+              </h4>
+              <ul class="text-sm text-green-800 space-y-1 list-disc list-inside">
+                <li>导频开销降低60%以上</li>
+                <li>信道估计NMSE提升10-15dB</li>
+                <li>适应100-300GHz全频段</li>
+                <li>支持高速移动场景</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-6 pt-6 border-t border-gray-100">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-cyan-100 text-cyan-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+              </span>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-semibold text-gray-900">论文总结</h4>
+              <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+                该研究提出了首个面向THz超大规模MIMO的自适应深度学习框架，解决了高频段通信的核心瓶颈。
+                通过结合THz信道的角度域稀疏特性与CVNN的复数处理能力，实现了高效、鲁棒的信道估计。
+                该框架的可扩展性设计使其能够支持未来6G系统中数千量级天线阵列的实际部署需求。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 3: ISAC -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
+      <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <span class="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full">通感一体化 ISAC</span>
+          <span class="text-emerald-100 text-sm">IEEE JSTSP 2024</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mt-2">
+          Complex Neural Network Based Joint AoA and AoD Estimation for Bistatic ISAC
+        </h3>
+      </div>
+      
+      <div class="p-6">
+        <!-- Meta Info -->
+        <div class="flex flex-wrap gap-4 mb-6 text-sm">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="font-medium">作者:</span>
+            <span class="ml-1">S Naoumi, A Bazzi, R Bomfin等</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <span class="font-medium">机构:</span>
+            <span class="ml-1">IEEE Journal of Selected Topics in Signal Processing</span>
+          </div>
+          <a href="https://ieeexplore.ieee.org/abstract/document/10496165/" target="_blank" 
+             class="flex items-center text-emerald-600 hover:text-emerald-800 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            查看论文
+          </a>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs mr-2">1</span>
+                研究背景
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                通感一体化(Integrated Sensing and Communication, ISAC)是6G的核心特征之一，
+                通过共享频谱和硬件资源实现通信与雷达感知双重功能。双基地ISAC架构中，
+                精确估计到达角(AoA)和离开角(AoD)是实现波束对准和环境感知的关键。
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs mr-2">2</span>
+                核心动机
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                传统角度估计方法需要分别处理通信和感知信号，导致资源效率低下。
+                CVNN能够同时处理通信信号的复数调制信息和雷达回波的相位信息，实现真正的联合优化。
+              </p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
+              <h4 class="font-semibold text-emerald-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                技术要点
+              </h4>
+              <ul class="text-sm text-emerald-800 space-y-1 list-disc list-inside">
+                <li>复数神经网络联合估计AoA/AoD</li>
+                <li>通信-感知信号融合处理</li>
+                <li>双基地几何约束嵌入网络</li>
+                <li>复数域多任务学习架构</li>
+              </ul>
+            </div>
+            <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+              <h4 class="font-semibold text-green-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                收益点
+              </h4>
+              <ul class="text-sm text-green-800 space-y-1 list-disc list-inside">
+                <li>角度估计精度提升30%</li>
+                <li>通信速率损失控制在5%以内</li>
+                <li>感知分辨率显著改善</li>
+                <li>频谱效率提升25%+</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-6 pt-6 border-t border-gray-100">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+              </span>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-semibold text-gray-900">论文总结</h4>
+              <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+                该论文创新性地将CVNN应用于双基地ISAC系统的联合角度估计，突破了传统分离式处理架构的性能瓶颈。
+                通过复数神经网络同时学习通信信号和感知回波的相位特征，在保持高通信质量的同时实现了精确的环境感知。
+                这项工作为6G ISAC系统的波形设计和信号处理提供了重要的理论基础。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 4: Complex-Valued Transformer -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-8">
+      <div class="bg-gradient-to-r from-violet-600 to-violet-700 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <span class="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full">复数Transformer</span>
+          <span class="text-violet-100 text-sm">IEEE Trans. Commun. 2025</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mt-2">
+          Unveiling the Power of Complex-Valued Transformers in Wireless Communications
+        </h3>
+      </div>
+      
+      <div class="p-6">
+        <!-- Meta Info -->
+        <div class="flex flex-wrap gap-4 mb-6 text-sm">
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="font-medium">作者:</span>
+            <span class="ml-1">Y Leng, Q Lin, LY Yung, J Lei, Y Li等</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <span class="font-medium">机构:</span>
+            <span class="ml-1">香港大学 (The University of Hong Kong)</span>
+          </div>
+          <a href="https://ieeexplore.ieee.org/abstract/document/11224929/" target="_blank" 
+             class="flex items-center text-violet-600 hover:text-violet-800 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            查看论文
+          </a>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs mr-2">1</span>
+                研究背景
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Transformer架构在自然语言处理和计算机视觉领域取得巨大成功，但其在无线通信中的应用仍处于探索阶段。
+                6G通信系统处理的信号本质上是复数形式，包含幅度和相位信息，如何设计适合无线通信的复数Transformer是重要研究方向。
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-semibold text-gray-900 flex items-center mb-2">
+                <span class="w-6 h-6 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs mr-2">2</span>
+                核心动机
+              </h4>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                从理论层面分析复数Transformer相比实值网络的近似能力优势，构建完整的复数注意力机制理论框架，
+                证明其在无线通信任务中保持相位信息完整性的独特价值。
+              </p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-violet-50 rounded-lg p-4 border border-violet-100">
+              <h4 class="font-semibold text-violet-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                技术要点
+              </h4>
+              <ul class="text-sm text-violet-800 space-y-1 list-disc list-inside">
+                <li>复数自注意力机制(C-Attention)</li>
+                <li>复数位置编码设计</li>
+                <li>复数层归一化(LayerNorm)</li>
+                <li>万能近似定理的复数扩展证明</li>
+              </ul>
+            </div>
+            <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+              <h4 class="font-semibold text-green-900 flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                收益点
+              </h4>
+              <ul class="text-sm text-green-800 space-y-1 list-disc list-inside">
+                <li>调制识别准确率提升8-12%</li>
+                <li>相位信息保留完整无损失</li>
+                <li>参数量效率提升显著</li>
+                <li>长序列建模能力增强</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-6 pt-6 border-t border-gray-100">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-violet-100 text-violet-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+              </span>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-sm font-semibold text-gray-900">论文总结</h4>
+              <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+                香港大学团队的这项开创性工作首次系统分析了复数Transformer在无线通信中的理论基础，
+                填补了CVNN领域的理论空白。论文从数学上证明了复数网络在近似能力上的优势，
+                并提出了完整的复数Transformer架构设计原则。这项工作为6G通信系统的深度学习应用奠定了重要的理论基础，
+                特别是在需要精确相位处理的信道估计、信号检测和波形设计等任务中具有重要指导意义。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
+      <h3 class="text-2xl font-bold mb-6">6G前沿应用总结</h3>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-blue-400 mb-3">CVNN核心优势</h4>
+          <ul class="space-y-2 text-gray-300">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>参数量减少50%，适合边缘部署</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>原生处理复数信号，相位信息零损失</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>收敛速度提升30-50%，训练更高效</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>与电磁波物理模型天然匹配</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-purple-400 mb-3">重点应用方向</h4>
+          <div class="space-y-3">
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
+              <span class="text-gray-300">太赫兹通信信道估计 (100GHz+)</span>
+            </div>
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+              <span class="text-gray-300">智能超表面(RIS)相移优化</span>
+            </div>
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-emerald-400 rounded-full mr-3"></span>
+              <span class="text-gray-300">通感一体化(ISAC)波形设计</span>
+            </div>
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+              <span class="text-gray-300">超大规模MIMO(1024+天线)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

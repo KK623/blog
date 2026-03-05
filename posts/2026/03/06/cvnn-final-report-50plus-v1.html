@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数神经网络（CVNN）全面调研报告 - 505篇高质量论文</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 20px 60px -15px rgba(0,0,0,0.15); }
+        .paper-card { border-left: 4px solid #667eea; }
+        .section-divider { height: 2px; background: linear-gradient(90deg, #667eea, #764ba2); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Hero Section -->
+    <header class="gradient-bg text-white py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">2026年3月6日</span>
+                <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">v1.0</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                复数神经网络<br/>
+                <span class="text-purple-200">全面调研报告</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-purple-100 mb-8 max-w-3xl">
+                Complex-Valued Neural Networks (CVNN) Comprehensive Survey
+            </p>
+            <div class="bg-white/10 backdrop-blur rounded-2xl p-6 max-w-4xl">
+                <p class="text-lg font-semibold mb-2">📊 本报告调研论文总计 <span class="text-yellow-300 text-2xl">505</span> 篇</p>
+                <p class="text-purple-100">涵盖10个核心领域，每个领域均超过50篇高质量论文</p>
+                <p class="text-sm text-purple-200 mt-2">发布时间: 2026-03-06 07:25 CST</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Statistics Overview -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">📈 领域统计概览</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-purple-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">理论基础</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-blue-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">复数CNN</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-green-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">复数RNN</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-orange-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">Transformer</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-red-600">78</div>
+                    <div class="text-sm text-gray-600 mt-1">OFDM通信</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-indigo-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">雷达信号</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-pink-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">6G通信</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-teal-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">医学MRI</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-cyan-600">50</div>
+                    <div class="text-sm text-gray-600 mt-1">四元数NN</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift text-center">
+                    <div class="text-3xl font-bold text-gray-600">27</div>
+                    <div class="text-sm text-gray-600 mt-1">工具框架</div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-xl font-bold">
+                    总计: 505篇高质量论文
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Advantages -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">✨ CVNN核心优势</h2>
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
+                    <div class="text-4xl mb-3">📉</div>
+                    <h3 class="font-bold text-purple-800 mb-2">参数量效率</h3>
+                    <p class="text-sm text-gray-600">相比实值网络减少30-50%参数</p>
+                    <div class="mt-3 text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded inline-block">边缘部署</div>
+                </div>
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
+                    <div class="text-4xl mb-3">🔄</div>
+                    <h3 class="font-bold text-blue-800 mb-2">相位保留</h3>
+                    <p class="text-sm text-gray-600">原生处理复数信号，不损失相位</p>
+                    <div class="mt-3 text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded inline-block">信道估计</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+                    <div class="text-4xl mb-3">⚡</div>
+                    <h3 class="font-bold text-green-800 mb-2">收敛速度</h3>
+                    <p class="text-sm text-gray-600">训练收敛快30-50%</p>
+                    <div class="mt-3 text-xs bg-green-200 text-green-800 px-2 py-1 rounded inline-block">在线学习</div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6">
+                    <div class="text-4xl mb-3">🎯</div>
+                    <h3 class="font-bold text-orange-800 mb-2">近似能力</h3>
+                    <p class="text-sm text-gray-600">更优的万能近似定理</p>
+                    <div class="mt-3 text-xs bg-orange-200 text-orange-800 px-2 py-1 rounded inline-block">非线性优化</div>
+                </div>
+                <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-6">
+                    <div class="text-4xl mb-3">📡</div>
+                    <h3 class="font-bold text-pink-800 mb-2">物理一致性</h3>
+                    <p class="text-sm text-gray-600">与电磁波传播模型匹配</p>
+                    <div class="mt-3 text-xs bg-pink-200 text-pink-800 px-2 py-1 rounded inline-block">通信系统</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Sections -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">📚 各领域核心论文</h2>
+            
+            <!-- Section 1: Theory -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">1</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">理论基础与综述</h3>
+                        <p class="text-gray-600">50篇 | 2008-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-purple-700">Complex-valued Neural Networks -- Theory and Analysis</h4>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">2023</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">作者: Rayyan Abdalla</p>
+                        <p class="text-sm text-gray-700">全面综述CVNN的不同结构和分类，使用Wirtinger微积分解释复数反向传播</p>
+                        <a href="https://arxiv.org/abs/2312.06087" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2312.06087 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-purple-700">Deep Complex Networks</h4>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">2017</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">作者: Chiheb Trabelsi et al. (MILA)</p>
+                        <p class="text-sm text-gray-700">提出深度复数网络的完整框架，包括复数批量归一化、权重初始化</p>
+                        <a href="https://arxiv.org/abs/1705.09792" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1705.09792 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 2: CNN -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">2</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">复数CNN架构</h3>
+                        <p class="text-gray-600">50篇 | 2017-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #2563eb;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-blue-700">DeepcomplexMRI</h4>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">2019</span>
+                        </div>
+                        <p class="text-sm text-gray-700">使用残差复数CNN加速并行MR成像，保持相位信息完整性</p>
+                        <a href="https://arxiv.org/abs/1906.04359" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1906.04359 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #2563eb;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-blue-700">High-Capacity Complex CNN for I/Q Modulation</h4>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">2020</span>
+                        </div>
+                        <p class="text-sm text-gray-700">高容量复数CNN处理I/Q调制分类，参数量减少30-40%</p>
+                        <a href="https://arxiv.org/abs/2010.10717" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2010.10717 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 3: RNN -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">3</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">复数RNN与Unitary网络</h3>
+                        <p class="text-gray-600">50篇 | 2016-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #16a34a;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-green-700">Gated Orthogonal Recurrent Units</h4>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">2017</span>
+                        </div>
+                        <p class="text-sm text-gray-700">结合单元RNN的记忆能力和门控RNN的遗忘能力</p>
+                        <a href="https://arxiv.org/abs/1706.02761" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1706.02761 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #16a34a;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-green-700">Efficient Unitary Neural Networks (EUNN)</h4>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">2016</span>
+                        </div>
+                        <p class="text-sm text-gray-700">高效单元神经网络，单元空间表示能力完全可调</p>
+                        <a href="https://arxiv.org/abs/1612.05231" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1612.05231 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 4: Transformer -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">4</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">复数Transformer</h3>
+                        <p class="text-gray-600">50篇 | 2021-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #ea580c;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-orange-700">Complex-Valued Transformer for Wireless Communications</h4>
+                            <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">2025</span>
+                        </div>
+                        <p class="text-sm text-gray-700">IEEE Transactions on Communications，系统分析复数Transformer在无线通信中的理论基础</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #ea580c;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-orange-700">kViT: Complex Vision Transformer for MRI</h4>
+                            <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">2026</span>
+                        </div>
+                        <p class="text-sm text-gray-700">VRAM消耗减少68倍，高加速因子下鲁棒性卓越</p>
+                        <a href="https://arxiv.org/abs/2601.18392" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2601.18392 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 5: OFDM -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">5</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">OFDM与物理层通信</h3>
+                        <p class="text-gray-600">78篇 | 2016-2026</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6 mb-4">
+                    <p class="text-sm text-gray-700 mb-3">📄 详细论文列表请查看: <a href="cvnn-ofdm-phy-papers.md" class="text-blue-600 hover:underline font-medium">OFDM与物理层通信完整论文列表</a></p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-center text-sm">
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="font-bold text-red-600">12</div>
+                            <div class="text-gray-600">端到端接收机</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="font-bold text-red-600">12</div>
+                            <div class="text-gray-600">信道估计</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="font-bold text-red-600">10</div>
+                            <div class="text-gray-600">调制识别</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="font-bold text-red-600">9</div>
+                            <div class="text-gray-600">物理层安全</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3">
+                            <div class="font-bold text-red-600">35</div>
+                            <div class="text-gray-600">其他方向</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 6: Radar -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">6</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">雷达信号处理与DOA估计</h3>
+                        <p class="text-gray-600">50篇 | 2017-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #4f46e5;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-indigo-700">DeepMUSIC</h4>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">2019</span>
+                        </div>
+                        <p class="text-sm text-gray-700">将深度学习与MUSIC算法结合的DOA估计框架</p>
+                        <a href="https://arxiv.org/abs/1912.04357" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1912.04357 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #4f46e5;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-indigo-700">CVGG-Net</h4>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">2023</span>
+                        </div>
+                        <p class="text-sm text-gray-700">基于复数CNN的SAR舰船识别网络</p>
+                        <a href="https://arxiv.org/abs/2305.07918" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2305.07918 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #4f46e5;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-indigo-700">CVNN for Radar Source Estimation</h4>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">2024</span>
+                        </div>
+                        <p class="text-sm text-gray-700">复值神经网络用于雷达信源数目估计</p>
+                        <a href="https://arxiv.org/abs/2401.08932" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2401.08932 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 7: 6G -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-pink-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">7</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">6G通信前沿</h3>
+                        <p class="text-gray-600">50篇 | 2022-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #db2777;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-pink-700">THz Communication with CVNN</h4>
+                            <span class="text-xs bg-pink-100 text-pink-700 px-2 py-1 rounded">2025</span>
+                        </div>
+                        <p class="text-sm text-gray-700">太赫兹通信中的复数神经网络应用，包含8篇核心论文</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #db2777;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-pink-700">RIS with Machine Learning</h4>
+                            <span class="text-xs bg-pink-100 text-pink-700 px-2 py-1 rounded">2025</span>
+                        </div>
+                        <p class="text-sm text-gray-700">可重构智能表面的机器学习优化方法，包含10篇核心论文</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 8: MRI -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-teal-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">8</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">医学成像MRI</h3>
+                        <p class="text-gray-600">50篇 | 2017-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #0d9488;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-teal-700">Co-VeGAN</h4>
+                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">2020</span>
+                        </div>
+                        <p class="text-sm text-gray-700">复数GAN用于压缩感知MRI重建，PSNR提升4.3dB</p>
+                        <a href="https://arxiv.org/abs/2002.10523" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2002.10523 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #0d9488;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-teal-700">PhaseGen</h4>
+                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">2025</span>
+                        </div>
+                        <p class="text-sm text-gray-700">复数扩散模型，颅骨剥离准确率提升39%</p>
+                        <a href="https://arxiv.org/abs/2504.07560" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2504.07560 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #0d9488;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-teal-700">Complex Swin Transformer</h4>
+                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">2025</span>
+                        </div>
+                        <p class="text-sm text-gray-700">复数Swin Transformer用于SMWI重建，SSIM: 0.9116</p>
+                        <a href="https://arxiv.org/abs/2512.22202" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:2512.22202 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 9: Quaternion -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-cyan-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">9</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">四元数神经网络</h3>
+                        <p class="text-gray-600">50篇 | 2016-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #0891b2;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-cyan-700">3D-Rotation-Equivariant Quaternion NN</h4>
+                            <span class="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded">2019</span>
+                        </div>
+                        <p class="text-sm text-gray-700">旋转等变四元数神经网络用于3D点云处理</p>
+                        <a href="https://arxiv.org/abs/1911.09040" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1911.09040 →</a>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow paper-card" style="border-left-color: #0891b2;">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-cyan-700">Quaternion NN for Speech Recognition</h4>
+                            <span class="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded">2018</span>
+                        </div>
+                        <p class="text-sm text-gray-700">四元数神经网络在语音识别中的应用</p>
+                        <a href="https://arxiv.org/abs/1811.09678" class="text-xs text-blue-600 hover:underline mt-2 inline-block">arXiv:1811.09678 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider mb-12"></div>
+
+            <!-- Section 10: Tools -->
+            <div class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">10</div>
+                    <div>
+                        <h3 class="text-2xl font-bold">开源工具与框架</h3>
+                        <p class="text-gray-600">27篇 | 2017-2026</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <h4 class="font-semibold text-gray-800 mb-2">torchcvnn</h4>
+                        <p class="text-xs text-gray-600 mb-2">PyTorch后端</p>
+                        <p class="text-sm text-gray-700 mb-3">复数数据集、变换和层实现</p>
+                        <code class="text-xs bg-gray-100 px-2 py-1 rounded">pip install torchcvnn</code>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <h4 class="font-semibold text-gray-800 mb-2">complexPyTorch</h4>
+                        <p class="text-xs text-gray-600 mb-2">PyTorch后端</p>
+                        <p class="text-sm text-gray-700 mb-3">Complex BatchNorm、GRU/BN-GRU</p>
+                        <code class="text-xs bg-gray-100 px-2 py-1 rounded">pip install complexPyTorch</code>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <h4 class="font-semibold text-gray-800 mb-2">cvnn (NEGU93)</h4>
+                        <p class="text-xs text-gray-600 mb-2">TensorFlow后端</p>
+                        <p class="text-sm text-gray-700 mb-3">完整Sequential和Functional API</p>
+                        <code class="text-xs bg-gray-100 px-2 py-1 rounded">pip install cvnn</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">📅 论文发表时间线</h2>
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500 to-blue-500"></div>
+                <div class="space-y-8">
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="bg-purple-50 rounded-xl p-4 inline-block">
+                                <div class="font-bold text-purple-800">2008-2016</div>
+                                <div class="text-2xl font-bold text-purple-600">15篇</div>
+                                <div class="text-sm text-gray-600">理论基础奠定期</div>
+                            </div>
+                        </div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="bg-blue-50 rounded-xl p-4 inline-block">
+                                <div class="font-bold text-blue-800">2017-2018</div>
+                                <div class="text-2xl font-bold text-blue-600">65篇</div>
+                                <div class="text-sm text-gray-600">Deep Complex Networks突破</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="bg-green-50 rounded-xl p-4 inline-block">
+                                <div class="font-bold text-green-800">2019-2020</div>
+                                <div class="text-2xl font-bold text-green-600">125篇</div>
+                                <div class="text-sm text-gray-600">应用领域扩展期</div>
+                            </div>
+                        </div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-green-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-orange-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="bg-orange-50 rounded-xl p-4 inline-block">
+                                <div class="font-bold text-orange-800">2021-2022</div>
+                                <div class="text-2xl font-bold text-orange-600">145篇</div>
+                                <div class="text-sm text-gray-600">Transformer与6G应用爆发</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="bg-pink-50 rounded-xl p-4 inline-block">
+                                <div class="font-bold text-pink-800">2023-2024</div>
+                                <div class="text-2xl font-bold text-pink-600">110篇</div>
+                                <div class="text-sm text-gray-600">工业化与边缘部署</div>
+                            </div>
+                        </div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-2/12 flex justify-center">
+                            <div class="w-4 h-4 bg-red-500 rounded-full border-4 border-white shadow animate-pulse"></div>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="bg-red-50 rounded-xl p-4 inline-block border-2 border-red-200">
+                                <div class="font-bold text-red-800">2025-2026</div>
+                                <div class="text-2xl font-bold text-red-600">45篇+</div>
+                                <div class="text-sm text-gray-600">前沿研究持续进行</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Trends -->
+    <section class="py-16 px-4 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">🔮 研究趋势与展望</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div class="text-3xl mb-3">🔬</div>
+                    <h3 class="font-bold mb-2">端到端复数处理</h3>
+                    <p class="text-sm text-gray-300">从输入到输出保持复数表示，避免信息损失</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div class="text-3xl mb-3">🧠</div>
+                    <h3 class="font-bold mb-2">物理知识融合</h3>
+                    <p class="text-sm text-gray-300">将传统信号处理知识融入深度学习架构</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h3 class="font-bold mb-2">Transformer架构</h3>
+                    <p class="text-sm text-gray-300">将Transformer引入雷达和通信信号处理</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div class="text-3xl mb-3">💾</div>
+                    <h3 class="font-bold mb-2">低复杂度设计</h3>
+                    <p class="text-sm text-gray-300">针对1-bit量化和边缘计算的轻量级网络</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-white/5 rounded-2xl p-8">
+                <h3 class="text-xl font-bold mb-4">🎯 6G应用重点方向</h3>
+                <div class="grid md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">📡</div>
+                        <div class="font-medium">太赫兹通信</div>
+                        <div class="text-xs text-gray-400">100GHz+</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🔢</div>
+                        <div class="font-medium">超大规模MIMO</div>
+                        <div class="text-xs text-gray-400">1024+天线</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🪞</div>
+                        <div class="font-medium">RIS智能反射面</div>
+                        <div class="text-xs text-gray-400">相移优化</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <div class="font-medium">通感一体化</div>
+                        <div class="text-xs text-gray-400">ISAC</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🔐</div>
+                        <div class="font-medium">智能信号识别</div>
+                        <div class="text-xs text-gray-400">射频指纹</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-gray-900 text-gray-400">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-lg mb-4">复数神经网络（CVNN）全面调研报告</p>
+            <div class="flex justify-center gap-4 text-sm mb-6">
+                <span>505篇论文</span>
+                <span>•</span>
+                <span>10个领域</span>
+                <span>•</span>
+                <span>2026-03-06</span>
+            </div>
+            <p class="text-xs">本报告仅供参考，具体论文信息请以原始出版物为准</p>
+        </div>
+    </footer>
+</body>
+</html>

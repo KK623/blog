@@ -1,0 +1,369 @@
+<!-- 四元数神经网络章节 -->
+<section id="quaternion" class="py-16 px-4 md:px-8 lg:px-16">
+  <div class="max-w-7xl mx-auto">
+    <!-- 章节标题 -->
+    <div class="mb-12 text-center">
+      <span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 text-sm font-medium rounded-full mb-4">
+        Quaternion Neural Networks
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        四元数神经网络
+      </h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        四元数神经网络（QNN）通过Hamilton积替代标准点积，为处理多维相关数据提供了紧凑而强大的表示方式，在3D旋转等变、语音识别和多通道信号处理等领域展现出独特优势。
+      </p>
+    </div>
+
+    <!-- 论文卡片列表 -->
+    <div class="space-y-8">
+      
+      <!-- 论文1: 3D旋转等变QNN -->
+      <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="p-6 md:p-8">
+          <!-- 论文标题与链接 -->
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+            <div class="flex-1">
+              <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                3D-Rotation-Equivariant Quaternion Neural Networks
+              </h3>
+              <p class="text-gray-500 text-sm">
+                <span class="font-medium text-gray-700">作者：</span>Wen Shen, Binbin Zhang, Shikun Huang, Zhihua Wei, Quanshi Zhang
+              </p>
+              <p class="text-gray-500 text-sm mt-1">
+                <span class="font-medium text-gray-700">机构：</span>上海交通大学（Shanghai Jiao Tong University）
+              </p>
+            </div>
+            <a href="https://arxiv.org/abs/1911.09040" target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              查看 arXiv
+            </a>
+          </div>
+
+          <!-- 论文内容详解 -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs mr-2">背</span>
+                  研究背景
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  3D点云处理是计算机视觉的核心任务，但传统神经网络在面对3D旋转时缺乏内在的等变性，导致模型需要对大量旋转后的数据进行训练才能获得旋转鲁棒性，计算成本高昂。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs mr-2">动</span>
+                  研究动机
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  四元数天然适合表示3D旋转，其代数结构与旋转群有深刻联系。研究团队希望利用四元数的这一数学特性，设计出对3D旋转具有固有等变性的神经网络架构。
+                </p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">技</span>
+                  核心方法
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  提出了一套规则来修订用于3D点云处理的各种神经网络，使其成为旋转等变四元数神经网络（REQNNs）。发现当神经网络在某些条件下使用四元数特征时，网络特征自然具有旋转等变性。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs mr-2">收</span>
+                  主要收益
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  与原始神经网络相比，REQNN表现出更高的旋转鲁棒性，无需对每种旋转角度进行大量数据增强，显著降低了3D点云处理任务的训练成本。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 总结 -->
+          <div class="mt-6 pt-6 border-t border-gray-100">
+            <h4 class="font-semibold text-gray-900 mb-2">📌 研究总结</h4>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              该研究为3D点云处理领域开辟了新的方向，证明了四元数神经网络的旋转等变特性可以大幅提升模型对3D旋转的鲁棒性。这项工作不仅在理论上具有重要价值，在实际应用中也具有广泛的潜力，如自动驾驶、机器人视觉和增强现实等领域。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 论文2: 语音识别QNN -->
+      <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+            <div class="flex-1">
+              <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                Speech Recognition with Quaternion Neural Networks
+              </h3>
+              <p class="text-gray-500 text-sm">
+                <span class="font-medium text-gray-700">作者：</span>Titouan Parcollet, Mirco Ravanelli, Mohamed Morchid, Georges Linarès, Renato De Mori
+              </p>
+              <p class="text-gray-500 text-sm mt-1">
+                <span class="font-medium text-gray-700">机构：</span>法国阿维尼翁大学（Avignon University）
+              </p>
+            </div>
+            <a href="https://arxiv.org/abs/1811.09678" target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              查看 arXiv
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs mr-2">背</span>
+                  研究背景
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  语音识别是深度学习最成功的应用之一，但传统实值神经网络需要大量参数来表示语音信号中的多维相关性。如何设计更紧凑、更高效的神经网络架构是该领域的核心挑战。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs mr-2">动</span>
+                  研究动机
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  语音信号包含多个相关维度（如能量、音调、频谱特征等），四元数代数提供了一种优雅的方式来建模这些元素之间的依赖关系，同时保持网络参数的高效性。
+                </p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">技</span>
+                  核心方法
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  研究了现代四元数模型（如卷积和循环四元数神经网络）在语音识别中的应用。四元数代数以Hamilton积替换标准点积，提供了一种简单而优雅的方式来建模元素之间的依赖关系。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs mr-2">收</span>
+                  主要收益
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  在TIMIT数据集上，QNN始终优于等效的实值模型，使用更少的自由参数，实现了更有效、紧凑和富有表现力的信息表示，为部署到资源受限设备提供了可能。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-gray-100">
+            <h4 class="font-semibold text-gray-900 mb-2">📌 研究总结</h4>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              该研究首次系统性地验证了四元数神经网络在语音识别任务中的优势，证明了QNN在保持更少参数的同时能够实现更好的识别性能。这项工作为语音处理领域引入了一种新的高效神经网络范式，推动了轻量化语音模型的研究发展。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 论文3: 多通道远距离语音识别 -->
+      <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+            <div class="flex-1">
+              <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                Quaternion Neural Networks for Multi-channel Distant Speech Recognition
+              </h3>
+              <p class="text-gray-500 text-sm">
+                <span class="font-medium text-gray-700">作者：</span>Xinchi Qiu, Titouan Parcollet, Mirco Ravanelli, Nicholas Lane, Mohamed Morchid
+              </p>
+              <p class="text-gray-500 text-sm mt-1">
+                <span class="font-medium text-gray-700">机构：</span>剑桥大学（University of Cambridge）
+              </p>
+            </div>
+            <a href="https://arxiv.org/abs/2005.08566" target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              查看 arXiv
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs mr-2">背</span>
+                  研究背景
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  多通道远距离语音识别是智能家居、会议系统等场景的关键技术。传统方法将多个麦克风信号分别处理或简单拼接，忽略了通道间的内在相关性和空间信息。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs mr-2">动</span>
+                  研究动机
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  多个麦克风通道的信号具有天然的相关性，传统实值网络难以有效建模这种多维耦合关系。四元数神经网络可以将多个通道作为一个整体四元数实体联合处理，更好地捕获通道间的内在关系。
+                </p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">技</span>
+                  核心方法
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  提出使用四元数神经网络捕获多通道音频录音中的内部关系，将多个信号作为整体四元数实体联合处理。四元数层与循环神经网络耦合，可以在时域中学习长期依赖关系。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs mr-2">收</span>
+                  主要收益
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  在多个通道远距离语音识别任务上，使用连接的多通道语音信号训练的四元数长短时记忆神经网络（QLSTM）优于等效的实值LSTM，在多通道场景下展现了显著优势。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-gray-100">
+            <h4 class="font-semibold text-gray-900 mb-2">📌 研究总结</h4>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              该研究开创性地将四元数神经网络应用于多通道语音识别任务，证明了QNN在处理多通道信号时的独特优势。通过将多个通道作为整体四元数实体处理，QLSTM能够更好地捕获通道间的相关性和空间信息，为智能音箱、会议转录等应用提供了更高效的解决方案。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 论文4: 四元数激活函数改进 -->
+      <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+            <div class="flex-1">
+              <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                Improving Quaternion Neural Networks with Quaternionic Activation Functions
+              </h3>
+              <p class="text-gray-500 text-sm">
+                <span class="font-medium text-gray-700">作者：</span>Johannes Pöppelbaum, Andreas Schwung
+              </p>
+              <p class="text-gray-500 text-sm mt-1">
+                <span class="font-medium text-gray-700">机构：</span>南威斯特法伦应用科学大学（South Westphalia University of Applied Sciences）
+              </p>
+            </div>
+            <a href="https://arxiv.org/abs/2406.16481" target="_blank" rel="noopener"
+               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              查看 arXiv
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs mr-2">背</span>
+                  研究背景
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  四元数神经网络近年来受到广泛关注，但激活函数的设计仍是一个开放问题。现有方法多采用"分割激活"策略，独立处理四元数的各个分量，未能充分利用四元数的代数特性。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs mr-2">动</span>
+                  研究动机
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  分割激活函数忽略了四元数各分量之间的耦合关系，限制了网络的表达能力。研究团队希望设计真正的四元数激活函数，充分利用Hamilton积带来的优势，使所有分量共同影响输出。
+                </p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs mr-2">技</span>
+                  核心方法
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  提出了新颖的四元数激活函数，通过修改四元数幅度或相位，替代常用的分割激活函数。所有四元数分量都用于计算所有输出分量，将Hamilton积的好处带到激活函数。
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
+                  <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs mr-2">收</span>
+                  主要收益
+                </h4>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  在CIFAR-10和SVHN数据集上的图像分类任务中，所提出的激活函数一致优于分割ReLU和分割Tanh，特别是影响相位的四元数激活函数在基本上整个输入范围内都敏感。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-gray-100">
+            <h4 class="font-semibold text-gray-900 mb-2">📌 研究总结</h4>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              该研究填补了四元数神经网络中激活函数设计的重要空白，提出了真正四元数化的激活函数。这项工作不仅提升了QNN的性能，更重要的是为四元数深度学习提供了更坚实的理论基础，推动了QNN在图像分类及其他领域的更广泛应用。
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- 章节总结 -->
+    <div class="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8">
+      <h3 class="text-xl font-bold text-gray-900 mb-4">🎯 四元数神经网络核心洞察</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 mb-2">旋转等变性</h4>
+          <p class="text-gray-600 text-sm">
+            四元数的代数结构天然适合表示3D旋转，使QNN在处理点云、姿态估计等任务时具有固有优势。
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 mb-2">多通道处理</h4>
+          <p class="text-gray-600 text-sm">
+            QNN可将多个相关信号通道作为整体四元数实体处理，有效捕获通道间的内在依赖关系。
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h4 class="font-semibold text-gray-900 mb-2">参数效率</h4>
+          <p class="text-gray-600 text-sm">
+            相比等效实值网络，QNN使用更少的自由参数即可达到或超越其性能，适合资源受限场景。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
