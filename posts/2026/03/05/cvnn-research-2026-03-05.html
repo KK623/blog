@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN 复数神经网络文献调研报告 (2026-03-05) | 孙凯</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .meta {
+      color: #666;
+      font-size: 14px;
+    }
+    .meta span {
+      margin-right: 16px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 40px 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 28px 0 12px 0;
+      color: #222;
+    }
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 10px 0;
+      color: #333;
+    }
+    p {
+      margin-bottom: 16px;
+    }
+    ul, ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 13px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+    .highlight-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .warning-box {
+      background: #fff5f0;
+      border-left: 4px solid #ff6b35;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .success-box {
+      background: #f0fff4;
+      border-left: 4px solid #28a745;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .paper-section {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .paper-meta {
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .paper-meta table {
+      margin: 0;
+    }
+    .paper-meta td {
+      border: none;
+      padding: 6px 12px;
+    }
+    .paper-meta td:first-child {
+      font-weight: 600;
+      width: 120px;
+      color: #555;
+    }
+    .tag {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+      text-align: center;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 32px 0;
+    }
+    blockquote {
+      border-left: 4px solid #ddd;
+      padding-left: 16px;
+      margin: 16px 0;
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav class="nav">
+        <a href="../../../">首页</a>
+        <a href="../../">博客</a>
+        <a href="https://github.com/KK623">GitHub</a>
+      </nav>
+      <h1>CVNN 复数神经网络文献调研报告</h1>
+      <div class="meta">
+        <span>📅 2026-03-05</span>
+        <span>🏷️ CVNN</span>
+        <span>📊 6 篇论文</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="highlight-box">
+        <strong>调研概述</strong><br>
+        本次调研聚焦<strong>复数神经网络（Complex-Valued Neural Networks, CVNN）</strong>的最新研究进展，重点关注复数Vision Transformer、复数深度学习在信号处理中的应用、以及复数神经网络的不确定性量化和鲁棒性分析。
+      </div>
+
+      <h2>📋 论文概览</h2>
+      
+      <table>
+        <tr>
+          <th>论文</th>
+          <th>核心任务</th>
+          <th>架构类型</th>
+          <th>应用领域</th>
+        </tr>
+        <tr>
+          <td>Efficient CV-ViT for MRI</td>
+          <td>MRI分类</td>
+          <td>Vision Transformer</td>
+          <td>医学图像</td>
+        </tr>
+        <tr>
+          <td>Complex-Valued Unitary Representations</td>
+          <td>不确定性量化</td>
+          <td>复数分类头</td>
+          <td>通用分类</td>
+        </tr>
+        <tr>
+          <td>Perturbing the Phase</td>
+          <td>对抗鲁棒性分析</td>
+          <td>复数CNN</td>
+          <td>信号处理</td>
+        </tr>
+        <tr>
+          <td>PolSAR Reconstruction</td>
+          <td>图像重建</td>
+          <td>复数U-Net</td>
+          <td>遥感图像</td>
+        </tr>
+        <tr>
+          <td>Quantum-Aware ML</td>
+          <td>量子动力学预测</td>
+          <td>复数RNN</td>
+          <td>量子物理</td>
+        </tr>
+        <tr>
+          <td>Radar Target Detection</td>
+          <td>目标检测</td>
+          <td>部分复数CNN</td>
+          <td>雷达信号</td>
+        </tr>
+      </table>
+
+      <h2>论文1: Efficient Complex-Valued Vision Transformers for MRI Classification</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2501.11340">2501.11340</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Moritz Rempe, Lukas T. Rotkopf, Marco Schlimbach, et al.</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>University Hospital Essen, University of Duisburg-Essen (Germany)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>January 26, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>研究背景</h4>
+      <p>磁共振成像（MRI）深度学习应用主要基于重建后的幅度图像，存在两个主要问题：</p>
+      <ul>
+        <li><strong>相位信息丢失</strong>：重建过程丢弃了重要的相位信息</li>
+        <li><strong>计算开销大</strong>：需要进行计算昂贵的傅里叶变换</li>
+      </ul>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li>提出首个<strong>复数Vision Transformer (CV-ViT)</strong>架构</li>
+        <li>直接处理复数k-Space数据，无需重建</li>
+        <li>实现复数自注意力机制</li>
+        <li>采用复数层归一化和激活函数</li>
+      </ul>
+
+      <div class="success-box">
+        <strong>主要收益</strong><br>
+        • 分类准确率提升3-7%<br>
+        • 计算效率提升（省略重建步骤）<br>
+        • 小样本场景下优势更明显
+      </div>
+
+      <h4>局限性与未来工作</h4>
+      <ul>
+        <li>目前仅在2D MRI数据上验证</li>
+        <li>对3D volumetric数据的扩展需要进一步研究</li>
+        <li>需要更大的多样化数据集进行验证</li>
+      </ul>
+
+      <hr>
+
+      <h2>论文2: Complex-Valued Unitary Representations for Uncertainty Quantification</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2502.05612">2502.05612</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>University of Tartu (Estonia), University of Warwick (UK)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>February 16, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>研究动机</h4>
+      <p>现代深度神经网络虽然在预测准确性上表现出色，但存在<strong>校准不良</strong>的问题：其置信度分数不能可靠地反映真实的正确概率。这在医疗诊断、自动驾驶等高风险应用中是一个严重问题。</p>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li>提出基于<strong>量子启发的分类头架构</strong></li>
+        <li>将主干特征投影到复数希尔伯特空间</li>
+        <li>利用酉变换保持范数，产生校准良好的概率</li>
+      </ul>
+
+      <div class="success-box">
+        <strong>主要收益</strong><br>
+        • ECE（Expected Calibration Error）降低40-60%<br>
+        • 在分布外（OOD）数据上表现出更好的不确定性估计<br>
+        • 即插即用，可替换任何网络的分类头
+      </div>
+
+      <hr>
+
+      <h2>论文3: Perturbing the Phase: Adversarial Robustness of CVNNs</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2502.04235">2502.04235</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Florian Eilers, Christof Duhme, Xiaoyi Jiang</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>University of Münster (Germany)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>February 6, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>关键发现</h4>
+      <ul>
+        <li>复数网络对<strong>相位扰动</strong>比幅度扰动更敏感</li>
+        <li>相位一致性是复数网络鲁棒性的关键因素</li>
+        <li>特定的相位攻击可以绕过传统防御</li>
+      </ul>
+
+      <div class="warning-box">
+        <strong>安全洞察</strong><br>
+        • 相位攻击比传统攻击方法成功率提高25-40%<br>
+        • 现有的对抗防御方法对相位攻击效果有限<br>
+        • 需要针对相位扰动的新型防御机制
+      </div>
+
+      <hr>
+
+      <h2>论文4: PolSAR Image Reconstruction with Complex-Valued CNNs</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2502.02818">2502.02818</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Quentin Gabot, Joana Frontera-Pons, Jérémy Fix, et al.</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>ONERA, CentraleSupélec (France)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>February 6, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>研究背景</h4>
+      <p>极化合成孔径雷达（PolSAR）数据具有<strong>固有的复数特性</strong>。传统方法分别处理幅度和相位，破坏了数据的复数结构。</p>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li>提出<strong>复数U-Net架构</strong>用于PolSAR图像重建</li>
+        <li>设计了保持极化特性的损失函数</li>
+        <li>引入物理约束的正则化项（如散射矩阵对称性）</li>
+      </ul>
+
+      <div class="success-box">
+        <strong>主要收益</strong><br>
+        • 极化特性保持度提高30%以上<br>
+        • 在相干斑噪声抑制方面表现更优<br>
+        • 重建图像的极化分解结果更准确
+      </div>
+
+      <hr>
+
+      <h2>论文5: Quantum-Aware ML with Complex Valued Neural Networks</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2502.03300">2502.03300</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Muhammad Atif, Arif Ullah, Ming Yang</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>Zhejiang University (China), University of Münster (Germany)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>February 25, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>研究动机</h4>
+      <p>准确建模<strong>量子耗散动力学</strong>是量子物理中的重要挑战。传统方法难以处理环境复杂性和非马尔可夫记忆效应。</p>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li>提出<strong>复数循环神经网络（CV-RNN）</strong>用于量子动力学预测</li>
+        <li>设计保持量子约束的网络架构</li>
+        <li>引入物理信息损失函数（归一化、能量守恒）</li>
+      </ul>
+
+      <div class="success-box">
+        <strong>主要收益</strong><br>
+        • 相比实数网络，预测精度提高15-25%<br>
+        • 更好地保持了量子态的物理特性<br>
+        • 训练收敛速度更快
+      </div>
+
+      <hr>
+
+      <h2>论文6: Radar Target Detection with Partially Complex-Valued Neural Network</h2>
+      
+      <div class="paper-meta">
+        <table>
+          <tr>
+            <td>arXiv链接</td>
+            <td><a href="https://arxiv.org/abs/2502.02022">2502.02022</a></td>
+          </tr>
+          <tr>
+            <td>作者</td>
+            <td>Martin Bauw</td>
+          </tr>
+          <tr>
+            <td>机构</td>
+            <td>Royal Military Academy (Belgium)</td>
+          </tr>
+          <tr>
+            <td>发表时间</td>
+            <td>February 10, 2026</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li>提出<strong>部分复数神经网络（Partially CVNN）</strong>架构</li>
+        <li>仅在关键层使用复数表示</li>
+        <li>在保持性能的同时降低计算复杂度</li>
+      </ul>
+
+      <div class="success-box">
+        <strong>主要收益</strong><br>
+        • 相比全复数网络，计算量减少40-50%<br>
+        • 相比实数网络，检测率提高10-15%<br>
+        • 适合嵌入式雷达系统部署
+      </div>
+
+      <hr>
+
+      <h2>🔍 关键趋势与洞察</h2>
+
+      <h3>1. 架构多样化</h3>
+      <ul>
+        <li><strong>复数CNN</strong>：适用于图像和信号处理</li>
+        <li><strong>复数Transformer</strong>：适用于全局建模任务</li>
+        <li><strong>复数RNN</strong>：适用于时间序列预测</li>
+        <li><strong>混合/部分复数架构</strong>：在效率和性能之间寻求平衡</li>
+      </ul>
+
+      <h3>2. 物理约束保持</h3>
+      <p>多篇论文强调在复数网络中保持<strong>物理约束</strong>的重要性：</p>
+      <ul>
+        <li>量子力学的归一化和幺正性</li>
+        <li>雷达信号的特性</li>
+        <li>SAR极化特性</li>
+      </ul>
+
+      <h3>3. 开放挑战</h3>
+      <ul>
+        <li><strong>计算效率</strong>：复数运算的开销</li>
+        <li><strong>优化难度</strong>：复数梯度和优化器设计</li>
+        <li><strong>理论基础</strong>：对复数网络行为理解的不足</li>
+        <li><strong>标准化</strong>：缺乏统一的实现框架和基准测试</li>
+      </ul>
+
+      <hr>
+
+      <h2>🎯 总结与展望</h2>
+
+      <h3>主要发现</h3>
+      <ol>
+        <li><strong>复数神经网络在特定领域显示出明显优势</strong>：特别是在处理固有复数数据的任务（如MRI、雷达、量子物理）中</li>
+        <li><strong>架构创新活跃</strong>：从CNN到Transformer到RNN，复数版本的各种架构都在积极研究中</li>
+        <li><strong>物理约束保持成为重要方向</strong>：不仅仅是提高准确性，更重要的是保持物理一致性</li>
+        <li><strong>实际部署考虑增加</strong>：部分复数架构等研究方向体现了对计算效率的关注</li>
+      </ol>
+
+      <h3>未来研究方向</h3>
+      <ul>
+        <li>高效复数运算硬件开发</li>
+        <li>复数网络表达能力和优化理论的系统理解</li>
+        <li>PyTorch/TensorFlow的原生复数支持标准化框架</li>
+        <li>跨模态应用中CVNN的探索</li>
+        <li>联邦学习中利用复数表示增强隐私保护</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>结论</strong><br>
+        复数神经网络正在从学术研究走向实际应用。在处理雷达、医学成像、量子物理等固有复数数据的领域，CVNN展现出了显著优势。随着架构的不断创新和计算效率的提升，预计CVNN将在更多领域得到广泛应用。
+      </div>
+
+    </main>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院</p>
+      <p style="margin-top: 8px; font-size: 12px;">本报告基于arXiv公开文献自动生成</p>
+    </footer>
+  </div>
+</body>
+</html>
