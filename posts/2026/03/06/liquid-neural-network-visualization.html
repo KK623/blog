@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Neural Networks - Research Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        h1 { text-align: center; font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(90deg, #00d4ff, #7b2cbf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .card h2 { color: #00d4ff; margin-bottom: 20px; font-size: 1.3rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
+        .stat-box { background: rgba(0,212,255,0.1); border-radius: 15px; padding: 20px; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; font-size: 0.9rem; }
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #00d4ff, #7b2cbf); border-radius: 3px; }
+        .timeline-item { position: relative; margin-bottom: 30px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .timeline-item::before { content: ''; position: absolute; left: -36px; top: 25px; width: 15px; height: 15px; background: #00d4ff; border-radius: 50%; box-shadow: 0 0 20px #00d4ff; }
+        .timeline-year { color: #00d4ff; font-weight: bold; font-size: 1.2rem; }
+        .timeline-title { font-weight: bold; margin: 10px 0; }
+        .timeline-desc { color: #aaa; font-size: 0.9rem; }
+        .mermaid { background: rgba(255,255,255,0.03); border-radius: 15px; padding: 20px; }
+        .compare-table { width: 100%; border-collapse: collapse; }
+        .compare-table th, .compare-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .compare-table th { color: #00d4ff; }
+        .tag { display: inline-block; padding: 5px 12px; background: rgba(0,212,255,0.2); border-radius: 20px; font-size: 0.8rem; margin: 3px; }
+        .highlight { color: #00ff88; }
+        .chart-container { height: 300px; }
+        .footer { text-align: center; padding: 40px; color: #666; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Liquid Neural Networks</h1>
+        <p class="subtitle">液态神经网络研究可视化报告 | Generated: 2026-03-06</p>
+
+        <!-- 核心统计 -->
+        <div class="card">
+            <h2>📊 核心指标</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">90+</div>
+                    <div class="stat-label">文献数量</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">19</div>
+                    <div class="stat-label">控制无人机的神经元数</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100x</div>
+                    <div class="stat-label">参数效率提升</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文献分类饼图 -->
+        <div class="grid">
+            <div class="card">
+                <h2>📚 文献分类分布</h2>
+                <div class="chart-container">
+                    <canvas id="paperChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>🎯 应用领域分布</h2>
+                <div class="chart-container">
+                    <canvas id="appChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 发展时间线 -->
+        <div class="card">
+            <h2>⏱️ 发展历程</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-title">Neural ODE 发表</div>
+                    <div class="timeline-desc">Chen et al. 提出用ODE描述神经网络，奠定连续时间网络理论基础 (NeurIPS)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-title">LTC 首次提出</div>
+                    <div class="timeline-desc">Hasani et al. 提出Liquid Time-Constant Networks (arXiv)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-title">LTC 正式发表 (AAAI)</div>
+                    <div class="timeline-desc">获得AI领域顶级会议认可，开始广泛传播</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-title">闭式解突破 (Nature)</div>
+                    <div class="timeline-desc">Hasani et al. 发表Nature论文，训练速度提升<span class="highlight">10-100倍</span></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-title">无人机导航 (Science Robotics)</div>
+                    <div class="timeline-desc">MIT证明<span class="highlight">19个LTC神经元</span>可控制无人机，参数少100倍</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-title">Liquid Foundation Models</div>
+                    <div class="timeline-desc">Liquid AI发布LFMs，非Transformer架构的基础模型</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-title">多模态扩展 (LFM2)</div>
+                    <div class="timeline-desc">LFM2-Audio、LFM2-VL发布，支持音频和视觉-语言任务</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 架构对比图 -->
+        <div class="card">
+            <h2>🏗️ 架构对比</h2>
+            <table class="compare-table">
+                <tr>
+                    <th>特性</th>
+                    <th>RNN/LSTM</th>
+                    <th>Transformer</th>
+                    <th>LNN (LTC)</th>
+                </tr>
+                <tr>
+                    <td>时间处理</td>
+                    <td>离散</td>
+                    <td>并行（位置编码）</td>
+                    <td><span class="highlight">连续（ODE）</span></td>
+                </tr>
+                <tr>
+                    <td>参数数量</td>
+                    <td>中等 (~100K)</td>
+                    <td>大量 (B级)</td>
+                    <td><span class="highlight">极少 (~1K)</span></td>
+                </tr>
+                <tr>
+                    <td>泛化能力 (OOD)</td>
+                    <td>一般</td>
+                    <td>较好</td>
+                    <td><span class="highlight">优秀</span></td>
+                </tr>
+                <tr>
+                    <td>计算效率</td>
+                    <td>中等</td>
+                    <td>高（可并行）</td>
+                    <td><span class="highlight">极高</span></td>
+                </tr>
+                <tr>
+                    <td>长序列处理</td>
+                    <td>差（梯度消失）</td>
+                    <td>优秀（注意力）</td>
+                    <td>良好（连续动态）</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 生态图 -->
+        <div class="card">
+            <h2>🌐 研究生态</h2>
+            <div class="mermaid">
+graph TB
+    LNN[Liquid Neural Networks<br/>液态神经网络]
+    
+    LNN --> F[Foundations<br/>理论基础]
+    LNN --> A[Applications<br/>应用场景]
+    LNN --> T[Tools<br/>工具资源]
+    
+    F --> F1[Neural ODE]
+    F --> F2[LTC Networks]
+    F --> F3[Closed-form Solution]
+    F --> F4[NCP<br/>Neural Circuit Policies]
+    
+    A --> A1[🚗 Autonomous Driving]
+    A --> A2[🤖 Robotics]
+    A --> A3[📈 Time Series]
+    A --> A4[🏥 Medical/Healthcare]
+    A --> A5[🖼️ Vision-Language]
+    
+    T --> T1[ncps Library]
+    T --> T2[Liquid AI Platform]
+    T --> T3[PyTorch/TF Code]
+    T --> T4[LFM Models]
+    
+    style LNN fill:#00d4ff,stroke:#fff,stroke-width:3px,color:#000
+    style F fill:#7b2cbf,color:#fff
+    style A fill:#00ff88,color:#000
+    style T fill:#ff6b6b,color:#fff
+            </div>
+        </div>
+
+        <!-- 关键人物 -->
+        <div class="card">
+            <h2>👥 关键人物</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 10px;">
+                    <h3 style="color: #00d4ff;">Ramin Hasani</h3>
+                    <p style="color: #888; font-size: 0.9rem;">MIT CSAIL / Liquid AI CEO</p>
+                    <div style="margin-top: 10px;">
+                        <span class="tag">LTC主要提出者</span>
+                        <span class="tag">Nature论文</span>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 10px;">
+                    <h3 style="color: #00d4ff;">Mathias Lechner</h3>
+                    <p style="color: #888; font-size: 0.9rem;">MIT / ISTA</p>
+                    <div style="margin-top: 10px;">
+                        <span class="tag">LTC共同提出者</span>
+                        <span class="tag">NCP架构</span>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 10px;">
+                    <h3 style="color: #00d4ff;">Daniela Rus</h3>
+                    <p style="color: #888; font-size: 0.9rem;">MIT CSAIL主任</p>
+                    <div style="margin-top: 10px;">
+                        <span class="tag">机器人权威</span>
+                        <span class="tag">LTC合作者</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心论文 -->
+        <div class="card">
+            <h2>📄 必读论文 Top 5</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">Nature 2022</div>
+                    <div class="timeline-title">Closed-form Continuous-time Neural Networks</div>
+                    <div class="timeline-desc">Hasani et al. | <span class="highlight">闭式解突破，效率提升10-100倍</span></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">AAAI 2021</div>
+                    <div class="timeline-title">Liquid Time-constant Networks</div>
+                    <div class="timeline-desc">Hasani et al. | <span class="highlight">LTC奠基论文</span></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Science Robotics 2023</div>
+                    <div class="timeline-title">Robust flight navigation with liquid neural networks</div>
+                    <div class="timeline-desc">Chahine et al. | <span class="highlight">19个神经元控制无人机</span></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Nature SR 2025</div>
+                    <div class="timeline-title">Invertible LNN for robotic manipulators</div>
+                    <div class="timeline-desc">最新逆运动学应用突破</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">arXiv 2024</div>
+                    <div class="timeline-title">Differential Equations for Continuous-Time Deep Learning</div>
+                    <div class="timeline-desc">最新综述，全面覆盖连续时间学习方法</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 应用场景 -->
+        <div class="card">
+            <h2>🚀 热门应用方向</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem;">🚗</div>
+                    <h3>自动驾驶</h3>
+                    <p style="color: #888; font-size: 0.9rem;">无人机导航、车辆控制、端到端驾驶</p>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem;">🤖</div>
+                    <h3>机器人</h3>
+                    <p style="color: #888; font-size: 0.9rem;">机械臂控制、逆运动学、动态适应</p>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem;">🏥</div>
+                    <h3>医疗健康</h3>
+                    <p style="color: #888; font-size: 0.9rem;">ECG/EEG分析、医学影像、诊断</p>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem;">📈</div>
+                    <h3>时序预测</h3>
+                    <p style="color: #888; font-size: 0.9rem;">股价预测、能源负荷、天气</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated by Jarvis | 2026-03-06 | Liquid Neural Network Research Survey</p>
+            <p style="margin-top: 10px;">数据来源: arXiv, Nature, Science, AAAI, MIT CSAIL</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        
+        // 文献分类饼图
+        const ctx1 = document.getElementById('paperChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['理论基础', '应用研究', '架构创新', '混合模型', '边缘部署', '医疗应用'],
+                datasets: [{
+                    data: [15, 30, 12, 15, 10, 8],
+                    backgroundColor: ['#00d4ff', '#7b2cbf', '#00ff88', '#ff6b6b', '#ffd93d', '#6bcf7f'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#fff' } }
+                }
+            }
+        });
+        
+        // 应用领域柱状图
+        const ctx2 = document.getElementById('appChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['自动驾驶', '机器人', '时序预测', '医疗健康', '边缘AI', '基础模型'],
+                datasets: [{
+                    label: '论文数量',
+                    data: [15, 12, 10, 8, 10, 8],
+                    backgroundColor: ['#00d4ff', '#7b2cbf', '#00ff88', '#ff6b6b', '#ffd93d', '#6bcf7f'],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { ticks: { color: '#888' }, grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

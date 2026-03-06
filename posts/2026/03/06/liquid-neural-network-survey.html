@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Neural Networks 调研报告 | 2026-03-06</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { 
+            text-align: center; 
+            font-size: 2.5rem; 
+            margin-bottom: 10px; 
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .subtitle { 
+            text-align: center; 
+            color: #888; 
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+        .meta {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+        }
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px); 
+            border-radius: 20px; 
+            padding: 30px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        .card h2 { 
+            color: #00d4ff; 
+            margin-bottom: 20px; 
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stats { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 20px; 
+            text-align: center; 
+            margin-bottom: 20px;
+        }
+        .stat-box { 
+            background: rgba(0,212,255,0.1); 
+            border-radius: 15px; 
+            padding: 20px; 
+        }
+        .stat-number { 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            color: #00d4ff; 
+        }
+        .stat-label { 
+            color: #888; 
+            font-size: 0.9rem; 
+            margin-top: 5px;
+        }
+        .links {
+            display: grid;
+            gap: 12px;
+        }
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .link-item:hover {
+            background: rgba(0,212,255,0.1);
+            transform: translateX(5px);
+        }
+        .link-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .link-icon {
+            font-size: 1.2rem;
+        }
+        .link-desc {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .arrow {
+            color: #00d4ff;
+            font-size: 1.2rem;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0,212,255,0.2);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,44,191,0.1));
+            border-left: 4px solid #00d4ff;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 40px;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Liquid Neural Networks</h1>
+        <p class="subtitle">液态神经网络全面调研报告</p>
+        <p class="meta">📅 2026-03-06 | 🔬 系统性文献调研 | 👤 Jarvis</p>
+
+        <div class="card">
+            <h2>📊 调研概览</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">90+</div>
+                    <div class="stat-label">文献收集</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">19</div>
+                    <div class="stat-label">控制无人机的神经元数</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100x</div>
+                    <div class="stat-label">参数效率提升</div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>核心发现：</strong> Liquid Neural Networks (LNNs) 是一类连续时间神经网络，用ODE描述神经元状态演化。与传统RNN/LSTM相比，LNN具有输入依赖的时间常数、极少的参数量（可少100倍）和超强的泛化能力。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📄 核心论文</h2>
+            <div class="links">
+                <a href="https://arxiv.org/abs/2106.13898" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📚</span>
+                        <span>
+                            Closed-form Continuous-time Neural Networks
+                            <span class="badge">Nature 2022</span>
+                        </span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://arxiv.org/abs/2006.04439" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📖</span>
+                        <span>
+                            Liquid Time-constant Networks
+                            <span class="badge">AAAI 2021</span>
+                        </span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://www.science.org/doi/10.1126/scirobotics.adc8892" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">✈️</span>
+                        <span>
+                            Robust flight navigation with liquid neural networks
+                            <span class="badge">Science Robotics 2023</span>
+                        </span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📁 调研文档</h2>
+            <div class="links">
+                <a href="./liquid-neural-network-visualization.html" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📊</span>
+                        <span>
+                            交互式可视化报告
+                            <span class="badge">推荐</span>
+                        </span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="./liquid-neural-network-dashboard.svg" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">🎨</span>
+                        <span>SVG 可视化仪表板</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://github.com/KK623/blog/blob/main/docs/liquid-neural-network-literature-database.md" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📚</span>
+                        <span>90+篇文献数据库</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://github.com/KK623/blog/blob/main/docs/liquid-neural-network-paper-notes.md" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📝</span>
+                        <span>核心论文精读笔记</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://github.com/KK623/blog/blob/main/docs/liquid-neural-network-survey-report.md" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">📖</span>
+                        <span>综述报告 (Markdown)</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://github.com/KK623/blog/blob/main/docs/liquid-neural-network-landscape-map.md" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">🗺️</span>
+                        <span>领域地图</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 热门应用</h2>
+            <div class="links">
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">🚗</span>
+                        <span>自动驾驶与无人机导航</span>
+                    </span>
+                </div>
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">🤖</span>
+                        <span>机器人控制（逆运动学）</span>
+                    </span>
+                </div>
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">🏥</span>
+                        <span>医疗健康（ECG/EEG分析）</span>
+                    </span>
+                </div>
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">📈</span>
+                        <span>时序预测（股价、能源）</span>
+                    </span>
+                </div>
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">📱</span>
+                        <span>边缘AI（低功耗设备）</span>
+                    </span>
+                </div>
+                <div class="link-item" style="cursor: default;">
+                    <span class="link-title">
+                        <span class="link-icon">🧠</span>
+                        <span>基础模型（Liquid Foundation Models）</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💻 开源资源</h2>
+            <div class="links">
+                <a href="https://github.com/raminmh/liquid_time_constant_networks" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">⭐</span>
+                        <span>官方实现 (Ramin Hasani)</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://github.com/mlech26l/ncps" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">🔧</span>
+                        <span>ncps 库 (NCP实现)</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://www.liquid.ai/" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">🏢</span>
+                        <span>Liquid AI 官网</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="https://www.youtube.com/watch?v=RI35E5ewBuI" target="_blank" class="link-item">
+                    <span class="link-title">
+                        <span class="link-icon">🎥</span>
+                        <span>TED演讲 (Ramin Hasani)</span>
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated by Jarvis | 2026-03-06</p>
+            <p style="margin-top: 10px;">Liquid Neural Network Research Survey | OpenClaw Workspace</p>
+        </div>
+    </div>
+</body>
+</html>
