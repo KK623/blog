@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 LNN文献数据库 | 90+篇液态神经网络论文</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 2rem; background: linear-gradient(90deg, #00d4ff, #7b2cbf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .meta { color: #888; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #888; text-decoration: none; }
+        .back-link:hover { color: #00d4ff; }
+        .category { margin: 40px 0; }
+        .category h2 { color: #00d4ff; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; margin-bottom: 20px; }
+        .paper { background: rgba(255,255,255,0.05); padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 4px solid #00d4ff; }
+        .paper-title { font-weight: bold; color: #fff; margin-bottom: 8px; }
+        .paper-meta { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+        .paper-desc { color: #aaa; font-size: 0.95rem; }
+        .tag { display: inline-block; padding: 3px 10px; background: rgba(0,212,255,0.2); border-radius: 15px; font-size: 0.75rem; margin-right: 8px; }
+        .tag-nature { background: rgba(255,107,107,0.2); color: #ff6b6b; }
+        .tag-science { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .tag-aaai { background: rgba(123,44,191,0.2); color: #9d4edd; }
+        a { color: #00d4ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 30px 0; }
+        .stat { background: rgba(0,212,255,0.1); padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-num { font-size: 2rem; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; font-size: 0.85rem; }
+        .footer { text-align: center; padding: 40px; color: #666; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="./liquid-neural-network-survey.html" class="back-link">← 返回LNN调研主页</a>
+        
+        <header>
+            <h1>📚 Liquid Neural Networks 文献数据库</h1>
+            <p class="meta">90+篇精选文献 | 涵盖理论、应用、架构、医疗、边缘部署</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat"><div class="stat-num">90+</div><div class="stat-label">总文献数</div></div>
+            <div class="stat"><div class="stat-num">3</div><div class="stat-label">顶刊论文</div></div>
+            <div class="stat"><div class="stat-num">8</div><div class="stat-label">应用方向</div></div>
+            <div class="stat"><div class="stat-num">15+</div><div class="stat-label">开源项目</div></div>
+        </div>
+
+        <div class="category">
+            <h2>🔬 核心开创性论文 (必读)</h2>
+            
+            <div class="paper">
+                <div class="paper-title"><span class="tag tag-nature">Nature 2022</span> Closed-form Continuous-time Neural Networks</div>
+                <div class="paper-meta">Ramin Hasani et al. | Nature Machine Intelligence</div>
+                <div class="paper-desc"><strong>核心贡献：</strong>提出闭式解，训练速度提升10-100倍，使LTC可以像普通RNN一样并行训练。</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title"><span class="tag tag-aaai">AAAI 2021</span> Liquid Time-constant Networks</div>
+                <div class="paper-meta">Ramin Hasani, Mathias Lechner, Alexander Amini, Daniela Rus | AAAI</div>
+                <div class="paper-desc"><strong>核心贡献：</strong>LTC奠基论文，首次提出液态时间常数网络，用ODE描述连续时间动态。</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title"><span class="tag tag-science">Science Robotics 2023</span> Robust flight navigation out of distribution with liquid neural networks</div>
+                <div class="paper-meta">Makram Chahine et al. (MIT CSAIL) | Science Robotics</div>
+                <div class="paper-desc"><strong>核心贡献：</strong>仅用19个LTC神经元控制无人机，证明超强泛化能力，参数比传统方法少100倍。</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>🚗 自动驾驶与无人机 (15+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title">Liquid Dino: A Multi-Task Neural Network towards Autonomous Driving</div>
+                <div class="paper-meta">OpenReview | 驾驶员行为分类和上下文感知</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Autonomous Vehicle Control with Liquid Time Constant Networks</div>
+                <div class="paper-meta">ResearchGate | 自动驾驶车辆控制综合评估</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">MIT uses liquid neural networks to teach drones navigation skills</div>
+                <div class="paper-meta">The Robot Report | 视觉引导的飞行目标追踪</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>🤖 机器人控制 (12+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title"><span class="tag">Nature SR 2025</span> Invertible liquid neural network-based learning of inverse kinematics and dynamics for robotic manipulators</div>
+                <div class="paper-meta">Nature Scientific Reports | 可逆LNN学习逆运动学和动力学</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Tracking control of humanoid manipulator using sliding mode with liquid neural networks</div>
+                <div class="paper-meta">Nature Scientific Reports 2025 | 仿人机械臂的滑模跟踪控制</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>🏥 医疗健康 (8+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title">Leveraging Liquid Time-Constant Neural Networks for ECG Analysis</div>
+                <div class="paper-meta">INSTICC 2025 | 心肌梗死分类</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Spiking neural networks with liquid time-constant dynamics for seizure detection</div>
+                <div class="paper-meta">ResearchGate | 癫痫发作检测</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">A novel hybrid liquid neural network for respiratory sound classification</div>
+                <div class="paper-meta">ScienceDirect 2025 | 呼吸音分类</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>📈 时序预测 (10+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title">Liquid Neural Networks in Stock Market Prediction</div>
+                <div class="paper-meta">GitHub | Tesla和Apple股价预测</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Combining LNN with LSTM for Time Series Forecasting</div>
+                <div class="paper-meta">AI Mind | LNN+LSTM混合预测</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>🧠 混合架构与基础模型 (18+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title"><span class="tag">Liquid AI 2024-2025</span> Liquid Foundation Models (LFM2系列)</div>
+                <div class="paper-meta">Liquid AI | LFM2-1.3B, LFM2-VL, LFM2-Audio</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Hybrid Transformer Model with Liquid Neural Networks</div>
+                <div class="paper-meta">Harvard/ADS 2025 | 建筑能源预测</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">CViTLNN: Vision Transformer + Liquid Neural Networks</div>
+                <div class="paper-meta">ETASR 2024 | 视觉Transformer与LNN混合模型</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>📱 边缘设备与效率 (10+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title">Hyena Edge: Convolutional Multi-Hybrids for Edge Devices</div>
+                <div class="paper-meta">Liquid AI | Samsung S24 Ultra基准测试</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">Liquid Neural Networks: 100x Faster on Edge AI</div>
+                <div class="paper-meta">arXiv 2304.08691 | 边缘AI效率分析</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>🔧 神经电路策略 NCP (8+篇)</h2>
+            
+            <div class="paper">
+                <div class="paper-title"><span class="tag">Nature MI 2020</span> Neural Circuit Policies Enabling Auditable Autonomy</div>
+                <div class="paper-meta">Mathias Lechner et al. | 引用338次 | NCP奠基论文</div>
+            </div>
+
+            <div class="paper">
+                <div class="paper-title">These neural networks know what they're doing (因果推理)</div>
+                <div class="paper-meta">MIT News 2021 | NCP理解因果结构</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated by Jarvis | 2026-03-06 | 持续更新中...</p>
+            <p>数据来源: arXiv, Nature, Science, AAAI, MIT CSAIL, Liquid AI</p>
+        </div>
+    </div>
+</body>
+</html>
