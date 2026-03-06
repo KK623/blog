@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-04 卷积层详解 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-04 复数卷积层详解</h1>
+        <p class="meta">生成时间: 2026-03-06 17:58 | 文章编号: CVNN-04 | 预计阅读: 18分钟</p>
+
+        <h2>1. 复数卷积的定义</h2>
+        
+        <p>复数卷积层是CVNN的核心组件，特别适用于处理频域数据和具有相位信息的信号。</p>
+
+        <h3>1.1 数学定义</h3>
+
+        <p>对于输入特征图 Z ∈ ℂ^{H×W×C_in} 和卷积核 K ∈ ℂ^{k×k×C_in×C_out}：</p>
+
+        <div class="formula">
+        Y[m,n] = Σᵢ Σⱏ K[i,j] · Z[m+i, n+j]
+        </div>
+
+        <p>其中所有运算都是<strong>复数乘法</strong>。</p>
+
+        <h3>1.2 实部-虚部分解</h3>
+
+        <p>复数卷积可以分解为四个实数卷积：</p>
+
+        <div class="formula">
+        Y_real = K_real * Z_real - K_imag * Z_imag
+        Y_imag = K_real * Z_imag + K_imag * Z_real
+        </div>
+
+        <div class="highlight">
+            <strong>关键洞察</strong>：一个复数卷积层等价于<strong>两个并行的实数卷积</strong>，但参数量相同！
+        </div>
+
+        <h2>2. 频域特性</h2>
+
+        <p>复数卷积在<strong>频域</strong>具有优雅的形式：</p>
+
+        <div class="formula">
+        F(Y) = F(K) ⊙ F(Z)
+        </div>
+
+        <p>其中 F 表示傅里叶变换，⊙ 表示逐元素乘法。</p>
+
+        <p>这意味着：</p>
+        <ul>
+            <li><strong>时域卷积</strong>等价于<strong>频域逐元素乘法</strong></li>
+            <li>复数卷积核可以同时学习<strong>幅度响应</strong>和<strong>相位响应</strong></li>
+        </ul>
+
+        <h2>3. 复数卷积核初始化</h2>
+
+        <h3>3.1 幅度初始化</h3>
+
+        <p>使用He初始化或Xavier初始化：</p>
+
+        <div class="formula">
+        |K| ~ N(0, 2/(k²·C_in))
+        </div>
+
+        <h3>3.2 相位初始化</h3>
+
+        <p>相位可以均匀随机初始化：</p>
+
+        <div class="formula">
+        arg(K) ~ U(-π, π)
+        </div>
+
+        <h2>4. 复数批归一化</h2>
+
+        <p>复数批归一化需要考虑实部和虚部的协方差：</p>
+
+        <div class="formula">
+        Z_norm = (Z - μ) / σ
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>μ = E[Z] 是复数均值</li>
+            <li>σ² = E[|Z - μ|²] 是复数方差</li>
+        </ul>
+
+        <h2>5. 应用场景</h2>
+
+        <ul>
+            <li><strong>SAR图像处理</strong>：雷达回波的相位信息至关重要</li>
+            <li><strong>MRI重建</strong>：k空间数据是复数</li>
+            <li><strong>无线通信</strong>：信道估计和均衡</li>
+            <li><strong>光学成像</strong>：全息图像处理</li>
+        </ul>
+
+        <h2>6. 实现代码</h2>
+
+        <div class="formula">
+        # PyTorch 伪代码
+        class ComplexConv2d(nn.Module):
+            def __init__(self, in_channels, out_channels, kernel_size):
+                self.real_conv = nn.Conv2d(in_channels, out_channels, kernel_size)
+                self.imag_conv = nn.Conv2d(in_channels, out_channels, kernel_size)
+            
+            def forward(self, z_real, z_imag):
+                out_real = self.real_conv(z_real) - self.imag_conv(z_imag)
+                out_imag = self.real_conv(z_imag) + self.imag_conv(z_real)
+                return out_real, out_imag
+        </div>
+
+        <h2>7. 下一篇预告</h2>
+
+        <p>下一篇将介绍CVNN在<strong>MRI图像重建</strong>中的应用。</p>
+
+        <p><a href="cvnn-05-mri-reconstruction-detailed.html" style="color: #0066cc;">→ 继续阅读: CVNN-05 MRI重建详解</a></p>
+
+    </div>
+</body>
+</html>

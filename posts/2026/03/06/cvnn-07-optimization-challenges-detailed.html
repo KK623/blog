@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-07 优化挑战与训练技巧 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-07 复数神经网络优化挑战与训练技巧</h1>
+        <p class="meta">生成时间: 2026-03-06 18:01 | 文章编号: CVNN-07 | 预计阅读: 15分钟</p>
+
+        <h2>1. 相位模糊问题</h2>
+        
+        <p>复数神经网络的独特挑战：<strong>相位模糊</strong>（Phase Ambiguity）</p>
+
+        <div class="highlight">
+            <strong>问题</strong>：乘以任意单位复数 e^{iθ} 不改变幅度，但会改变表示。
+        </div>
+
+        <p><strong>解决方案</strong>：</p>
+
+        <ul>
+            <li><strong>相位约束</strong>：固定某一层的相位</li>
+            <li><strong>数据依赖初始化</strong>：根据输入数据调整相位</li>
+        </ul>
+
+        <h2>2. 模式坍塌</h2>
+
+        <p>复数网络容易出现<strong>模式坍塌</strong>（Mode Collapse）：</p>
+
+        <ul>
+            <li>所有神经元输出相似的相位</li>
+            <li>损失了复数表示的丰富性</li>
+        </ul>
+
+        <p><strong>预防措施</strong>：</p>
+
+        <ul>
+            <li><strong>多样性正则化</strong>：鼓励相位分布的多样性</li>
+            <li><strong>批归一化</strong>：稳定训练过程</li>
+        </ul>
+
+        <h2>3. 学习率调度</h2>
+
+        <p>复数网络对学习率更敏感：</p>
+
+        <div class="formula">
+        推荐：初始学习率 1e-3 ~ 1e-4
+        使用：余弦退火或指数衰减
+        </div>
+
+        <h2>4. 数值稳定性</h2>
+
+        <h3>4.1 幅度归一化</h3>
+
+        <p>防止幅度爆炸或消失：</p>
+
+        <div class="formula">
+        z_norm = z / (|z| + ε)
+        </div>
+
+        <h3>4.2 梯度裁剪</h3>
+
+        <p>限制梯度大小：</p>
+
+        <div class="formula">
+        if |g| > threshold: g = g · (threshold/|g|)
+        </div>
+
+        <h2>5. 训练技巧总结</h2>
+
+        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+            <tr style="background: #f5f5f5;">
+                <th style="padding: 10px; border: 1px solid #ddd;">技巧</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">作用</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">复数批归一化</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">稳定训练，加速收敛</td>
+            </tr>
+            <tr style="background: #fafafa;">
+                <td style="padding: 10px; border: 1px solid #ddd;">幅度-相位分离优化</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">分别控制幅度和相位的学习率</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">谱归一化</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">限制权重矩阵的谱半径</td>
+            </tr>
+        </table>
+
+        <h2>6. 系列总结</h2>
+
+        <p>本系列文章介绍了CVNN的完整知识体系：</p>
+
+        <ul>
+            <li><a href="cvnn-01-fundamentals-detailed.html">CVNN-01: 基础概念</a></li>
+            <li><a href="cvnn-02-backpropagation-detailed.html">CVNN-02: 反向传播</a></li>
+            <li><a href="cvnn-03-activation-functions-detailed.html">CVNN-03: 激活函数</a></li>
+            <li><a href="cvnn-04-convolutional-layers-detailed.html">CVNN-04: 卷积层</a></li>
+            <li><a href="cvnn-05-mri-reconstruction-detailed.html">CVNN-05: MRI重建</a></li>
+            <li><a href="cvnn-06-wireless-communications-detailed.html">CVNN-06: 无线通信</a></li>
+            <li>CVNN-07: 优化挑战 (本文)</li>
+        </ul>
+
+        <p>希望本系列对你理解复数神经网络有所帮助！</p>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-02 反向传播与优化详解 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-02 复数神经网络反向传播与优化详解</h1>
+        <p class="meta">生成时间: 2026-03-06 17:56 | 文章编号: CVNN-02 | 预计阅读: 20分钟</p>
+
+        <h2>1. 复数梯度下降的挑战</h2>
+        
+        <p>复数函数 f(z) 的优化面临一个根本问题：复数域<strong>不是有序域</strong>，无法直接比较 "z₁ > z₂"。</p>
+
+        <div class="highlight">
+            <strong>核心问题</strong>：如何定义复数函数的导数和梯度？
+        </div>
+
+        <h2>2. Wirtinger 微积分</h2>
+
+        <p>Wirtinger微积分提供了一种优雅的处理方式，将复数函数视为两个独立变量 z 和 z* 的函数。</p>
+
+        <h3>2.1 Wirtinger 导数定义</h3>
+
+        <p>对于复数函数 f(z)，定义两个偏导数：</p>
+
+        <div class="formula">
+        ∂f/∂z = ½(∂f/∂a - i·∂f/∂b)  
+        ∂f/∂z* = ½(∂f/∂a + i·∂f/∂b)
+        </div>
+
+        <p>其中 z = a + bi，z* = a - bi。</p>
+
+        <h3>2.2 重要性质</h3>
+
+        <ul>
+            <li>如果 f 是<strong>全纯函数</strong>（满足柯西-黎曼条件），则 ∂f/∂z* = 0</li>
+            <li>对于实值损失函数 L，∂L/∂z* 是<strong>共轭梯度</strong>，用于梯度下降</li>
+        </ul>
+
+        <h2>3. 复数梯度下降</h2>
+
+        <h3>3.1 梯度更新规则</h3>
+
+        <p>复数参数的更新规则：</p>
+
+        <div class="formula">
+        z ← z - η · ∂L/∂z*
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>η 是学习率</li>
+            <li>∂L/∂z* 是损失函数对 z 的共轭梯度</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>关键理解</strong>：复数梯度下降沿着<strong>共轭梯度</strong>的负方向更新，这与实数梯度下降类似，但考虑了复数的特殊结构。
+        </div>
+
+        <h3>3.2 实部-虚部分解形式</h3>
+
+        <p>复数梯度下降可以分解为实部和虚部的联合更新：</p>
+
+        <div class="formula">
+        [Re(z)]   [Re(∂L/∂z)]
+        [Im(z)] ← [Im(z)] - η · [Im(∂L/∂z)]
+        </div>
+
+        <h2>4. CVNN 反向传播算法</h2>
+
+        <h3>4.1 前向传播</h3>
+
+        <div class="formula">
+        zₗ = Wₗ · aₗ₋₁ + bₗ
+        aₗ = σ(zₗ)
+        </div>
+
+        <h3>4.2 反向传播</h3>
+
+        <p><strong>输出层梯度</strong>：</p>
+        <div class="formula">
+        δₗ = ∂L/∂zₗ* = (∂L/∂aₗ*) ⊙ σ'(zₗ*)
+        </div>
+
+        <p><strong>隐藏层梯度</strong>：</p>
+        <div class="formula">
+        δₗ = (Wₗ₊₁ᴴ · δₗ₊₁) ⊙ σ'(zₗ*)
+        </div>
+
+        <p>其中 Wᴴ 表示共轭转置（Hermitian）。</p>
+
+        <h3>4.3 参数梯度</h3>
+
+        <div class="formula">
+        ∂L/∂Wₗ* = δₗ · aₗ₋₁ᴴ
+        ∂L/∂bₗ* = δₗ
+        </div>
+
+        <h2>5. 复数优化器</h2>
+
+        <h3>5.1 复数 Adam</h3>
+
+        <p>复数版本的Adam优化器：</p>
+
+        <div class="formula">
+        mₜ = β₁·mₜ₋₁ + (1-β₁)·gₜ
+        vₜ = β₂·vₜ₋₁ + (1-β₂)·|gₜ|²
+        m̂ₜ = mₜ/(1-β₁ᵗ)
+        v̂ₜ = vₜ/(1-β₂ᵗ)
+        θₜ = θₜ₋₁ - η·m̂ₜ/(√v̂ₜ + ε)
+        </div>
+
+        <p>其中 gₜ = ∂L/∂θ* 是共轭梯度。</p>
+
+        <h2>6. 实现注意事项</h2>
+
+        <ul>
+            <li><strong>数值稳定性</strong>：复数除法需要处理分母接近零的情况</li>
+            <li><strong>初始化</strong>：复数权重的初始化需要考虑幅度和相位的分布</li>
+            <li><strong>正则化</strong>：L2正则化应作用于 |w|² = w·w*</li>
+        </ul>
+
+        <h2>7. 下一篇预告</h2>
+
+        <p>下一篇将介绍CVNN的<strong>激活函数</strong>，包括ModReLU、CReLU等专为复数设计的激活函数。</p>
+
+        <p><a href="cvnn-03-activation-functions-detailed.html" style="color: #0066cc;">→ 继续阅读: CVNN-03 激活函数详解</a></p>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-05 MRI重建应用详解 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-05 CVNN在MRI重建中的应用详解</h1>
+        <p class="meta">生成时间: 2026-03-06 17:59 | 文章编号: CVNN-05 | 预计阅读: 20分钟</p>
+
+        <h2>1. MRI成像基础</h2>
+        
+        <p>磁共振成像(MRI)的数据在<strong>k空间</strong>（频域）采集，天然是<strong>复数</strong>形式：</p>
+
+        <div class="formula">
+        S(k) = |S(k)| · exp(i·φ(k))
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>|S(k)|：信号幅度</li>
+            <li>φ(k)：信号相位</li>
+        </ul>
+
+        <h2>2. 加速MRI的问题</h2>
+
+        <p>为了加速扫描，通常只采集<strong>部分k空间数据</strong>（欠采样），这导致：</p>
+
+        <ul>
+            <li><strong>混叠伪影</strong>（Aliasing artifacts）</li>
+            <li>传统方法需要复杂的重建算法</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>CVNN的优势</strong>：可以直接处理复数k空间数据，同时学习幅度和相位的映射关系。
+        </div>
+
+        <h2>3. 基于CVNN的重建方法</h2>
+
+        <h3>3.1 网络架构</h3>
+
+        <p>典型的CVNN-MRI架构：</p>
+
+        <div class="formula">
+        欠采样k空间 → 复数卷积层 → 复数激活 → 反卷积 → 重建图像
+        </div>
+
+        <h3>3.2 损失函数</h3>
+
+        <p>常用的复数损失函数：</p>
+
+        <div class="formula">
+        L = ||Y_pred - Y_true||² = Σ|y_pred - y_true|²
+        </div>
+
+        <h2>4. 数据一致性约束</h2>
+
+        <p>关键技巧：<strong>数据一致性层</strong>(Data Consistency Layer)</p>
+
+        <div class="formula">
+        X_DC = F⁻¹(M ⊙ F(X_net) + (1-M) ⊙ Y_measured)
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>M：采样掩码</li>
+            <li>F：傅里叶变换</li>
+            <li>X_net：网络输出</li>
+        </ul>
+
+        <h2>5. 实验结果</h2>
+
+        <p>CVNN相比传统方法和实数深度网络：</p>
+
+        <ul>
+            <li><strong>PSNR提升</strong>：2-4 dB</li>
+            <li><strong>SSIM提升</strong>：5-10%</li>
+            <li><strong>伪影减少</strong>：更好地保留细节</li>
+        </ul>
+
+        <h2>6. 下一篇预告</h2>
+
+        <p>下一篇将介绍CVNN在<strong>无线通信</strong>中的应用。</p>
+
+        <p><a href="cvnn-06-wireless-communications-detailed.html" style="color: #0066cc;">→ 继续阅读: CVNN-06 无线通信详解</a></p>
+
+    </div>
+</body>
+</html>

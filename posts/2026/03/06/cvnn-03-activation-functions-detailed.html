@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-03 激活函数详解 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-03 复数神经网络激活函数详解</h1>
+        <p class="meta">生成时间: 2026-03-06 17:57 | 文章编号: CVNN-03 | 预计阅读: 15分钟</p>
+
+        <h2>1. 复数激活函数的挑战</h2>
+        
+        <p>实数激活函数（如ReLU、sigmoid）不能直接用于复数，因为：</p>
+        
+        <ul>
+            <li>复数<strong>没有自然的大小顺序</strong>（无法比较 z₁ > z₂）</li>
+            <li>直接对实部和虚部分开应用ReLU会<strong>破坏相位信息</strong></li>
+            <li>需要保持<strong>全纯性</strong>或合理的非线性特性</li>
+        </ul>
+
+        <h2>2. ModReLU (模值ReLU)</h2>
+
+        <p>ModReLU是目前最流行的复数激活函数之一。</p>
+
+        <h3>2.1 定义</h3>
+
+        <div class="formula">
+        ModReLU(z) = (|z| + b)₊ · (z/|z|)
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>|z| 是复数的幅度</li>
+            <li>b 是可学习的偏置参数</li>
+            <li>(x)₊ = max(0, x) 是ReLU函数</li>
+            <li>z/|z| 保持相位信息</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>直观理解</strong>：ModReLU对幅度进行阈值处理（类似ReLU），但保持相位不变。
+        </div>
+
+        <h3>2.2 特性</h3>
+
+        <ul>
+            <li><strong>相位保持</strong>：输出与输入具有相同相位</li>
+            <li><strong>幅度非线性</strong>：对幅度进行ReLU-like变换</li>
+            <li><strong>可学习阈值</strong>：通过b参数自适应调整</li>
+        </ul>
+
+        <h2>3. CReLU (复数ReLU)</h2>
+
+        <h3>3.1 定义</h3>
+
+        <div class="formula">
+        CReLU(z) = ReLU(Re(z)) + i·ReLU(Im(z))
+        </div>
+
+        <p>即对实部和虚部分别应用ReLU。</p>
+
+        <h3>3.2 问题与改进</h3>
+
+        <p>CReLU的问题是可能<strong>改变相位</strong>。改进版本zReLU：</p>
+
+        <div class="formula">
+        zReLU(z) = z  if Re(z) > 0 and Im(z) > 0
+                   0  otherwise
+        </div>
+
+        <h2>4. 复数 sigmoid 和 tanh</h2>
+
+        <h3>4.1 复数 sigmoid</h3>
+
+        <div class="formula">
+        σ(z) = 1 / (1 + exp(-z))
+        </div>
+
+        <h3>4.2 复数 tanh</h3>
+
+        <div class="formula">
+        tanh(z) = (exp(z) - exp(-z)) / (exp(z) + exp(-z))
+        </div>
+
+        <p>注意：这些函数在复数域上是<strong>周期性的</strong>，可能导致梯度爆炸。</p>
+
+        <h2>5. 相位敏感激活函数</h2>
+
+        <h3>5.1 Phased ReLU</h3>
+
+        <div class="formula">
+        PhasedReLU(z) = ReLU(|z| - b) · exp(i·θ)
+        </div>
+
+        <p>其中 z = |z|·exp(i·θ)。</p>
+
+        <h2>6. 激活函数选择指南</h2>
+
+        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+            <tr style="background: #f5f5f5;">
+                <th style="padding: 10px; border: 1px solid #ddd;">激活函数</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">适用场景</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">注意事项</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">ModReLU</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">通用首选</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">需要学习偏置b</td>
+            </tr>
+            <tr style="background: #fafafa;">
+                <td style="padding: 10px; border: 1px solid #ddd;">CReLU</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">简单快速</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">可能改变相位</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">zReLU</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">保持象限信息</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">可能过于稀疏</td>
+            </tr>
+        </table>
+
+        <h2>7. 实现代码示例</h2>
+
+        <div class="formula">
+        # PyTorch 伪代码
+        def mod_relu(z, b):
+            magnitude = torch.abs(z)
+            phase = z / (magnitude + 1e-8)
+            return F.relu(magnitude + b) * phase
+        </div>
+
+        <h2>8. 下一篇预告</h2>
+
+        <p>下一篇将介绍CVNN的<strong>卷积层</strong>，包括复数卷积核的设计和频域特性。</p>
+
+        <p><a href="cvnn-04-convolutional-layers-detailed.html" style="color: #0066cc;">→ 继续阅读: CVNN-04 卷积层详解</a></p>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN-06 无线通信应用详解 | 复数神经网络</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.8; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #0066cc; margin-bottom: 20px; }
+        h2 { color: #333; margin: 30px 0 15px; border-bottom: 2px solid #0066cc; padding-bottom: 10px; }
+        h3 { color: #555; margin: 20px 0 10px; }
+        p { margin-bottom: 15px; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+        .formula { background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; margin: 15px 0; overflow-x: auto; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">← 返回博客主页</a>
+        
+        <h1>CVNN-06 CVNN在无线通信中的应用详解</h1>
+        <p class="meta">生成时间: 2026-03-06 18:00 | 文章编号: CVNN-06 | 预计阅读: 20分钟</p>
+
+        <h2>1. 无线通信中的复数信号</h2>
+        
+        <p>无线通信系统中，基带信号天然是<strong>复数</strong>形式：</p>
+
+        <div class="formula">
+        s(t) = I(t) + j·Q(t)
+        </div>
+
+        <p>其中：</p>
+        <ul>
+            <li>I(t)：同相分量 (In-phase)</li>
+            <li>Q(t)：正交分量 (Quadrature)</li>
+        </ul>
+
+        <h2>2. 应用场景</h2>
+
+        <h3>2.1 MIMO信道估计</h3>
+
+        <p>多输入多输出(MIMO)系统的信道矩阵是复数：</p>
+
+        <div class="formula">
+        y = H·x + n
+        </div>
+
+        <p>其中 H ∈ ℂ^{N_r × N_t} 是复数信道矩阵。</p>
+
+        <div class="highlight">
+            <strong>CVNN应用</strong>：学习从导频信号到信道矩阵的映射，比传统LS/MMSE估计更准确。
+        </div>
+
+        <h3>2.2 信号检测</h3>
+
+        <p>在接收端从噪声干扰的信号中恢复发送符号：</p>
+
+        <div class="formula">
+        x̂ = f_θ(y)
+        </div>
+
+        <p>CVNN可以直接处理复数接收信号，学习最优检测规则。</p>
+
+        <h3>2.3 预编码与波束成形</h3e>
+
+        <p>在发射端对信号进行预处理以优化传输：</p>
+
+        <div class="formula">
+        x = W·s
+        </div>
+
+        <p>CVNN可以学习复数预编码矩阵W。</p>
+
+        <h2>3. 网络架构设计</h2>
+
+        <h3>3.1 信道估计网络</h3>
+
+        <div class="formula">
+        Ĥ = CVNN(Y_pilot, X_pilot)
+        </div>
+
+        <h3>3.2 端到端通信系统</h3>
+
+        <p>联合优化发射机和接收机：</p>
+
+        <div class="formula">
+        x = Encoder(s) → 信道 → y = Decoder(y)
+        </div>
+
+        <h2>4. 优势总结</h2>
+
+        <ul>
+            <li><strong>直接处理复数</strong>：无需分离I/Q分量</li>
+            <li><strong>学习相位关系</strong>：更好的相干检测性能</li>
+            <li><strong>端到端优化</strong>：联合优化发射和接收</li>
+        </ul>
+
+        <h2>5. 下一篇预告</h2>
+
+        <p>下一篇将介绍CVNN的<strong>优化挑战</strong>和训练技巧。</p>
+
+        <p><a href="cvnn-07-optimization-challenges-detailed.html" style="color: #0066cc;">→ 继续阅读: CVNN-07 优化挑战详解</a></p>
+
+    </div>
+</body>
+</html>
