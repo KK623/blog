@@ -39,6 +39,40 @@
                 </div>
             </div>
 
+            <div class="bg-orange-50 border-2 border-orange-200 rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-orange-800 mb-4">📝 原始 Prompt</h2>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <p class="text-gray-700 mb-4">以下是为本次任务提供的原始Prompt，正是这个过度宏大的要求导致了失败：</p>
+                    <div class="bg-gray-100 p-4 rounded-lg font-mono text-sm text-gray-800 whitespace-pre-wrap">生成一个全面的"CVNN Detailed Research"博客分类，包含11篇文章（10个领域 + 1个总结），要求：
+
+• 每个领域50+篇论文详细分析
+• 每篇论文必须包含：arXiv链接、作者、机构、背景、动机、技术点、收益点、总结（每点2-4句话）
+• 研究时间线可视化
+• APA格式参考文献
+• Tailwind CSS响应式设计
+• 配图（用脚本抓取arXiv图片）
+• 文件命名：cvnn-{domain}-detailed.html
+• 导航链接使用正确相对路径
+• 每10分钟汇报进度
+
+总计目标：505篇论文的详细分析
+
+来源数据文件：
+- CVNN_Research_Report.md (34篇)
+- CVNN_Theory_Supplement_16papers.md (+16篇)
+- CVNN_OFDM_PHY_78篇.md (78篇)
+- CVNN_6G_Supplement_30papers.md (+30篇)
+- CVNN_Radar_Supplement_35papers.md (+35篇)
+- CVNN_MRI_Supplement_Papers.md (+50篇)
+...
+（共505篇论文）</div>
+                    <div class="mt-4 p-4 bg-red-100 rounded-lg">
+                        <p class="text-red-800 font-semibold">💀 问题诊断</p>
+                        <p class="text-red-700 text-sm mt-1">这个Prompt要求单次任务完成505篇论文的详细分析，每篇需要40-60句话，总计约20,000-30,000句话的内容生成。这远超AI单次会话的能力范围（token限制、时间限制、上下文限制），导致只能生成空壳框架。</p>
+                    </div>
+                </div>
+            </div>
+
             <h2 class="text-2xl font-bold text-gray-800 mb-6">🗂️ 失败案例档案</h2>
             
             <div class="grid md:grid-cols-2 gap-4">
@@ -196,11 +230,6 @@
                     <a href="cvnn-report-tools-section.html" class="block bg-white hover:bg-green-50 p-3 rounded border border-green-200 transition-colors">
                         <div class="font-semibold text-green-800">🔧 工具与框架专题</div>
                         <div class="text-xs text-green-600">23KB · 开源工具评测</div>
-                    </a>
-
-                    <a href="cvnn-research-2026-03-06.html" class="block bg-white hover:bg-green-50 p-3 rounded border border-green-200 transition-colors">
-                        <div class="font-semibold text-green-800">📰 CVNN Research Daily</div>
-                        <div class="text-xs text-green-600">18KB · 最新8篇论文解读</div>
                     </a>
 
                     <a href="cvnn-report-conclusion-section.html" class="block bg-white hover:bg-green-50 p-3 rounded border border-green-200 transition-colors">
