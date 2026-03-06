@@ -48,6 +48,14 @@
     "agent-browser": {
       "version": "0.2.0",
       "installedAt": 1772605649385
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1772683681540
+    },
+    "evolver": {
+      "version": "1.27.2",
+      "installedAt": 1772722146246
     }
   }
 }
