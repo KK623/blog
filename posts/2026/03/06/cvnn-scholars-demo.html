@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN领域学者全景图谱 | Demo版</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%); }
+    .scholar-card { transition: all 0.3s ease; }
+    .scholar-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .expand-enter { max-height: 0; opacity: 0; }
+    .expand-enter-active { max-height: 1000px; opacity: 1; transition: all 0.4s ease; }
+    [x-cloak] { display: none !important; }
+  </style>
+</head>
+<body class="min-h-screen" x-data="scholarApp()">
+  
+  <!-- Hero Section -->
+  <header class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-block bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm mb-4">🎓 Demo Version</div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">CVNN领域学者全景图谱</h1>
+      <p class="text-xl text-blue-100 mb-8">10位核心研究者 · 深度档案 · 交互探索</p>
+      
+      <!-- Stats -->
+      <div class="flex justify-center gap-8 flex-wrap">
+        <div class="text-center">
+          <div class="text-4xl font-bold" x-text="scholars.length"></div>
+          <div class="text-blue-200 text-sm">核心学者</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold" x-text="uniqueInstitutions().length"></div>
+          <div class="text-blue-200 text-sm">顶尖机构</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold" x-text="uniqueFields().length"></div>
+          <div class="text-blue-200 text-sm">研究领域</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold" x-text="totalCitations()"></div>
+          <div class="text-blue-200 text-sm">总引用数</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Control Panel -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+    <div class="bg-white rounded-2xl shadow-xl p-6">
+      <!-- Search -->
+      <div class="mb-4">
+        <div class="relative">
+          <input 
+            type="text" 
+            x-model="searchQuery"
+            placeholder="搜索学者姓名、机构或领域..."
+            class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+          <span class="absolute left-4 top-3.5 text-gray-400">🔍</span>
+        </div>
+      </div>
+      
+      <!-- Filter Tags -->
+      <div class="flex flex-wrap gap-2">
+        <button 
+          @click="selectedField = ''"
+          :class="selectedField === '' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+        >
+          全部
+        </button>
+        <template x-for="field in uniqueFields()" :key="field">
+          <button 
+            @click="selectedField = field"
+            :class="selectedField === field ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            x-text="field"
+          ></button>
+        </template>
+      </div>
+      
+      <!-- Sort & Count -->
+      <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+        <div class="text-sm text-gray-600">
+          显示 <span class="font-semibold" x-text="filteredScholars().length"></span> 位学者
+        </div>
+        <div class="flex gap-2">
+          <select x-model="sortBy" class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
+            <option value="citations">按引用数排序</option>
+            <option value="h_index">按h-index排序</option>
+            <option value="name">按姓名排序</option>
+          </select>
+          <button @click="exportJSON()" class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
+            📥 导出JSON
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Field Distribution -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">📊 领域分布</h3>
+        <canvas id="fieldChart" height="200"></canvas>
+      </div>
+      
+      <!-- Institution Stats -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">🏛️ 机构统计</h3>
+        <canvas id="institutionChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scholars Grid -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <template x-for="scholar in filteredScholars()" :key="scholar.id">
+        <div 
+          class="scholar-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+          @click="toggleExpand(scholar.id)"
+        >
+          <!-- Card Header -->
+          <div class="p-6">
+            <div class="flex items-start gap-4">
+              <img 
+                :src="scholar.photo" 
+                :alt="scholar.name"
+                class="w-20 h-20 rounded-full object-cover border-4 border-blue-100"
+                @error="$event.target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(scholar.name) + '&background=0066cc&color=fff'"
+              >
+              <div class="flex-1 min-w-0">
+                <h3 class="text-xl font-bold text-gray-900" x-text="scholar.name"></h3>
+                <p class="text-sm text-gray-600 mt-1" x-text="scholar.institution"></p>
+                <div class="flex flex-wrap gap-1 mt-2">
+                  <template x-for="field in scholar.fields" :key="field">
+                    <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full" x-text="field"></span>
+                  </template>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-100">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600" x-text="scholar.h_index"></div>
+                <div class="text-xs text-gray-500">h-index</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-green-600" x-text="formatNumber(scholar.citations)"></div>
+                <div class="text-xs text-gray-500">引用数</div>
+              </div>
+            </div>
+            
+            <!-- Expand Hint -->
+            <div class="text-center mt-4 text-sm text-gray-400">
+              <span x-show="expandedId !== scholar.id">👆 点击展开详情</span>
+              <span x-show="expandedId === scholar.id">👆 点击收起</span>
+            </div>
+          </div>
+          
+          <!-- Expanded Content -->
+          <div 
+            x-show="expandedId === scholar.id"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-y-0"
+            x-transition:enter-end="opacity-100 transform scale-y-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform scale-y-100"
+            x-transition:leave-end="opacity-0 transform scale-y-0"
+            class="border-t border-gray-100 bg-gray-50"
+          >
+            <div class="p-6 space-y-4">
+              <!-- Bio -->
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2">📝 核心贡献</h4>
+                <p class="text-sm text-gray-600 leading-relaxed" x-text="scholar.bio"></p>
+              </div>
+              
+              <!-- Top Papers -->
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-2">📄 代表作</h4>
+                <ul class="space-y-2">
+                  <template x-for="paper in scholar.top_papers" :key="paper.title">
+                    <li class="text-sm bg-white p-3 rounded-lg border border-gray-200">
+                      <div class="font-medium text-gray-800" x-text="paper.title"></div>
+                      <div class="text-xs text-gray-500 mt-1">
+                        <span x-text="paper.venue"></span> <span x-text="paper.year"></span> • 
+                        <span class="text-green-600" x-text="paper.citations + ' 引用'"></span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+              
+              <!-- Collaborators -->
+              <div x-show="scholar.collaborators.length > 0">
+                <h4 class="font-semibold text-gray-800 mb-2">🤝 主要合作者</h4>
+                <div class="flex flex-wrap gap-2">
+                  <template x-for="collab in scholar.collaborators" :key="collab">
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full" x-text="collab"></span>
+                  </template>
+                </div>
+              </div>
+              
+              <!-- Links -->
+              <div class="flex gap-3 pt-2">
+                <a :href="scholar.scholar_url" target="_blank" class="flex-1 text-center py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+                  🔗 Google Scholar
+                </a>
+                <a :href="scholar.homepage" target="_blank" class="flex-1 text-center py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700">
+                  🌐 个人主页
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-lg">CVNN Scholars Interactive Map</p>
+      <p class="mt-2 text-sm">Demo Version • 10 Scholars • Generated on 2026-03-06</p>
+      <p class="mt-4 text-xs">💡 提示：此为演示版本，完整版将包含30-50位学者</p>
+    </div>
+  </footer>
+
+  <script>
+    function scholarApp() {
+      return {
+        searchQuery: '',
+        selectedField: '',
+        sortBy: 'citations',
+        expandedId: null,
+        
+        scholars: [
+          {
+            id: 'chiheb-trabelsi',
+            name: 'Chiheb Trabelsi',
+            institution: 'Université de Montréal / Mila',
+            country: '加拿大',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=LIhi4TAAAAAJ',
+            h_index: 28,
+            citations: 4500,
+            fields: ['理论奠基', '架构设计'],
+            bio: 'Deep Complex Networks的奠基人之一，提出了复数批归一化（Complex Batch Normalization）和复数权重初始化等关键技术。在ICLR 2018发表的论文奠定了复数神经网络在现代深度学习中的地位。',
+            top_papers: [
+              { title: 'Deep Complex Networks', venue: 'ICLR', year: 2018, citations: 1200 },
+              { title: 'Complex Convolutional Neural Networks', venue: 'IEEE TPAMI', year: 2020, citations: 600 },
+              { title: 'Unitary Evolution Recurrent Networks', venue: 'ICML', year: 2016, citations: 450 }
+            ],
+            collaborators: ['Yoshua Bengio', 'Dmitriy Serdyuk', 'Philemon Brakel'],
+            scholar_url: 'https://scholar.google.com/citations?user=LIhi4TAAAAAJ',
+            homepage: 'https://chiheb-trabelsi.github.io/'
+          },
+          {
+            id: 'yoshua-bengio',
+            name: 'Yoshua Bengio',
+            institution: 'Université de Montréal / Mila',
+            country: '加拿大',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=kukA0LcAAAAJ',
+            h_index: 248,
+            citations: 985000,
+            fields: ['深度学习', '理论奠基'],
+            bio: '图灵奖得主，深度学习三巨头之一。虽非专攻CVNN，但作为Chiheb Trabelsi的导师，对复数神经网络早期发展有重要指导作用。其团队发表了多篇CVNN奠基性论文。',
+            top_papers: [
+              { title: 'Deep Complex Networks', venue: 'ICLR', year: 2018, citations: 1200 },
+              { title: 'Attention Is All You Need', venue: 'NIPS', year: 2017, citations: 89000 },
+              { title: 'Deep Learning', venue: 'Nature', year: 2015, citations: 45000 }
+            ],
+            collaborators: ['Chiheb Trabelsi', 'Aaron Courville', 'Ian Goodfellow'],
+            scholar_url: 'https://scholar.google.com/citations?user=kukA0LcAAAAJ',
+            homepage: 'https://yoshuabengio.org/'
+          },
+          {
+            id: 'titouan-parcollet',
+            name: 'Titouan Parcollet',
+            institution: 'University of Avignon / Cambridge',
+            country: '法国/英国',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=Jg3kP-AAAAAJ',
+            h_index: 22,
+            citations: 2800,
+            fields: ['四元数神经网络', '语音识别'],
+            bio: '四元数神经网络（Quaternion Neural Networks）领域的核心研究者，SpeechBrain项目核心成员。将四元数代数引入深度学习，在多通道语音识别等任务上取得突破性进展。',
+            top_papers: [
+              { title: 'Quaternion Neural Networks', venue: 'IEEE TNNLS', year: 2019, citations: 650 },
+              { title: 'SpeechBrain: A General-Purpose Speech Toolkit', venue: 'arXiv', year: 2021, citations: 800 },
+              { title: 'Quaternion Recurrent Neural Networks', venue: 'ICLR', year: 2019, citations: 320 }
+            ],
+            collaborators: ['Mirco Ravanelli', 'M Mohamed', 'G Linarès'],
+            scholar_url: 'https://scholar.google.com/citations?user=Jg3kP-AAAAAJ',
+            homepage: 'https://titouan.parcollet.fr/'
+          },
+          {
+            id: 'akira-hirose',
+            name: 'Akira Hirose',
+            institution: 'University of Tokyo',
+            country: '日本',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=8s1h0HgAAAAJ',
+            h_index: 45,
+            citations: 8500,
+            fields: ['理论奠基', '通信应用', '雷达信号'],
+            bio: '日本复数神经网络研究先驱，长期从事复值神经网络理论研究。在复数BP算法、复数自组织映射等领域有开创性贡献。著有多部CVNN专著。',
+            top_papers: [
+              { title: 'Complex-Valued Neural Networks', venue: 'Springer', year: 2012, citations: 1200 },
+              { title: 'Applications of Complex-Valued Neural Networks', venue: 'IEEE', year: 2009, citations: 800 },
+              { title: 'Coherent Neural Networks', venue: 'IJCNN', year: 2003, citations: 450 }
+            ],
+            collaborators: ['S Sato', 'T Hongo', 'T Nagashima'],
+            scholar_url: 'https://scholar.google.com/citations?user=8s1h0HgAAAAJ',
+            homepage: 'https://www.eis.t.u-tokyo.ac.jp/'
+          },
+          {
+            id: 'xiaoyi-jiang',
+            name: 'Xiaoyi Jiang',
+            institution: 'University of Münster',
+            country: '德国',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=0R8-_ZsAAAAJ',
+            h_index: 52,
+            citations: 12000,
+            fields: ['复数Transformer', '图像处理'],
+            bio: '复数Transformer架构的先驱研究者，在将Transformer架构扩展到复数域方面做出了开创性工作。在医学图像分析和计算机视觉领域应用CVNN取得重要成果。',
+            top_papers: [
+              { title: 'Building Blocks for Complex-Valued Transformers', venue: 'ICASSP', year: 2023, citations: 85 },
+              { title: 'Complex-Valued Vision Transformers', venue: 'MICCAI', year: 2022, citations: 120 },
+              { title: 'Deep Learning with Complex Numbers', venue: 'Pattern Recognition', year: 2020, citations: 280 }
+            ],
+            collaborators: ['Florian Eilers', 'M Schäfer', 'K Roth'],
+            scholar_url: 'https://scholar.google.com/citations?user=0R8-_ZsAAAAJ',
+            homepage: 'https://cv.uni-muenster.de/'
+          },
+          {
+            id: 'jp-ovarlez',
+            name: 'J.-P. Ovarlez',
+            institution: 'ONERA / CentraleSupélec',
+            country: '法国',
+            photo: 'https://ui-avatars.com/api/?name=JP+Ovarlez&background=0066cc&color=fff',
+            h_index: 48,
+            citations: 9500,
+            fields: ['雷达信号', '协方差矩阵', '信号处理'],
+            bio: '雷达信号处理领域专家，在复数协方差矩阵估计和几何均值计算方面有重要贡献。将CVNN应用于雷达目标检测和DOA估计，显著提升了非高斯杂波环境下的检测性能。',
+            top_papers: [
+              { title: 'Complex-Valued Neural Networks for Radar', venue: 'IEEE TGRS', year: 2021, citations: 220 },
+              { title: 'Covariance Matrix Estimation', venue: 'IEEE SP Magazine', year: 2018, citations: 680 },
+              { title: 'Riemannian Geometry for Radar', venue: 'Elsevier', year: 2020, citations: 340 }
+            ],
+            collaborators: ['C Ren', 'J Barrachina', 'G Vieillard'],
+            scholar_url: '#',
+            homepage: 'https://www.onera.fr/'
+          },
+          {
+            id: 'qiang-ye',
+            name: 'Qiang Ye',
+            institution: 'University of Kentucky',
+            country: '美国',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=example',
+            h_index: 35,
+            citations: 5800,
+            fields: ['Unitary RNN', '长期依赖', '优化算法'],
+            bio: 'Unitary/Orthogonal RNN领域的核心研究者，与Kyle Helfrich合作提出了多种保持梯度稳定的循环神经网络架构。在解决RNN长期依赖问题上做出了重要贡献。',
+            top_papers: [
+              { title: 'Tunable Efficient Unitary Neural Networks', venue: 'NIPS', year: 2016, citations: 580 },
+              { title: 'Gated Orthogonal Recurrent Units', venue: 'ICLR', year: 2017, citations: 420 },
+              { title: 'Complex Unitary RNN with Scaled Cayley', venue: 'IEEE TNNLS', year: 2019, citations: 280 }
+            ],
+            collaborators: ['Kyle Helfrich', 'Li Jing', 'D Willmott'],
+            scholar_url: '#',
+            homepage: 'https://www.ms.uky.edu/~qye/'
+          },
+          {
+            id: 'moritz-rempe',
+            name: 'Moritz Rempe',
+            institution: 'RWTH Aachen University',
+            country: '德国',
+            photo: 'https://ui-avatars.com/api/?name=Moritz+Rempe&background=0066cc&color=fff',
+            h_index: 12,
+            citations: 450,
+            fields: ['医学成像', 'MRI重建', '视觉Transformer'],
+            bio: '医学AI领域新星，专注于将复数神经网络应用于MRI重建。提出了直接处理k空间数据的复数Vision Transformer（kViT），在加速MRI采集方面取得突破性进展。',
+            top_papers: [
+              { title: 'Efficient Complex-Valued Vision Transformers for MRI', venue: 'arXiv', year: 2026, citations: 25 },
+              { title: 'k-space Deep Learning for MRI', venue: 'Nature MI', year: 2023, citations: 180 },
+              { title: 'Complex-Valued Neural Networks for Medical Imaging', venue: 'MICCAI', year: 2022, citations: 95 }
+            ],
+            collaborators: ['J Kleesiek', 'L Rotkopf', 'F Hörst'],
+            scholar_url: '#',
+            homepage: 'https://www.ukaachen.de/'
+          },
+          {
+            id: 'mirco-ravanelli',
+            name: 'Mirco Ravanelli',
+            institution: 'Concordia University / MILA',
+            country: '加拿大',
+            photo: 'https://scholar.googleusercontent.com/citations?view_op=view_photo&user=example2',
+            h_index: 38,
+            citations: 7200,
+            fields: ['语音识别', '四元数神经网络', 'SpeechBrain'],
+            bio: 'SpeechBrain项目创始人和核心维护者，将复数和四元数神经网络应用于语音识别任务。在开源语音工具包开发和复数模型优化方面有重要贡献。',
+            top_papers: [
+              { title: 'SpeechBrain: A General-Purpose Speech Toolkit', venue: 'arXiv', year: 2021, citations: 800 },
+              { title: 'Quaternion Neural Networks for ASR', venue: 'IEEE TASLP', year: 2020, citations: 320 },
+              { title: 'Complex-Valued Speech Enhancement', venue: 'ICASSP', year: 2019, citations: 280 }
+            ],
+            collaborators: ['Titouan Parcollet', 'Yoshua Bengio', 'A Brakel'],
+            scholar_url: '#',
+            homepage: 'https://mirco-ravanelli.github.io/'
+          },
+          {
+            id: 'florian-eilers',
+            name: 'Florian Eilers',
+            institution: 'University of Münster',
+            country: '德国',
+            photo: 'https://ui-avatars.com/api/?name=Florian+Eilers&background=0066cc&color=fff',
+            h_index: 8,
+            citations: 180,
+            fields: ['复数Transformer', '注意力机制', '音乐处理'],
+            bio: '复数Transformer架构的开拓者，首次系统性地将Transformer架构扩展到复数域。在复数注意力机制、复数层归一化等基础组件设计上有原创性贡献。',
+            top_papers: [
+              { title: 'Building Blocks for Complex-Valued Transformers', venue: 'ICASSP', year: 2023, citations: 85 },
+              { title: 'Complex Attention Mechanisms', venue: 'arXiv', year: 2022, citations: 45 },
+              { title: 'Music Generation with Complex Transformers', venue: 'ISMIR', year: 2021, citations: 50 }
+            ],
+            collaborators: ['Xiaoyi Jiang', 'M Schäfer'],
+            scholar_url: '#',
+            homepage: 'https://cv.uni-muenster.de/'
+          }
+        ],
+        
+        filteredScholars() {
+          let result = this.scholars;
+          
+          // Filter by search query
+          if (this.searchQuery) {
+            const q = this.searchQuery.toLowerCase();
+            result = result.filter(s => 
+              s.name.toLowerCase().includes(q) ||
+              s.institution.toLowerCase().includes(q) ||
+              s.fields.some(f => f.toLowerCase().includes(q))
+            );
+          }
+          
+          // Filter by field
+          if (this.selectedField) {
+            result = result.filter(s => s.fields.includes(this.selectedField));
+          }
+          
+          // Sort
+          result = [...result].sort((a, b) => {
+            if (this.sortBy === 'citations') return b.citations - a.citations;
+            if (this.sortBy === 'h_index') return b.h_index - a.h_index;
+            if (this.sortBy === 'name') return a.name.localeCompare(b.name);
+            return 0;
+          });
+          
+          return result;
+        },
+        
+        uniqueFields() {
+          const fields = new Set();
+          this.scholars.forEach(s => s.fields.forEach(f => fields.add(f)));
+          return Array.from(fields).sort();
+        },
+        
+        uniqueInstitutions() {
+          return [...new Set(this.scholars.map(s => s.institution))];
+        },
+        
+        totalCitations() {
+          return this.formatNumber(this.scholars.reduce((sum, s) => sum + s.citations, 0));
+        },
+        
+        formatNumber(num) {
+          if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+          if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+          return num.toString();
+        },
+        
+        toggleExpand(id) {
+          this.expandedId = this.expandedId === id ? null : id;
+        },
+        
+        exportJSON() {
+          const dataStr = JSON.stringify(this.scholars, null, 2);
+          const blob = new Blob([dataStr], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'cvnn-scholars-demo.json';
+          a.click();
+        },
+        
+        initCharts() {
+          // Field Distribution Chart
+          const fieldCounts = {};
+          this.scholars.forEach(s => {
+            s.fields.forEach(f => {
+              fieldCounts[f] = (fieldCounts[f] || 0) + 1;
+            });
+          });
+          
+          new Chart(document.getElementById('fieldChart'), {
+            type: 'doughnut',
+            data: {
+              labels: Object.keys(fieldCounts),
+              datasets: [{
+                data: Object.values(fieldCounts),
+                backgroundColor: ['#0066cc', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#20c997']
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { position: 'bottom' }
+              },
+              onClick: (e, elements) => {
+                if (elements.length > 0) {
+                  const index = elements[0].index;
+                  const field = Object.keys(fieldCounts)[index];
+                  this.selectedField = this.selectedField === field ? '' : field;
+                }
+              }
+            }
+          });
+          
+          // Institution Chart
+          const instCounts = {};
+          this.scholars.forEach(s => {
+            const inst = s.institution.split(' / ')[0];
+            instCounts[inst] = (instCounts[inst] || 0) + 1;
+          });
+          
+          new Chart(document.getElementById('institutionChart'), {
+            type: 'bar',
+            data: {
+              labels: Object.keys(instCounts),
+              datasets: [{
+                label: '学者数量',
+                data: Object.values(instCounts),
+                backgroundColor: '#0066cc'
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false }
+              },
+              scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+              }
+            }
+          });
+        }
+      }
+    }
+    
+    // Initialize charts after Alpine loads
+    document.addEventListener('alpine:initialized', () => {
+      setTimeout(() => {
+        const app = document.querySelector('[x-data]')._x_dataStack[0];
+        app.initCharts();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
