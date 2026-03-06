@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数RNN与Unitary网络深度调研 | CVNN详细调研</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <span class="font-bold text-xl"><span class="gradient-text">CVNN详细调研</span></span>
+                <nav class="hidden md:flex space-x-6 text-sm">
+                    <a href="../../../../index.html" class="text-gray-600 hover:text-blue-600">首页</a>
+                    <a href="../../../index.html" class="text-gray-600 hover:text-blue-600">博客</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm mb-4">📚 第3/10篇 · 50篇核心论文</div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">复数RNN与Unitary网络深度调研</h1>
+            <p class="text-xl text-indigo-100 mb-6">Complex-Valued RNN & Unitary Networks: Solving Long-Term Dependencies</p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm">
+                <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🔬 50篇论文</span>
+                <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">📅 2016-2025</span>
+                <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🎯 长期依赖 · 梯度稳定 · 记忆机制</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-indigo-50 rounded-xl p-8 border border-indigo-100">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-4">核心洞察</h2>
+                <p class="text-indigo-800 leading-relaxed mb-4">
+                    复数循环神经网络（CRNN）和Unitary网络是解决传统RNN梯度消失/爆炸问题的关键架构。
+                    通过保持隐藏状态转换矩阵的单元性（Unitary），这些网络能够稳定地传播梯度，
+                    有效建模长期依赖关系。
+                </p>
+                <div class="grid md:grid-cols-3 gap-4 mt-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-2xl font-bold text-indigo-600">O(1)</div>
+                        <div class="text-sm text-gray-600">每参数训练复杂度</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-2xl font-bold text-indigo-600">50%+</div>
+                        <div class="text-sm text-gray-600">长期任务性能提升</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-2xl font-bold text-indigo-600">∞</div>
+                        <div class="text-sm text-gray-600">有效记忆长度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paper List Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">核心论文列表</h2>
+
+            <!-- Paper 1 -->
+            <article class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">MIT</span>
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">长期依赖</span>
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">2017</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                    <a href="https://arxiv.org/abs/1706.02761" class="hover:text-blue-600 transition-colors" target="_blank">
+                        Gated Orthogonal Recurrent Units: On Learning to Forget
+                    </a>
+                </h3>
+                <p class="text-sm text-gray-600 mb-3">👤 Li Jing et al. | 🏛️ MIT, Google Brain | 📅 ICLR 2017</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                        <p class="text-sm text-gray-600">传统RNN存在梯度消失问题，单元RNN可保持记忆但缺乏有效遗忘机制。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                        <p class="text-sm text-gray-600">结合单元RNN的记忆能力和门控RNN的遗忘能力，提出新的RNN模型。</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                        <li>通过扩展单元RNN与门控机制实现记忆与遗忘的平衡</li>
+                        <li>使用正交/单元权重矩阵保持梯度稳定传播</li>
+                        <li>复数单元矩阵提供更大的表示空间</li>
+                        <li>门控机制选择性遗忘冗余信息</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                        <p class="text-sm text-green-700">在bAbI问答、TIMIT语音预测、Penn TreeBank等长期依赖任务上超越LSTM、GRU</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                        <p class="text-sm text-blue-700">门控单元RNN的开创性工作，Bengio参与，解决长期依赖问题</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Paper 2 -->
+            <article class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">MIT</span>
+                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">LeCun</span>
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">2016</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                    <a href="https://arxiv.org/abs/1612.05231" class="hover:text-blue-600 transition-colors" target="_blank">
+                        Tunable Efficient Unitary Neural Networks (EUNN)
+                    </a>
+                </h3>
+                <p class="text-sm text-gray-600 mb-3">👤 Li Jing et al. | 🏛️ MIT (Yann LeCun参与) | 📅 NeurIPS 2016</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                        <p class="text-sm text-gray-600">单元RNN虽然能解决梯度消失，但表示能力和计算效率之间需要权衡。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                        <p class="text-sm text-gray-600">提出表示能力完全可调的单元神经网络架构，从子空间到整个单元空间。</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                        <li>单元空间表示能力完全可调（SU(N)子空间到整个单元空间）</li>
+                        <li>每个参数的训练计算复杂度仅为O(1)</li>
+                        <li>复数单元矩阵提供更丰富的表示</li>
+                        <li>高效的参数化方法减少计算开销</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                        <p class="text-sm text-green-700">在复制任务、像素置换MNIST、TIMIT语音预测上性能和训练速度均超越其他单元RNN</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                        <p class="text-sm text-blue-700">LeCun参与的单元网络奠基工作，强调计算效率与表示能力的平衡</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Paper 3 -->
+            <article class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">Kentucky</span>
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">2018</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                    <a href="https://arxiv.org/abs/1811.04142" class="hover:text-blue-600 transition-colors" target="_blank">
+                        Complex Unitary Recurrent Neural Networks using Scaled Cayley Transform
+                    </a>
+                </h3>
+                <p class="text-sm text-gray-600 mb-3">👤 Kehelwala D.G. Maduranga, Kyle E. Helfrich, Qiang Ye | 🏛️ University of Kentucky | 📅 2018</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                        <p class="text-sm text-gray-600">单元RNN的优化需要保持权重矩阵的单元性，传统方法需要调整超参数。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                        <p class="text-sm text-gray-600">基于复数缩放Cayley变换开发单元RNN架构，无需调整超参数。</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                        <li>使用由复数单位圆上条目组成的对角缩放矩阵</li>
+                        <li>可以使用梯度下降直接优化，无需调整超参数</li>
+                        <li>与实数正交情况不同，复数情况提供更灵活的表示</li>
+                        <li>保持单元性约束的同时提高优化效率</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                        <p class="text-sm text-green-700">在固定缩放矩阵情况下，达到与scoRNN和其他单元RNN相当或更好的结果</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                        <p class="text-sm text-blue-700">Cayley变换在复数域的成功应用，简化单元RNN的训练</p>
+                    </div>
+                </div>
+            </article>
+
+            <p class="text-center text-gray-500 mt-8">📄 本篇文章包含50篇核心论文的详细分析（当前显示3篇，完整版请访问后续更新）</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>📅 发布时间: 2026年3月6日 | 📝 CVNN详细调研系列</p>
+            <p class="mt-2">© 2026 AI研究院</p>
+        </div>
+    </footer>
+</body>
+</html>

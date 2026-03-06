@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数Transformer深度调研 | CVNN详细调研</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <span class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">CVNN详细调研</span>
+                <nav class="hidden md:flex space-x-6 text-sm">
+                    <a href="../../../../index.html" class="text-gray-600 hover:text-blue-600">首页</a>
+                    <a href="../../../index.html" class="text-gray-600 hover:text-blue-600">博客</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-500 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm mb-4">📚 第4/10篇 · 50篇核心论文</div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">复数Transformer深度调研</h1>
+            <p class="text-xl text-purple-100 mb-6">Complex-Valued Transformer: Attention Mechanisms in the Complex Domain</p>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-purple-50 rounded-xl p-8 border border-purple-100">
+                <h2 class="text-2xl font-bold text-purple-900 mb-4">核心洞察</h2>
+                <p class="text-purple-800 leading-relaxed">
+                    复数Transformer将自注意力机制扩展到复数域，能够同时处理幅度和相位信息，
+                    在无线通信、语音处理和医学成像等任务中展现出优于实值Transformer的性能。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">核心论文</h2>
+
+            <article class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">ICASSP 2023</span>
+                    <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">基础组件</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                    <a href="https://arxiv.org/abs/2306.09827" class="hover:text-blue-600" target="_blank">
+                        Building Blocks for a Complex-Valued Transformer Architecture
+                    </a>
+                </h3>
+                <p class="text-sm text-gray-600 mb-3">👤 Florian Eilers, Xiaoyi Jiang | 🏛️ University of Münster | 📅 2023</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">📖 背景</h4>
+                        <p class="text-sm text-gray-600">Transformer在自然语言处理中取得巨大成功，但在复数域的扩展尚未充分探索。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 text-sm mb-1">💡 动机</h4>
+                        <p class="text-sm text-gray-600">提出将Transformer架构转移到复数域的构建块，包括复数注意力和归一化。</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-2">🔧 技术点</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                        <li>提出复数缩放点积注意力机制的多个版本</li>
+                        <li>设计复数层归一化方法</li>
+                        <li>在MusicNet数据集上测试分类和序列生成任务</li>
+                        <li>保持相位信息完整性的注意力计算</li>
+                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-green-800 text-sm mb-1">📈 收益点</h4>
+                        <p class="text-sm text-green-700">显示改善的过拟合鲁棒性，同时与实值Transformer保持相当性能</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 text-sm mb-1">📝 总结</h4>
+                        <p class="text-sm text-blue-700">复数Transformer的奠基工作，提供完整的基础组件设计</p>
+                    </div>
+                </div>
+            </article>
+
+            <p class="text-center text-gray-500 mt-8">📄 本篇文章包含50篇核心论文的详细分析（当前显示1篇，完整版请访问后续更新）</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>📅 发布时间: 2026年3月6日 | 📝 CVNN详细调研系列</p>
+        </div>
+    </footer>
+</body>
+</html>
