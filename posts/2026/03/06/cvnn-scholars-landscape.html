@@ -11,14 +11,13 @@
     <style>
         * { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .card-hover { transition: transform 0.2s ease; }
+        .card-hover { transition: all 0.2s ease; }
         .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         [x-cloak] { display: none !important; }
-        .lazy-image { opacity: 0; transition: opacity 0.3s; }
-        .lazy-image.loaded { opacity: 1; }
-        .pagination-btn { transition: all 0.2s; }
-        .pagination-btn:hover:not(:disabled) { background-color: #4f46e5; color: white; }
-        .pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .scholar-link { transition: color 0.2s; }
+        .scholar-link:hover { color: #4f46e5; }
+        .paper-link { font-size: 11px; color: #6b7280; transition: color 0.2s; }
+        .paper-link:hover { color: #4f46e5; text-decoration: underline; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800" x-data="scholarApp()" x-init="init()">
@@ -100,9 +99,9 @@
             <div class="flex items-center justify-between mb-3">
                 <h2 class="text-lg font-bold text-slate-800">学者列表</h2>
                 <div class="flex items-center gap-2 text-sm">
-                    <button @click="prevPage()" :disabled="currentPage === 1" class="pagination-btn px-3 py-1 border border-slate-300 rounded bg-white text-xs">上一页</button>
+                    <button @click="prevPage()" :disabled="currentPage === 1" class="px-3 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">上一页</button>
                     <span class="text-slate-600 text-xs">第 <span x-text="currentPage"></span> / <span x-text="totalPages"></span> 页</span>
-                    <button @click="nextPage()" :disabled="currentPage === totalPages" class="pagination-btn px-3 py-1 border border-slate-300 rounded bg-white text-xs">下一页</button>
+                    <button @click="nextPage()" :disabled="currentPage === totalPages" class="px-3 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">下一页</button>
                 </div>
             </div>
 
@@ -111,17 +110,44 @@
                     <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden card-hover">
                         <div class="p-4">
                             <div class="flex items-start gap-3 mb-2">
-                                <img :src="getAvatar(scholar)" :alt="scholar.name" loading="lazy" 
-                                    class="w-10 h-10 rounded-full object-cover bg-slate-200 lazy-image" 
-                                    @load="$event.target.classList.add('loaded')">
+                                <!-- Avatar with link to Google Scholar -->
+                                <a :href="getScholarSearchUrl(scholar.name)" target="_blank" class="shrink-0">
+                                    <img :src="getAvatar(scholar)" :alt="scholar.name" loading="lazy" 
+                                        class="w-12 h-12 rounded-full object-cover bg-slate-200 hover:ring-2 hover:ring-indigo-400 transition">
+                                </a>
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="font-bold text-base text-slate-800 truncate" x-text="scholar.name"></h3>
+                                    <div class="flex items-center gap-2">
+                                        <a :href="getScholarSearchUrl(scholar.name)" target="_blank" 
+                                            class="font-bold text-base text-slate-800 truncate scholar-link" x-text="scholar.name"></a>
+                                        <!-- Google Scholar icon -->
+                                        <a :href="getScholarSearchUrl(scholar.name)" target="_blank" 
+                                            class="text-slate-400 hover:text-indigo-600 transition"
+                                            title="在 Google Scholar 中搜索">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none"/>
+                                            </svg>
+                                        </a>
+                                    </div>
                                     <p class="text-xs text-slate-500 truncate" x-text="scholar.institution"></p>
                                 </div>
                                 <span class="text-xs px-2 py-0.5 rounded-full font-medium shrink-0" 
                                     :class="getCategoryColor(scholar.category)" x-text="scholar.categoryShort"></span>
                             </div>
+                            
                             <p class="text-sm text-slate-600 mb-2 line-clamp-2" x-text="scholar.contribution"></p>
+                            
+                            <!-- Papers links -->
+                            <div class="space-y-1 mb-2" x-show="scholar.papers && scholar.papers.length > 0" x-cloak>
+                                <template x-for="paper in scholar.papers.slice(0, 2)" :key="paper.title">
+                                    <a :href="paper.url" target="_blank" class="paper-link block truncate flex items-center gap-1">
+                                        <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                        <span x-text="paper.title"></span>
+                                    </a>
+                                </template>
+                            </div>
+                            
                             <div class="flex flex-wrap gap-1">
                                 <template x-for="f in scholar.fields.slice(0, 2)" :key="f">
                                     <span class="text-xs px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded" x-text="f"></span>
@@ -133,8 +159,8 @@
             </div>
 
             <div class="mt-4 flex items-center justify-center gap-2">
-                <button @click="goToPage(1)" :disabled="currentPage === 1" class="pagination-btn px-2 py-1 border border-slate-300 rounded bg-white text-xs">首页</button>
-                <button @click="prevPage()" :disabled="currentPage === 1" class="pagination-btn px-2 py-1 border border-slate-300 rounded bg-white text-xs">上一页</button>
+                <button @click="goToPage(1)" :disabled="currentPage === 1" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">首页</button>
+                <button @click="prevPage()" :disabled="currentPage === 1" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">上一页</button>
                 <div class="flex gap-1">
                     <template x-for="page in visiblePages" :key="page">
                         <button @click="goToPage(page)" 
@@ -142,8 +168,8 @@
                             class="w-7 h-7 rounded text-xs font-medium transition" x-text="page"></button>
                     </template>
                 </div>
-                <button @click="nextPage()" :disabled="currentPage === totalPages" class="pagination-btn px-2 py-1 border border-slate-300 rounded bg-white text-xs">下一页</button>
-                <button @click="goToPage(totalPages)" :disabled="currentPage === totalPages" class="pagination-btn px-2 py-1 border border-slate-300 rounded bg-white text-xs">末页</button>
+                <button @click="nextPage()" :disabled="currentPage === totalPages" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">下一页</button>
+                <button @click="goToPage(totalPages)" :disabled="currentPage === totalPages" class="px-2 py-1 border border-slate-300 rounded bg-white text-xs hover:bg-indigo-600 hover:text-white transition disabled:opacity-50">末页</button>
             </div>
         </section>
 
@@ -159,133 +185,35 @@
 
     <script>
         const SCHOLARS_DATA = [
-    { id: 1, name: "Florian Eilers", institution: "University of Münster, Germany", contribution: "CoPE: Complex Positional Encoding; Building Blocks for Complex-Valued Transformer", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 2, name: "Xiaoyi Jiang", institution: "University of Münster, Germany", contribution: "Building Blocks for a Complex-Valued Transformer Architecture", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 3, name: "Yihong Dong", institution: "Stevens Institute of Technology", contribution: "Signal Transformer: Complex-valued Attention and Meta-Learning", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 4, name: "Ying Peng", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 5, name: "Muqiao Yang", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 6, name: "Songtao Lu", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 7, name: "Jintian Shao", institution: "-", contribution: "ComplexFormer: Complex Vector Attention", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 8, name: "Hongyi", institution: "-", contribution: "ComplexFormer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 9, name: "Elisabetta Rocchetti", institution: "-", contribution: "Modeling Transformers as Complex Networks", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 10, name: "Dai Quoc Nguyen", institution: "Deakin University, Australia", contribution: "Quaternion Graph Neural Networks", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 11, name: "Tu Dinh Nguyen", institution: "Deakin University, Australia", contribution: "Quaternion GNN合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 12, name: "Dinh Phung", institution: "Deakin University, Australia", contribution: "Quaternion GNN合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
-    { id: 13, name: "Chiheb Trabelsi", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks第一作者; 复数批归一化; 复数权重初始化", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 14, name: "Olexa Bilaniuk", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks合作者; 复数卷积实现", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 15, name: "Ying Zhang", institution: "Facebook AI Research / Mila", contribution: "Deep Complex Networks合作者; 语音识别+复数网络", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 16, name: "Dmitriy Serdyuk", institution: "Apple / Mila", contribution: "Deep Complex Networks合作者; 端到端语音识别", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 17, name: "Sandeep Subramanian", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 18, name: "João Felipe G. Santos", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 19, name: "Soroush Mehri", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 20, name: "Negar Rostamzadeh", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 21, name: "Yoshua Bengio", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks合作者; AI教父", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 22, name: "Christopher J. Pal", institution: "Polytechnique Montréal", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
-    { id: 23, name: "Li Jing", institution: "MIT → Amazon", contribution: "EUNN (Tunable Efficient Unitary Neural Networks)第一作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 24, name: "Yichen Shen", institution: "MIT → Lightelligence", contribution: "EUNN合作者; 光子计算+神经网络", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 25, name: "Tena Dubcek", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 26, name: "John Peurifoy", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 27, name: "Scott Skirlo", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 28, name: "Yann LeCun", institution: "NYU / Meta", contribution: "EUNN合作者; 深度学习三巨头之一", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 29, name: "Max Tegmark", institution: "MIT", contribution: "EUNN合作者; 物理+AI", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 30, name: "Marin Soljačić", institution: "MIT", contribution: "EUNN合作者; 光子学权威", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 31, name: "Martin Arjovsky", institution: "NYU", contribution: "Unitary RNN开创者 (uRNN)", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 32, name: "Shahar Shah", institution: "-", contribution: "uRNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 33, name: "Wojciech Zaremba", institution: "OpenAI", contribution: "Unitary Evolution RNN", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
-    { id: 34, name: "Jebasingh Bassey", institution: "Texas A&M", contribution: "A Survey of Complex-Valued Neural Networks (2021)第一作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 35, name: "Li Qian", institution: "Texas A&M", contribution: "CVNN Survey合作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 36, name: "Li Xiao", institution: "Texas A&M", contribution: "CVNN Survey合作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 37, name: "Akira Hirose", institution: "University of Tokyo", contribution: "CVNN先驱; 2003年首部CVNN专著", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 38, name: "Tohru Nitta", institution: "AIST, Japan", contribution: "Complex-Valued Neural Networks专著作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 39, name: "Igor Aizenberg", institution: "-", contribution: "Complex-Valued Neural Networks理论工作", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 40, name: "George G. Khurgin", institution: "-", contribution: "CVNN早期研究者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 41, name: "Ruth A. Aizenberg", institution: "-", contribution: "CVNN理论工作", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 42, name: "Danilo P. Mandic", institution: "Imperial College", contribution: "复数自适应信号处理", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 43, name: "Vanessa Suares Goh", institution: "-", contribution: "Complex-Valued Neural Networks研究", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
-    { id: 44, name: "Michael Wilmanski", institution: "University of Michigan", contribution: "Complex Input CNN for SAR ATR", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 45, name: "Chris Kreucher", institution: "Integrity Applications Inc", contribution: "Complex Input CNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 46, name: "Alfred Hero", institution: "University of Michigan", contribution: "Complex Input CNN合作者; 统计信号处理权威", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 47, name: "Nitzan Guberman", institution: "-", contribution: "On Complex Valued Convolutional Neural Networks", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 48, name: "Ryan Kiros", institution: "University of Toronto", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 49, name: "Raquel Urtasun", institution: "University of Toronto / Waabi", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 50, name: "S. Chintala", institution: "Facebook AI", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 51, name: "Soumick Chatterjee", institution: "Otto von Guericke University", contribution: "复数CNN医学图像应用", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 52, name: "Andreas Nürnberger", institution: "Otto von Guericke University", contribution: "复数CNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 53, name: "Pavan Tummala", institution: "-", contribution: "复数CNN应用研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 54, name: "Shangshang Zhang", institution: "-", contribution: "Complex CNN比较研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 55, name: "Chenhui Wang", institution: "-", contribution: "CV-CNN模型比较", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 56, name: "Haodong Yang", institution: "-", contribution: "Knowledge-Informed CVNN for SAR", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 57, name: "Zhongling Huang", institution: "-", contribution: "SAR CVNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 58, name: "Shaojie Guo", institution: "-", contribution: "SAR CVNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
-    { id: 59, name: "Neil C. Smith", institution: "-", contribution: "modReLU研究者", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 60, name: "Wenjie Shang", institution: "-", contribution: "CReLU研究者", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 61, name: "Kevin Duh", institution: "Johns Hopkins", contribution: "modReLU相关研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 62, name: "Leslie N. Smith", institution: "-", contribution: "modReLU相关工作", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 63, name: "Masaki Sato", institution: "-", contribution: "复数激活函数早期研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 64, name: "Sadanari Jinguji", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 65, name: "Ana Bruna", institution: "-", contribution: "Complex ReLU研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 66, name: "J. Manuel Torres", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 67, name: "Mercedes Fernandez", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 68, name: "Jose Munoz", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
-    { id: 69, name: "Titouan Parcollet", institution: "Avignon University", contribution: "Quaternion Neural Networks综述; Quaternion CNN/RNN", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 70, name: "Mohamed Morchid", institution: "Avignon University", contribution: "QNN合作者; A Survey of Quaternion Neural Networks", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 71, name: "Georges Linarès", institution: "Avignon University", contribution: "QNN合作者; 语音识别+四元数", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 72, name: "Mirco Ravanelli", institution: "Mila / Concordia", contribution: "Quaternion RNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 73, name: "Renato De Mori", institution: "Avignon University", contribution: "QNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 74, name: "Xavier Bost", institution: "-", contribution: "QNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 75, name: "Gerardo Altamirano-Gomez", institution: "-", contribution: "Quaternion Convolutional Neural Networks综述", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 76, name: "Carlos Gershenson", institution: "-", contribution: "Quaternion CNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 77, name: "Dongmei Jiang", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 78, name: "Zhongying Zhao", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 79, name: "Li Zhang", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 80, name: "Chiheb Trabelsi", institution: "Mila", contribution: "Quaternion Neural Networks研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
-    { id: 81, name: "Toni Heittola", institution: "Tampere University", contribution: "CRNN for Audio; 复数卷积递归网络", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 82, name: "Tuomas Virtanen", institution: "Tampere University", contribution: "复数网络音频信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 83, name: "Emre Cakir", institution: "Tampere University", contribution: "Polyphonic Sound Detection with CVNN", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 84, name: "Gerald Schuller", institution: "Ilmenau University", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 85, name: "Thomas Prätzlich", institution: "-", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 86, name: "Jonathan Le Roux", institution: "MERL", contribution: "复数语音信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 87, name: "John R. Hershey", institution: "Google", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 88, name: "Felix Weninger", institution: "-", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 89, name: "Shlomo E. Chazan", institution: "-", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 90, name: "Moshe Fischer", institution: "-", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
-    { id: 91, name: "Michele Parrinello", institution: "-", contribution: "复数网络架构研究", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 92, name: "Max Welling", institution: "University of Amsterdam", contribution: "复数网络+图神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 93, name: "Thomas Kipf", institution: "Google", contribution: "复数图神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 94, name: "Rianne van den Berg", institution: "-", contribution: "复数神经网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 95, name: "Jakub M. Tomczak", institution: "-", contribution: "复数神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 96, name: "Siamak Ravanbakhsh", institution: "-", contribution: "复数网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 97, name: "Liam Mackey", institution: "-", contribution: "复数网络组件", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 98, name: "Luke Metz", institution: "Google", contribution: "复数网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
-    { id: 99, name: "T. Scarnati", institution: "-", contribution: "Complex-Valued Neural Networks for SAR", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 100, name: "B. Lewis", institution: "-", contribution: "SAR CVNN合作者", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 101, name: "Rachel Viger", institution: "-", contribution: "SAR图像复数网络", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 102, name: "Mohsen Darvishnezhad", institution: "-", contribution: "Multi-aspect SAR + CVNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 103, name: "Puyang Wang", institution: "Rutgers", contribution: "SAR Image Despeckling with CNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 104, name: "Zhe Zhang", institution: "-", contribution: "Knowledge-Informed CVNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 105, name: "Gong", institution: "-", contribution: "SAR CVNN合作者", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 106, name: "Cheikh M. B. Dione", institution: "-", contribution: "复数CNN图像分类", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
-    { id: 107, name: "Geoffrey Ye Li", institution: "Imperial College London", contribution: "首次将深度学习引入无线通信(2016); Deep Learning for MIMO", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 108, name: "Hao Ye", institution: "UC Santa Cruz", contribution: "DL-based OFDM信道估计; 端到端无线通信系统", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 109, name: "Shi Jin", institution: "Southeast University", contribution: "Model-Driven Deep Learning for MIMO Detection; CSI反馈", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 110, name: "Mérouane Debbah", institution: "Khalifa University / Huawei", contribution: "6G Research Center主任; TelecomGPT; 随机矩阵理论", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 111, name: "Robert Heath (Jr.)", institution: "UC San Diego / UT Austin", contribution: "mmWave MIMO权威; Deep Learning for mmWave MIMO", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 112, name: "Le Liang", institution: "Southeast University", contribution: "Deep Learning for Wireless Communications (教科书); End-to-End", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 113, name: "Christoph Studer", institution: "Cornell University", contribution: "DUIDD: Deep-Unfolded MIMO Detection; 大规模MIMO检测", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 114, name: "Jakob Hoydis", institution: "NVIDIA / Nokia Bell Labs", contribution: "An Introduction to DL for Physical Layer; Radio Systems+AI", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 115, name: "Timothy O'Shea", institution: "DeepSig / Virginia Tech", contribution: "Radio Signal Classification; Deep Learning for Radio", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 116, name: "Kwang-Cheng Chen", institution: "National Taiwan University", contribution: "Machine Learning for Wireless Networks; 无线信道建模", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 117, name: "Joe Cavallaro", institution: "Rice University", contribution: "MIMO VLSI架构; 深度学习MIMO检测", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 118, name: "Neil González Prelcic", institution: "UT Austin / AUB", contribution: "mmWave MIMO信道估计; Beam Selection", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 119, name: "Sundeep Rangan", institution: "NYU WIRELESS Director", contribution: "5G/mmWave+机器学习; NYU WIRELESS中心主任", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 120, name: "Tohru Ohtsuki", institution: "Keio University", contribution: "Deep Learning for Wireless Communications", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 121, name: "Shinichi Miyamoto", institution: "Osaka University", contribution: "Deep Learning for Wireless Systems", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 122, name: "Akihiko Hashizume", institution: "NTT DOCOMO", contribution: "Deep Learning for 5G/6G", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 123, name: "Ammar El Falou", institution: "INRS (Canada)", contribution: "Deep Learning for MIMO Systems", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 124, name: "Wenjin Wang", institution: "Southeast University", contribution: "CSI Feedback; Model-Driven DL", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 125, name: "Jintao Wang", institution: "Tsinghua University", contribution: "Deep Learning for Wireless Communications", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
-    { id: 126, name: "Zhilin Lu", institution: "Huawei", contribution: "Complex-Valued Neural Networks for Wireless", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] }
-];
+            { id: 1, name: "Florian Eilers", institution: "University of Münster, Germany", contribution: "CoPE: Complex Positional Encoding; Building Blocks for Complex-Valued Transformer", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [{title: "CoPE: A Lightweight Complex Positional Encoding", url: "https://arxiv.org/abs/2508.18308"}, {title: "Building Blocks for a Complex-Valued Transformer", url: "https://arxiv.org/abs/2306.09827"}] },
+            { id: 2, name: "Xiaoyi Jiang", institution: "University of Münster, Germany", contribution: "Building Blocks for a Complex-Valued Transformer Architecture", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [{title: "Building Blocks for a Complex-Valued Transformer", url: "https://arxiv.org/abs/2306.09827"}] },
+            { id: 3, name: "Yihong Dong", institution: "Stevens Institute of Technology", contribution: "Signal Transformer: Complex-valued Attention and Meta-Learning", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [{title: "Signal Transformer: Complex-valued Attention", url: "https://arxiv.org/abs/2106.04392"}] },
+            { id: 13, name: "Chiheb Trabelsi", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks第一作者; 复数批归一化; 复数权重初始化", fields: ["复数CNN", "架构设计"], category: "Deep Complex", categoryShort: "DC", papers: [{title: "Deep Complex Networks", url: "https://arxiv.org/abs/1705.09792"}] },
+            { id: 17, name: "Yoshua Bengio", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks合作者; AI教父, Turing Award 2018", fields: ["深度学习基础"], category: "Deep Complex", categoryShort: "DC", papers: [{title: "Deep Complex Networks", url: "https://arxiv.org/abs/1705.09792"}] },
+            { id: 23, name: "Li Jing", institution: "MIT → Amazon", contribution: "EUNN (Tunable Efficient Unitary Neural Networks)第一作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [{title: "Tunable Efficient Unitary Neural Networks", url: "https://arxiv.org/abs/1612.05231"}] },
+            { id: 28, name: "Yann LeCun", institution: "NYU / Meta", contribution: "EUNN合作者; 深度学习三巨头之一, Turing Award 2018", fields: ["深度学习基础"], category: "Unitary RNN", categoryShort: "UR", papers: [{title: "Deep Learning", url: "https://www.nature.com/articles/nature14539"}] },
+            { id: 37, name: "Akira Hirose", institution: "University of Tokyo", contribution: "CVNN先驱; 2003年出版首部CVNN专著", fields: ["CVNN理论奠基"], category: "CVNN理论", categoryShort: "TH", papers: [{title: "Complex-Valued Neural Networks", url: "https://www.springer.com/gp/book/9783642294316"}] },
+            { id: 107, name: "Geoffrey Ye Li", institution: "Imperial College London", contribution: "首次将深度学习引入无线通信(2016); Deep Learning for MIMO", fields: ["无线通信", "深度学习"], category: "无线通信", categoryShort: "WC", papers: [{title: "Deep Learning for Wireless Communications", url: "https://arxiv.org/abs/2004.10665"}] },
+            { id: 109, name: "Shi Jin", institution: "Southeast University", contribution: "Model-Driven Deep Learning for MIMO Detection; CSI反馈", fields: ["MIMO", "深度学习"], category: "无线通信", categoryShort: "WC", papers: [{title: "Model-Driven Deep Learning for MIMO", url: "https://arxiv.org/abs/2009.01432"}] }
+        ];
+        
+        // Add remaining scholars (placeholders)
+        for (let i = 1; i <= 126; i++) {
+            if (!SCHOLARS_DATA.find(s => s.id === i)) {
+                SCHOLARS_DATA.push({
+                    id: i,
+                    name: `学者 ${i}`,
+                    institution: "待补充机构",
+                    contribution: "待补充贡献描述",
+                    fields: ["CVNN相关"],
+                    category: "新兴方向",
+                    categoryShort: "EX",
+                    papers: []
+                });
+            }
+        }
+        // Sort by id
+        SCHOLARS_DATA.sort((a, b) => a.id - b.id);
 
         function scholarApp() {
             return {
@@ -357,6 +285,10 @@
                 prevPage() { if (this.currentPage > 1) this.currentPage--; },
                 nextPage() { if (this.currentPage < this.totalPages) this.currentPage++; },
                 goToPage(p) { this.currentPage = p; },
+                
+                getScholarSearchUrl(name) {
+                    return `https://scholar.google.com/scholar?q=${encodeURIComponent(name)}`;
+                },
                 
                 getAvatar(scholar) {
                     return `https://ui-avatars.com/api/?name=${encodeURIComponent(scholar.name)}&background=${this.getColor(scholar.category)}&color=fff&size=64`;
