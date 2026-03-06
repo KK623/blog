@@ -137,6 +137,24 @@
                             <p class="text-sm text-slate-600 mb-2 line-clamp-2" x-text="scholar.contribution"></p>
                             
                             <!-- Papers links -->
+                            <!-- Links -->
+                            <div class="flex items-center gap-2 mb-2 text-xs">
+                                <a x-show="scholar.scholar_url" :href="scholar.scholar_url || getScholarSearchUrl(scholar.name)" target="_blank" 
+                                   class="flex items-center gap-1 text-slate-500 hover:text-indigo-600 transition">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                    <span>Scholar</span>
+                                </a>
+                                <a x-show="scholar.homepage" :href="scholar.homepage" target="_blank" 
+                                   class="flex items-center gap-1 text-slate-500 hover:text-indigo-600 transition">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                    </svg>
+                                    <span>主页</span>
+                                </a>
+                            </div>
+                            
                             <div class="space-y-1 mb-2" x-show="scholar.papers && scholar.papers.length > 0" x-cloak>
                                 <template x-for="paper in scholar.papers.slice(0, 2)" :key="paper.title">
                                     <a :href="paper.url" target="_blank" class="paper-link block truncate flex items-center gap-1">
@@ -185,2195 +203,2195 @@
 
     <script>
         const SCHOLARS_DATA = [
-  {
-    "id": 1,
-    "name": "Florian Eilers",
-    "institution": "University of Münster, Germany",
-    "contribution": "CoPE: Complex Positional Encoding; Building Blocks for Complex-Valued Transformer",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "CoPE: A Lightweight Complex Positional Encoding",
-        "url": "https://arxiv.org/abs/2508.18308"
-      },
-      {
-        "title": "Building Blocks for a Complex-Valued Transformer",
-        "url": "https://arxiv.org/abs/2306.09827"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Xiaoyi Jiang",
-    "institution": "University of Münster, Germany",
-    "contribution": "Building Blocks for a Complex-Valued Transformer Architecture",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Building Blocks for a Complex-Valued Transformer",
-        "url": "https://arxiv.org/abs/2306.09827"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Yihong Dong",
-    "institution": "Stevens Institute of Technology",
-    "contribution": "Signal Transformer: Complex-valued Attention and Meta-Learning",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Signal Transformer: Complex-valued Attention",
-        "url": "https://arxiv.org/abs/2106.04392"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Ying Peng",
-    "institution": "Stevens Institute of Technology",
-    "contribution": "Signal Transformer合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Signal Transformer: Complex-valued Attention",
-        "url": "https://arxiv.org/abs/2106.04392"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Muqiao Yang",
-    "institution": "Stevens Institute of Technology",
-    "contribution": "Signal Transformer合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Signal Transformer: Complex-valued Attention",
-        "url": "https://arxiv.org/abs/2106.04392"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Songtao Lu",
-    "institution": "Stevens Institute of Technology",
-    "contribution": "Signal Transformer合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Signal Transformer: Complex-valued Attention",
-        "url": "https://arxiv.org/abs/2106.04392"
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "name": "Jintian Shao",
-    "institution": "-",
-    "contribution": "ComplexFormer: Complex Vector Attention",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "ComplexFormer: Complex Vector Attention",
-        "url": "https://arxiv.org/abs/2505.10222"
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "name": "Hongyi",
-    "institution": "-",
-    "contribution": "ComplexFormer合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "ComplexFormer: Complex Vector Attention",
-        "url": "https://arxiv.org/abs/2505.10222"
-      }
-    ]
-  },
-  {
-    "id": 9,
-    "name": "Elisabetta Rocchetti",
-    "institution": "-",
-    "contribution": "Modeling Transformers as Complex Networks",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Modeling Transformers as Complex Networks",
-        "url": "https://arxiv.org/abs/2509.15269"
-      }
-    ]
-  },
-  {
-    "id": 10,
-    "name": "Dai Quoc Nguyen",
-    "institution": "Deakin University, Australia",
-    "contribution": "Quaternion Graph Neural Networks",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Quaternion Graph Neural Networks",
-        "url": "https://arxiv.org/abs/2008.05089"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "name": "Tu Dinh Nguyen",
-    "institution": "Deakin University, Australia",
-    "contribution": "Quaternion GNN合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Quaternion Graph Neural Networks",
-        "url": "https://arxiv.org/abs/2008.05089"
-      }
-    ]
-  },
-  {
-    "id": 12,
-    "name": "Dinh Phung",
-    "institution": "Deakin University, Australia",
-    "contribution": "Quaternion GNN合作者",
-    "fields": [
-      "复数Transformer"
-    ],
-    "category": "复数Transformer",
-    "categoryShort": "CT",
-    "papers": [
-      {
-        "title": "Quaternion Graph Neural Networks",
-        "url": "https://arxiv.org/abs/2008.05089"
-      }
-    ]
-  },
-  {
-    "id": 13,
-    "name": "Chiheb Trabelsi",
-    "institution": "Université de Montréal / Mila",
-    "contribution": "Deep Complex Networks第一作者; 复数批归一化; 复数权重初始化",
-    "fields": [
-      "复数CNN",
-      "架构设计"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 14,
-    "name": "Olexa Bilaniuk",
-    "institution": "Université de Montréal / Mila",
-    "contribution": "Deep Complex Networks合作者; 复数卷积实现",
-    "fields": [
-      "复数架构",
-      "优化"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 15,
-    "name": "Ying Zhang",
-    "institution": "Facebook AI Research / Mila",
-    "contribution": "Deep Complex Networks合作者; 语音识别+复数网络",
-    "fields": [
-      "复数网络",
-      "语音识别"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 16,
-    "name": "Dmitriy Serdyuk",
-    "institution": "Apple / Mila",
-    "contribution": "Deep Complex Networks合作者; 端到端语音识别",
-    "fields": [
-      "语音",
-      "复数网络"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 17,
-    "name": "Sandeep Subramanian",
-    "institution": "Mila",
-    "contribution": "Deep Complex Networks合作者",
-    "fields": [
-      "复数网络训练"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 18,
-    "name": "João Felipe G. Santos",
-    "institution": "Mila",
-    "contribution": "Deep Complex Networks合作者",
-    "fields": [
-      "深度学习"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 19,
-    "name": "Soroush Mehri",
-    "institution": "Mila",
-    "contribution": "Deep Complex Networks合作者",
-    "fields": [
-      "语音识别"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 20,
-    "name": "Negar Rostamzadeh",
-    "institution": "Mila",
-    "contribution": "Deep Complex Networks合作者",
-    "fields": [
-      "深度学习"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Yoshua Bengio",
-    "institution": "Université de Montréal / Mila",
-    "contribution": "Deep Complex Networks合作者; AI教父, Turing Award 2018",
-    "fields": [
-      "深度学习基础"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 22,
-    "name": "Christopher J. Pal",
-    "institution": "Polytechnique Montréal",
-    "contribution": "Deep Complex Networks合作者",
-    "fields": [
-      "深度学习"
-    ],
-    "category": "Deep Complex",
-    "categoryShort": "DC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 23,
-    "name": "Li Jing",
-    "institution": "MIT → Amazon",
-    "contribution": "EUNN (Tunable Efficient Unitary Neural Networks)第一作者",
-    "fields": [
-      "Unitary RNN",
-      "正交网络"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 24,
-    "name": "Yichen Shen",
-    "institution": "MIT → Lightelligence",
-    "contribution": "EUNN合作者; 光子计算+神经网络",
-    "fields": [
-      "Unitary RNN",
-      "光子AI"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 25,
-    "name": "Tena Dubcek",
-    "institution": "MIT",
-    "contribution": "EUNN合作者",
-    "fields": [
-      "量子计算+神经网络"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 26,
-    "name": "John Peurifoy",
-    "institution": "MIT",
-    "contribution": "EUNN合作者",
-    "fields": [
-      "光学神经网络"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Scott Skirlo",
-    "institution": "MIT",
-    "contribution": "EUNN合作者",
-    "fields": [
-      "深度学习"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 28,
-    "name": "Yann LeCun",
-    "institution": "NYU / Meta",
-    "contribution": "EUNN合作者; 深度学习三巨头之一, Turing Award 2018",
-    "fields": [
-      "深度学习基础"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Deep Learning",
-        "url": "https://www.nature.com/articles/nature14539"
-      }
-    ]
-  },
-  {
-    "id": 29,
-    "name": "Max Tegmark",
-    "institution": "MIT",
-    "contribution": "EUNN合作者; 物理+AI",
-    "fields": [
-      "物理启发的神经网络"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Tunable Efficient Unitary Neural Networks",
-        "url": "https://arxiv.org/abs/1612.05231"
-      }
-    ]
-  },
-  {
-    "id": 30,
-    "name": "Marin Soljačić",
-    "institution": "MIT",
-    "contribution": "EUNN合作者; 光子学权威",
-    "fields": [
-      "光学神经网络"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Deep Learning with Coherent Nanophotonic Circuits",
-        "url": "https://www.nature.com/articles/s41566-017-0001-1"
-      }
-    ]
-  },
-  {
-    "id": 31,
-    "name": "Martin Arjovsky",
-    "institution": "NYU",
-    "contribution": "Unitary RNN开创者 (uRNN)",
-    "fields": [
-      "正交RNN",
-      "梯度问题"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Unitary Evolution Recurrent Neural Networks",
-        "url": "https://arxiv.org/abs/1511.06464"
-      }
-    ]
-  },
-  {
-    "id": 32,
-    "name": "Shahar Shah",
-    "institution": "-",
-    "contribution": "uRNN合作者",
-    "fields": [
-      "正交RNN"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Unitary Evolution Recurrent Neural Networks",
-        "url": "https://arxiv.org/abs/1511.06464"
-      }
-    ]
-  },
-  {
-    "id": 33,
-    "name": "Wojciech Zaremba",
-    "institution": "OpenAI",
-    "contribution": "Unitary Evolution RNN",
-    "fields": [
-      "正交RNN",
-      "LSTM"
-    ],
-    "category": "Unitary RNN",
-    "categoryShort": "UR",
-    "papers": [
-      {
-        "title": "Unitary Evolution Recurrent Neural Networks",
-        "url": "https://arxiv.org/abs/1511.06464"
-      }
-    ]
-  },
-  {
-    "id": 34,
-    "name": "Jebasingh Bassey",
-    "institution": "Texas A&M",
-    "contribution": "A Survey of Complex-Valued Neural Networks (2021)第一作者",
-    "fields": [
-      "CVNN综述"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "A Survey of Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 35,
-    "name": "Li Qian",
-    "institution": "Texas A&M",
-    "contribution": "CVNN Survey合作者",
-    "fields": [
-      "CVNN综述"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "A Survey of Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 36,
-    "name": "Li Xiao",
-    "institution": "Texas A&M",
-    "contribution": "CVNN Survey合作者",
-    "fields": [
-      "CVNN综述"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "A Survey of Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 37,
-    "name": "Akira Hirose",
-    "institution": "University of Tokyo",
-    "contribution": "CVNN先驱; 2003年出版首部CVNN专著",
-    "fields": [
-      "CVNN理论奠基"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex-Valued Neural Networks: Theories and Applications",
-        "url": "https://www.springer.com/gp/book/9783642294316"
-      }
-    ]
-  },
-  {
-    "id": 38,
-    "name": "Tohru Nitta",
-    "institution": "AIST, Japan",
-    "contribution": "Complex-Valued Neural Networks专著作者",
-    "fields": [
-      "CVNN理论"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex-Valued Neural Networks",
-        "url": "https://www.igi-global.com/book/complex-valued-neural-networks/1614"
-      }
-    ]
-  },
-  {
-    "id": 39,
-    "name": "Igor Aizenberg",
-    "institution": "-",
-    "contribution": "Complex-Valued Neural Networks理论工作",
-    "fields": [
-      "CVNN数学基础"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 40,
-    "name": "George G. Khurgin",
-    "institution": "-",
-    "contribution": "CVNN早期研究者",
-    "fields": [
-      "复数网络理论"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 41,
-    "name": "Ruth A. Aizenberg",
-    "institution": "-",
-    "contribution": "CVNN理论工作",
-    "fields": [
-      "复数网络理论"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 42,
-    "name": "Danilo P. Mandic",
-    "institution": "Imperial College",
-    "contribution": "复数自适应信号处理",
-    "fields": [
-      "复数信号处理"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "Complex Valued Nonlinear Adaptive Filters",
-        "url": "https://www.wiley.com/en-us/Complex+Valued+Nonlinear+Adaptive+Filters%3A+Noncircularity%2C+Widely+Linear+and+Neural+Models-p-9780470742631"
-      }
-    ]
-  },
-  {
-    "id": 43,
-    "name": "Vanessa Suares Goh",
-    "institution": "-",
-    "contribution": "Complex-Valued Neural Networks研究",
-    "fields": [
-      "CVNN理论"
-    ],
-    "category": "CVNN理论",
-    "categoryShort": "TH",
-    "papers": [
-      {
-        "title": "A Survey of Complex-Valued Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 44,
-    "name": "Michael Wilmanski",
-    "institution": "University of Michigan",
-    "contribution": "Complex Input CNN for SAR ATR",
-    "fields": [
-      "复数CNN",
-      "SAR"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex Input CNN for Wide-Angle SAR ATR",
-        "url": "https://arxiv.org/abs/1612.08427"
-      }
-    ]
-  },
-  {
-    "id": 45,
-    "name": "Chris Kreucher",
-    "institution": "Integrity Applications Inc",
-    "contribution": "Complex Input CNN合作者",
-    "fields": [
-      "SAR+复数网络"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex Input CNN for SAR",
-        "url": "https://arxiv.org/abs/1612.08427"
-      }
-    ]
-  },
-  {
-    "id": 46,
-    "name": "Alfred Hero",
-    "institution": "University of Michigan",
-    "contribution": "Complex Input CNN合作者; 统计信号处理权威",
-    "fields": [
-      "信号处理"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex Input CNN for SAR",
-        "url": "https://arxiv.org/abs/1612.08427"
-      }
-    ]
-  },
-  {
-    "id": 47,
-    "name": "Nitzan Guberman",
-    "institution": "-",
-    "contribution": "On Complex Valued Convolutional Neural Networks",
-    "fields": [
-      "复数CNN理论"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "On Complex Valued Convolutional Neural Networks",
-        "url": "https://arxiv.org/abs/1602.09046"
-      }
-    ]
-  },
-  {
-    "id": 48,
-    "name": "Ryan Kiros",
-    "institution": "University of Toronto",
-    "contribution": "复数CNN研究",
-    "fields": [
-      "复数卷积"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Skip-Thought Vectors",
-        "url": "https://arxiv.org/abs/1506.06726"
-      }
-    ]
-  },
-  {
-    "id": 49,
-    "name": "Raquel Urtasun",
-    "institution": "University of Toronto / Waabi",
-    "contribution": "复数CNN研究",
-    "fields": [
-      "计算机视觉"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex CNN for Autonomous Driving",
-        "url": "https://www.cs.toronto.edu/~urtasun/publications.html"
-      }
-    ]
-  },
-  {
-    "id": 50,
-    "name": "S. Chintala",
-    "institution": "Facebook AI",
-    "contribution": "复数CNN研究",
-    "fields": [
-      "深度学习"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 51,
-    "name": "Soumick Chatterjee",
-    "institution": "Otto von Guericke University",
-    "contribution": "复数CNN医学图像应用",
-    "fields": [
-      "复数CNN",
-      "医学成像"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex CNN for Medical Image Analysis",
-        "url": "https://arxiv.org/abs/2002.02037"
-      }
-    ]
-  },
-  {
-    "id": 52,
-    "name": "Andreas Nürnberger",
-    "institution": "Otto von Guericke University",
-    "contribution": "复数CNN合作者",
-    "fields": [
-      "医学图像"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex CNN for Medical Image Analysis",
-        "url": "https://arxiv.org/abs/2002.02037"
-      }
-    ]
-  },
-  {
-    "id": 53,
-    "name": "Pavan Tummala",
-    "institution": "-",
-    "contribution": "复数CNN应用研究",
-    "fields": [
-      "复数卷积"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Complex CNN Applications",
-        "url": "https://ieeexplore.ieee.org/document/8039431"
-      }
-    ]
-  },
-  {
-    "id": 54,
-    "name": "Shangshang Zhang",
-    "institution": "-",
-    "contribution": "Complex CNN比较研究",
-    "fields": [
-      "复数CNN"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Comparison of Complex CNN Architectures",
-        "url": "https://arxiv.org/abs/2302.04584"
-      }
-    ]
-  },
-  {
-    "id": 55,
-    "name": "Chenhui Wang",
-    "institution": "-",
-    "contribution": "CV-CNN模型比较",
-    "fields": [
-      "复数CNN"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "CV-CNN Model Comparison",
-        "url": "https://arxiv.org/abs/2302.04584"
-      }
-    ]
-  },
-  {
-    "id": 56,
-    "name": "Haodong Yang",
-    "institution": "-",
-    "contribution": "Knowledge-Informed CVNN for SAR",
-    "fields": [
-      "SAR+复数网络"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "Knowledge-Informed CVNN for SAR",
-        "url": "https://arxiv.org/abs/2510.20284"
-      }
-    ]
-  },
-  {
-    "id": 57,
-    "name": "Zhongling Huang",
-    "institution": "-",
-    "contribution": "SAR CVNN合作者",
-    "fields": [
-      "复数CNN"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "SAR CVNN",
-        "url": "https://arxiv.org/abs/2510.20284"
-      }
-    ]
-  },
-  {
-    "id": 58,
-    "name": "Shaojie Guo",
-    "institution": "-",
-    "contribution": "SAR CVNN合作者",
-    "fields": [
-      "复数卷积"
-    ],
-    "category": "复数CNN",
-    "categoryShort": "CC",
-    "papers": [
-      {
-        "title": "SAR CVNN",
-        "url": "https://arxiv.org/abs/2510.20284"
-      }
-    ]
-  },
-  {
-    "id": 59,
-    "name": "Neil C. Smith",
-    "institution": "-",
-    "contribution": "modReLU研究者",
-    "fields": [
-      "复数激活函数"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "modReLU Activation for Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 60,
-    "name": "Wenjie Shang",
-    "institution": "-",
-    "contribution": "CReLU研究者",
-    "fields": [
-      "复数激活函数"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "CReLU: Complex ReLU",
-        "url": "https://arxiv.org/abs/1603.05201"
-      }
-    ]
-  },
-  {
-    "id": 61,
-    "name": "Kevin Duh",
-    "institution": "Johns Hopkins",
-    "contribution": "modReLU相关研究",
-    "fields": [
-      "复数网络"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "ModReLU in Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 62,
-    "name": "Leslie N. Smith",
-    "institution": "-",
-    "contribution": "modReLU相关工作",
-    "fields": [
-      "激活函数"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Cyclical Learning Rates",
-        "url": "https://arxiv.org/abs/1506.01186"
-      }
-    ]
-  },
-  {
-    "id": 63,
-    "name": "Masaki Sato",
-    "institution": "-",
-    "contribution": "复数激活函数早期研究",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex Activation Functions",
-        "url": "https://ieeexplore.ieee.org/document/1023123"
-      }
-    ]
-  },
-  {
-    "id": 64,
-    "name": "Sadanari Jinguji",
-    "institution": "-",
-    "contribution": "复数激活函数研究",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex Neural Networks",
-        "url": "https://www.jstage.jst.go.jp/article/tjsai/12/3/12_434/_article/-char/ja/"
-      }
-    ]
-  },
-  {
-    "id": 65,
-    "name": "Ana Bruna",
-    "institution": "-",
-    "contribution": "Complex ReLU研究",
-    "fields": [
-      "复数激活"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex ReLU Activation",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 66,
-    "name": "J. Manuel Torres",
-    "institution": "-",
-    "contribution": "复数激活函数研究",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex Activation Functions",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 67,
-    "name": "Mercedes Fernandez",
-    "institution": "-",
-    "contribution": "复数激活函数研究",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 68,
-    "name": "Jose Munoz",
-    "institution": "-",
-    "contribution": "复数激活函数研究",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "复数激活",
-    "categoryShort": "AF",
-    "papers": [
-      {
-        "title": "Complex Activation Functions",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 69,
-    "name": "Titouan Parcollet",
-    "institution": "Avignon University",
-    "contribution": "Quaternion Neural Networks综述; Quaternion CNN/RNN",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "A Survey of Quaternion Neural Networks",
-        "url": "https://arxiv.org/abs/1905.05445"
-      }
-    ]
-  },
-  {
-    "id": 70,
-    "name": "Mohamed Morchid",
-    "institution": "Avignon University",
-    "contribution": "QNN合作者; A Survey of Quaternion Neural Networks",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "A Survey of Quaternion Neural Networks",
-        "url": "https://arxiv.org/abs/1905.05445"
-      }
-    ]
-  },
-  {
-    "id": 71,
-    "name": "Georges Linarès",
-    "institution": "Avignon University",
-    "contribution": "QNN合作者; 语音识别+四元数",
-    "fields": [
-      "四元数语音处理"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN for Speech Recognition",
-        "url": "https://arxiv.org/abs/1806.04418"
-      }
-    ]
-  },
-  {
-    "id": 72,
-    "name": "Mirco Ravanelli",
-    "institution": "Mila / Concordia",
-    "contribution": "Quaternion RNN合作者",
-    "fields": [
-      "语音+四元数"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion Recurrent Neural Networks",
-        "url": "https://arxiv.org/abs/1806.04418"
-      }
-    ]
-  },
-  {
-    "id": 73,
-    "name": "Renato De Mori",
-    "institution": "Avignon University",
-    "contribution": "QNN合作者",
-    "fields": [
-      "语音识别"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion Neural Networks",
-        "url": "https://arxiv.org/abs/1905.05445"
-      }
-    ]
-  },
-  {
-    "id": 74,
-    "name": "Xavier Bost",
-    "institution": "-",
-    "contribution": "QNN合作者",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion Neural Networks",
-        "url": "https://arxiv.org/abs/1905.05445"
-      }
-    ]
-  },
-  {
-    "id": 75,
-    "name": "Gerardo Altamirano-Gomez",
-    "institution": "-",
-    "contribution": "Quaternion Convolutional Neural Networks综述",
-    "fields": [
-      "四元数CNN"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN Survey",
-        "url": "https://arxiv.org/abs/2307.08663"
-      }
-    ]
-  },
-  {
-    "id": 76,
-    "name": "Carlos Gershenson",
-    "institution": "-",
-    "contribution": "Quaternion CNN合作者",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN",
-        "url": "https://arxiv.org/abs/2307.08663"
-      }
-    ]
-  },
-  {
-    "id": 77,
-    "name": "Dongmei Jiang",
-    "institution": "-",
-    "contribution": "Quaternion CNN研究",
-    "fields": [
-      "四元数卷积"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN for Color Images",
-        "url": "https://arxiv.org/abs/2307.08663"
-      }
-    ]
-  },
-  {
-    "id": 78,
-    "name": "Zhongying Zhao",
-    "institution": "-",
-    "contribution": "Quaternion CNN研究",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN",
-        "url": "https://arxiv.org/abs/2307.08663"
-      }
-    ]
-  },
-  {
-    "id": 79,
-    "name": "Li Zhang",
-    "institution": "-",
-    "contribution": "Quaternion CNN研究",
-    "fields": [
-      "四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion CNN",
-        "url": "https://arxiv.org/abs/2307.08663"
-      }
-    ]
-  },
-  {
-    "id": 80,
-    "name": "Chiheb Trabelsi",
-    "institution": "Mila",
-    "contribution": "Quaternion Neural Networks研究",
-    "fields": [
-      "复数/四元数网络"
-    ],
-    "category": "四元数",
-    "categoryShort": "QN",
-    "papers": [
-      {
-        "title": "Quaternion Neural Networks",
-        "url": "https://arxiv.org/abs/1905.05445"
-      }
-    ]
-  },
-  {
-    "id": 81,
-    "name": "Toni Heittola",
-    "institution": "Tampere University",
-    "contribution": "CRNN for Audio; 复数卷积递归网络",
-    "fields": [
-      "音频+复数网络"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "CRNN for Polyphonic Sound Detection",
-        "url": "https://arxiv.org/abs/1702.06286"
-      }
-    ]
-  },
-  {
-    "id": 82,
-    "name": "Tuomas Virtanen",
-    "institution": "Tampere University",
-    "contribution": "复数网络音频信号处理",
-    "fields": [
-      "音频信号处理"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Neural Networks for Audio",
-        "url": "https://arxiv.org/abs/1702.06286"
-      }
-    ]
-  },
-  {
-    "id": 83,
-    "name": "Emre Cakir",
-    "institution": "Tampere University",
-    "contribution": "Polyphonic Sound Detection with CVNN",
-    "fields": [
-      "复数网络+音频"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Polyphonic Sound Detection with CVNN",
-        "url": "https://arxiv.org/abs/1702.06286"
-      }
-    ]
-  },
-  {
-    "id": 84,
-    "name": "Gerald Schuller",
-    "institution": "Ilmenau University",
-    "contribution": "复数信号处理",
-    "fields": [
-      "复数音频处理"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Audio Signal Processing",
-        "url": "https://ieeexplore.ieee.org/document/9052976"
-      }
-    ]
-  },
-  {
-    "id": 85,
-    "name": "Thomas Prätzlich",
-    "institution": "-",
-    "contribution": "复数语音处理",
-    "fields": [
-      "复数网络+语音"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Speech Processing",
-        "url": "https://arxiv.org/abs/1702.06286"
-      }
-    ]
-  },
-  {
-    "id": 86,
-    "name": "Jonathan Le Roux",
-    "institution": "MERL",
-    "contribution": "复数语音信号处理",
-    "fields": [
-      "语音分离"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Neural Networks for Speech",
-        "url": "https://arxiv.org/abs/1802.00817"
-      }
-    ]
-  },
-  {
-    "id": 87,
-    "name": "John R. Hershey",
-    "institution": "Google",
-    "contribution": "复数语音处理",
-    "fields": [
-      "语音处理"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Deep Complex Neural Networks for Speech",
-        "url": "https://arxiv.org/abs/1612.04672"
-      }
-    ]
-  },
-  {
-    "id": 88,
-    "name": "Felix Weninger",
-    "institution": "-",
-    "contribution": "复数语音处理",
-    "fields": [
-      "语音增强"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Neural Networks for Speech Enhancement",
-        "url": "https://arxiv.org/abs/1612.04672"
-      }
-    ]
-  },
-  {
-    "id": 89,
-    "name": "Shlomo E. Chazan",
-    "institution": "-",
-    "contribution": "复数信号处理",
-    "fields": [
-      "信号处理"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Signal Processing",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 90,
-    "name": "Moshe Fischer",
-    "institution": "-",
-    "contribution": "复数信号处理",
-    "fields": [
-      "信号处理"
-    ],
-    "category": "语音处理",
-    "categoryShort": "SP",
-    "papers": [
-      {
-        "title": "Complex Neural Networks",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 91,
-    "name": "Michele Parrinello",
-    "institution": "-",
-    "contribution": "复数网络架构研究",
-    "fields": [
-      "CVNN架构"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Complex Neural Network Architectures",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 92,
-    "name": "Max Welling",
-    "institution": "University of Amsterdam",
-    "contribution": "复数网络+图神经网络",
-    "fields": [
-      "复数GNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Graph Neural Networks",
-        "url": "https://arxiv.org/abs/1609.02907"
-      }
-    ]
-  },
-  {
-    "id": 93,
-    "name": "Thomas Kipf",
-    "institution": "Google",
-    "contribution": "复数图神经网络",
-    "fields": [
-      "复数GNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Semi-Supervised Classification with GCN",
-        "url": "https://arxiv.org/abs/1609.02907"
-      }
-    ]
-  },
-  {
-    "id": 94,
-    "name": "Rianne van den Berg",
-    "institution": "-",
-    "contribution": "复数神经网络架构",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Graph Convolutional Networks",
-        "url": "https://arxiv.org/abs/1609.02907"
-      }
-    ]
-  },
-  {
-    "id": 95,
-    "name": "Jakub M. Tomczak",
-    "institution": "-",
-    "contribution": "复数神经网络",
-    "fields": [
-      "CVNN架构"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 96,
-    "name": "Siamak Ravanbakhsh",
-    "institution": "-",
-    "contribution": "复数网络架构",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 97,
-    "name": "Liam Mackey",
-    "institution": "-",
-    "contribution": "复数网络组件",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Complex Neural Network Components",
-        "url": "https://arxiv.org/abs/2101.12249"
-      }
-    ]
-  },
-  {
-    "id": 98,
-    "name": "Luke Metz",
-    "institution": "Google",
-    "contribution": "复数网络架构",
-    "fields": [
-      "CVNN"
-    ],
-    "category": "架构组件",
-    "categoryShort": "AC",
-    "papers": [
-      {
-        "title": "Deep Complex Networks",
-        "url": "https://arxiv.org/abs/1705.09792"
-      }
-    ]
-  },
-  {
-    "id": 99,
-    "name": "T. Scarnati",
-    "institution": "-",
-    "contribution": "Complex-Valued Neural Networks for SAR",
-    "fields": [
-      "SAR+复数网络"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "CVNN for SAR Image Classification",
-        "url": "https://arxiv.org/abs/2103.03458"
-      }
-    ]
-  },
-  {
-    "id": 100,
-    "name": "B. Lewis",
-    "institution": "-",
-    "contribution": "SAR CVNN合作者",
-    "fields": [
-      "复数CNN"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "SAR CVNN",
-        "url": "https://arxiv.org/abs/2103.03458"
-      }
-    ]
-  },
-  {
-    "id": 101,
-    "name": "Rachel Viger",
-    "institution": "-",
-    "contribution": "SAR图像复数网络",
-    "fields": [
-      "复数SAR"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "SAR Image Analysis with CVNN",
-        "url": "https://arxiv.org/abs/2103.03458"
-      }
-    ]
-  },
-  {
-    "id": 102,
-    "name": "Mohsen Darvishnezhad",
-    "institution": "-",
-    "contribution": "Multi-aspect SAR + CVNN",
-    "fields": [
-      "SAR+复数"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "Multi-aspect SAR with CVNN",
-        "url": "https://arxiv.org/abs/2103.03458"
-      }
-    ]
-  },
-  {
-    "id": 103,
-    "name": "Puyang Wang",
-    "institution": "Rutgers",
-    "contribution": "SAR Image Despeckling with CNN",
-    "fields": [
-      "SAR+深度学习"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "SAR Image Despeckling",
-        "url": "https://ieeexplore.ieee.org/document/7919214"
-      }
-    ]
-  },
-  {
-    "id": 104,
-    "name": "Zhe Zhang",
-    "institution": "-",
-    "contribution": "Knowledge-Informed CVNN",
-    "fields": [
-      "SAR+复数"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "Knowledge-Informed CVNN for SAR",
-        "url": "https://arxiv.org/abs/2510.20284"
-      }
-    ]
-  },
-  {
-    "id": 105,
-    "name": "Gong",
-    "institution": "-",
-    "contribution": "SAR CVNN合作者",
-    "fields": [
-      "复数网络"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "SAR CVNN",
-        "url": "https://arxiv.org/abs/2510.20284"
-      }
-    ]
-  },
-  {
-    "id": 106,
-    "name": "Cheikh M. B. Dione",
-    "institution": "-",
-    "contribution": "复数CNN图像分类",
-    "fields": [
-      "复数CNN"
-    ],
-    "category": "新兴方向",
-    "categoryShort": "EX",
-    "papers": [
-      {
-        "title": "Complex CNN for Image Classification",
-        "url": "https://arxiv.org/abs/2302.04584"
-      }
-    ]
-  },
-  {
-    "id": 107,
-    "name": "Geoffrey Ye Li",
-    "institution": "Imperial College London",
-    "contribution": "首次将深度学习引入无线通信(2016); Deep Learning for MIMO",
-    "fields": [
-      "无线通信",
-      "深度学习",
-      "MIMO"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Wireless Communications",
-        "url": "https://arxiv.org/abs/2004.10665"
-      }
-    ]
-  },
-  {
-    "id": 108,
-    "name": "Hao Ye",
-    "institution": "UC Santa Cruz",
-    "contribution": "DL-based OFDM信道估计; 端到端无线通信系统",
-    "fields": [
-      "OFDM",
-      "深度学习",
-      "信道估计"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Power of Deep Learning for Channel Estimation",
-        "url": "https://arxiv.org/abs/1708.08514"
-      }
-    ]
-  },
-  {
-    "id": 109,
-    "name": "Shi Jin",
-    "institution": "Southeast University",
-    "contribution": "Model-Driven Deep Learning for MIMO Detection; CSI反馈",
-    "fields": [
-      "MIMO",
-      "深度学习",
-      "信道估计"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Model-Driven Deep Learning for MIMO",
-        "url": "https://arxiv.org/abs/2009.01432"
-      }
-    ]
-  },
-  {
-    "id": 110,
-    "name": "Mérouane Debbah",
-    "institution": "Khalifa University / Huawei",
-    "contribution": "6G Research Center主任; TelecomGPT; 随机矩阵理论",
-    "fields": [
-      "6G",
-      "AI",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Machine Learning for 5G and Beyond",
-        "url": "https://arxiv.org/abs/1902.05774"
-      }
-    ]
-  },
-  {
-    "id": 111,
-    "name": "Robert Heath (Jr.)",
-    "institution": "UC San Diego / UT Austin",
-    "contribution": "mmWave MIMO权威; Deep Learning for mmWave MIMO",
-    "fields": [
-      "mmWave",
-      "MIMO",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for mmWave MIMO",
-        "url": "https://arxiv.org/abs/1712.06123"
-      }
-    ]
-  },
-  {
-    "id": 112,
-    "name": "Le Liang",
-    "institution": "Southeast University",
-    "contribution": "Deep Learning for Wireless Communications (教科书); End-to-End",
-    "fields": [
-      "无线通信",
-      "深度学习",
-      "端到端"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Wireless Communications",
-        "url": "https://arxiv.org/abs/2004.10665"
-      }
-    ]
-  },
-  {
-    "id": 113,
-    "name": "Christoph Studer",
-    "institution": "Cornell University",
-    "contribution": "DUIDD: Deep-Unfolded MIMO Detection; 大规模MIMO检测",
-    "fields": [
-      "MIMO检测",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "DUIDD: Deep-Unfolded Detection and Decoding",
-        "url": "https://arxiv.org/abs/2208.08878"
-      }
-    ]
-  },
-  {
-    "id": 114,
-    "name": "Jakob Hoydis",
-    "institution": "NVIDIA / Nokia Bell Labs",
-    "contribution": "An Introduction to DL for Physical Layer; Radio Systems+AI",
-    "fields": [
-      "物理层",
-      "深度学习",
-      "无线电"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for the Physical Layer",
-        "url": "https://arxiv.org/abs/1708.06925"
-      }
-    ]
-  },
-  {
-    "id": 115,
-    "name": "Timothy O'Shea",
-    "institution": "DeepSig / Virginia Tech",
-    "contribution": "Radio Signal Classification; Deep Learning for Radio",
-    "fields": [
-      "无线电",
-      "深度学习",
-      "信号分类"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Radio Signal Classification",
-        "url": "https://arxiv.org/abs/1602.04105"
-      }
-    ]
-  },
-  {
-    "id": 116,
-    "name": "Kwang-Cheng Chen",
-    "institution": "National Taiwan University",
-    "contribution": "Machine Learning for Wireless Networks; 无线信道建模",
-    "fields": [
-      "无线网络",
-      "机器学习",
-      "信道建模"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Machine Learning for Wireless Networks",
-        "url": "https://arxiv.org/abs/1712.06209"
-      }
-    ]
-  },
-  {
-    "id": 117,
-    "name": "Joe Cavallaro",
-    "institution": "Rice University",
-    "contribution": "MIMO VLSI架构; 深度学习MIMO检测",
-    "fields": [
-      "MIMO",
-      "VLSI",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Large-scale MIMO Detection",
-        "url": "https://arxiv.org/abs/1303.0190"
-      }
-    ]
-  },
-  {
-    "id": 118,
-    "name": "Neil González Prelcic",
-    "institution": "UT Austin / AUB",
-    "contribution": "mmWave MIMO信道估计; Beam Selection",
-    "fields": [
-      "mmWave",
-      "MIMO",
-      "信道估计"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for mmWave Channel Estimation",
-        "url": "https://arxiv.org/abs/1712.08619"
-      }
-    ]
-  },
-  {
-    "id": 119,
-    "name": "Sundeep Rangan",
-    "institution": "NYU WIRELESS Director",
-    "contribution": "5G/mmWave+机器学习; NYU WIRELESS中心主任",
-    "fields": [
-      "5G",
-      "6G",
-      "AI",
-      "mmWave"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Millimeter Wave Wireless Communications",
-        "url": "https://arxiv.org/abs/1407.1181"
-      }
-    ]
-  },
-  {
-    "id": 120,
-    "name": "Tohru Ohtsuki",
-    "institution": "Keio University",
-    "contribution": "Deep Learning for Wireless Communications",
-    "fields": [
-      "无线通信",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Wireless Communications",
-        "url": "https://arxiv.org/abs/2004.10665"
-      }
-    ]
-  },
-  {
-    "id": 121,
-    "name": "Shinichi Miyamoto",
-    "institution": "Osaka University",
-    "contribution": "Deep Learning for Wireless Systems",
-    "fields": [
-      "无线系统",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Wireless Systems",
-        "url": "https://arxiv.org/abs/2004.10665"
-      }
-    ]
-  },
-  {
-    "id": 122,
-    "name": "Akihiko Hashizume",
-    "institution": "NTT DOCOMO",
-    "contribution": "Deep Learning for 5G/6G",
-    "fields": [
-      "5G/6G",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for 5G/6G",
-        "url": "https://arxiv.org/abs/1902.05774"
-      }
-    ]
-  },
-  {
-    "id": 123,
-    "name": "Ammar El Falou",
-    "institution": "INRS (Canada)",
-    "contribution": "Deep Learning for MIMO Systems",
-    "fields": [
-      "MIMO",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for MIMO Systems",
-        "url": "https://arxiv.org/abs/2009.01432"
-      }
-    ]
-  },
-  {
-    "id": 124,
-    "name": "Wenjin Wang",
-    "institution": "Southeast University",
-    "contribution": "CSI Feedback; Model-Driven DL",
-    "fields": [
-      "信道估计",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for CSI Feedback",
-        "url": "https://arxiv.org/abs/1810.09376"
-      }
-    ]
-  },
-  {
-    "id": 125,
-    "name": "Jintao Wang",
-    "institution": "Tsinghua University",
-    "contribution": "Deep Learning for Wireless Communications",
-    "fields": [
-      "无线通信",
-      "深度学习"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "Deep Learning for Wireless Communications",
-        "url": "https://arxiv.org/abs/2004.10665"
-      }
-    ]
-  },
-  {
-    "id": 126,
-    "name": "Zhilin Lu",
-    "institution": "Huawei",
-    "contribution": "Complex-Valued Neural Networks for Wireless",
-    "fields": [
-      "CVNN",
-      "无线通信"
-    ],
-    "category": "无线通信",
-    "categoryShort": "WC",
-    "papers": [
-      {
-        "title": "CVNN for Wireless Communications",
-        "url": "https://arxiv.org/abs/2308.13623"
-      }
-    ]
-  }
+    {
+        "id": 1,
+        "name": "Florian Eilers",
+        "institution": "University of Münster, Germany",
+        "contribution": "CoPE: Complex Positional Encoding; Building Blocks for Complex-Valued Transformer",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "CoPE: A Lightweight Complex Positional Encoding",
+                "url": "https://arxiv.org/abs/2508.18308"
+            },
+            {
+                "title": "Building Blocks for a Complex-Valued Transformer",
+                "url": "https://arxiv.org/abs/2306.09827"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Xiaoyi Jiang",
+        "institution": "University of Münster, Germany",
+        "contribution": "Building Blocks for a Complex-Valued Transformer Architecture",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Building Blocks for a Complex-Valued Transformer",
+                "url": "https://arxiv.org/abs/2306.09827"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Yihong Dong",
+        "institution": "Stevens Institute of Technology",
+        "contribution": "Signal Transformer: Complex-valued Attention and Meta-Learning",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Signal Transformer: Complex-valued Attention",
+                "url": "https://arxiv.org/abs/2106.04392"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Ying Peng",
+        "institution": "Stevens Institute of Technology",
+        "contribution": "Signal Transformer合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Signal Transformer: Complex-valued Attention",
+                "url": "https://arxiv.org/abs/2106.04392"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Muqiao Yang",
+        "institution": "Stevens Institute of Technology",
+        "contribution": "Signal Transformer合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Signal Transformer: Complex-valued Attention",
+                "url": "https://arxiv.org/abs/2106.04392"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Songtao Lu",
+        "institution": "Stevens Institute of Technology",
+        "contribution": "Signal Transformer合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Signal Transformer: Complex-valued Attention",
+                "url": "https://arxiv.org/abs/2106.04392"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Jintian Shao",
+        "institution": "-",
+        "contribution": "ComplexFormer: Complex Vector Attention",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "ComplexFormer: Complex Vector Attention",
+                "url": "https://arxiv.org/abs/2505.10222"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Hongyi",
+        "institution": "-",
+        "contribution": "ComplexFormer合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "ComplexFormer: Complex Vector Attention",
+                "url": "https://arxiv.org/abs/2505.10222"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Elisabetta Rocchetti",
+        "institution": "-",
+        "contribution": "Modeling Transformers as Complex Networks",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Modeling Transformers as Complex Networks",
+                "url": "https://arxiv.org/abs/2509.15269"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Dai Quoc Nguyen",
+        "institution": "Deakin University, Australia",
+        "contribution": "Quaternion Graph Neural Networks",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Quaternion Graph Neural Networks",
+                "url": "https://arxiv.org/abs/2008.05089"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Tu Dinh Nguyen",
+        "institution": "Deakin University, Australia",
+        "contribution": "Quaternion GNN合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Quaternion Graph Neural Networks",
+                "url": "https://arxiv.org/abs/2008.05089"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Dinh Phung",
+        "institution": "Deakin University, Australia",
+        "contribution": "Quaternion GNN合作者",
+        "fields": [
+            "复数Transformer"
+        ],
+        "category": "复数Transformer",
+        "categoryShort": "CT",
+        "papers": [
+            {
+                "title": "Quaternion Graph Neural Networks",
+                "url": "https://arxiv.org/abs/2008.05089"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Chiheb Trabelsi",
+        "institution": "Université de Montréal / Mila",
+        "contribution": "Deep Complex Networks第一作者; 复数批归一化; 复数权重初始化",
+        "fields": [
+            "复数CNN",
+            "架构设计"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Olexa Bilaniuk",
+        "institution": "Université de Montréal / Mila",
+        "contribution": "Deep Complex Networks合作者; 复数卷积实现",
+        "fields": [
+            "复数架构",
+            "优化"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Ying Zhang",
+        "institution": "Facebook AI Research / Mila",
+        "contribution": "Deep Complex Networks合作者; 语音识别+复数网络",
+        "fields": [
+            "复数网络",
+            "语音识别"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Dmitriy Serdyuk",
+        "institution": "Apple / Mila",
+        "contribution": "Deep Complex Networks合作者; 端到端语音识别",
+        "fields": [
+            "语音",
+            "复数网络"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "name": "Sandeep Subramanian",
+        "institution": "Mila",
+        "contribution": "Deep Complex Networks合作者",
+        "fields": [
+            "复数网络训练"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "name": "João Felipe G. Santos",
+        "institution": "Mila",
+        "contribution": "Deep Complex Networks合作者",
+        "fields": [
+            "深度学习"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "name": "Soroush Mehri",
+        "institution": "Mila",
+        "contribution": "Deep Complex Networks合作者",
+        "fields": [
+            "语音识别"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "name": "Negar Rostamzadeh",
+        "institution": "Mila",
+        "contribution": "Deep Complex Networks合作者",
+        "fields": [
+            "深度学习"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Yoshua Bengio",
+        "institution": "Université de Montréal / Mila",
+        "contribution": "Deep Complex Networks合作者; AI教父, Turing Award 2018",
+        "fields": [
+            "深度学习基础"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Christopher J. Pal",
+        "institution": "Polytechnique Montréal",
+        "contribution": "Deep Complex Networks合作者",
+        "fields": [
+            "深度学习"
+        ],
+        "category": "Deep Complex",
+        "categoryShort": "DC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Li Jing",
+        "institution": "MIT → Amazon",
+        "contribution": "EUNN (Tunable Efficient Unitary Neural Networks)第一作者",
+        "fields": [
+            "Unitary RNN",
+            "正交网络"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 24,
+        "name": "Yichen Shen",
+        "institution": "MIT → Lightelligence",
+        "contribution": "EUNN合作者; 光子计算+神经网络",
+        "fields": [
+            "Unitary RNN",
+            "光子AI"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "name": "Tena Dubcek",
+        "institution": "MIT",
+        "contribution": "EUNN合作者",
+        "fields": [
+            "量子计算+神经网络"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 26,
+        "name": "John Peurifoy",
+        "institution": "MIT",
+        "contribution": "EUNN合作者",
+        "fields": [
+            "光学神经网络"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 27,
+        "name": "Scott Skirlo",
+        "institution": "MIT",
+        "contribution": "EUNN合作者",
+        "fields": [
+            "深度学习"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 28,
+        "name": "Yann LeCun",
+        "institution": "NYU / Meta",
+        "contribution": "EUNN合作者; 深度学习三巨头之一, Turing Award 2018",
+        "fields": [
+            "深度学习基础"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Deep Learning",
+                "url": "https://www.nature.com/articles/nature14539"
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "name": "Max Tegmark",
+        "institution": "MIT",
+        "contribution": "EUNN合作者; 物理+AI",
+        "fields": [
+            "物理启发的神经网络"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Tunable Efficient Unitary Neural Networks",
+                "url": "https://arxiv.org/abs/1612.05231"
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "name": "Marin Soljačić",
+        "institution": "MIT",
+        "contribution": "EUNN合作者; 光子学权威",
+        "fields": [
+            "光学神经网络"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Deep Learning with Coherent Nanophotonic Circuits",
+                "url": "https://www.nature.com/articles/s41566-017-0001-1"
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "name": "Martin Arjovsky",
+        "institution": "NYU",
+        "contribution": "Unitary RNN开创者 (uRNN)",
+        "fields": [
+            "正交RNN",
+            "梯度问题"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Unitary Evolution Recurrent Neural Networks",
+                "url": "https://arxiv.org/abs/1511.06464"
+            }
+        ]
+    },
+    {
+        "id": 32,
+        "name": "Shahar Shah",
+        "institution": "-",
+        "contribution": "uRNN合作者",
+        "fields": [
+            "正交RNN"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Unitary Evolution Recurrent Neural Networks",
+                "url": "https://arxiv.org/abs/1511.06464"
+            }
+        ]
+    },
+    {
+        "id": 33,
+        "name": "Wojciech Zaremba",
+        "institution": "OpenAI",
+        "contribution": "Unitary Evolution RNN",
+        "fields": [
+            "正交RNN",
+            "LSTM"
+        ],
+        "category": "Unitary RNN",
+        "categoryShort": "UR",
+        "papers": [
+            {
+                "title": "Unitary Evolution Recurrent Neural Networks",
+                "url": "https://arxiv.org/abs/1511.06464"
+            }
+        ]
+    },
+    {
+        "id": 34,
+        "name": "Jebasingh Bassey",
+        "institution": "Texas A&M",
+        "contribution": "A Survey of Complex-Valued Neural Networks (2021)第一作者",
+        "fields": [
+            "CVNN综述"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "A Survey of Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "name": "Li Qian",
+        "institution": "Texas A&M",
+        "contribution": "CVNN Survey合作者",
+        "fields": [
+            "CVNN综述"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "A Survey of Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 36,
+        "name": "Li Xiao",
+        "institution": "Texas A&M",
+        "contribution": "CVNN Survey合作者",
+        "fields": [
+            "CVNN综述"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "A Survey of Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "name": "Akira Hirose",
+        "institution": "University of Tokyo",
+        "contribution": "CVNN先驱; 2003年出版首部CVNN专著",
+        "fields": [
+            "CVNN理论奠基"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex-Valued Neural Networks: Theories and Applications",
+                "url": "https://www.springer.com/gp/book/9783642294316"
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "name": "Tohru Nitta",
+        "institution": "AIST, Japan",
+        "contribution": "Complex-Valued Neural Networks专著作者",
+        "fields": [
+            "CVNN理论"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex-Valued Neural Networks",
+                "url": "https://www.igi-global.com/book/complex-valued-neural-networks/1614"
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "name": "Igor Aizenberg",
+        "institution": "-",
+        "contribution": "Complex-Valued Neural Networks理论工作",
+        "fields": [
+            "CVNN数学基础"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 40,
+        "name": "George G. Khurgin",
+        "institution": "-",
+        "contribution": "CVNN早期研究者",
+        "fields": [
+            "复数网络理论"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "name": "Ruth A. Aizenberg",
+        "institution": "-",
+        "contribution": "CVNN理论工作",
+        "fields": [
+            "复数网络理论"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "name": "Danilo P. Mandic",
+        "institution": "Imperial College",
+        "contribution": "复数自适应信号处理",
+        "fields": [
+            "复数信号处理"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "Complex Valued Nonlinear Adaptive Filters",
+                "url": "https://www.wiley.com/en-us/Complex+Valued+Nonlinear+Adaptive+Filters%3A+Noncircularity%2C+Widely+Linear+and+Neural+Models-p-9780470742631"
+            }
+        ]
+    },
+    {
+        "id": 43,
+        "name": "Vanessa Suares Goh",
+        "institution": "-",
+        "contribution": "Complex-Valued Neural Networks研究",
+        "fields": [
+            "CVNN理论"
+        ],
+        "category": "CVNN理论",
+        "categoryShort": "TH",
+        "papers": [
+            {
+                "title": "A Survey of Complex-Valued Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "name": "Michael Wilmanski",
+        "institution": "University of Michigan",
+        "contribution": "Complex Input CNN for SAR ATR",
+        "fields": [
+            "复数CNN",
+            "SAR"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex Input CNN for Wide-Angle SAR ATR",
+                "url": "https://arxiv.org/abs/1612.08427"
+            }
+        ]
+    },
+    {
+        "id": 45,
+        "name": "Chris Kreucher",
+        "institution": "Integrity Applications Inc",
+        "contribution": "Complex Input CNN合作者",
+        "fields": [
+            "SAR+复数网络"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex Input CNN for SAR",
+                "url": "https://arxiv.org/abs/1612.08427"
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "name": "Alfred Hero",
+        "institution": "University of Michigan",
+        "contribution": "Complex Input CNN合作者; 统计信号处理权威",
+        "fields": [
+            "信号处理"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex Input CNN for SAR",
+                "url": "https://arxiv.org/abs/1612.08427"
+            }
+        ]
+    },
+    {
+        "id": 47,
+        "name": "Nitzan Guberman",
+        "institution": "-",
+        "contribution": "On Complex Valued Convolutional Neural Networks",
+        "fields": [
+            "复数CNN理论"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "On Complex Valued Convolutional Neural Networks",
+                "url": "https://arxiv.org/abs/1602.09046"
+            }
+        ]
+    },
+    {
+        "id": 48,
+        "name": "Ryan Kiros",
+        "institution": "University of Toronto",
+        "contribution": "复数CNN研究",
+        "fields": [
+            "复数卷积"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Skip-Thought Vectors",
+                "url": "https://arxiv.org/abs/1506.06726"
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "name": "Raquel Urtasun",
+        "institution": "University of Toronto / Waabi",
+        "contribution": "复数CNN研究",
+        "fields": [
+            "计算机视觉"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex CNN for Autonomous Driving",
+                "url": "https://www.cs.toronto.edu/~urtasun/publications.html"
+            }
+        ]
+    },
+    {
+        "id": 50,
+        "name": "S. Chintala",
+        "institution": "Facebook AI",
+        "contribution": "复数CNN研究",
+        "fields": [
+            "深度学习"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "name": "Soumick Chatterjee",
+        "institution": "Otto von Guericke University",
+        "contribution": "复数CNN医学图像应用",
+        "fields": [
+            "复数CNN",
+            "医学成像"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex CNN for Medical Image Analysis",
+                "url": "https://arxiv.org/abs/2002.02037"
+            }
+        ]
+    },
+    {
+        "id": 52,
+        "name": "Andreas Nürnberger",
+        "institution": "Otto von Guericke University",
+        "contribution": "复数CNN合作者",
+        "fields": [
+            "医学图像"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex CNN for Medical Image Analysis",
+                "url": "https://arxiv.org/abs/2002.02037"
+            }
+        ]
+    },
+    {
+        "id": 53,
+        "name": "Pavan Tummala",
+        "institution": "-",
+        "contribution": "复数CNN应用研究",
+        "fields": [
+            "复数卷积"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Complex CNN Applications",
+                "url": "https://ieeexplore.ieee.org/document/8039431"
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "name": "Shangshang Zhang",
+        "institution": "-",
+        "contribution": "Complex CNN比较研究",
+        "fields": [
+            "复数CNN"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Comparison of Complex CNN Architectures",
+                "url": "https://arxiv.org/abs/2302.04584"
+            }
+        ]
+    },
+    {
+        "id": 55,
+        "name": "Chenhui Wang",
+        "institution": "-",
+        "contribution": "CV-CNN模型比较",
+        "fields": [
+            "复数CNN"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "CV-CNN Model Comparison",
+                "url": "https://arxiv.org/abs/2302.04584"
+            }
+        ]
+    },
+    {
+        "id": 56,
+        "name": "Haodong Yang",
+        "institution": "-",
+        "contribution": "Knowledge-Informed CVNN for SAR",
+        "fields": [
+            "SAR+复数网络"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "Knowledge-Informed CVNN for SAR",
+                "url": "https://arxiv.org/abs/2510.20284"
+            }
+        ]
+    },
+    {
+        "id": 57,
+        "name": "Zhongling Huang",
+        "institution": "-",
+        "contribution": "SAR CVNN合作者",
+        "fields": [
+            "复数CNN"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "SAR CVNN",
+                "url": "https://arxiv.org/abs/2510.20284"
+            }
+        ]
+    },
+    {
+        "id": 58,
+        "name": "Shaojie Guo",
+        "institution": "-",
+        "contribution": "SAR CVNN合作者",
+        "fields": [
+            "复数卷积"
+        ],
+        "category": "复数CNN",
+        "categoryShort": "CC",
+        "papers": [
+            {
+                "title": "SAR CVNN",
+                "url": "https://arxiv.org/abs/2510.20284"
+            }
+        ]
+    },
+    {
+        "id": 59,
+        "name": "Neil C. Smith",
+        "institution": "-",
+        "contribution": "modReLU研究者",
+        "fields": [
+            "复数激活函数"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "modReLU Activation for Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 60,
+        "name": "Wenjie Shang",
+        "institution": "-",
+        "contribution": "CReLU研究者",
+        "fields": [
+            "复数激活函数"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "CReLU: Complex ReLU",
+                "url": "https://arxiv.org/abs/1603.05201"
+            }
+        ]
+    },
+    {
+        "id": 61,
+        "name": "Kevin Duh",
+        "institution": "Johns Hopkins",
+        "contribution": "modReLU相关研究",
+        "fields": [
+            "复数网络"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "ModReLU in Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 62,
+        "name": "Leslie N. Smith",
+        "institution": "-",
+        "contribution": "modReLU相关工作",
+        "fields": [
+            "激活函数"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Cyclical Learning Rates",
+                "url": "https://arxiv.org/abs/1506.01186"
+            }
+        ]
+    },
+    {
+        "id": 63,
+        "name": "Masaki Sato",
+        "institution": "-",
+        "contribution": "复数激活函数早期研究",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex Activation Functions",
+                "url": "https://ieeexplore.ieee.org/document/1023123"
+            }
+        ]
+    },
+    {
+        "id": 64,
+        "name": "Sadanari Jinguji",
+        "institution": "-",
+        "contribution": "复数激活函数研究",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex Neural Networks",
+                "url": "https://www.jstage.jst.go.jp/article/tjsai/12/3/12_434/_article/-char/ja/"
+            }
+        ]
+    },
+    {
+        "id": 65,
+        "name": "Ana Bruna",
+        "institution": "-",
+        "contribution": "Complex ReLU研究",
+        "fields": [
+            "复数激活"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex ReLU Activation",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 66,
+        "name": "J. Manuel Torres",
+        "institution": "-",
+        "contribution": "复数激活函数研究",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex Activation Functions",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 67,
+        "name": "Mercedes Fernandez",
+        "institution": "-",
+        "contribution": "复数激活函数研究",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 68,
+        "name": "Jose Munoz",
+        "institution": "-",
+        "contribution": "复数激活函数研究",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "复数激活",
+        "categoryShort": "AF",
+        "papers": [
+            {
+                "title": "Complex Activation Functions",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 69,
+        "name": "Titouan Parcollet",
+        "institution": "Avignon University",
+        "contribution": "Quaternion Neural Networks综述; Quaternion CNN/RNN",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "A Survey of Quaternion Neural Networks",
+                "url": "https://arxiv.org/abs/1905.05445"
+            }
+        ]
+    },
+    {
+        "id": 70,
+        "name": "Mohamed Morchid",
+        "institution": "Avignon University",
+        "contribution": "QNN合作者; A Survey of Quaternion Neural Networks",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "A Survey of Quaternion Neural Networks",
+                "url": "https://arxiv.org/abs/1905.05445"
+            }
+        ]
+    },
+    {
+        "id": 71,
+        "name": "Georges Linarès",
+        "institution": "Avignon University",
+        "contribution": "QNN合作者; 语音识别+四元数",
+        "fields": [
+            "四元数语音处理"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN for Speech Recognition",
+                "url": "https://arxiv.org/abs/1806.04418"
+            }
+        ]
+    },
+    {
+        "id": 72,
+        "name": "Mirco Ravanelli",
+        "institution": "Mila / Concordia",
+        "contribution": "Quaternion RNN合作者",
+        "fields": [
+            "语音+四元数"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion Recurrent Neural Networks",
+                "url": "https://arxiv.org/abs/1806.04418"
+            }
+        ]
+    },
+    {
+        "id": 73,
+        "name": "Renato De Mori",
+        "institution": "Avignon University",
+        "contribution": "QNN合作者",
+        "fields": [
+            "语音识别"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion Neural Networks",
+                "url": "https://arxiv.org/abs/1905.05445"
+            }
+        ]
+    },
+    {
+        "id": 74,
+        "name": "Xavier Bost",
+        "institution": "-",
+        "contribution": "QNN合作者",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion Neural Networks",
+                "url": "https://arxiv.org/abs/1905.05445"
+            }
+        ]
+    },
+    {
+        "id": 75,
+        "name": "Gerardo Altamirano-Gomez",
+        "institution": "-",
+        "contribution": "Quaternion Convolutional Neural Networks综述",
+        "fields": [
+            "四元数CNN"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN Survey",
+                "url": "https://arxiv.org/abs/2307.08663"
+            }
+        ]
+    },
+    {
+        "id": 76,
+        "name": "Carlos Gershenson",
+        "institution": "-",
+        "contribution": "Quaternion CNN合作者",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN",
+                "url": "https://arxiv.org/abs/2307.08663"
+            }
+        ]
+    },
+    {
+        "id": 77,
+        "name": "Dongmei Jiang",
+        "institution": "-",
+        "contribution": "Quaternion CNN研究",
+        "fields": [
+            "四元数卷积"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN for Color Images",
+                "url": "https://arxiv.org/abs/2307.08663"
+            }
+        ]
+    },
+    {
+        "id": 78,
+        "name": "Zhongying Zhao",
+        "institution": "-",
+        "contribution": "Quaternion CNN研究",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN",
+                "url": "https://arxiv.org/abs/2307.08663"
+            }
+        ]
+    },
+    {
+        "id": 79,
+        "name": "Li Zhang",
+        "institution": "-",
+        "contribution": "Quaternion CNN研究",
+        "fields": [
+            "四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion CNN",
+                "url": "https://arxiv.org/abs/2307.08663"
+            }
+        ]
+    },
+    {
+        "id": 80,
+        "name": "Chiheb Trabelsi",
+        "institution": "Mila",
+        "contribution": "Quaternion Neural Networks研究",
+        "fields": [
+            "复数/四元数网络"
+        ],
+        "category": "四元数",
+        "categoryShort": "QN",
+        "papers": [
+            {
+                "title": "Quaternion Neural Networks",
+                "url": "https://arxiv.org/abs/1905.05445"
+            }
+        ]
+    },
+    {
+        "id": 81,
+        "name": "Toni Heittola",
+        "institution": "Tampere University",
+        "contribution": "CRNN for Audio; 复数卷积递归网络",
+        "fields": [
+            "音频+复数网络"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "CRNN for Polyphonic Sound Detection",
+                "url": "https://arxiv.org/abs/1702.06286"
+            }
+        ]
+    },
+    {
+        "id": 82,
+        "name": "Tuomas Virtanen",
+        "institution": "Tampere University",
+        "contribution": "复数网络音频信号处理",
+        "fields": [
+            "音频信号处理"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Neural Networks for Audio",
+                "url": "https://arxiv.org/abs/1702.06286"
+            }
+        ]
+    },
+    {
+        "id": 83,
+        "name": "Emre Cakir",
+        "institution": "Tampere University",
+        "contribution": "Polyphonic Sound Detection with CVNN",
+        "fields": [
+            "复数网络+音频"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Polyphonic Sound Detection with CVNN",
+                "url": "https://arxiv.org/abs/1702.06286"
+            }
+        ]
+    },
+    {
+        "id": 84,
+        "name": "Gerald Schuller",
+        "institution": "Ilmenau University",
+        "contribution": "复数信号处理",
+        "fields": [
+            "复数音频处理"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Audio Signal Processing",
+                "url": "https://ieeexplore.ieee.org/document/9052976"
+            }
+        ]
+    },
+    {
+        "id": 85,
+        "name": "Thomas Prätzlich",
+        "institution": "-",
+        "contribution": "复数语音处理",
+        "fields": [
+            "复数网络+语音"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Speech Processing",
+                "url": "https://arxiv.org/abs/1702.06286"
+            }
+        ]
+    },
+    {
+        "id": 86,
+        "name": "Jonathan Le Roux",
+        "institution": "MERL",
+        "contribution": "复数语音信号处理",
+        "fields": [
+            "语音分离"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Neural Networks for Speech",
+                "url": "https://arxiv.org/abs/1802.00817"
+            }
+        ]
+    },
+    {
+        "id": 87,
+        "name": "John R. Hershey",
+        "institution": "Google",
+        "contribution": "复数语音处理",
+        "fields": [
+            "语音处理"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Deep Complex Neural Networks for Speech",
+                "url": "https://arxiv.org/abs/1612.04672"
+            }
+        ]
+    },
+    {
+        "id": 88,
+        "name": "Felix Weninger",
+        "institution": "-",
+        "contribution": "复数语音处理",
+        "fields": [
+            "语音增强"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Neural Networks for Speech Enhancement",
+                "url": "https://arxiv.org/abs/1612.04672"
+            }
+        ]
+    },
+    {
+        "id": 89,
+        "name": "Shlomo E. Chazan",
+        "institution": "-",
+        "contribution": "复数信号处理",
+        "fields": [
+            "信号处理"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Signal Processing",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 90,
+        "name": "Moshe Fischer",
+        "institution": "-",
+        "contribution": "复数信号处理",
+        "fields": [
+            "信号处理"
+        ],
+        "category": "语音处理",
+        "categoryShort": "SP",
+        "papers": [
+            {
+                "title": "Complex Neural Networks",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 91,
+        "name": "Michele Parrinello",
+        "institution": "-",
+        "contribution": "复数网络架构研究",
+        "fields": [
+            "CVNN架构"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Complex Neural Network Architectures",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 92,
+        "name": "Max Welling",
+        "institution": "University of Amsterdam",
+        "contribution": "复数网络+图神经网络",
+        "fields": [
+            "复数GNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Graph Neural Networks",
+                "url": "https://arxiv.org/abs/1609.02907"
+            }
+        ]
+    },
+    {
+        "id": 93,
+        "name": "Thomas Kipf",
+        "institution": "Google",
+        "contribution": "复数图神经网络",
+        "fields": [
+            "复数GNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Semi-Supervised Classification with GCN",
+                "url": "https://arxiv.org/abs/1609.02907"
+            }
+        ]
+    },
+    {
+        "id": 94,
+        "name": "Rianne van den Berg",
+        "institution": "-",
+        "contribution": "复数神经网络架构",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Graph Convolutional Networks",
+                "url": "https://arxiv.org/abs/1609.02907"
+            }
+        ]
+    },
+    {
+        "id": 95,
+        "name": "Jakub M. Tomczak",
+        "institution": "-",
+        "contribution": "复数神经网络",
+        "fields": [
+            "CVNN架构"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 96,
+        "name": "Siamak Ravanbakhsh",
+        "institution": "-",
+        "contribution": "复数网络架构",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 97,
+        "name": "Liam Mackey",
+        "institution": "-",
+        "contribution": "复数网络组件",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Complex Neural Network Components",
+                "url": "https://arxiv.org/abs/2101.12249"
+            }
+        ]
+    },
+    {
+        "id": 98,
+        "name": "Luke Metz",
+        "institution": "Google",
+        "contribution": "复数网络架构",
+        "fields": [
+            "CVNN"
+        ],
+        "category": "架构组件",
+        "categoryShort": "AC",
+        "papers": [
+            {
+                "title": "Deep Complex Networks",
+                "url": "https://arxiv.org/abs/1705.09792"
+            }
+        ]
+    },
+    {
+        "id": 99,
+        "name": "T. Scarnati",
+        "institution": "-",
+        "contribution": "Complex-Valued Neural Networks for SAR",
+        "fields": [
+            "SAR+复数网络"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "CVNN for SAR Image Classification",
+                "url": "https://arxiv.org/abs/2103.03458"
+            }
+        ]
+    },
+    {
+        "id": 100,
+        "name": "B. Lewis",
+        "institution": "-",
+        "contribution": "SAR CVNN合作者",
+        "fields": [
+            "复数CNN"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "SAR CVNN",
+                "url": "https://arxiv.org/abs/2103.03458"
+            }
+        ]
+    },
+    {
+        "id": 101,
+        "name": "Rachel Viger",
+        "institution": "-",
+        "contribution": "SAR图像复数网络",
+        "fields": [
+            "复数SAR"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "SAR Image Analysis with CVNN",
+                "url": "https://arxiv.org/abs/2103.03458"
+            }
+        ]
+    },
+    {
+        "id": 102,
+        "name": "Mohsen Darvishnezhad",
+        "institution": "-",
+        "contribution": "Multi-aspect SAR + CVNN",
+        "fields": [
+            "SAR+复数"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "Multi-aspect SAR with CVNN",
+                "url": "https://arxiv.org/abs/2103.03458"
+            }
+        ]
+    },
+    {
+        "id": 103,
+        "name": "Puyang Wang",
+        "institution": "Rutgers",
+        "contribution": "SAR Image Despeckling with CNN",
+        "fields": [
+            "SAR+深度学习"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "SAR Image Despeckling",
+                "url": "https://ieeexplore.ieee.org/document/7919214"
+            }
+        ]
+    },
+    {
+        "id": 104,
+        "name": "Zhe Zhang",
+        "institution": "-",
+        "contribution": "Knowledge-Informed CVNN",
+        "fields": [
+            "SAR+复数"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "Knowledge-Informed CVNN for SAR",
+                "url": "https://arxiv.org/abs/2510.20284"
+            }
+        ]
+    },
+    {
+        "id": 105,
+        "name": "Gong",
+        "institution": "-",
+        "contribution": "SAR CVNN合作者",
+        "fields": [
+            "复数网络"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "SAR CVNN",
+                "url": "https://arxiv.org/abs/2510.20284"
+            }
+        ]
+    },
+    {
+        "id": 106,
+        "name": "Cheikh M. B. Dione",
+        "institution": "-",
+        "contribution": "复数CNN图像分类",
+        "fields": [
+            "复数CNN"
+        ],
+        "category": "新兴方向",
+        "categoryShort": "EX",
+        "papers": [
+            {
+                "title": "Complex CNN for Image Classification",
+                "url": "https://arxiv.org/abs/2302.04584"
+            }
+        ]
+    },
+    {
+        "id": 107,
+        "name": "Geoffrey Ye Li",
+        "institution": "Imperial College London",
+        "contribution": "首次将深度学习引入无线通信(2016); Deep Learning for MIMO",
+        "fields": [
+            "无线通信",
+            "深度学习",
+            "MIMO"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Wireless Communications",
+                "url": "https://arxiv.org/abs/2004.10665"
+            }
+        ]
+    },
+    {
+        "id": 108,
+        "name": "Hao Ye",
+        "institution": "UC Santa Cruz",
+        "contribution": "DL-based OFDM信道估计; 端到端无线通信系统",
+        "fields": [
+            "OFDM",
+            "深度学习",
+            "信道估计"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Power of Deep Learning for Channel Estimation",
+                "url": "https://arxiv.org/abs/1708.08514"
+            }
+        ]
+    },
+    {
+        "id": 109,
+        "name": "Shi Jin",
+        "institution": "Southeast University",
+        "contribution": "Model-Driven Deep Learning for MIMO Detection; CSI反馈",
+        "fields": [
+            "MIMO",
+            "深度学习",
+            "信道估计"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Model-Driven Deep Learning for MIMO",
+                "url": "https://arxiv.org/abs/2009.01432"
+            }
+        ]
+    },
+    {
+        "id": 110,
+        "name": "Mérouane Debbah",
+        "institution": "Khalifa University / Huawei",
+        "contribution": "6G Research Center主任; TelecomGPT; 随机矩阵理论",
+        "fields": [
+            "6G",
+            "AI",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Machine Learning for 5G and Beyond",
+                "url": "https://arxiv.org/abs/1902.05774"
+            }
+        ]
+    },
+    {
+        "id": 111,
+        "name": "Robert Heath (Jr.)",
+        "institution": "UC San Diego / UT Austin",
+        "contribution": "mmWave MIMO权威; Deep Learning for mmWave MIMO",
+        "fields": [
+            "mmWave",
+            "MIMO",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for mmWave MIMO",
+                "url": "https://arxiv.org/abs/1712.06123"
+            }
+        ]
+    },
+    {
+        "id": 112,
+        "name": "Le Liang",
+        "institution": "Southeast University",
+        "contribution": "Deep Learning for Wireless Communications (教科书); End-to-End",
+        "fields": [
+            "无线通信",
+            "深度学习",
+            "端到端"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Wireless Communications",
+                "url": "https://arxiv.org/abs/2004.10665"
+            }
+        ]
+    },
+    {
+        "id": 113,
+        "name": "Christoph Studer",
+        "institution": "Cornell University",
+        "contribution": "DUIDD: Deep-Unfolded MIMO Detection; 大规模MIMO检测",
+        "fields": [
+            "MIMO检测",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "DUIDD: Deep-Unfolded Detection and Decoding",
+                "url": "https://arxiv.org/abs/2208.08878"
+            }
+        ]
+    },
+    {
+        "id": 114,
+        "name": "Jakob Hoydis",
+        "institution": "NVIDIA / Nokia Bell Labs",
+        "contribution": "An Introduction to DL for Physical Layer; Radio Systems+AI",
+        "fields": [
+            "物理层",
+            "深度学习",
+            "无线电"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for the Physical Layer",
+                "url": "https://arxiv.org/abs/1708.06925"
+            }
+        ]
+    },
+    {
+        "id": 115,
+        "name": "Timothy O'Shea",
+        "institution": "DeepSig / Virginia Tech",
+        "contribution": "Radio Signal Classification; Deep Learning for Radio",
+        "fields": [
+            "无线电",
+            "深度学习",
+            "信号分类"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Radio Signal Classification",
+                "url": "https://arxiv.org/abs/1602.04105"
+            }
+        ]
+    },
+    {
+        "id": 116,
+        "name": "Kwang-Cheng Chen",
+        "institution": "National Taiwan University",
+        "contribution": "Machine Learning for Wireless Networks; 无线信道建模",
+        "fields": [
+            "无线网络",
+            "机器学习",
+            "信道建模"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Machine Learning for Wireless Networks",
+                "url": "https://arxiv.org/abs/1712.06209"
+            }
+        ]
+    },
+    {
+        "id": 117,
+        "name": "Joe Cavallaro",
+        "institution": "Rice University",
+        "contribution": "MIMO VLSI架构; 深度学习MIMO检测",
+        "fields": [
+            "MIMO",
+            "VLSI",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Large-scale MIMO Detection",
+                "url": "https://arxiv.org/abs/1303.0190"
+            }
+        ]
+    },
+    {
+        "id": 118,
+        "name": "Neil González Prelcic",
+        "institution": "UT Austin / AUB",
+        "contribution": "mmWave MIMO信道估计; Beam Selection",
+        "fields": [
+            "mmWave",
+            "MIMO",
+            "信道估计"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for mmWave Channel Estimation",
+                "url": "https://arxiv.org/abs/1712.08619"
+            }
+        ]
+    },
+    {
+        "id": 119,
+        "name": "Sundeep Rangan",
+        "institution": "NYU WIRELESS Director",
+        "contribution": "5G/mmWave+机器学习; NYU WIRELESS中心主任",
+        "fields": [
+            "5G",
+            "6G",
+            "AI",
+            "mmWave"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Millimeter Wave Wireless Communications",
+                "url": "https://arxiv.org/abs/1407.1181"
+            }
+        ]
+    },
+    {
+        "id": 120,
+        "name": "Tohru Ohtsuki",
+        "institution": "Keio University",
+        "contribution": "Deep Learning for Wireless Communications",
+        "fields": [
+            "无线通信",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Wireless Communications",
+                "url": "https://arxiv.org/abs/2004.10665"
+            }
+        ]
+    },
+    {
+        "id": 121,
+        "name": "Shinichi Miyamoto",
+        "institution": "Osaka University",
+        "contribution": "Deep Learning for Wireless Systems",
+        "fields": [
+            "无线系统",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Wireless Systems",
+                "url": "https://arxiv.org/abs/2004.10665"
+            }
+        ]
+    },
+    {
+        "id": 122,
+        "name": "Akihiko Hashizume",
+        "institution": "NTT DOCOMO",
+        "contribution": "Deep Learning for 5G/6G",
+        "fields": [
+            "5G/6G",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for 5G/6G",
+                "url": "https://arxiv.org/abs/1902.05774"
+            }
+        ]
+    },
+    {
+        "id": 123,
+        "name": "Ammar El Falou",
+        "institution": "INRS (Canada)",
+        "contribution": "Deep Learning for MIMO Systems",
+        "fields": [
+            "MIMO",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for MIMO Systems",
+                "url": "https://arxiv.org/abs/2009.01432"
+            }
+        ]
+    },
+    {
+        "id": 124,
+        "name": "Wenjin Wang",
+        "institution": "Southeast University",
+        "contribution": "CSI Feedback; Model-Driven DL",
+        "fields": [
+            "信道估计",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for CSI Feedback",
+                "url": "https://arxiv.org/abs/1810.09376"
+            }
+        ]
+    },
+    {
+        "id": 125,
+        "name": "Jintao Wang",
+        "institution": "Tsinghua University",
+        "contribution": "Deep Learning for Wireless Communications",
+        "fields": [
+            "无线通信",
+            "深度学习"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "Deep Learning for Wireless Communications",
+                "url": "https://arxiv.org/abs/2004.10665"
+            }
+        ]
+    },
+    {
+        "id": 126,
+        "name": "Zhilin Lu",
+        "institution": "Huawei",
+        "contribution": "Complex-Valued Neural Networks for Wireless",
+        "fields": [
+            "CVNN",
+            "无线通信"
+        ],
+        "category": "无线通信",
+        "categoryShort": "WC",
+        "papers": [
+            {
+                "title": "CVNN for Wireless Communications",
+                "url": "https://arxiv.org/abs/2308.13623"
+            }
+        ]
+    }
 ];
         
         // Add remaining scholars (placeholders)
