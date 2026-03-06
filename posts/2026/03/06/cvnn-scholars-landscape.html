@@ -73,6 +73,8 @@
                     <option value="name">按姓名</option>
                     <option value="institution">按机构</option>
                     <option value="category">按领域</option>
+                    <option value="citations">按引用数</option>
+                    <option value="h_index">按h-index</option>
                 </select>
             </div>
             <div class="mt-2 flex items-center justify-between text-xs text-slate-600">
@@ -129,6 +131,11 @@
                                         </a>
                                     </div>
                                     <p class="text-xs text-slate-500 truncate" x-text="scholar.institution"></p>
+                                    <!-- h-index and citations -->
+                                    <div class="flex items-center gap-2 mt-0.5 text-xs text-slate-400">
+                                        <span x-show="scholar.h_index">h-index: <span class="font-medium text-slate-600" x-text="scholar.h_index"></span></span>
+                                        <span x-show="scholar.citations">引用: <span class="font-medium text-slate-600" x-text="scholar.citations?.toLocaleString()"></span></span>
+                                    </div>
                                 </div>
                                 <span class="text-xs px-2 py-0.5 rounded-full font-medium shrink-0" 
                                     :class="getCategoryColor(scholar.category)" x-text="scholar.categoryShort"></span>
@@ -2467,7 +2474,9 @@
                     const sortFn = {
                         'name': (a, b) => a.name.localeCompare(b.name),
                         'institution': (a, b) => a.institution.localeCompare(b.institution),
-                        'category': (a, b) => a.category.localeCompare(b.category)
+                        'category': (a, b) => a.category.localeCompare(b.category),
+                        'citations': (a, b) => (b.citations || 0) - (a.citations || 0),
+                        'h_index': (a, b) => (b.h_index || 0) - (a.h_index || 0)
                     };
                     this.scholars.sort(sortFn[this.sortBy]);
                     this.currentPage = 1;
