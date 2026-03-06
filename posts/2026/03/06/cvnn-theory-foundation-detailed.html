@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN理论基础与综述深度调研 | 孙凯的博客</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0066cc',
+            secondary: '#1e40af',
+            accent: '#3b82f6',
+            dark: '#1e293b',
+            light: '#f8fafc'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .timeline-container {
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+      border-radius: 2px;
+    }
+    @media (max-width: 768px) {
+      .timeline-line {
+        left: 20px;
+      }
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 4px solid #3b82f6;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    @media (max-width: 768px) {
+      .timeline-dot {
+        left: 20px;
+      }
+    }
+    .paper-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .paper-card:hover {
+      transform: translateX(5px);
+      border-left-color: #3b82f6;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, #3b82f6, transparent);
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .tag-theory { background: #dbeafe; color: #1e40af; }
+    .tag-cnn { background: #d1fae5; color: #065f46; }
+    .tag-rnn { background: #fce7f3; color: #9d174d; }
+    .tag-transformer { background: #fef3c7; color: #92400e; }
+    .tag-quaternion { background: #e0e7ff; color: #3730a3; }
+    .tag-gan { background: #fecaca; color: #991b1b; }
+    .tag-mri { background: #ccfbf1; color: #0f766e; }
+    .tag-activation { background: #f3e8ff; color: #6b21a8; }
+    .tag-optimization { background: #ffedd5; color: #9a3412; }
+    .tag-architecture { background: #ecfccb; color: #3f6212; }
+    html {
+      scroll-behavior: smooth;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="text-primary hover:text-secondary font-medium"><i class="fas fa-arrow-left mr-2"></i>返回首页</a>
+        <div class="text-sm text-gray-500">CVNN详细调研系列 · 第1篇</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-gradient-to-br from-dark to-secondary text-white py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="tag tag-theory">理论基础</span>
+        <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm">50篇核心论文</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">CVNN理论基础与综述深度调研</h1>
+      <p class="text-xl text-gray-300 max-w-3xl">全面解析复数神经网络的理论根基、架构演进与前沿突破，涵盖2016-2026年50篇里程碑式论文</p>
+      <div class="flex items-center gap-6 mt-8 text-sm text-gray-400">
+        <span><i class="far fa-calendar mr-2"></i>2026-03-06</span>
+        <span><i class="far fa-clock mr-2"></i>深度阅读约45分钟</span>
+        <span><i class="fas fa-user mr-2"></i>孙凯</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Table of Contents -->
+  <div class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+      <h3 class="text-lg font-semibold mb-4"><i class="fas fa-list mr-2 text-primary"></i>目录</h3>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <a href="#timeline" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition">
+          <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs mr-3">1</span>
+          研究进展时间线
+        </a>
+        <a href="#papers" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition">
+          <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs mr-3">2</span>
+          核心论文分析(50篇)
+        </a>
+        <a href="#trends" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition">
+          <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs mr-3">3</span>
+          技术趋势分析
+        </a>
+        <a href="#references" class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition">
+          <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs mr-3">4</span>
+          参考文献
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-12">
+
+    <!-- Section 1: Timeline -->
+    <section id="timeline" class="mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white text-xl mr-4">
+          <i class="fas fa-stream"></i>
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold">研究进展时间线</h2>
+          <p class="text-gray-500">2016-2026年复数神经网络领域的里程碑式发展</p>
+        </div>
+      </div>
+
+      <div class="timeline-container py-8">
+        <div class="timeline-line"></div>
+
+        <!-- 2016 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-blue-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:text-right md:pr-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-primary">2016</span>
+                <h3 class="text-lg font-semibold mt-2">单元RNN奠基</h3>
+                <p class="text-gray-600 text-sm mt-2">EUNN提出高效单元神经网络，实现O(1)参数复杂度的酉矩阵表示，解决长期依赖问题</p>
+                <div class="mt-3 flex flex-wrap gap-2 justify-end">
+                  <span class="tag tag-rnn">RNN</span>
+                  <span class="tag tag-architecture">架构</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:pl-12">
+              <div class="text-sm text-gray-500">Jing et al., MIT</div>
+              <a href="https://arxiv.org/abs/1612.05231" target="_blank" class="text-primary hover:underline"><i class="fas fa-external-link-alt mr-1"></i>arXiv:1612.05231</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2017 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-purple-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:order-2 md:pl-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-purple-600">2017</span>
+                <h3 class="text-lg font-semibold mt-2">深度复数网络框架</h3>
+                <p class="text-gray-600 text-sm mt-2">Trabelsi等人提出首个完整的深度复数网络框架，包括复数批归一化、权重初始化和激活函数</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tag tag-theory">理论</span>
+                  <span class="tag tag-activation">激活函数</span>
+                  <span class="tag tag-cnn">CNN</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:order-1 md:text-right md:pr-12">
+              <div class="text-sm text-gray-500">Trabelsi et al., MILA</div>
+              <a href="https://arxiv.org/abs/1705.09792" target="_blank" class="text-primary hover:underline"><i class="fas fa-external-link-alt mr-1"></i>arXiv:1705.09792</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2018 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-pink-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:text-right md:pr-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-pink-600">2018</span>
+                <h3 class="text-lg font-semibold mt-2">理论爆发与ICLR关注</h3>
+                <p class="text-gray-600 text-sm mt-2">ICLR 2018收录多篇CVNN论文；非参数激活函数、Gated Orthogonal RNN、Scaled Cayley变换等突破性工作涌现</p>
+                <div class="mt-3 flex flex-wrap gap-2 justify-end">
+                  <span class="tag tag-activation">激活函数</span>
+                  <span class="tag tag-rnn">RNN</span>
+                  <span class="tag tag-quaternion">四元数</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:pl-12">
+              <div class="text-sm text-gray-500">多机构</div>
+              <div class="text-xs text-gray-400 mt-1">Scardapane, Jing, Helfrich, Parcollet等</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2019-2020 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-indigo-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:order-2 md:pl-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-indigo-600">2019-2020</span>
+                <h3 class="text-lg font-semibold mt-2">应用拓展与MRI革命</h3>
+                <p class="text-gray-600 text-sm mt-2">DeepcomplexMRI、Co-VeGAN等开创性工作将CVNN应用于医学成像；复数GAN架构成熟</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tag tag-mri">MRI</span>
+                  <span class="tag tag-gan">GAN</span>
+                  <span class="tag tag-cnn">CNN</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:order-1 md:text-right md:pr-12">
+              <div class="text-sm text-gray-500">应用爆发期</div>
+              <div class="text-xs text-gray-400 mt-1">Wang, Vasudeva, Cole等</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2021 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-teal-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:text-right md:pr-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-teal-600">2021</span>
+                <h3 class="text-lg font-semibold mt-2">综述元年与泛化理论</h3>
+                <p class="text-gray-600 text-sm mt-2">多篇权威综述发表；首次证明CVNN的谱复杂度泛化界；GAN综述与新架构提出</p>
+                <div class="mt-3 flex flex-wrap gap-2 justify-end">
+                  <span class="tag tag-theory">泛化界</span>
+                  <span class="tag tag-gan">GAN</span>
+                  <span class="tag tag-survey">综述</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:pl-12">
+              <div class="text-sm text-gray-500">理论总结期</div>
+              <div class="text-xs text-gray-400 mt-1">Bassey, Chen, Fu等</div>
+            </div>
+          </div>        </div>
+
+        <!-- 2022-2023 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-orange-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:order-2 md:pl-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg">
+                <span class="text-3xl font-bold text-orange-600">2022-2023</span>
+                <h3 class="text-lg font-semibold mt-2">Transformer与可学习激活函数</h3>
+                <p class="text-gray-600 text-sm mt-2">复数Transformer架构提出；可学习激活函数、超复数CNN、差分隐私联邦学习等前沿方向突破</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <span class="tag tag-transformer">Transformer</span>
+                  <span class="tag tag-activation">学习激活</span>
+                  <span class="tag tag-quaternion">超复数</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:order-1 md:text-right md:pr-12">
+              <div class="text-sm text-gray-500">架构创新期</div>
+              <div class="text-xs text-gray-400 mt-1">Eilers, Parcollet, Vieira等</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2024-2026 -->
+        <div class="timeline-item">
+          <div class="timeline-dot bg-red-500"></div>
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="md:text-right md:pr-12">
+              <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-red-200">
+                <span class="text-3xl font-bold text-red-600">2024-2026</span>
+                <h3 class="text-lg font-semibold mt-2">理论突破与混合架构</h3>
+                <p class="text-gray-600 text-sm mt-2">Newton-Puiseux可解释性分析、平移等变CV-CNN、混合实复架构、量子电路设计应用等前沿突破</p>
+                <div class="mt-3 flex flex-wrap gap-2 justify-end">
+                  <span class="tag tag-theory">可解释性</span>
+                  <span class="tag tag-architecture">等变学习</span>
+                  <span class="tag tag-architecture">混合架构</span>
+                  <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">最新</span>
+                </div>
+              </div>
+            </div>
+            <div class="md:pl-12">
+              <div class="text-sm text-gray-500">前沿突破期</div>
+              <div class="text-xs text-gray-400 mt-1">Migus, Gabot, Young, Manna等</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider my-12"></div>

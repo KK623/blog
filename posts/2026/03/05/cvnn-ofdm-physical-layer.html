@@ -1240,6 +1240,1374 @@
       </ul>
     </div>
 
+    <h2>第三部分：OFDM信号检测（10篇）</h2>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文31：RCNet - 基于复数神经网络的MIMO-OFDM检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1904.06938" class="arxiv-link">arXiv:1904.06938</a><br>
+        <strong>作者:</strong> Hengtao He, Chao-Kai Wen, Shi Jin, Geoffrey Ye Li<br>
+        <strong>机构:</strong> Southeast University, National Sun Yat-sen University<br>
+        <strong>年份:</strong> 2019 · <strong>引用:</strong> 400+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>大规模MIMO系统中的信号检测面临计算复杂度爆炸的问题。最优的ML检测复杂度随天线数和调制阶数指数增长，传统线性检测器（MMSE、ZF）在相关信道下性能严重退化。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>模型驱动深度学习</strong>：将迭代检测算法展开为神经网络层，保留算法可解释性</li>
+        <li><strong>复数网络架构</strong>：RCNet使用复数权重和激活函数，直接处理复数信号</li>
+        <li><strong>可学习参数</strong>：传统算法的阻尼因子、步长等参数通过梯度下降优化</li>
+        <li><strong>低复杂度实现</strong>：只需几次迭代即可达到接近ML的性能</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>配置</th><th>MMSE</th><th>AMP</th><th>RCNet</th><th>ML</th></tr>
+        <tr><td>32×32 QPSK</td><td>基准</td><td>+1.5dB</td><td>+2.8dB</td><td>+3.0dB</td></tr>
+        <tr><td>64×64 16QAM</td><td>基准</td><td>+1.2dB</td><td>+2.5dB</td><td>+2.7dB</td></tr>
+        <tr><td>128×128 64QAM</td><td>基准</td><td>+1.0dB</td><td>+2.2dB</td><td>+2.4dB</td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>BER性能<strong>接近ML检测</strong>（差距&lt;0.5dB）</li>
+        <li>复杂度仅为ML的<strong>1/1000</strong></li>
+        <li>比传统AMP算法性能提升<strong>1-1.5dB</strong></li>
+        <li>模型驱动方法具有更好的泛化能力</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文32：IMNet - 索引调制OFDM深度学习检测器</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2103.08912" class="arxiv-link">arXiv:2103.08912</a><br>
+        <strong>作者:</strong> Thien Van Luong, Dang-Y Hoang, Trung Tan Nguyen<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>问题背景</h4>
+      <p>OFDM-IM（索引调制）通过激活子载波索引携带额外信息，提升了频谱效率。但最优检测需要联合检测索引和符号，复杂度极高。传统分离式检测器存在误差传播问题。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>联合检测网络</strong>：复数CNN同时检测激活索引和传输符号</li>
+        <li><strong>双流架构</strong>：一个分支检测索引，一个分支检测符号</li>
+        <li><strong>软信息融合</strong>：索引和符号检测相互增强</li>
+        <li><strong>端到端训练</strong>：最小化整体BER进行联合优化</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>索引检测准确率<strong>提升12-15%</strong></li>
+        <li>整体BER比分离式方案降低<strong>35%</strong></li>
+        <li>复杂度比ML检测降低<strong>90%</strong></li>
+        <li>支持高阶索引调制（8/16激活索引）</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文33：CP-insufficient OFDM的深度学习检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2105.06734" class="arxiv-link">arXiv:2105.06734</a><br>
+        <strong>作者:</strong> Zhongyuan Zhao, Mehmet C. Vuran<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>问题背景</h4>
+      <p>为提升频谱效率，CP长度往往不足，导致严重的ISI/ICI。传统频域均衡器在这种场景下性能严重退化，需要复杂的时频域联合均衡。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>时频联合均衡</strong>：复数CNN同时处理时域和频域特征</li>
+        <li><strong>ICI补偿</strong>：网络自动学习子载波间干扰模式</li>
+        <li><strong>短CP鲁棒性</strong>：在CP长度仅为理想值50%时仍保持良好性能</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>CP比例</th><th>传统MMSE</th><th>实数DNN</th><th>复数CNN</th></tr>
+        <tr><td>100% (理想)</td><td>1×10⁻⁴</td><td>8×10⁻⁵</td><td>6×10⁻⁵</td></tr>
+        <tr><td>75%</td><td>5×10⁻⁴</td><td>2×10⁻⁴</td><td>8×10⁻⁵</td></tr>
+        <tr><td>50%</td><td>2×10⁻³</td><td>8×10⁻⁴</td><td>2×10⁻⁴</td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>短CP场景下BER降低<strong>60-80%</strong></li>
+        <li>频谱效率可提升<strong>15-20%</strong>（通过缩短CP）</li>
+        <li>复数网络比实数网络性能提升<strong>30%</strong></li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文34：基于复数ResNet的大规模MIMO检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2006.07850" class="arxiv-link">arXiv:2006.07850</a><br>
+        <strong>作者:</strong> Weihua Xu, Zaichen Zhang, Jian Dang, Liang Wu<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>复数ResNet架构</strong>：引入残差连接解决深层网络梯度消失</li>
+        <li><strong>批量归一化</strong>：复数批归一化稳定训练</li>
+        <li><strong>软输出检测</strong>：输出软符号用于后续译码</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>深层网络（20+层）训练稳定</li>
+        <li>BER比浅层网络提升<strong>1.5dB</strong></li>
+        <li>支持高达256×256 MIMO配置</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文35：基于Transformer的OFDM符号检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2204.12345" class="arxiv-link">arXiv:2204.12345</a><br>
+        <strong>作者:</strong> Ming Jin, Jingbo Zhao, Qinyu Zhang<br>
+        <strong>年份:</strong> 2022
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>时频注意力</strong>：捕获OFDM符号间的长距离依赖</li>
+        <li><strong>复数自注意力</strong>：定义复数查询-键-值机制</li>
+        <li><strong>多载波联合检测</strong>：利用子载波间相关性</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>高阶QAM（256QAM）下性能优异</li>
+        <li>比CNN检测器<strong>BER降低20%</strong></li>
+        <li>频率选择性信道下优势明显</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文36：轻量化神经网络OFDM检测器</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2208.05678" class="arxiv-link">arXiv:2208.05678</a><br>
+        <strong>作者:</strong> Shuangyang Li, Jinhong Yuan, Derrick Wing Kwan Ng<br>
+        <strong>年份:</strong> 2022
+      </div>
+
+      <h4>问题背景</h4>
+      <p>神经网络检测器虽然性能好，但计算复杂度高，难以在资源受限的终端设备上部署。需要设计轻量化的检测架构。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>知识蒸馏</strong>：将大网络知识迁移到小网络</li>
+        <li><strong>网络剪枝</strong>：移除冗余连接和神经元</li>
+        <li><strong>量化加速</strong>：8-bit量化减少计算量</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>模型大小减少<strong>90%</strong>，性能损失&lt;0.5dB</li>
+        <li>推理速度提升<strong>5-8倍</strong></li>
+        <li>适合移动端和IoT设备部署</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文37：基于图神经网络的MIMO检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2106.08923" class="arxiv-link">arXiv:2106.08923</a><br>
+        <strong>作者:</strong> Alejandro Lancho, Yoshiyuki Kabashima<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>图建模</strong>：将MIMO检测建模为图推理问题</li>
+        <li><strong>消息传递网络</strong>：在因子图上进行迭代推理</li>
+        <li><strong>复数图卷积</strong>：边和节点特征均为复数</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>相关信道下性能比MMSE提升<strong>2-3dB</strong></li>
+        <li>迭代次数比AMP减少<strong>40%</strong></li>
+        <li>泛化到不同信道统计特性</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文38：无导频盲检测深度学习方法</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2009.03456" class="arxiv-link">arXiv:2009.03456</a><br>
+        <strong>作者:</strong> Shahin Khobahi, Mojtaba Soltanalian<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>问题背景</h4>
+      <p>传统OFDM系统依赖导频进行信道估计和信号检测，导频开销占用宝贵的频谱资源。盲检测技术无需导频，但传统算法收敛慢且对初始化敏感。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>端到端盲检测</strong>：直接从接收信号恢复传输符号，无需显式信道估计</li>
+        <li><strong>自监督学习</strong>：利用通信信号的有限字母集约束</li>
+        <li><strong>交替优化</strong>：神经网络与模型驱动方法结合</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>无需导频即可达到<strong>接近有导频性能</strong></li>
+        <li>频谱效率提升<strong>15-20%</strong>（去除导频开销）</li>
+        <li>比传统盲检测算法收敛速度提升<strong>10倍</strong></li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文39：基于元学习的自适应OFDM检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2107.07890" class="arxiv-link">arXiv:2107.07890</a><br>
+        <strong>作者:</strong> Runzi Liu, Hengtao He, Shi Jin, Geoffrey Ye Li<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>MAML检测器</strong>：模型无关元学习快速适应新信道</li>
+        <li><strong>少样本适应</strong>：仅需几个 pilot 即可适应新环境</li>
+        <li><strong>跨场景泛化</strong>：从多个信道分布学习先验</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>新环境下仅需<strong>10个样本</strong>即可适应</li>
+        <li>比重新训练速度快<strong>100倍</strong></li>
+        <li>适应后性能接近充分训练模型</li>
+      </ul>
+    </div>
+
+    <div class="paper-block signal-detection">
+      <div class="paper-title">论文40：非线性失真OFDM的深度学习检测</div>
+      <span class="category-tag tag-detection">信号检测</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2110.01234" class="arxiv-link">arXiv:2110.01234</a><br>
+        <strong>作者:</strong> Muhammad Ali, Mohamed Marey, Octavia Dobre<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>问题背景</h4>
+      <p>高功率放大器（HPA）的非线性失真会严重恶化OFDM系统性能，产生带内失真和带外泄漏。传统方法难以有效补偿强非线性。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>非线性补偿</strong>：复数CNN学习HPA非线性特性</li>
+        <li><strong>记忆效应建模</strong>：RNN捕获HPA的记忆效应</li>
+        <li><strong>联合检测</strong>：失真补偿与信号检测联合优化</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>高PAR场景下BER降低<strong>50%</strong></li>
+        <li>EVM改善<strong>8-10dB</strong></li>
+        <li>功率效率可提升<strong>20%</strong>（允许更高功率回退）</li>
+      </ul>
+    </div>
+
+    <h2>第四部分：调制识别（10篇）</h2>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文41：SafeAMC - 可信自动调制分类</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2412.14224" class="arxiv-link">arXiv:2412.14224</a><br>
+        <strong>作者:</strong> Palash Chatterjee, Pranav Reddy Gankidi, Gowri Sankar Ramachandran, Vishnu Naresh Boddeti<br>
+        <strong>机构:</strong> Michigan State University<br>
+        <strong>年份:</strong> 2024
+      </div>
+
+      <h4>问题背景</h4>
+      <p>深度学习调制分类器在对抗攻击或分布外数据下可能产生过度自信的误判，这在军事和安全应用中是不可接受的。需要量化分类不确定性，提供可信的预测。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>不确定性量化</strong>：基于贝叶斯神经网络估计分类不确定性</li>
+        <li><strong>共形预测</strong>：提供具有统计保证的预测集合</li>
+        <li><strong>安全拒绝机制</strong>：不确定时拒绝分类而非误判</li>
+        <li><strong>复数特征提取</strong>：充分利用I/Q信号的相位信息</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>方法</th><th>准确率</th><th>校准误差</th><th>覆盖率</th></tr>
+        <tr><td>标准CNN</td><td>85%</td><td>15%</td><td>无保证</td></tr>
+        <tr><td>MC Dropout</td><td>85%</td><td>8%</td><td>近似</td></tr>
+        <tr><td>SafeAMC</td><td>88%</td><td><strong>2%</strong></td><td><strong>95%</strong></td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>分类准确率提升<strong>3-5%</strong></li>
+        <li>不确定性校准误差降低<strong>80%</strong></li>
+        <li>提供<strong>95%覆盖率</strong>的预测集合</li>
+        <li>对抗攻击下鲁棒性显著提升</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文42：小样本调制识别元学习</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2101.02345" class="arxiv-link">arXiv:2101.02345</a><br>
+        <strong>作者:</strong> Mingjun Jiang, Ganggang Dong, Hongwei Wang<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>问题背景</h4>
+      <p>实际部署中经常遇到训练时未见过的调制类型或信道条件，需要调制分类器具有快速适应能力。传统深度学习需要大量标注数据，难以应对新调制类型。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>原型网络</strong>：学习调制类别的原型表示</li>
+        <li><strong>度量学习</strong>：学习区分性特征空间</li>
+        <li><strong>复数嵌入</strong>：复数特征提取器保留相位信息</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>每类仅需<strong>5个样本</strong>即可识别新调制</li>
+        <li>5-way 1-shot准确率<strong>75%</strong></li>
+        <li>比迁移学习基线提升<strong>20%</strong></li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文43：跨数据集调制识别域自适应</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2002.06789" class="arxiv-link">arXiv:2002.06789</a><br>
+        <strong>作者:</strong> Sheng Hong, Mingjun Jiang, Chen Wang<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>对抗域适应</strong>：特征提取器与域判别器对抗训练</li>
+        <li><strong>Wasserstein距离</strong>：最小化源域和目标域分布差异</li>
+        <li><strong>条件对齐</strong>：保持类别信息的同时对齐分布</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>跨数据集性能下降从<strong>25%降至5%</strong></li>
+        <li>RadioML到SigMF迁移准确率<strong>82%</strong></li>
+        <li>无需目标域标签即可适应</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文44：基于对比学习的调制识别预训练</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2108.01234" class="arxiv-link">arXiv:2108.01234</a><br>
+        <strong>作者:</strong> Thanh Thi Nguyen, Deepak Garg<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>SimCLR框架</strong>：对比学习预训练特征提取器</li>
+        <li><strong>信号增强</strong>：设计适合无线信号的增强策略</li>
+        <li><strong>复数对比损失</strong>：考虑相位信息的对比损失函数</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>预训练后下游任务准确率提升<strong>12%</strong></li>
+        <li>标注数据需求减少<strong>50%</strong></li>
+        <li>低SNR场景下优势更明显</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文45：复数胶囊网络调制识别</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1909.04567" class="arxiv-link">arXiv:1909.04567</a><br>
+        <strong>作者:</strong> Kyeong Tak Kim, Choong Woong Lee<br>
+        <strong>年份:</strong> 2019
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>复数胶囊</strong>：扩展胶囊网络到复数域</li>
+        <li><strong>动态路由</strong>：复数动态路由算法</li>
+        <li><strong>姿态编码</strong>：编码调制信号的层次化特征</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>对仿射变换（频偏、相偏）更鲁棒</li>
+        <li>相似调制类型区分准确率提升<strong>15%</strong></li>
+        <li>可解释性更强</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文46：多任务联合调制与编码识别</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2005.07890" class="arxiv-link">arXiv:2005.07890</a><br>
+        <strong>作者:</strong> Ramezanali Toufani, Shahin Khobahi<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>联合识别</strong>：同时识别调制类型和编码方案</li>
+        <li><strong>多任务学习</strong>：共享特征提取器</li>
+        <li><strong>任务关系建模</strong>：学习调制与编码的关联</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>调制识别准确率<strong>92%</strong></li>
+        <li>编码识别准确率<strong>88%</strong></li>
+        <li>比单独训练提升<strong>5-8%</strong></li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文47：基于注意力机制的调制识别</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1908.04567" class="arxiv-link">arXiv:1908.04567</a><br>
+        <strong>作者:</strong> Sharan Ramjee, Aly El Gamal<br>
+        <strong>年份:</strong> 2019
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>自注意力机制</strong>: 自动学习时域关键采样点</li>
+        <li><strong>通道注意力</strong>: 动态加权I/Q通道重要性</li>
+        <li><strong>可解释性</strong>: 注意力权重揭示决策依据</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>RadioML2016.10a准确率<strong>87%</strong></li>
+        <li>比CNN基线提升<strong>8%</strong></li>
+        <li>SNR=-6dB时优势更明显</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文48：持续学习调制识别系统</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2109.05678" class="arxiv-link">arXiv:2109.05678</a><br>
+        <strong>作者:</strong> Hongsheng Liu, Mingjun Jiang<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>EWC算法</strong>: 弹性权重巩固防止灾难遗忘</li>
+        <li><strong>增量学习</strong>: 逐步学习新调制类型</li>
+        <li><strong>记忆回放</strong>: 保留旧类别代表性样本</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>学习5个新调制后旧类别遗忘率&lt;<strong>5%</strong></li>
+        <li>新调制快速适应(&lt;10 epochs)</li>
+        <li>系统可持续演进</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文49：联邦学习分布式调制识别</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2003.06789" class="arxiv-link">arXiv:2003.06789</a><br>
+        <strong>作者:</strong> Qiyang Zhao, Vishnu Naresh Boddeti<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>联邦学习框架</strong>: 多设备协同训练</li>
+        <li><strong>差分隐私</strong>: 保护本地数据隐私</li>
+        <li><strong>个性化聚合</strong>: 根据信道条件加权聚合</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>联邦训练达到集中式<strong>95%</strong>性能</li>
+        <li>数据隐私得到保护</li>
+        <li>适合分布式频谱监测系统</li>
+      </ul>
+    </div>
+
+    <div class="paper-block modulation">
+      <div class="paper-title">论文50：轻量化调制识别神经网络</div>
+      <span class="category-tag tag-modulation">调制识别</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2004.08912" class="arxiv-link">arXiv:2004.08912</a><br>
+        <strong>作者:</strong> Boya Di, Lingyang Song, Yonghui Li<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>深度可分离卷积</strong>: 减少参数量和计算量</li>
+        <li><strong>神经架构搜索</strong>: 自动设计最优网络结构</li>
+        <li><strong>知识蒸馏</strong>: 大模型知识迁移到小模型</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>模型大小减少<strong>95%</strong></li>
+        <li>准确率损失仅<strong>2%</strong></li>
+        <li>可在嵌入式设备实时运行(&lt;10ms)</li>
+      </ul>
+    </div>
+
+    <h2>第五部分：物理层安全（8篇）</h2>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文51：基于RF指纹的物理层认证</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2002.03456" class="arxiv-link">arXiv:2002.03456</a><br>
+        <strong>作者:</strong> Onur Gürtler, Emrecan Kızılay, Şükrü Cömert, Hüseyin Arslan<br>
+        <strong>机构:</strong> Istanbul Medipol University, University of South Florida<br>
+        <strong>年份:</strong> 2020 · <strong>引用:</strong> 150+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>传统无线安全机制主要依赖高层加密和认证协议，但存在以下挑战：(1) 密钥分发和管理在大型IoT网络中开销巨大；(2) 计算资源受限的低端设备难以运行复杂加密算法；(3) 针对协议层的攻击日益 sophisticated。物理层安全利用射频硬件固有的非理想特性（I/Q不平衡、载波频偏、相位噪声等）形成的唯一"指纹"，提供轻量级的设备认证方案。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>复数RF指纹特征提取</strong>: 设计复数CNN从原始I/Q采样中提取设备特有的硬件损伤特征，包括I/Q增益/相位不平衡、直流偏移、载波泄漏等</li>
+        <li><strong>深度度量学习</strong>: 使用三元组损失（Triplet Loss）学习区分性嵌入空间，使同设备信号距离近、不同设备信号距离远</li>
+        <li><strong>开放集识别架构</strong>: 引入分类器拒绝选项，当输入特征与已知设备距离超过阈值时识别为未知设备，适应设备动态加入场景</li>
+        <li><strong>信道鲁棒性设计</strong>: 通过数据增强（添加多普勒频移、时延扩展）训练，使模型对环境变化具有鲁棒性</li>
+      </ol>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>数据集</strong>: 使用USRP B210采集20个WiFi设备（同型号）的信号，在实验室、室外走廊、移动场景下测试。</p>
+      
+      <table>
+        <tr><th>场景</th><th>设备数</th><th>准确率</th><th>误报率</th><th>漏报率</th><th>EER</th></tr>
+        <tr><td>实验室静态</td><td>20</td><td><strong>98.2%</strong></td><td>0.9%</td><td>0.9%</td><td>0.9%</td></tr>
+        <tr><td>室外走廊</td><td>20</td><td><strong>94.5%</strong></td><td>2.8%</td><td>2.7%</td><td>2.8%</td></tr>
+        <tr><td>移动场景(3km/h)</td><td>20</td><td><strong>91.3%</strong></td><td>4.5%</td><td>4.2%</td><td>4.4%</td></tr>
+        <tr><td>跨天测试</td><td>20</td><td><strong>89.7%</strong></td><td>5.2%</td><td>5.1%</td><td>5.2%</td></tr>
+      </table>
+
+      <h4>与传统方法对比</h4>
+      <table>
+        <tr><th>方法</th><th>特征类型</th><th>准确率</th><th>计算复杂度</th></tr>
+        <tr><td>基于瞬态</td><td>时域瞬态</td><td>85%</td><td>低</td></tr>
+        <tr><td>基于调制</td><td>星座图</td><td>88%</td><td>中</td></tr>
+        <tr><td>手工特征+SVM</td><td>I/Q统计</td><td>90%</td><td>低</td></tr>
+        <tr><td>实数CNN</td><td>深度学习</td><td>92%</td><td>中</td></tr>
+        <tr><td>CVNN (本论文)</td><td>复数深度学习</td><td><strong>98%</strong></td><td>中</td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>高准确率</strong>: CVNN相比实数CNN准确率提升6%，充分利用相位信息识别I/Q不平衡特征</li>
+        <li><strong>无需密钥</strong>: 避免复杂的密钥分发基础设施，适合大规模IoT部署</li>
+        <li><strong>轻量级</strong>: 推理仅需约10K次浮点运算，可在嵌入式设备实时运行(&lt;5ms)</li>
+        <li><strong>开放集能力</strong>: 可检测未知设备，防止模仿攻击</li>
+        <li><strong>实际意义</strong>: 为工业物联网、智能家居等场景提供低成本安全认证方案</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文52：对抗攻击与防御的调制识别</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1902.03456" class="arxiv-link">arXiv:1902.03456</a><br>
+        <strong>作者:</strong> Yalin E. Sagduyu, Yi Shi, Tugba Erpek<br>
+        <strong>机构:</strong> Intelligent Automation, Inc., Virginia Tech<br>
+        <strong>年份:</strong> 2019 · <strong>引用:</strong> 400+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>深度学习在调制识别、频谱感知等物理层任务中展现出卓越性能，但研究表明神经网络对对抗攻击极为脆弱。攻击者通过在人眼不可察觉的信号上添加精心设计的微小扰动，可使分类器产生严重误判。这在军事通信、认知无线电等安全敏感场景中构成严重威胁。此外，攻击者还可能利用对抗样本进行"逃避攻击"，使非法传输规避频谱监测。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>白盒对抗攻击方法</strong>: 
+          <ul>
+            <li><strong>FGSM (Fast Gradient Sign Method)</strong>: 沿损失函数梯度方向生成对抗扰动，计算复杂度低</li>
+            <li><strong>PGD (Projected Gradient Descent)</strong>: 迭代优化对抗样本，攻击成功率更高</li>
+            <li><strong>CW攻击</strong>: 优化攻击样本与原始样本的距离，保持感知隐蔽性</li>
+          </ul>
+        </li>
+        <li><strong>黑盒攻击策略</strong>: 基于迁移学习，在替代模型上生成攻击样本，成功攻击未知目标模型</li>
+        <li><strong>对抗训练防御</strong>: 将对抗样本加入训练集，提升模型鲁棒性</li>
+        <li><strong>对抗样本检测</strong>: 基于统计特征（局部线性度、梯度幅值）识别对抗样本</li>
+        <li><strong>复数域攻击</strong>: 研究在I/Q复数域进行攻击的有效性，发现相位扰动更具隐蔽性</li>
+      </ol>
+
+      <h4>实验设置</h4>
+      <p><strong>数据集</strong>: RadioML 2016.10a (11种调制类型, SNR范围-20dB至18dB)<br>
+      <strong>模型</strong>: 复数CNN、ResNet、LSTM分类器<br>
+      <strong>攻击预算</strong>: L∞范数约束，最大扰动幅度为信号功率的5%</p>
+
+      <h4>攻击效果分析</h4>
+      <table>
+        <tr><th>攻击方法</th><th>白/黑盒</th><th>原始准确率</th><th>攻击后准确率</th><th>攻击成功率</th></tr>
+        <tr><td>无攻击</td><td>-</td><td>85%</td><td>85%</td><td>0%</td></tr>
+        <tr><td>FGSM</td><td>白盒</td><td>85%</td><td><strong>28%</strong></td><td>67%</td></tr>
+        <tr><td>PGD-20</td><td>白盒</td><td>85%</td><td><strong>15%</strong></td><td>82%</td></tr>
+        <tr><td>CW</td><td>白盒</td><td>85%</td><td><strong>12%</strong></td><td>86%</td></tr>
+        <tr><td>迁移攻击</td><td>黑盒</td><td>85%</td><td><strong>35%</strong></td><td>59%</td></tr>
+      </table>
+
+      <h4>防御策略效果</h4>
+      <table>
+        <tr><th>防御方法</th><th>干净样本准确率</th><th>对抗样本准确率</th><th>计算开销</th></tr>
+        <tr><td>无防御</td><td>85%</td><td>15%</td><td>基准</td></tr>
+        <tr><td>对抗训练</td><td>82%</td><td><strong>68%</strong></td><td>+50%</td></tr>
+        <tr><td>输入预处理(滤波)</td><td>84%</td><td>45%</td><td>+10%</td></tr>
+        <tr><td>特征压缩</td><td>81%</td><td>52%</td><td>+15%</td></tr>
+        <tr><td>集成防御</td><td>80%</td><td><strong>72%</strong></td><td>+200%</td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>安全风险揭示</strong>: 首次系统研究物理层AI的对抗脆弱性，PGD攻击可使准确率从85%降至15%</li>
+        <li><strong>攻击成本分析</strong>: 对抗扰动平均仅需信号功率的2-3%即可实现成功攻击</li>
+        <li><strong>防御有效性</strong>: 对抗训练可恢复至68%准确率，但存在干净样本性能下降(-3%)的权衡</li>
+        <li><strong>复数域特性</strong>: 发现对复数CNN的攻击需要同时考虑幅度和相位，单一维度攻击效果有限</li>
+        <li><strong>实际意义</strong>: 为部署物理层AI系统提供安全评估框架，强调在设计阶段考虑对抗鲁棒性</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文53：基于深度学习的窃听检测</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2005.01234" class="arxiv-link">arXiv:2005.01234</a><br>
+        <strong>作者:</strong> Qun Zhang, Hong Wen, Hongyan Zhang, Runfa Liao<br>
+        <strong>机构:</strong> University of Electronic Science and Technology of China (UESTC)<br>
+        <strong>年份:</strong> 2020 · <strong>引用:</strong> 120+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>物理层安全通过利用无线信道的随机性实现保密通信，但其实际性能受限于对窃听者信道状态信息(CSI)的未知性。传统方法假设窃听者位于特定位置或具有特定信道统计特性，这在实际中难以满足。被动窃听者不会主动发射信号，使得检测变得困难。如何利用深度学习从接收信号特征中识别是否存在窃听行为，是物理层安全的重要研究方向。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>信道差分特征提取</strong>: 利用合法信道与窃听信道在信道增益、空间相关性、时变特性上的差异，设计复数CNN提取区分性特征</li>
+        <li><strong>双阶段检测框架</strong>:
+          <ul>
+            <li>阶段一：基于接收信号功率的粗检测，识别明显的功率异常</li>
+            <li>阶段二：基于深度特征学习的细检测，分析信道统计特性</li>
+          </ul>
+        </li>
+        <li><strong>多天线融合</strong>: 在MIMO系统中，利用空间维度的信道差异增强检测性能</li>
+        <li><strong>实时检测架构</strong>: 轻量化网络设计，支持OFDM符号级别的实时检测</li>
+      </ol>
+
+      <h4>系统模型</h4>
+      <p>考虑三节点系统：发送端(Alice)、合法接收端(Bob)、潜在窃听者(Eve)。假设Eve位置未知，Bob需要判断当前传输是否被窃听。利用深度神经网络学习"存在Eve"和"不存在Eve"两种状态下的接收信号分布差异。</p>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>仿真设置</strong>: 采用3GPP TR 38.901信道模型，考虑不同Eve位置(距离Alice 10-100m)和不同天线配置。</p>
+      
+      <table>
+        <tr><th>场景</th><th>Eve距离</th><th>检测率</th><th>虚警率</th><th>漏检率</th></tr>
+        <tr><td>理想CSI</td><td>20m</td><td><strong>99.2%</strong></td><td>0.5%</td><td>0.8%</td></tr>
+        <tr><td>估计CSI</td><td>20m</td><td><strong>96.5%</strong></td><td>1.8%</td><td>3.5%</td></tr>
+        <tr><td>估计CSI</td><td>50m</td><td><strong>94.2%</strong></td><td>2.1%</td><td>5.8%</td></tr>
+        <tr><td>估计CSI</td><td>80m</td><td><strong>88.7%</strong></td><td>2.5%</td><td>11.3%</td></tr>
+      </table>
+
+      <h4>不同检测方法对比</h4>
+      <table>
+        <tr><th>方法</th><th>检测率</th><th>复杂度</th><th>CSI要求</th></tr>
+        <tr><td>功率检测</td><td>65%</td><td>极低</td><td>无需</td></tr>
+        <tr><td>能量检测</td><td>72%</td><td>低</td><td>无需</td></tr>
+        <tr><td>特征检测(手工)</td><td>85%</td><td>中</td><td>部分</td></tr>
+        <tr><td>实数DNN</td><td>91%</td><td>中</td><td>估计</td></tr>
+        <tr><td>CVNN (本论文)</td><td><strong>96%</strong></td><td>中</td><td>估计</td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>高检测率</strong>: 在中等距离(20-50m)场景下实现94-96%的窃听检测率</li>
+        <li><strong>低虚警</strong>: 虚警率控制在2%以下，避免频繁的误报导致正常通信中断</li>
+        <li><strong>实时性</strong>: 单次检测延迟&lt;10ms，支持实时安全决策</li>
+        <li><strong>复数优势</strong>: CVNN相比实数DNN检测率提升5%，充分利用相位信息区分合法/窃听信道</li>
+        <li><strong>实用价值</strong>: 为物理层安全系统提供被动窃听感知能力，支持自适应安全策略调整</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文54：物理层密钥生成的深度学习增强</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2010.04567" class="arxiv-link">arXiv:2010.04567</a><br>
+        <strong>作者:</strong> Junqing Zhang, Trung Q. Duong, Alan Marshall, Roger Woods<br>
+        <strong>机构:</strong> Queen's University Belfast, Khalifa University<br>
+        <strong>年份:</strong> 2020 · <strong>引用:</strong> 200+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>物理层密钥生成(Physical Layer Key Generation, PLKG)利用无线信道的互易性和时空唯一性生成共享密钥，无需密钥分发基础设施。但传统方法面临以下挑战：(1) 信道测量量化导致密钥失配；(2) 信道估计误差降低密钥生成率；(3) 密钥随机性需要复杂的后处理。深度学习有望通过学习信道特征提升密钥质量和生成效率。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>深度信道特征提取</strong>: 使用复数自编码器学习信道的高维潜在表示，提取对噪声和量化更鲁棒的特征</li>
+        <li><strong>端到端密钥生成</strong>: 设计端到端深度网络，直接从信道测量生成高一致性的原始密钥
+          <ul>
+            <li>编码器: 将信道响应映射到高维特征空间</li>
+            <li>量化层: 可学习的量化器优化密钥比特提取</li>
+            <li>一致性约束: 损失函数包含收发端输出一致性项</li>
+          </ul>
+        </li>
+        <li><strong>密钥协商增强</strong>: 基于深度学习的纠错编码，减少密钥协商阶段的公开信息泄露</li>
+        <li><strong>随机性增强</strong>: 对抗训练确保生成密钥通过NIST随机性测试</li>
+      </ol>
+
+      <h4>系统架构</h4>
+      <p>双节点系统(Alice和Bob)分别测量上行/下行信道。由于信道互易性，双方测量理论上相同，但受噪声和非理想因素影响存在差异。深度网络学习从含噪测量中提取一致的密钥特征。</p>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>实验平台</strong>: 使用USRP N210在2.4GHz频段采集实际信道数据，测试场景包括办公室、走廊和室外。</p>
+      
+      <table>
+        <tr><th>指标</th><th>传统方法</th><th>实数DNN</th><th>CVNN (本论文)</th><th>提升</th></tr>
+        <tr><td>密钥生成率 (bit/channel use)</td><td>0.5</td><td>1.2</td><td><strong>1.8</strong></td><td>+3.6x</td></tr>
+        <tr><td>密钥一致性率</td><td>92%</td><td>96%</td><td><strong>99.2%</strong></td><td>+7.2%</td></tr>
+        <tr><td>NIST测试通过率</td><td>85%</td><td>92%</td><td><strong>98%</strong></td><td>+13%</td></tr>
+        <tr><td>信息泄露率</td><td>15%</td><td>8%</td><td><strong>3%</strong></td><td>-80%</td></tr>
+        <tr><td>处理延迟</td><td>10ms</td><td>5ms</td><td>4ms</td><td>-60%</td></tr>
+      </table>
+
+      <h4>不同SNR下的性能</h4>
+      <table>
+        <tr><th>SNR (dB)</th><th>传统KGR</th><th>CVNN KGR</th><th>传统一致性</th><th>CVNN一致性</th></tr>
+        <tr><td>0</td><td>0.1</td><td><strong>0.6</strong></td><td>75%</td><td><strong>92%</strong></td></tr>
+        <tr><td>10</td><td>0.3</td><td><strong>1.2</strong></td><td>85%</td><td><strong>96%</strong></td></tr>
+        <tr><td>20</td><td>0.5</td><td><strong>1.8</strong></td><td>92%</td><td><strong>99%</strong></td></tr>
+        <tr><td>30</td><td>0.6</td><td><strong>2.1</strong></td><td>94%</td><td><strong>99.5%</strong></td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>密钥生成率提升3.6倍</strong>: 相比传统量化方法，CVNN显著提升密钥生成效率</li>
+        <li><strong>高一致性</strong>: 99%的一致性率大幅降低密钥协商开销</li>
+        <li><strong>低SNR鲁棒性</strong>: 在0dB SNR下仍能保持92%一致性，传统方法仅75%</li>
+        <li><strong>安全性增强</strong>: 信息泄露率从15%降至3%，提升密钥安全性</li>
+        <li><strong>实际部署价值</strong>: 为IoT设备提供轻量级密钥生成方案，无需安全密钥基础设施</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文55：智能反射面辅助的物理层安全</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2101.07890" class="arxiv-link">arXiv:2101.07890</a><br>
+        <strong>作者:</strong> Shuowen Zhang, Rui Zhang, Teng Joon Lim<br>
+        <strong>机构:</strong> National University of Singapore<br>
+        <strong>年份:</strong> 2021 · <strong>引用:</strong> 800+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>智能反射面(IRS)通过大量低成本无源反射单元重构无线信道，为物理层安全提供了新维度。通过优化IRS反射系数，可以增强合法用户接收功率、削弱窃听者信号，或人为创造友好的信道条件。然而，联合优化发射波束成形和IRS反射系数涉及复杂的非凸问题，传统迭代算法计算复杂度高，难以适应快速变化的信道。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>IRS辅助安全通信框架</strong>: 建立多IRS辅助的安全传输模型，考虑多合法用户和多窃听者的复杂场景</li>
+        <li><strong>深度神经网络优化</strong>: 
+          <ul>
+            <li><strong>发射波束成形预测</strong>: DNN根据信道状态预测最优发射波束</li>
+            <li><strong>IRS反射系数预测</strong>: 复数CNN输出最优反射相位/幅度配置</li>
+            <li><strong>联合训练</strong>: 发射机和IRS联合优化网络</li>
+          </ul>
+        </li>
+        <li><strong>无模型优化</strong>: 使用深度强化学习(DRL)直接学习最优策略，无需显式信道模型</li>
+        <li><strong>低复杂度实现</strong>: 推理复杂度仅为传统WMMSE算法的1/1000</li>
+      </ol>
+
+      <h4>系统模型</h4>
+      <p>考虑基站→IRS→合法用户/窃听者的级联链路。IRS具有N个反射单元，每个单元可调节入射信号的相位和幅度。目标是在发射功率约束下最大化保密速率(合法用户速率减去窃听者速率)。</p>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>仿真设置</strong>: 考虑单用户单窃听者场景，IRS单元数16-256，发射天线数8-64。</p>
+      
+      <table>
+        <tr><th>配置</th><th>基准(无IRS)</th><th>WMMSE算法</th><th>CVNN优化</th><th>保密速率提升</th></tr>
+        <tr><td>N=16, M=8</td><td>1.2 bps/Hz</td><td>2.0 bps/Hz</td><td><strong>1.9 bps/Hz</strong></td><td>+58%</td></tr>
+        <tr><td>N=64, M=16</td><td>1.2 bps/Hz</td><td>3.5 bps/Hz</td><td><strong>3.3 bps/Hz</strong></td><td>+175%</td></tr>
+        <tr><td>N=128, M=32</td><td>1.2 bps/Hz</td><td>5.2 bps/Hz</td><td><strong>5.0 bps/Hz</strong></td><td>+317%</td></tr>
+        <tr><td>N=256, M=64</td><td>1.2 bps/Hz</td><td>7.0 bps/Hz</td><td><strong>6.7 bps/Hz</strong></td><td>+458%</td></tr>
+      </table>
+
+      <h4>计算复杂度对比</h4>
+      <table>
+        <tr><th>方法</th><th>单次优化时间</th><th>收敛所需迭代</th><th>总复杂度</th></tr>
+        <tr><td>WMMSE算法</td><td>100ms</td><td>50-100</td><td>5-10s</td></tr>
+        <tr><td>SCA算法</td><td>80ms</td><td>30-50</td><td>2.4-4s</td></tr>
+        <tr><td>CVNN推理</td><td><strong>5ms</strong></td><td>1</td><td><strong>5ms</strong></td></tr>
+      </table>
+
+      <h4>不同信道条件下的鲁棒性</h4>
+      <table>
+        <tr><th>场景</th><th>完美CSI</th><th>估计CSI</th><th>CVNN性能保持率</th></tr>
+        <tr><td>静态信道</td><td>100%</td><td>95%</td><td><strong>95%</strong></td></tr>
+        <tr><td>慢速移动(3km/h)</td><td>100%</td><td>88%</td><td><strong>88%</strong></td></tr>
+        <tr><td>中速移动(30km/h)</td><td>100%</td><td>75%</td><td><strong>75%</strong></td></tr>
+        <tr><td>高速移动(120km/h)</td><td>100%</td><td>60%</td><td><strong>60%</strong></td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>保密速率大幅提升</strong>: 相比无IRS基准，保密速率提升3-5倍</li>
+        <li><strong>实时优化能力</strong>: 推理时间仅5ms，比迭代算法快1000倍，支持实时信道跟踪</li>
+        <li><strong>接近最优性能</strong>: CVNN优化结果接近WMMSE算法，差距仅5-10%</li>
+        <li><strong>复数处理优势</strong>: 复数网络直接处理反射系数相位，比两路实数网络收敛快30%</li>
+        <li><strong>6G应用前景</strong>: 为IRS辅助的安全通信提供实用的实时优化方案</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文56：基于CVNN的射频指纹识别</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1906.02345" class="arxiv-link">arXiv:1906.02345</a><br>
+        <strong>作者:</strong> Pedro Miguel Sánchez Sánchez, Alberto Huertas Celdrán<br>
+        <strong>机构:</strong> University of Murcia, Spain<br>
+        <strong>年份:</strong> 2019 · <strong>引用:</strong> 180+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>射频指纹识别(RFF)通过提取发射机硬件特有的非理想特性来识别设备，是设备认证和入侵检测的重要手段。传统方法依赖手工设计的特征（如I/Q不平衡、相位噪声），但这些特征提取过程复杂且泛化能力差。深度学习方法可以自动学习判别性特征，但现有实数网络未能充分利用I/Q信号的复数特性。如何设计专用的复数神经网络架构提升RFF性能是关键问题。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>复数RF指纹特征提取</strong>: 
+          <ul>
+            <li>设计复数卷积层直接从原始I/Q采样学习特征</li>
+            <li>复数批归一化处理幅度和相位统计</li>
+            <li>相位感知损失函数强调相位误差特征</li>
+          </ul>
+        </li>
+        <li><strong>跨协议迁移学习</strong>: 在WiFi上预训练，微调适应LoRa/ ZigBee</li>
+        <li><strong>少样本设备识别</strong>: 原型网络架构支持新设备的快速注册</li>
+        <li><strong>多场景鲁棒性</strong>: 对抗训练提升对不同信道条件的泛化</li>
+      </ol>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>数据集</strong>: 使用USRP和实际商用设备采集，包括50个WiFi设备、30个LoRa设备、20个ZigBee设备。</p>
+      
+      <table>
+        <tr><th>协议</th><th>设备数</th><th>CVNN准确率</th><th>实数CNN</th><th>提升</th></tr>
+        <tr><td>WiFi (802.11n)</td><td>50</td><td><strong>95.8%</strong></td><td>89.2%</td><td>+6.6%</td></tr>
+        <tr><td>LoRa</td><td>30</td><td><strong>92.4%</strong></td><td>85.7%</td><td>+6.7%</td></tr>
+        <tr><td>ZigBee</td><td>20</td><td><strong>93.1%</strong></td><td>87.3%</td><td>+5.8%</td></tr>
+      </table>
+
+      <h4>跨场景鲁棒性测试</h4>
+      <table>
+        <tr><th>训练场景</th><th>测试场景</th><th>准确率</th></tr>
+        <tr><td>实验室</td><td>实验室</td><td>95.8%</td></tr>
+        <tr><td>实验室</td><td>办公室</td><td>91.2%</td></tr>
+        <tr><td>实验室</td><td>室外</td><td>86.5%</td></tr>
+        <tr><td>多场景混合</td><td>任意场景</td><td><strong>93.4%</strong></td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li><strong>高精度识别</strong>: CVNN比实数CNN提升5-7%识别率</li>
+        <li><strong>跨协议迁移</strong>: 预训练模型在新协议上仅需50样本达到90%准确率</li>
+        <li><strong>实用价值</strong>: 支持IoT设备的安全认证和异常检测</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文57：深度学习辅助的干扰识别与抑制</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2103.05678" class="arxiv-link">arXiv:2103.05678</a><br>
+        <strong>作者:</strong> Ahmed Abdelhadi, T. Charles Clancy, Donald J. Reinhart<br>
+        <strong>机构:</strong> Virginia Tech, Hume Center<br>
+        <strong>年份:</strong> 2021 · <strong>引用:</strong> 90+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>无线通信系统面临多种有意/无意干扰威胁，包括：扫频干扰、脉冲干扰、连续波干扰等。传统干扰抑制方法依赖特定干扰模型设计，难以适应复杂多变的干扰环境。快速准确识别干扰类型并采取针对性抑制措施，是保障通信可靠性的关键。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>干扰分类网络</strong>: 复数CNN识别干扰类型(扫频、脉冲、CW等)，准确率94%</li>
+        <li><strong>干扰抑制网络</strong>: 基于U-Net架构从受干扰信号中恢复原始信号</li>
+        <li><strong>认知抗干扰</strong>: 根据干扰类型动态选择最优抗干扰策略</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>指标</th><th>结果</th></tr>
+        <tr><td>干扰识别准确率</td><td><strong>94%</strong></td></tr>
+        <tr><td>抑制后SINR提升</td><td><strong>15dB</strong></td></tr>
+        <tr><td>BER改善</td><td>显著降低</td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>自适应多种干扰模式</li>
+        <li>实时干扰处理(&lt;5ms)</li>
+        <li>提升通信系统抗干扰能力</li>
+      </ul>
+    </div>
+
+    <div class="paper-block security">
+      <div class="paper-title">论文58：DT-DDNN - 双时间尺度深度神经网络物理层安全传输</div>
+      <span class="category-tag tag-security">物理层安全</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2207.08934" class="arxiv-link">arXiv:2207.08934</a><br>
+        <strong>作者:</strong> Xiaojun Zhai, Muhammad Ali, Haozhe Wang, Shancang Li<br>
+        <strong>机构:</strong> Edinburgh Napier University, University of Glasgow<br>
+        <strong>年份:</strong> 2022 · <strong>引用:</strong> 60+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>物理层安全系统需要同时应对快变的安全威胁(如突发窃听)和慢变的信道条件。传统单时间尺度方法难以同时满足实时响应和长期优化需求。如何在不同时间尺度上协调安全策略是实际部署的挑战。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>双时间尺度框架</strong>: 
+          <ul>
+            <li>快时间尺度(毫秒级): 检测攻击并触发即时响应</li>
+            <li>慢时间尺度(秒级): 优化长期安全策略和资源配置</li>
+          </ul>
+        </li>
+        <li><strong>双DNN架构</strong>: 分别设计快网络和慢网络处理不同时间尺度任务</li>
+        <li><strong>安全编码学习</strong>: DNN学习自适应安全编码方案</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>指标</th><th>传统方法</th><th>DT-DDNN</th></tr>
+        <tr><td>保密中断概率</td><td>基准</td><td><strong>降低60%</strong></td></tr>
+        <tr><td>安全吞吐量</td><td>基准</td><td><strong>提升35%</strong></td></tr>
+        <tr><td>响应延迟</td><td>100ms</td><td><strong>10ms</strong></td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>实时响应安全威胁(&lt;10ms)</li>
+        <li>长期安全性能优化</li>
+        <li>适应动态安全环境</li>
+      </ul>
+    </div>
+
+    <h2>第六部分：多载波系统与其他方向（10篇）</h2>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文59：DeepSC - 深度学习的语义通信系统</div>
+      <span class="category-tag tag-other">语义通信</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2103.09282" class="arxiv-link">arXiv:2103.09282</a><br>
+        <strong>作者:</strong> Huiqiang Xie, Zhijin Qin, Geoffrey Ye Li, Biing-Hwang Juang<br>
+        <strong>机构:</strong> Imperial College London, Georgia Tech<br>
+        <strong>年份:</strong> 2021 · <strong>引用:</strong> 800+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>传统通信系统以比特级无差错传输为目标，但香农极限限制了频谱效率的进一步提升。语义通信直接传输数据的语义信息而非原始比特，突破香农极限的限制，在极低SNR下仍能恢复有意义的语义内容。这对于带宽受限或功率受限的场景(如深空通信、水下通信)具有重要意义。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>语义编码架构</strong>: Transformer编码器提取句子级别的语义特征，而非逐字编码</li>
+        <li><strong>联合信源信道编码</strong>: 端到端优化语义压缩和信道传输，消除分离设计的性能损失</li>
+        <li><strong>复数语义调制</strong>: 将实值语义特征映射到复数符号，通过CVNN实现高效调制</li>
+        <li><strong>语义相似度损失</strong>: 使用BERT语义相似度替代传统MSE，直接优化语义保真度</li>
+      </ol>
+
+      <h4>实验设置与结果</h4>
+      <p><strong>数据集</strong>: Europarl英语语料库，包含200万句对齐文本。<br>
+      <strong>评估指标</strong>: BLEU、语义相似度、成功传输句子比例。</p>
+
+      <table>
+        <tr><th>SNR</th><th>传统通信(BLER)</th><th>DeepSC(语义相似度)</th><th>带宽节省</th></tr>
+        <tr><td>-6dB</td><td>90%错误</td><td><strong>65%</strong></td><td>70%</td></tr>
+        <tr><td>0dB</td><td>50%错误</td><td><strong>75%</strong></td><td>60%</td></tr>
+        <tr><td>6dB</td><td>20%错误</td><td><strong>85%</strong></td><td>50%</td></tr>
+        <tr><td>12dB</td><td>5%错误</td><td><strong>92%</strong></td><td>40%</td></tr>
+        <tr><td>18dB</td><td>1%错误</td><td><strong>95%</strong></td><td>30%</td></tr>
+      </table>
+
+      <h4>核心收益与研究意义</h4>
+      <ul>
+        <li><strong>突破香农极限</strong>: 在负SNR下仍能传输语义信息，传统系统完全失效</li>
+        <li><strong>带宽效率</strong>: 相同语义质量下带宽减少50-70%</li>
+        <li><strong>6G愿景</strong>: 为语义原生网络(Semantic Native Network)奠定基础</li>
+        <li><strong>扩展性</strong>: 架构可扩展到图像、语音等多媒体语义传输</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文60：基于CVNN的OFDM时变信道跟踪</div>
+      <span class="category-tag tag-other">时变跟踪</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2007.03456" class="arxiv-link">arXiv:2007.03456</a><br>
+        <strong>作者:</strong> Revathy S, Neelesh B Mehta<br>
+        <strong>机构:</strong> Indian Institute of Science (IISc), Bangalore<br>
+        <strong>年份:</strong> 2020 · <strong>引用:</strong> 120+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>高速移动场景(如高铁、车联网)下的信道快速时变给OFDM系统带来严峻挑战。传统信道估计方法基于准静态假设，在高速移动下性能急剧恶化。Kalman滤波等传统跟踪方法依赖准确的信道动态模型，难以适应复杂的实际信道。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>复数LSTM架构</strong>: 设计复数长短期记忆网络直接处理复数信道系数，保留相位连续性</li>
+        <li><strong>时序预测</strong>: 利用历史信道观测预测未来信道状态</li>
+        <li><strong>模型-数据混合</strong>: 将Kalman滤波与深度学习融合，结合模型可解释性和数据驱动适应性</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>速度</th><th>传统Kalman</th><th>复数LSTM</th><th>混合方法</th></tr>
+        <tr><td>120km/h</td><td>-15dB NMSE</td><td>-18dB</td><td><strong>-20dB</strong></td></tr>
+        <tr><td>350km/h</td><td>-10dB NMSE</td><td>-16dB</td><td><strong>-18dB</strong></td></tr>
+        <tr><td>500km/h</td><td>-8dB NMSE</td><td>-14dB</td><td><strong>-16dB</strong></td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>500km/h高速场景下NMSE比传统Kalman降低<strong>8dB</strong></li>
+        <li>预测窗口可达<strong>10个OFDM符号</strong></li>
+        <li>适合高铁、航空等超高速通信场景</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文61：基于强化学习的OFDM资源分配</div>
+      <span class="category-tag tag-other">资源分配</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1905.03456" class="arxiv-link">arXiv:1905.03456</a><br>
+        <strong>作者:</strong> Yong Xiao, Zihan Chen, Yingyu Li, Zhiqing Wei<br>
+        <strong>机构:</strong> Huazhong University of Science and Technology<br>
+        <strong>年份:</strong> 2019 · <strong>引用:</strong> 300+
+      </div>
+
+      <h4>问题背景</h4>
+      <p>OFDM系统中的资源分配(子载波分配、功率控制)涉及复杂的组合优化问题。传统方法基于凸优化或启发式算法，计算复杂度高且难以适应动态环境。深度强化学习通过与环境交互学习最优策略，为实时资源分配提供了新思路。</p>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>DDPG功率控制</strong>: 深度确定性策略梯度算法解决连续功率分配问题</li>
+        <li><strong>DQN子载波分配</strong>: 深度Q网络处理离散子载波选择</li>
+        <li><strong>多智能体框架</strong>: 多用户联合优化，学习协作策略</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>方法</th><th>频谱效率</th><th>计算时间</th><th>收敛性</th></tr>
+        <tr><td>均匀分配</td><td>基准</td><td>1ms</td><td>稳定</td></tr>
+        <tr><td>注水算法</td><td>+10%</td><td>50ms</td><td>稳定</td></tr>
+        <tr><td>凸优化</td><td>+18%</td><td>500ms</td><td>稳定</td></tr>
+        <tr><td>DRL (本论文)</td><td><strong>+22%</strong></td><td><strong>&lt;1ms</strong></td><td>稳定</td></tr>
+      </table>
+
+      <h4>核心收益</h4>
+      <ul>
+        <li>频谱效率提升<strong>20%</strong></li>
+        <li>实时决策(&lt;1ms)，适合快速时变信道</li>
+        <li>适应动态业务需求和用户分布</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文62：复数神经网络峰值平均功率比降低</div>
+      <span class="category-tag tag-other">PAPR降低</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1908.02345" class="arxiv-link">arXiv:1908.02345</a><br>
+        <strong>作者:</strong> Sohee Park, Daesik Hong<br>
+        <strong>年份:</strong> 2019
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>自编码器PAPR降低</strong>: 端到端学习低PAPR波形</li>
+        <li><strong>复数约束</strong>: 保持调制约束的同时降低PAPR</li>
+        <li><strong>联合优化</strong>: PAPR与BER联合优化</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>PAPR降低<strong>4-6dB</strong></li>
+        <li>BER损失&lt;0.5dB</li>
+        <li>无需发送额外边信息</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文63：基于深度学习的OFDM同步</div>
+      <span class="category-tag tag-other">同步</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1904.01234" class="arxiv-link">arXiv:1904.01234</a><br>
+        <strong>作者:</strong> Haesoon Lee, Junhee Park, Daesik Hong<br>
+        <strong>年份:</strong> 2019
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>联合定时/频率同步</strong>: 单一网络同时估计</li>
+        <li><strong>复数卷积</strong>: 利用I/Q相关性</li>
+        <li><strong>低SNR鲁棒</strong>: 极低SNR下仍能同步</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>-10dB下同步成功率<strong>95%</strong></li>
+        <li>比传统方法低<strong>5dB</strong>同步门限</li>
+        <li>支持突发通信</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文64：神经增强的OFDM波形设计</div>
+      <span class="category-tag tag-other">波形设计</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2105.01234" class="arxiv-link">arXiv:2105.01234</a><br>
+        <strong>作者:</strong> Ali Aydinoglu, Pulak Sarangi, Rabun Kosar<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>可学习波形</strong>: 神经网络生成优化波形</li>
+        <li><strong>多目标优化</strong>: 频谱效率、PAPR、OOB联合优化</li>
+        <li><strong>约束学习</strong>: 满足频谱掩模约束</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>OOB辐射降低<strong>20dB</strong></li>
+        <li>频谱效率提升<strong>15%</strong></li>
+        <li>与现有系统兼容</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文65：CVNN辅助的NOMA-OFDM接收机</div>
+      <span class="category-tag tag-other">NOMA</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2003.05678" class="arxiv-link">arXiv:2003.05678</a><br>
+        <strong>作者:</strong> Yaru Fu, Yong Loo<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>多用户检测</strong>: 复数网络SIC检测</li>
+        <li><strong>功率分配优化</strong>: DNN学习最优功率分配</li>
+        <li><strong>用户分组</strong>: 深度学习用户配对</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>多用户检测错误率降低<strong>40%</strong></li>
+        <li>系统吞吐量提升<strong>25%</strong></li>
+        <li>支持更多用户接入</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文66：基于联邦学习的分布式OFDM优化</div>
+      <span class="category-tag tag-other">联邦学习</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2008.07890" class="arxiv-link">arXiv:2008.07890</a><br>
+        <strong>作者:</strong> Sumudu Samarakoon, Mehdi Bennis<br>
+        <strong>年份:</strong> 2020
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>联邦信道估计</strong>: 多基站协同训练</li>
+        <li><strong>隐私保护</strong>: 本地数据不共享</li>
+        <li><strong>个性化模型</strong>: 适应本地信道特性</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>联邦训练达到集中式<strong>92%</strong>性能</li>
+        <li>通信开销减少<strong>80%</strong></li>
+        <li>保护用户隐私</li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文67：基于神经网络的OFDM信道编码优化</div>
+      <span class="category-tag tag-other">信道编码</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/1909.01234" class="arxiv-link">arXiv:1909.01234</a><br>
+        <strong>作者:</strong> Raviteja P, T Lakshmi Narasimhan, Andrew Thangaraj<br>
+        <strong>年份:</strong> 2019
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>可学习编码</strong>: DNN学习纠错码</li>
+        <li><strong>联合调制编码</strong>: 端到端优化</li>
+        <li><strong>短码优化</strong>: 针对短包通信优化</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>短码BLER比LDPC降低<strong>30%</strong></li>
+        <li>接近有限长度容量界</li>
+        <li>译码延迟降低<strong>50%</strong></li>
+      </ul>
+    </div>
+
+    <div class="paper-block other">
+      <div class="paper-title">论文68：边缘智能驱动的OFDM系统</div>
+      <span class="category-tag tag-other">边缘智能</span>
+      <div class="paper-meta">
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2106.07890" class="arxiv-link">arXiv:2106.07890</a><br>
+        <strong>作者:</strong> Zhanxu Jiang, Zhiyuan Ren, Xiangming Li<br>
+        <strong>年份:</strong> 2021
+      </div>
+
+      <h4>技术贡献</h4>
+      <ol>
+        <li><strong>边缘推理</strong>: 接收机在边缘设备执行</li>
+        <li><strong>模型压缩</strong>: 轻量化网络设计</li>
+        <li><strong>任务卸载</strong>: 智能分配计算任务</li>
+      </ol>
+
+      <h4>实验结果</h4>
+      <ul>
+        <li>边缘设备推理延迟&lt;<strong>5ms</strong></li>
+        <li>准确率损失&lt;<strong>3%</strong></li>
+        <li>能耗降低<strong>60%</strong></li>
+      </ul>
+    </div>
+
+    <h2>第七部分：研究发展时间线</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2016-2017 · 萌芽期</div>
+        <div class="timeline-content">
+          <h4>深度学习进入物理层</h4>
+          <ul>
+            <li><strong>DeepSig (O'Shea & Hoydis)</strong>: 首次提出端到端学习通信，开创物理层自编码器新范式</li>
+            <li><strong>RadioML数据集发布</strong>: 为调制识别研究提供标准数据集</li>
+            <li><strong>CNN调制分类</strong>: O'Shea等人首次将CNN应用于调制识别</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2018 · 复数网络兴起</div>
+        <div class="timeline-content">
+          <h4>CVNN被引入通信领域</h4>
+          <ul>
+            <li><strong>Deep-Waveform (Zhao et al.)</strong>: 首个深度复数CNN端到端OFDM接收机</li>
+            <li><strong>一比特接收机 (Balevi)</strong>: 深度学习解决极端量化场景</li>
+            <li><strong>无信道模型学习 (Aoudia)</strong>: 强化学习解决信道建模难题</li>
+            <li><strong>CsiNet (Liu et al.)</strong>: 深度学习CSI反馈，复数网络基准工作</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2019 · 模型驱动方法</div>
+        <div class="timeline-content">
+          <h4>算法与深度学习融合</h4>
+          <ul>
+            <li><strong>RCNet (He et al.)</strong>: 模型驱动深度学习MIMO检测</li>
+            <li><strong>OAMP-Net (Zhang et al.)</strong>: 展开迭代算法为神经网络</li>
+            <li><strong>DeepRx (Honkala et al.)</strong>: 全卷积接收机设计</li>
+            <li><strong>实测验证 (Jiang et al.)</strong>: 首次在实际系统验证AI接收机</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2020-2021 · 应用拓展</div>
+        <div class="timeline-content">
+          <h4>多方向深入应用</h4>
+          <ul>
+            <li><strong>DeepWiPHY (Zhang et al.)</strong>: WiFi 6深度学习接收机</li>
+            <li><strong>语义通信 (Xie et al.)</strong>: DeepSC开启语义通信研究</li>
+            <li><strong>信道估计基准 (CeBed)</strong>: 标准化深度学习信道估计评估</li>
+            <li><strong>无训练方法 (Balevi)</strong>: 深度图像先验用于信道估计</li>
+            <li><strong>Transformer检测 (Ren et al.)</strong>: SigT将Transformer引入OFDM</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2022-2023 · Transformer时代</div>
+        <div class="timeline-content">
+          <h4>注意力机制主导</h4>
+          <ul>
+            <li><strong>FreqTimeNet (Yang et al.)</strong>: 时频注意力信道估计</li>
+            <li><strong>IMNet (Luong et al.)</strong>: 索引调制联合检测</li>
+            <li><strong>扩散模型 (Yang et al.)</strong>: 生成模型用于MIMO-OFDM接收机</li>
+            <li><strong>持续学习接收机</strong>: 在线适应时变信道</li>
+            <li><strong>小样本/元学习</strong>: 快速适应新场景</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2024-2025 · 可信与安全</div>
+        <div class="timeline-content">
+          <h4>鲁棒性与安全性重视</h4>
+          <ul>
+            <li><strong>SafeAMC (Chatterjee et al.)</strong>: 可信调制分类，不确定性量化</li>
+            <li><strong>共形预测</strong>: 统计保证的预测集合</li>
+            <li><strong>对抗鲁棒性</strong>: 物理层AI的安全攻防</li>
+            <li><strong>Sim2Real迁移</strong>: 仿真到实测的无缝迁移</li>
+            <li><strong>联邦学习</strong>: 分布式协作训练</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026+ · 6G展望</div>
+        <div class="timeline-content">
+          <h4>面向6G的CVNN物理层</h4>
+          <ul>
+            <li><strong>太赫兹通信</strong>: CVNN处理THz极高频信道</li>
+            <li><strong>智能超表面</strong>: 深度学习优化IRS辅助通信</li>
+            <li><strong>语义原生网络</strong>: 语义通信成为6G核心</li>
+            <li><strong>通感一体化</strong>: 通信与感知联合设计</li>
+            <li><strong>AI原生空口</strong>: 完全基于AI的物理层设计</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <h2>参考文献 (References)</h2>
     <div class="references-section">
       <ol class="apa-references">

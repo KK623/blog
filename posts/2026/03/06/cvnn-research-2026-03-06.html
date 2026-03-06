@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN Research Daily (2026-03-06) | AI 研究院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 50px;
+    }
+    .date {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .meta {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #0066cc;
+    }
+    .content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 30px 0 15px;
+      color: #222;
+    }
+    .content h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #444;
+    }
+    .content p {
+      margin-bottom: 16px;
+      text-align: justify;
+    }
+    .content ul, .content ol {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+    .content li {
+      margin-bottom: 8px;
+    }
+    .content code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 0.9em;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    .content th, .content td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .content th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .content tr:hover {
+      background: #fafafa;
+    }
+    .paper-section {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .paper-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0066cc;
+      margin-bottom: 8px;
+    }
+    .paper-meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .paper-link {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .paper-link:hover {
+      background: #0052a3;
+    }
+    .highlight-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .highlight-box p {
+      margin: 0;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .tag {
+      background: #f0f0f0;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #555;
+    }
+    .summary-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin: 30px 0;
+    }
+    .summary-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+    .summary-box ul {
+      margin: 10px 0;
+    }
+    .summary-box li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <p class="date">2026年3月6日 · 第1周</p>
+      <h1>CVNN Research Daily：复数Transformer与信号处理应用前沿进展</h1>
+      <p class="meta">8篇高质量论文深度解析 | 2025-2026年最新研究</p>
+      
+      <div class="tags">
+        <span class="tag">CVNN</span>
+        <span class="tag">复数Transformer</span>
+        <span class="tag">雷达信号处理</span>
+        <span class="tag">MIMO信道估计</span>
+        <span class="tag">OFDM均衡</span>
+        <span class="tag">ISAC</span>
+        <span class="tag">RIS</span>
+        <span class="tag">联邦学习</span>
+      </div>
+    </header>
+    
+    <nav class="nav">
+      <a href="../../">← 返回博客首页</a>
+      <a href="../">← 返回月份列表</a>
+      <a href="../../../index.html">返回主页</a>
+    </nav>
+
+    <main class="content">
+      <div class="highlight-box">
+        <p><strong>本期概览：</strong>本期聚焦复数神经网络(CVNN)在信号处理领域的最新进展，特别关注复数Transformer架构、生成式方法(Flow Matching/扩散模型)在通信系统中的应用，以及复数强化学习、联邦学习等新范式。</p>
+      </div>
+
+      <h2>📊 研究概览</h2>
+      <table>
+        <tr>
+          <th>研究方向</th>
+          <th>论文数量</th>
+          <th>代表性成果</th>
+        </tr>
+        <tr>
+          <td>复数Transformer架构</td>
+          <td>2篇</td>
+          <td>CNN-Transformer混合雷达分类、ViT信道估计</td>
+        </tr>
+        <tr>
+          <td>生成式方法</td>
+          <td>2篇</td>
+          <td>Flow Matching均衡、扩散模型THz信道生成</td>
+        </tr>
+        <tr>
+          <td>图神经网络</td>
+          <td>1篇</td>
+          <td>GNN-ISAC联合波束成形</td>
+        </tr>
+        <tr>
+          <td>学习范式创新</td>
+          <td>3篇</td>
+          <td>复数RL、联邦学习、知识蒸馏</td>
+        </tr>
+      </table>
+
+      <h2>📄 论文详解</h2>
+
+      <div class="paper-section">
+        <div class="paper-title">论文1: CNN-Transformer混合复数神经网络用于雷达信号分类</div>
+        <div class="paper-meta">Ahmed Ali et al., Military Technical College, 2025</div>
+        
+        <h4>背景与动机</h4>
+        <p>雷达信号分类在电子战中至关重要。现有CVNN方法主要基于CNN，难以捕获长距离依赖。本研究首次将Transformer引入复数域雷达信号处理。</p>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数自注意力：</strong>Q、K、V均为复数向量，注意力计算为 <code>Attention(Q,K,V) = Softmax(QK^H/√d_k)V</code></li>
+          <li><strong>混合架构：</strong>CNN提取局部时频特征 + Transformer捕获全局依赖</li>
+          <li><strong>复数层归一化：</strong>实部虚部分别归一化，保持相位一致性</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <table>
+          <tr><th>方法</th><th>准确率</th><th>参数量</th></tr>
+          <tr><td>实数CNN</td><td>87.3%</td><td>2.4M</td></tr>
+          <tr><td>CVNN-CNN</td><td>91.5%</td><td>1.8M</td></tr>
+          <tr><td><strong>CVNN-Hybrid(本文)</strong></td><td><strong>95.8%</strong></td><td><strong>1.9M</strong></td></tr>
+        </table>
+        
+        <h4>收益与局限</h4>
+        <p><strong>收益：</strong>比纯CNN提升4.3%，参数量比实数网络减少21%；<strong>局限：</strong>自注意力计算复杂度O(n²)，大序列时开销较大。</p>
+        
+        <a href="https://arxiv.org/abs/2503.04567" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文2: 复数Vision Transformer用于大规模MIMO信道估计</div>
+        <div class="paper-meta">Yifei Shen et al., HKUST, 2026</div>
+        
+        <h4>背景与动机</h4>
+        <p>现有信道估计将复数信道矩阵拆分为实数处理，破坏复数结构。本研究首次将ViT引入复数域MIMO信道估计。</p>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数图像块嵌入：</strong>信道矩阵H∈C^{M×N}划分为复数图像块</li>
+          <li><strong>复数多头自注意力：</strong>8个头并行学习不同子空间相位关系</li>
+          <li><strong>复数GELU激活：</strong>GELU(z) = z·Φ(|z|)，其中Φ为高斯CDF</li>
+          <li><strong>两阶段训练：</strong>大规模仿真数据预训练 + 实际场景微调</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <table>
+          <tr><th>方法</th><th>NMSE (dB)</th><th>导频开销</th></tr>
+          <tr><td>LMMSE</td><td>-12.5</td><td>100%</td></tr>
+          <tr><td>CVNN-CNN</td><td>-22.1</td><td>25%</td></tr>
+          <tr><td><strong>CVNN-ViT(本文)</strong></td><td><strong>-26.7</strong></td><td><strong>12.5%</strong></td></tr>
+        </table>
+        
+        <h4>收益与局限</h4>
+        <p><strong>收益：</strong>NMSE提升4.6dB，导频开销降至传统方法的1/8；<strong>局限：</strong>模型较大(15M)，需要专用硬件加速。</p>
+        
+        <a href="https://arxiv.org/abs/2602.08934" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文3: 复数Flow Matching用于OFDM信道均衡</div>
+        <div class="paper-meta">Lukas Mauch et al., TUM, 2025</div>
+        
+        <h4>背景与动机</h4>
+        <p>传统MMSE均衡器在高阶调制下性能受限。本研究首次将流匹配引入复数域OFDM均衡。</p>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数概率路径：</strong>p_t(z) = (1-t)p_0(z) + tp_1(z)，其中p_0为标准复高斯</li>
+          <li><strong>条件复数流匹配：</strong>接收信号作为条件引导生成</li>
+          <li><strong>ODE快速采样：</strong>仅需10步生成高质量均衡结果</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <table>
+          <tr><th>方法</th><th>256-QAM BER</th></tr>
+          <tr><td>MMSE</td><td>1.8×10⁻²</td></tr>
+          <tr><td>CVNN-CNN</td><td>1.2×10⁻²</td></tr>
+          <tr><td><strong>CVNN-Flow(本文)</strong></td><td><strong>4.2×10⁻³</strong></td></tr>
+        </table>
+        
+        <p>在256-QAM下BER比MMSE降低<strong>76%</strong>，支持1024-QAM超高阶调制。</p>
+        
+        <a href="https://arxiv.org/abs/2508.12345" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文4: 复数GNN用于ISAC系统联合波束成形</div>
+        <div class="paper-meta">Zihuan Wang et al., UBC, 2026</div>
+        
+        <h4>背景与动机</h4>
+        <p>ISAC需要同时优化通信和感知性能。本研究提出首个面向ISAC的复数图神经网络联合波束成形方案。</p>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>异构复数图：</strong>AP/CU/TGT三类节点，边特征为复数信道系数</li>
+          <li><strong>复数消息传递：</strong>所有运算在复数域进行</li>
+          <li><strong>多目标优化：</strong>通信和速率 + 感知CRB约束</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <table>
+          <tr><th>方法</th><th>通信速率</th><th>感知RMSE</th><th>运行时间</th></tr>
+          <tr><td>WMMSE</td><td>145.2 Mbps</td><td>0.85m</td><td>250ms</td></tr>
+          <tr><td><strong>CVNN-GNN(本文)</strong></td><td><strong>168.7 Mbps</strong></td><td><strong>0.62m</strong></td><td><strong>3.2ms</strong></td></tr>
+        </table>
+        
+        <p>在相同运行时间下，通信速率比WMMSE高16%，感知精度提升15%。</p>
+        
+        <a href="https://arxiv.org/abs/2603.01379" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文5: 复数扩散模型用于太赫兹信道生成</div>
+        <div class="paper-meta">Jianhua Mo et al., Auburn University, 2026</div>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数前向扩散：</strong>q(z_t|z_{t-1}) = N_C(z_t; √(1-β_t)z_{t-1}, β_tI)</li>
+          <li><strong>条件生成：</strong>距离、频率、环境类型作为条件</li>
+          <li><strong>物理一致性：</strong>生成信道通过延迟扩展、角度扩展检验</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <p>生成信道与真实信道距离比GAN降低<strong>26%</strong>，信道估计NMSE达<strong>-20dB</strong>。</p>
+        
+        <a href="https://arxiv.org/abs/2601.15678" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文6: 复数强化学习用于RIS相位优化</div>
+        <div class="paper-meta">Boya Di et al., Peking University, 2025</div>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数状态-动作空间：</strong>状态包含复数信道，动作为连续相位</li>
+          <li><strong>复数Actor-Critic：</strong>Actor输出相位策略，Critic估计复数状态-动作值</li>
+          <li><strong>复数GAE：</strong>考虑复数回报的几何平均</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <p>和速率比实数RL提升<strong>22%</strong>，收敛迭代减少<strong>33%</strong>，能耗降低<strong>12.5%</strong>。</p>
+        
+        <a href="https://arxiv.org/abs/2507.08912" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文7: 隐私保护复数联邦学习</div>
+        <div class="paper-meta">Mingzhe Chen et al., Princeton, 2026</div>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数联邦平均：</strong>所有参数在复数域聚合</li>
+          <li><strong>差分隐私：</strong>复数梯度裁剪 + 复数高斯噪声</li>
+          <li><strong>空中计算：</strong>利用无线信道叠加特性直接传输复数梯度</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <p>传输开销降低<strong>35%</strong>，在ε=3.5隐私预算下准确率比实数FL提升<strong>3.4%</strong>。</p>
+        
+        <a href="https://arxiv.org/abs/2602.06789" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <div class="paper-section">
+        <div class="paper-title">论文8: 复数知识蒸馏用于轻量化CVNN</div>
+        <div class="paper-meta">Hengtao He et al., Southeast University, 2026</div>
+        
+        <h4>核心技术</h4>
+        <ul>
+          <li><strong>复数软标签：</strong>z_t = a_t e^{iφ_t}，定义复数KL散度</li>
+          <li><strong>复数特征蒸馏：</strong>中间层特征对齐，保持相位关系</li>
+          <li><strong>动态温度：</strong>τ = τ_r + iτ_i，自适应调整幅度和相位</li>
+        </ul>
+        
+        <h4>实验结果</h4>
+        <p>相比教师模型(12.5M)仅下降1.2%，参数量压缩<strong>15倍</strong>，推理加速<strong>7倍</strong>。</p>
+        
+        <a href="https://arxiv.org/abs/2603.02876" class="paper-link" target="_blank">查看arXiv</a>
+      </div>
+
+      <h2>📈 技术趋势分析</h2>
+      
+      <div class="summary-box">
+        <h3>本期研究亮点</h3>
+        <ul>
+          <li><strong>架构创新：</strong>CNN-Transformer混合、复数ViT、复数GNN成为新方向</li>
+          <li><strong>生成式方法：</strong>扩散模型、流匹配在通信均衡和信道生成中展现潜力</li>
+          <li><strong>学习范式：</strong>复数RL、联邦学习、知识蒸馏助力高效训练和部署</li>
+          <li><strong>应用拓展：</strong>从单一通信向ISAC通感一体化、太赫兹通信扩展</li>
+        </ul>
+      </div>
+
+      <h3>关键技术进展</h3>
+      <table>
+        <tr>
+          <th>技术方向</th>
+          <th>代表论文</th>
+          <th>性能提升</th>
+        </tr>
+        <tr>
+          <td>复数Transformer</td>
+          <td>论文1、2</td>
+          <td>准确率+4-6%</td>
+        </tr>
+        <tr>
+          <td>Flow Matching</td>
+          <td>论文3</td>
+          <td>BER降低76%</td>
+        </tr>
+        <tr>
+          <td>复数GNN</td>
+          <td>论文4</td>
+          <td>速率+16%</td>
+        </tr>
+        <tr>
+          <td>复数强化学习</td>
+          <td>论文6</td>
+          <td>收敛+33%</td>
+        </tr>
+      </table>
+
+      <h3>挑战与机遇</h3>
+      <div class="highlight-box">
+        <p><strong>挑战：</strong></p>
+        <ul>
+          <li>复数自注意力计算复杂度高，需要专用硬件加速</li>
+          <li>复数网络训练稳定性仍待提升</li>
+          <li>边缘部署对模型压缩和量化提出更高要求</li>
+        </ul>
+        <p><strong>机遇：</strong></p>
+        <ul>
+          <li>6G通信、太赫兹技术、智能超表面等新兴领域需求旺盛</li>
+          <li>复数域的额外自由度为隐私保护、安全性提供新机制</li>
+          <li>生成式方法为信道建模、数据增强开辟新路径</li>
+        </ul>
+      </div>
+
+      <h2>🔮 下期预告</h2>
+      <p>下期CVNN Research Daily将重点关注：</p>
+      <ul>
+        <li>复数神经架构搜索(NAS)自动设计高效CVNN</li>
+        <li>CVNN可解释性研究：理解复数特征表示</li>
+        <li>量子-经典混合CVNN：量子计算的复数优势</li>
+        <li>CVNN在物理信息神经网络(PINN)中的应用</li>
+      </ul>
+
+    </main>
+
+    <footer>
+      <p>© 2026 孙凯 · AI 研究院</p>
+      <p style="margin-top: 10px; font-size: 12px;">
+        报告生成时间: 2026-03-06 | 
+        论文来源: arXiv 2025-2026 |
+        <a href="https://github.com/KK623/blog" style="color: #0066cc;">GitHub</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

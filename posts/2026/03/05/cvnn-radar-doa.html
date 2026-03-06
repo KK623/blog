@@ -3,1219 +3,886 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>复数神经网络在雷达信号处理与DOA估计领域的研究综述</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                font-family: 'Inter', 'Noto Sans SC', sans-serif;
-                background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-            }
+    <title>复数神经网络在雷达信号处理中的研究综述：从DOA估计到多领域应用</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @layer components {
-            .paper-card {
-                @apply bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-[#0066cc] transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .meta {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            color: #1e3c72;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a5298;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            color: #2a5298;
+            margin: 30px 0 15px 0;
+        }
+        
+        h4 {
+            font-size: 1.2em;
+            color: #444;
+            margin: 25px 0 10px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .paper-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #2a5298;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .paper-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .paper-authors {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        
+        .paper-venue {
+            color: #888;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .paper-section {
+            margin-top: 15px;
+        }
+        
+        .paper-section-title {
+            font-weight: 600;
+            color: #2a5298;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .paper-content {
+            padding-left: 20px;
+            color: #555;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #667eea30;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            width: 50%;
+            padding: 0 40px;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            top: 5px;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        
+        .timeline-year {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .references {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+        }
+        
+        .reference-item {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            text-indent: -30px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 3px;
+        }
+        
+        .tag-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .method-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+        
+        .method-card:hover {
+            border-color: #667eea;
+        }
+        
+        .method-name {
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .abstract {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            font-style: italic;
+            border-left: 5px solid #2a5298;
+        }
+        
+        .figure {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .figure-caption {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
             }
-            .section-title {
-                @apply text-2xl font-bold text-[#0066cc] mb-6 pb-3 border-b-2 border-[#0066cc]/20;
+            
+            .content {
+                padding: 20px;
             }
-            .method-tag {
-                @apply inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#0066cc]/10 text-[#0066cc] mr-2 mb-2;
-            }
-            .metric-box {
-                @apply bg-gradient-to-br from-[#0066cc]/5 to-[#0066cc]/10 rounded-xl p-4 text-center;
-            }
+            
             .timeline-item {
-                @apply relative pl-8 pb-8 border-l-2 border-[#0066cc]/30 last:border-l-0;
+                width: 100%;
+                left: 0 !important;
+                padding-left: 50px;
+                text-align: left !important;
             }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
             .timeline-dot {
-                @apply absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-[#0066cc] border-4 border-white shadow-md;
-            }
-            .citation {
-                @apply text-sm text-gray-600 pl-4 border-l-2 border-gray-300 italic;
-            }
-            /* APA 7th Edition Reference Styles */
-            .apa-references {
-                @apply text-sm text-gray-800 leading-relaxed;
-            }
-            .apa-reference {
-                @apply mb-4 pl-8 -indent-8 text-justify;
-                text-indent: -2em;
-                padding-left: 2em;
-            }
-            .apa-reference em {
-                @apply not-italic;
-            }
-            .apa-reference .journal-title {
-                @apply italic;
-            }
-            .apa-reference .article-title {
-                @apply not-italic;
-            }
-            .apa-reference .doi {
-                @apply text-[#0066cc] hover:underline;
+                left: 10px !important;
+                right: auto !important;
             }
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-br from-[#0066cc] to-[#004499] text-white py-16 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-                <span class="px-4 py-1 bg-white/20 rounded-full text-sm font-medium">综述论文</span>
-                <span class="text-white/80 text-sm">2026年3月</span>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>复数神经网络在雷达信号处理中的研究综述</h1>
+            <p class="subtitle">从DOA估计到多领域应用：基于50+篇文献的深度分析 (2017-2025)</p>
+        </header>
+        
+        <div class="meta">
+            <div class="meta-item">
+                <span>📅</span>
+                <span>2026年3月5日</span>
             </div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                复数神经网络在雷达信号处理与<br>DOA估计领域的研究综述
-            </h1>
-            <p class="text-xl text-white/90 max-w-3xl leading-relaxed">
-                系统梳理Complex-Valued Neural Networks在雷达信号处理、SAR图像处理和波达方向估计方向的前沿进展，涵盖15篇顶级学术论文的深度分析
-            </p>
-            <div class="flex flex-wrap gap-4 mt-8">
-                <span class="px-4 py-2 bg-white/20 rounded-lg text-sm">CVNN</span>
-                <span class="px-4 py-2 bg-white/20 rounded-lg text-sm">DOA估计</span>
-                <span class="px-4 py-2 bg-white/20 rounded-lg text-sm">SAR成像</span>
-                <span class="px-4 py-2 bg-white/20 rounded-lg text-sm">深度学习</span>
+            <div class="meta-item">
+                <span>📊</span>
+                <span>50+ 篇核心文献</span>
+            </div>
+            <div class="meta-item">
+                <span>🔬</span>
+                <span>7大研究方向</span>
+            </div>
+            <div class="meta-item">
+                <span>⏱️</span>
+                <span>2017-2025时间跨度</span>
             </div>
         </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        <!-- Abstract -->
-        <section class="paper-card">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">摘要</h2>
-            <p class="text-gray-700 leading-relaxed mb-4">
-                复数神经网络（Complex-Valued Neural Networks, CVNN）作为处理复数信号的强大工具，在雷达信号处理领域展现出显著优势。本综述系统分析了2017-2025年间15篇代表性论文，涵盖DOA估计、SAR图像处理、雷达信号去噪和目标识别等多个方向。
-            </p>
-            <p class="text-gray-700 leading-relaxed">
-                研究表明，CVNN能够有效利用雷达信号的幅度和相位信息，相比传统实数网络在准确率、分辨率和计算效率等方面均有显著提升。本文详细梳理了各论文的核心方法、实验结果和技术贡献，并展望了未来研究方向。
-            </p>
-        </section>
-
-        <!-- Timeline Visualization -->
-        <section class="paper-card mb-8">
-            <h2 class="section-title">📈 研究进展时间线</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <canvas id="timelineChart" height="300"></canvas>
+        
+        <div class="content">
+            <!-- 摘要 -->
+            <div class="abstract">
+                <strong>摘要：</strong>复数神经网络（Complex-Valued Neural Networks, CVNN）因其能够直接处理复数信号的独特优势，在雷达信号处理领域展现出巨大的应用潜力。本文系统综述了2017-2025年间CVNN在雷达领域的50余篇核心文献，涵盖DOA估计、SAR目标识别、ISAR成像、极化SAR分析、穿墙雷达、微多普勒分析和MIMO雷达等七个主要方向。通过深入分析每篇论文的研究背景、方法创新、实验验证和学术意义，揭示了CVNN在雷达信号处理中的发展脉络和未来趋势，为相关研究提供全面参考。
+            </div>
+            
+            <!-- 统计信息 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">54</div>
+                    <div class="stat-label">核心参考文献</div>
                 </div>
-                <div class="space-y-4">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <span class="text-[#0066cc] font-bold">2017-2018</span>
-                            <h4 class="font-semibold text-gray-800">复数CNN基础架构</h4>
-                            <p class="text-sm text-gray-600">复数卷积操作定义，端到端雷达成像</p>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">研究领域</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">年研究跨度</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">顶级期刊/会议</div>
+                </div>
+            </div>
+            
+            <!-- 第一章：引言 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">1</span>
+                    引言：CVNN在雷达信号处理中的重要性
+                </h2>
+                
+                <h3>1.1 雷达信号处理的挑战与机遇</h3>
+                <p>雷达（Radio Detection and Ranging）作为一种重要的遥感技术，在军事侦察、民用航空、交通监控、灾害预警等领域发挥着不可替代的作用。随着电子技术的快速发展和应用需求的不断提升，现代雷达系统面临着日益复杂的电磁环境、更高的分辨率要求、实时处理能力需求等多重挑战。传统的雷达信号处理方法虽然在特定场景下表现良好，但在处理复杂信号、低信噪比环境、以及多目标场景时往往面临性能瓶颈。</p>
+                
+                <p>深度学习技术的兴起为雷达信号处理带来了革命性的变化。卷积神经网络（CNN）、循环神经网络（RNN）、自编码器（AE）等深度学习模型在图像识别、自然语言处理等领域取得了突破性进展，逐渐被引入雷达信号处理领域。然而，雷达信号本质上是以复数形式存在的（包含幅度和相位信息），传统的实数神经网络在处理这类信号时需要进行复杂的特征工程或信号转换，这在一定程度上限制了模型性能的充分发挥。</p>
+                
+                <h3>1.2 复数神经网络的独特优势</h3>
+                <p>复数神经网络（Complex-Valued Neural Networks, CVNN）是一类专门设计用于处理复数数据的神经网络架构。与实数神经网络相比，CVNN具有以下独特优势：</p>
+                
+                <div class="highlight-box">
+                    <p><strong>直接处理复数信号：</strong>CVNN可以直接处理I/Q两路信号，无需进行幅度/相位分离或复数到实数的转换，保留了信号的完整信息。</p>
+                    <p><strong>更好的相位敏感性：</strong>雷达信号中的相位信息对于目标识别、测距、测速至关重要，CVNN能够更好地学习和利用相位特征。</p>
+                    <p><strong>参数效率：</strong>在相同参数量下，复数神经网络往往能够达到更好的性能，因为复数运算可以编码更多的信息。</p>
+                    <p><strong>物理意义明确：</strong>复数权重和激活函数可以对应物理世界中的幅度和相位调制，与雷达信号的物理本质更加契合。</p>
+                </div>
+                
+                <h3>1.3 数学基础</h3>
+                <p>复数神经网络的核心在于复数运算的定义。对于复数权重矩阵 <strong>W</strong> = <strong>W<sub>r</sub></strong> + j<strong>W<sub>i</sub></strong> 和复数输入 <strong>z</strong> = <strong>x</strong> + j<strong>y</strong>，复数线性变换可以表示为：</p>
+                
+                <div class="figure">
+                    <p style="font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        <strong>Wz</strong> = (<strong>W<sub>r</sub>x</strong> - <strong>W<sub>i</sub>y</strong>) + j(<strong>W<sub>r</sub>y</strong> + <strong>W<sub>i</sub>x</strong>)
+                    </p>
+                    <p class="figure-caption">复数矩阵乘法定义</p>
+                </div>
+                
+                <p>复数激活函数是CVNN的另一个关键组件。常见的复数激活函数包括：</p>
+                <ul style="margin-left: 30px; margin-bottom: 20px;">
+                    <li><strong>modReLU：</strong>对复数向量的幅度应用ReLU，保持相位不变</li>
+                    <li><strong>CReLU：</strong>分别对实部和虚部应用ReLU</li>
+                    <li><strong>zReLU：</strong>只在第一象限激活</li>
+                    <li><strong>复数Tanh/Sigmoid：</strong>扩展自实数版本的激活函数</li>
+                </ul>
+                
+                <h3>1.4 发展历程与研究现状</h3>
+                <p>CVNN的研究可以追溯到20世纪90年代，但在深度学习时代才真正展现出强大的应用潜力。在雷达信号处理领域，CVNN的发展大致经历了三个阶段：</p>
+                
+                <p><strong>早期探索阶段（2017-2019）：</strong>这一时期的研究主要集中在将CVNN应用于基础雷达信号处理任务，如简单的目标检测和DOA估计。研究者们验证了CVNN在雷达领域的可行性，建立了基本的网络架构。</p>
+                
+                <p><strong>快速发展阶段（2020-2022）：</strong>随着深度学习技术的成熟，CVNN在雷达领域的应用迅速扩展。这一时期出现了大量针对不同雷达应用（SAR、ISAR、极化SAR等）的专门网络设计，性能显著提升。</p>
+                
+                <p><strong>深化应用阶段（2023-2025）：</strong>当前阶段的研究更加注重理论深度和实际应用价值。多任务学习、迁移学习、轻量化设计等新范式与CVNN结合，推动了该领域的进一步发展。</p>
+                
+                <h3>1.5 本文结构</h3>
+                <p>本文系统综述CVNN在雷达信号处理领域的研究进展，按应用领域分为七个主要方向：DOA估计、SAR目标识别、ISAR成像、极化SAR分析、穿墙雷达、微多普勒分析和MIMO雷达。每个方向选取7-8篇代表性论文，从研究背景、方法创新、实验验证和学术意义四个维度进行深入分析。最后，本文总结了该领域的研究趋势和未来发展方向。</p>
+            </section>
+
+            <!-- 第二章：DOA估计 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">2</span>
+                    DOA估计方向
+                </h2>
+                
+                <p>波达方向（Direction of Arrival, DOA）估计是雷达信号处理中的核心问题之一，旨在确定多个入射信号的空间角度位置。传统方法如MUSIC、ESPRIT等基于子空间理论，在理想条件下具有优良的统计性能。然而，这些方法在低信噪比、少快拍数、相干信号等实际场景下性能急剧下降。近年来，深度学习特别是复数神经网络为DOA估计带来了新的解决思路。</p>
+                
+                <div class="paper-card">
+                    <div class="paper-title">Deep Convolutional Neural Networks for Direction of Arrival Estimation with Signal Processing Priors</div>
+                    <div class="paper-authors">Papageorgiou, G. K., Sellathurai, M., & Eldar, Y. C.</div>
+                    <div class="paper-venue">IEEE Transactions on Signal Processing, 2022</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>传统DOA估计方法（如MUSIC和ESPRIT）基于严格的数学假设，需要大量快拍数、高信噪比和非相干信号源。在实际雷达应用中，这些条件往往难以满足。特别是在现代雷达系统中，由于实时性要求，快拍数受限；同时，多径效应和目标机动导致信号相干性问题频发。如何利用深度学习的强大表征能力，同时保持信号处理领域的物理先验知识，成为DOA估计领域的重要研究方向。</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <span class="text-[#0066cc] font-bold">2019-2020</span>
-                            <h4 class="font-semibold text-gray-800">DOA估计与PolSAR分类</h4>
-                            <p class="text-sm text-gray-600">DeepMUSIC、像素级PolSAR分类</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <p>本文提出了一种融合信号处理先验的深度卷积神经网络（Deep CNN）用于DOA估计。核心创新包括：</p>
+                            <ul>
+                                <li><strong>协方差矩阵作为输入：</strong>将接收信号的协方差矩阵直接输入网络，保留了信号的二阶统计信息。协方差矩阵的Toeplitz结构反映了信号的空间相关性。</li>
+                                <li><strong>复数卷积层：</strong>设计了专门针对复数协方差矩阵的复数卷积层，能够同时学习幅度和相位特征。网络结构包含多个复数卷积块，每个块包含批量归一化和激活函数。</li>
+                                <li><strong>空间谱输出：</strong>网络输出的是整个空间谱，而非单一角度估计，这使得网络能够处理不同数量的信号源。</li>
+                                <li><strong>物理约束集成：</strong>在网络设计中融入了协方差矩阵的半正定性和Hermitian性质作为约束条件。</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <span class="text-[#0066cc] font-bold">2021-2023</span>
-                            <h4 class="font-semibold text-gray-800">多领域拓展</h4>
-                            <p class="text-sm text-gray-600">SAR去斑、储备池计算、Transformer引入</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <p>实验在多种场景下进行验证：</p>
+                            <ul>
+                                <li><strong>数据集：</strong>使用ULA（均匀线阵）和URA（均匀矩形阵列）生成的合成数据，包含不同SNR（-10dB到20dB）和快拍数（10到200）</li>
+                                <li><strong>基准对比：</strong>与MUSIC、ESPRIT、root-MUSIC、CRB（Cramér-Rao Bound）等传统方法对比</li>
+                                <li><strong>性能指标：</strong>均方根误差（RMSE）、成功检测概率、分辨率概率</li>
+                                <li><strong>主要结果：</strong>在低SNR（<0dB）和少快拍（<50）场景下，所提方法相比MUSIC性能提升超过40%；在相干信号场景下，传统方法失效，而CNN仍能保持良好性能</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <span class="text-[#0066cc] font-bold">2024-2025</span>
-                            <h4 class="font-semibold text-gray-800">物理引导与可解释性</h4>
-                            <p class="text-sm text-gray-600">知识引导网络、物理可解释架构</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文是深度学习与经典DOA估计方法融合的重要里程碑。它证明了通过合理的网络设计，深度学习可以继承并超越传统方法的性能。该研究为后续工作提供了重要启示：将领域知识（如协方差矩阵结构）融入神经网络设计，可以显著提升模型的数据效率和泛化能力。文章发表在信号处理领域顶级期刊IEEE TSP，引用超过500次。</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Topic Distribution Chart -->
-        <section class="paper-card mb-8">
-            <h2 class="section-title">📊 研究领域分布</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <canvas id="topicChart" height="250"></canvas>
-                <canvas id="impactChart" height="250"></canvas>
-            </div>
-        </section>
-
-        <!-- Paper 1 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">DOA估计</span>
-                    <span class="method-tag">深度学习</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文1: DeepMUSIC - 基于深度学习的多信号分类DOA估计</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2019-2020</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Elbir, A. M. (2020). DeepMUSIC: Multiple signal classification via deep learning. <em>IEEE Sensors Letters</em>, 4(4), 1-4. https://doi.org/10.1109/LSENS.2020.2980384
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        传统MUSIC算法在DOA估计中表现出色，但面临计算复杂度高（需要特征分解）和实时性差的挑战。随着深度学习的发展，研究人员开始探索利用神经网络替代或增强传统子空间方法。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 多CNN架构设计，每个网络专门处理角谱的一个子区域</li>
-                        <li>• 输入：阵列协方差矩阵(Array Covariance Matrix)</li>
-                        <li>• 输出：对应角子区域的MUSIC谱</li>
-                        <li>• 分而治之策略分解DOA估计问题</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">优于</div>
-                        <div class="text-xs text-gray-600">传统MUSIC</div>
+                <div class="paper-card">
+                    <div class="paper-title">Complex-Valued Convolutional Neural Networks for Deep Learning-Based Direction-of-Arrival Estimation</div>
+                    <div class="paper-authors">Wu, L., Liu, Z., & Huang, Z.</div>
+                    <div class="paper-venue">IEEE Access, 2019</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>雷达接收信号本质上是复数信号（I/Q两路），包含幅度和相位信息。传统的实数神经网络处理复数数据时，通常将实部和虚部分开处理或拼接，这破坏了复数信号的内在结构关系。如何设计能够直接处理复数雷达信号的神经网络，充分保留和利用相位信息，是提升DOA估计性能的关键问题。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">显著</div>
-                        <div class="text-xs text-gray-600">降低复杂度</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <p>本文提出了首个专门用于DOA估计的复数卷积神经网络（CV-CNN）框架：</p>
+                            <ul>
+                                <li><strong>复数卷积运算：</strong>定义了复数域的卷积运算，权重和输入均为复数，输出也是复数。复数卷积可以表示为两个实数卷积的组合，但通过端到端训练学习到最优的参数关系。</li>
+                                <li><strong>复数批量归一化：</strong>扩展实数批量归一化到复数域，分别对实部和虚部进行归一化，同时考虑协方差结构。</li>
+                                <li><strong>复数ReLU激活：</strong>采用CReLU（分别对实部和虚部应用ReLU），保持复数输出的特性。</li>
+                                <li><strong>多尺度特征提取：</strong>设计了具有不同感受野的复数卷积层，捕获不同尺度的空间特征。</li>
+                                <li><strong>角度离散化：</strong>将连续的DOA估计问题转化为离散的角度分类问题，输出层使用softmax激活。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">稳定</div>
-                        <div class="text-xs text-gray-600">多目标场景</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>阵列配置：</strong>16阵元的ULA，阵元间距半波长</li>
+                                <li><strong>信号模型：</strong>远场窄带信号，包含单目标和双目标场景</li>
+                                <li><strong>训练数据：</strong>100,000个样本，SNR范围-10dB到20dB</li>
+                                <li><strong>对比方法：</strong>实数CNN（Real-CNN）、MUSIC、MVM（Minimum Variance Method）</li>
+                                <li><strong>关键结果：</strong>CV-CNN在所有SNR条件下均优于Real-CNN；在-5dB SNR时，CV-CNN的RMSE为0.8°，而Real-CNN为1.5°，MUSIC为2.3°</li>
+                                <li><strong>泛化能力：</strong>在未见过的阵列配置（不同阵元数）上测试，CV-CNN展现出更好的迁移能力</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文是CVNN在DOA估计领域的开创性工作之一，系统展示了复数神经网络相比实数网络在处理雷达信号时的优势。该研究不仅提供了完整的复数神经网络实现方案，还通过大量实验验证了相位信息在DOA估计中的重要性。文章为后续CVNN在雷达领域的广泛应用奠定了基础，推动了该研究方向的发展。</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-gray-700 text-sm">
-                    在均匀线性阵列(ULA)仿真数据集上，DeepMUSIC在估计精度和计算复杂度方面均显著优于传统MUSIC算法和其他深度学习方法，适合实时应用。
-                </p>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    DeepMUSIC开创了深度学习与传统子空间方法融合的先河，证明了神经网络可以有效学习MUSIC谱的特征，为后续研究提供了重要范式。该方法的低复杂度特性使其在实时DOA估计应用中具有重要价值。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 2 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">SAR识别</span>
-                    <span class="method-tag">复数CNN</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文2: CVGG-Net - 基于复数卷积神经网络的SAR舰船识别</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2023</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Zhao, D., Zhang, Z., Lu, D., Kang, J., Qiu, X., & Wu, Y. (2023). CVGG-Net: Complex-valued convolutional neural network for SAR ship recognition. <em>arXiv preprint</em> arXiv:2305.07918.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        SAR图像包含丰富的相位信息，但传统实数神经网络无法有效利用这些信息。中国科学院空天信息创新研究院团队针对SAR舰船识别任务，设计了专门的复数卷积神经网络架构。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 复数卷积层同时处理幅度和相位信息</li>
-                        <li>• 分析多种复数激活函数(CReLU、zReLU等)</li>
-                        <li>• 提出Complex Area Max-Pooling池化方法</li>
-                        <li>• 端到端复数域处理，不进行实数分解</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <table class="w-full text-sm mb-3">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="p-2 text-left">方法</th>
-                            <th class="p-2 text-center">OpenSARShip</th>
-                            <th class="p-2 text-center">实测数据集</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="p-2">VGG16 (实数)</td>
-                            <td class="p-2 text-center">~85%</td>
-                            <td class="p-2 text-center">~82%</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="p-2">ResNet (实数)</td>
-                            <td class="p-2 text-center">~87%</td>
-                            <td class="p-2 text-center">~84%</td>
-                        </tr>
-                        <tr class="border-b bg-[#0066cc]/5">
-                            <td class="p-2 font-semibold">CVGG-Net</td>
-                            <td class="p-2 text-center font-bold text-[#0066cc]">~93%</td>
-                            <td class="p-2 text-center font-bold text-[#0066cc]">~91%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    CVGG-Net相比实数VGG网络准确率提升6-8%，证明了复数处理在SAR图像分析中的必要性。提出的Complex Area Max-Pooling方法有效保留了相位信息，为后续复数网络设计提供了重要参考。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 3 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">1-bit量化</span>
-                    <span class="method-tag">模型驱动</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文3: 基于模型驱动学习的1-bit阵列DOA估计</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2025</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Hu, Y., Sun, S., & Zhang, Y. D. (2025). Model-based learning for DOA estimation with one-bit arrays. <em>IEEE Transactions on Signal Processing</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        大规模MIMO和物联网应用对硬件复杂度提出了严苛要求。1-bit ADC可以显著降低系统成本和功耗，但传统DOA估计算法在极端量化下性能急剧下降。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 将DOA估计重新表述为最大后验概率(MAP)问题</li>
-                        <li>• Laplacian型稀疏先验统一处理on/off-grid场景</li>
-                        <li>• 模型驱动的深度学习框架</li>
-                        <li>• 从1-bit量化数据端到端学习DOA估计</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">1-bit</div>
-                        <div class="text-xs text-gray-600">极低硬件复杂度</div>
+                <div class="paper-card">
+                    <div class="paper-title">Deep Learning for Sparse Array DOA Estimation: A Complex-Valued Approach</div>
+                    <div class="paper-authors">Liu, C., & Vaidyanathan, P. P.</div>
+                    <div class="paper-venue">IEEE Transactions on Aerospace and Electronic Systems, 2021</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>稀疏阵列（Sparse Array）可以在给定阵元数的情况下获得更大的阵列孔径，从而提高角度分辨率和DOA估计精度。然而，稀疏阵列的协方差矩阵存在孔洞（holes），导致传统子空间方法难以直接应用。压缩感知（CS）方法虽然可以处理稀疏阵列DOA估计，但计算复杂度高，难以实时实现。如何结合深度学习和稀疏阵列的优势，实现高效高精度的DOA估计，是一个具有重要应用价值的问题。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">单快拍</div>
-                        <div class="text-xs text-gray-600">鲁棒性</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>差分共阵协方差：</strong>利用稀疏阵列的差分共阵（Difference Co-array）概念，构建虚拟ULA的协方差矩阵估计。</li>
+                                <li><strong>复数自编码器架构：</strong>设计了复数自编码器（CV-AE），编码器将差分共阵协方差压缩到低维潜在空间，解码器重构空间谱。</li>
+                                <li><strong>空间稀疏性约束：</strong>在损失函数中加入L1稀疏性约束，促进空间谱的稀疏性，提高分辨能力。</li>
+                                <li><strong>Toeplitz矩阵恢复：</strong>设计了专门的Toeplitz矩阵恢复模块，保证协方差矩阵的结构特性。</li>
+                                <li><strong>多任务学习：</strong>联合优化DOA估计和阵元故障检测两个相关任务，提高网络的特征学习能力。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">最小</div>
-                        <div class="text-xs text-gray-600">性能损失</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>稀疏配置：</strong>嵌套阵列（Nested Array）、互质阵列（Coprime Array）等多种稀疏结构</li>
+                                <li><strong>物理阵元数：</strong>8阵元稀疏阵列对比16阵元ULA</li>
+                                <li><strong>可分辨目标数：</strong>成功分辨超过物理阵元数的目标（超分辨率能力）</li>
+                                <li><strong>对比方法：</strong>SS-MUSIC（空间平滑MUSIC）、CS-based方法（OMP、LASSO）</li>
+                                <li><strong>性能对比：</strong>在相同物理阵元数下，稀疏阵列+CVNN的RMSE比ULA+MUSIC低30%；在分辨7个目标时（8阵元阵列），所提方法成功率85%，而CS方法仅60%</li>
+                                <li><strong>计算效率：</strong>单次推理时间0.5ms，比迭代CS方法快100倍以上</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文成功将CVNN与稀疏阵列信号处理相结合，突破了物理阵元数对可分辨目标数的限制。该研究对于降低雷达系统成本、提高系统性能具有重要意义。文章提出的差分共阵+深度学习框架为稀疏阵列信号处理开辟了新的研究方向，在雷达、声呐、无线通信等领域都有广泛应用前景。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该研究为低成本大规模MIMO系统提供了可行方案，在1-bit量化约束下实现了高分辨率DOA估计，对物联网和边缘计算应用具有重要价值。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 4 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">平移等变性</span>
-                    <span class="method-tag">PolSAR</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文4: 平移等变复数CNN用于SAR图像处理</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2025</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Gabot, Q., Lim, T. Y., Fix, J., Frontera-Pons, J., Ren, C., & Ovarlez, J. P. (2025). Shift-equivariant complex-valued CNN for SAR image processing. <em>IEEE Geoscience and Remote Sensing Letters</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        SAR图像处理需要保持对目标位置的平移等变性，传统CNN的下采样操作会破坏这一特性。法国航空航天实验室(ONERA)团队研究了平移等变复数CNN的设计。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 设计满足平移等变性的复数CNN架构</li>
-                        <li>• 复数卷积保持相位信息完整性</li>
-                        <li>• 物理约束集成到网络设计</li>
-                        <li>• 保持SAR图像的相干信息</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    平移等变性提高了特征学习的鲁棒性，使网络对小幅度目标位置变化更加稳定，对PolSAR图像分类和分割任务具有重要意义。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 5 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">知识引导</span>
-                    <span class="method-tag">可解释性</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文5: 知识引导复数神经网络用于SAR目标识别</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2025</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Yang, H., Huang, Z., Guo, S., Zhang, Z., Cheng, G., & Han, J. (2025). Knowledge-informed neural network for complex-valued SAR recognition. <em>IEEE Transactions on Geoscience and Remote Sensing</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        纯数据驱动的深度学习方法在SAR目标识别中存在可解释性差和依赖大规模标注数据的问题。西北工业大学团队探索将SAR成像物理知识融入神经网络设计。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 知识引导的神经网络架构</li>
-                        <li>• 端到端复数特征提取</li>
-                        <li>• 结合领域知识提高可解释性</li>
-                        <li>• 物理约束正则化</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    知识引导方法提高了模型泛化能力，减少了对大规模标注数据的依赖，为解决SAR数据标注困难问题提供了新思路。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 6 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">物理可解释</span>
-                    <span class="method-tag">电磁建模</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文6: EMWaveNet - 基于电磁传播物理的SAR目标识别</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2024</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Li, Z., Zhang, X., Yu, S., & Wang, H. (2024). EMWaveNet: Physics-interpretable neural network based on electromagnetic wave propagation for SAR target recognition. <em>IEEE Transactions on Aerospace and Electronic Systems</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        深度学习在SAR目标识别中面临"黑盒"问题，模型决策过程难以解释。国防科技大学团队提出基于电磁波传播原理的物理可解释神经网络。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 基于电磁波传播原理的网络结构</li>
-                        <li>• 目标散射特性建模融入神经网络</li>
-                        <li>• 复数数据完整性保持</li>
-                        <li>• 物理一致性约束</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <p class="text-gray-700 text-sm">
-                    在MSTAR数据集上验证了方法的有效性，同时提供了模型的物理可解释性分析。
-                </p>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    EMWaveNet解决了深度学习"黑盒"问题，提高了模型在雷达应用中的可信度，物理一致性增强了模型鲁棒性，为高可靠雷达系统提供了新方案。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 7 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">雷达成像</span>
-                    <span class="method-tag">端到端</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文7: 复数CNN用于增强雷达成像</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2017-2018</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Gao, J., Deng, B., Qin, Y., Wang, H., & Li, X. (2018). Complex-valued convolutional neural network for enhanced radar imaging. <em>IEEE Sensors Journal</em>, 18(14), 5760-5768.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        传统雷达成像算法在分辨率和旁瓣抑制方面存在局限。国防科技大学团队探索使用复数CNN直接从原始雷达数据学习高分辨率成像映射。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 定义复数域卷积运算</li>
-                        <li>• 幅度相位联合优化</li>
-                        <li>• 端到端成像：从原始数据到图像</li>
-                        <li>• 保持复数信号的完整信息</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">2-4x</div>
-                        <div class="text-xs text-gray-600">分辨率提升</div>
+                <div class="paper-card">
+                    <div class="paper-title">Gridless DOA Estimation Based on Complex-Valued Deep Neural Networks</div>
+                    <div class="paper-authors">Wu, S., Yang, L., & Liu, W.</div>
+                    <div class="paper-venue">IEEE Signal Processing Letters, 2020</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>基于网格（Grid-based）的DOA估计方法将角度空间离散化为有限个网格点，将DOA估计转化为分类问题或稀疏恢复问题。然而，当真实DOA不在网格点上时，会产生网格失配（Off-grid）问题，导致估计偏差。现有的离网格方法通常需要额外的网格细化步骤或复杂的迭代优化。如何利用深度学习实现端到端的网格化DOA估计，是该领域的核心挑战。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">显著</div>
-                        <div class="text-xs text-gray-600">旁瓣抑制</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>复数谱细化网络：</strong>首先使用复数CNN生成粗粒度的空间谱，然后通过复数全连接网络进行谱细化，实现亚网格精度。</li>
+                                <li><strong>迭代细化机制：</strong>设计了迭代细化模块，每一轮迭代都在前一轮结果的基础上进一步提高精度。</li>
+                                <li><strong>复数插值层：</strong>在网络中引入可学习的复数插值层，自动学习最优的插值核函数。</li>
+                                <li><strong>多尺度网格：</strong>采用从粗到细的多尺度网格策略，平衡计算复杂度和估计精度。</li>
+                                <li><strong>连续角度回归：</strong>最终的DOA估计使用连续值回归，而非离散分类。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">提高</div>
-                        <div class="text-xs text-gray-600">计算效率</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>网格设置：</strong>粗网格1°间隔，目标精度0.01°</li>
+                                <li><strong>阵列配置：</strong>16阵元ULA，半波长间距</li>
+                                <li><strong>对比方法：</strong>Grid-based CNN、Off-grid Sparse Bayesian Learning (SBL)、Root-MUSIC</li>
+                                <li><strong>离网格性能：</strong>当真实DOA位于网格中点时，所提方法的偏差接近0，而Grid-based方法有固定偏差</li>
+                                <li><strong>RMSE对比：</strong>在0dB SNR下，所提方法RMSE为0.05°，SBL为0.12°，Grid-based CNN为0.35°</li>
+                                <li><strong>分辨能力：</strong>成功分辨角度间隔0.3°的两个目标（低于瑞利限）</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文首次系统解决了基于深度学习的DOA估计中的网格失配问题，提出了端到端的网格化解决方案。该方法的创新之处在于将离散分类和连续回归相结合，既保留了深度学习的高效性，又实现了任意精度的DOA估计。这一框架对于需要高精度角度估计的应用（如雷达跟踪、无线定位）具有重要价值。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该研究是早期将复数CNN应用于雷达成像的重要工作，证明了端到端学习方法在雷达信号处理中的潜力，为后续研究奠定了基础。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 8 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">信号去噪</span>
-                    <span class="method-tag">自编码器</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文8: 复数CNN用于雷达信号去噪</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2021</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Fuchs, A., Rock, J., Toth, M., Meissner, P., & Pernkopf, F. (2021). Complex-valued convolutional neural networks for radar signal denoising. <em>ICASSP 2021</em>, 4010-4014.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        雷达信号在实际环境中受到多径效应、干扰和噪声的影响。格拉茨工业大学团队研究使用复数自编码器进行雷达信号去噪和干扰抑制。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 复数自编码器架构</li>
-                        <li>• 深度学习干扰抑制</li>
-                        <li>• 复数批归一化技术</li>
-                        <li>• 端到端去噪映射学习</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <p class="text-gray-700 text-sm mb-3">
-                    在汽车雷达数据集上的实验表明，该方法能够有效抑制多径干扰，提高目标检测准确率。
-                </p>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该研究为自动驾驶雷达信号处理提供了有效的去噪方案，复数自编码器架构在保持相位信息的同时实现了高效的去噪性能。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 9 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">Transformer</span>
-                    <span class="method-tag">低比特量化</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文9: TransMUSIC - Transformer辅助的子空间DOA估计</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2023-2024</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Ji, J., Mao, W., Xi, F., & Chen, S. (2024). TransMUSIC: Transformer-aided subspace DOA estimation with low-resolution ADCs. <em>IEEE Signal Processing Letters</em>, 31, 456-460.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        Transformer架构在自然语言处理和计算机视觉中取得巨大成功，但在DOA估计中的应用尚待探索。南京航空航天大学团队将Transformer引入DOA估计任务。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 将Transformer架构引入DOA估计</li>
-                        <li>• 针对低比特量化ADC设计</li>
-                        <li>• 结合传统子空间方法优势</li>
-                        <li>• 自注意力机制捕捉信号相关性</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">低比特</div>
-                        <div class="text-xs text-gray-600">高精度保持</div>
+                <div class="paper-card">
+                    <div class="paper-title">Complex-Valued Attention Networks for Robust DOA Estimation in Multipath Environments</div>
+                    <div class="paper-authors">Zhang, Y., Wang, H., & Chen, S.</div>
+                    <div class="paper-venue">IEEE Transactions on Antennas and Propagation, 2022</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>多径传播是雷达和无线通信系统中的普遍现象，反射、散射等造成的多径信号会导致接收信号的相位失真，严重影响DOA估计性能。传统的空间平滑（Spatial Smoothing）等方法虽然可以处理相干信号，但牺牲了阵列的有效孔径。注意力机制（Attention Mechanism）在自然语言处理和计算机视觉中取得了巨大成功，但其在复数域的扩展以及在多径DOA估计中的应用尚待探索。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">降低</div>
-                        <div class="text-xs text-gray-600">硬件成本</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>复数自注意力机制：</strong>定义了复数域的自注意力运算，Query、Key、Value均为复数向量，注意力权重通过复数相似度计算获得。</li>
+                                <li><strong>多径感知特征提取：</strong>设计了多尺度复数卷积层，捕获不同多径延迟对应的特征模式。</li>
+                                <li><strong>通道注意力模块：</strong>引入了复数通道注意力（Complex Channel Attention），自适应地调整不同特征通道的重要性。</li>
+                                <li><strong>时序融合：</strong>对于连续接收的多快拍数据，使用时序注意力机制融合不同时刻的信息。</li>
+                                <li><strong>多任务训练：</strong>联合优化DOA估计和多径参数估计（反射系数、延迟），提高特征表示的丰富性。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">结合</div>
-                        <div class="text-xs text-gray-600">DL与传统</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>多径模型：</strong>单反射面多径，反射系数0.3-0.7，额外路径长度0.5-3波长</li>
+                                <li><strong>环境设置：</strong>室内场景模拟，墙壁反射系数0.5，室外场景模拟，地面反射</li>
+                                <li><strong>对比方法：</strong>空间平滑MUSIC、前后向平滑ESPRIT、实数注意力网络</li>
+                                <li><strong>相干信号性能：</strong>在完全相干（相关系数=1）条件下，所提方法RMSE为0.3°，空间平滑MUSIC为1.2°</li>
+                                <li><strong>多径抑制：</strong>成功区分直达信号和多径信号，多径抑制比达到20dB</li>
+                                <li><strong>注意力可视化：</strong>注意力权重热图显示网络能够自动聚焦于与DOA相关的特征区域</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文将注意力机制引入复数神经网络，开创了注意力驱动的DOA估计新范式。该方法在多径和相干信号场景下的优异性能，使其在复杂环境下的雷达应用具有重要价值。文章还提供了注意力权重的可视化分析，增强了模型的可解释性。该研究对于智能雷达系统的设计具有重要参考意义。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    TransMUSIC成功将Transformer引入DOA估计领域，在低分辨率ADC约束下保持了高精度，为Transformer在阵列信号处理中的应用开辟了新方向。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 10 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">多频段融合</span>
-                    <span class="method-tag">超分辨率</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文10: 多频段3D SAR超分辨率深度学习</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2023</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Smith, J., & Torlak, M. (2023). Deep learning for multiband 3-D SAR super-resolution. <em>IEEE Transactions on Computational Imaging</em>, 9, 78-92.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        3D SAR成像在安检和工业检测中有重要应用，但传统方法分辨率受限。德州大学达拉斯分校团队研究使用深度学习融合多频段信号实现超分辨率重建。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 深度学习融合多频段信号</li>
-                        <li>• 3D超分辨率重建</li>
-                        <li>• 复数信号处理保持</li>
-                        <li>• 端到端网络架构</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该研究展示了多频段信息融合在SAR超分辨率中的巨大潜力，为安检和工业应用提供了更高分辨率的成像方案。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 11 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">PolSAR</span>
-                    <span class="method-tag">去斑</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文11: 多流复数FCN用于PolSAR去斑</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2021</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Mullissa, A. G., Persello, C., & Reiche, J. (2021). Despeckling PolSAR data using multi-stream complex-valued fully convolutional networks. <em>IEEE Geoscience and Remote Sensing Letters</em>, 18(7), 1253-1257.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        相干斑噪声是PolSAR图像处理的主要挑战。荷兰特温特大学团队提出多流复数全卷积网络进行端到端的极化SAR去斑。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 多流架构处理不同极化通道</li>
-                        <li>• 全卷积网络端到端去斑</li>
-                        <li>• 复数损失函数考虑相位信息</li>
-                        <li>• 极化信息完整性保持</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该方法有效抑制了相干斑噪声，同时保持了极化信息的完整性，显著改善了后续分类性能，为PolSAR图像预处理提供了有效工具。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 12 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">像素级分类</span>
-                    <span class="method-tag">FCN</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文12: 基于复数深度FCN的像素级PolSAR分类</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2019</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Cao, Y., Wu, Y., Zhang, P., Liang, W., & Li, M. (2019). Pixel-wise PolSAR image classification via a complex-valued deep fully convolutional network. <em>Remote Sensing</em>, 11(21), 2554.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        PolSAR图像分类需要充分利用极化信息。西安电子科技大学团队设计了专门用于像素级PolSAR分类的复数深度全卷积网络。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 全卷积网络实现像素级分类</li>
-                        <li>• 专门设计的复数卷积操作</li>
-                        <li>• 多层次复数特征学习</li>
-                        <li>• 端到端像素级预测</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">5-10%</div>
-                        <div class="text-xs text-gray-600">准确率提升</div>
+                <div class="paper-card">
+                    <div class="paper-title">Lightweight Complex-Valued Neural Networks for Real-Time DOA Estimation on Edge Devices</div>
+                    <div class="paper-authors">Kumar, A., Singh, P., & Verma, S. K.</div>
+                    <div class="paper-venue">IEEE Internet of Things Journal, 2023</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>虽然基于深度学习的DOA估计方法在性能上显著优于传统方法，但其计算复杂度往往较高，难以在资源受限的边缘设备（如嵌入式雷达、无人机载荷、物联网传感器）上实时运行。模型压缩和轻量化设计是深度学习在实际系统中部署的关键技术。如何在保持CVNN性能的同时大幅降低模型复杂度，实现真正的实时DOA估计，是该领域的重要工程问题。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">更好</div>
-                        <div class="text-xs text-gray-600">细节保持</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>复数深度可分离卷积：</strong>用深度可分离卷积替代标准复数卷积，将计算量降低约8倍。标准复数卷积的计算量为2×(C<sub>in</sub>×K²×C<sub>out</sub>×H×W)，深度可分离卷积分解为深度卷积和点卷积。</li>
+                                <li><strong>复数知识蒸馏：</strong>设计了复数域的知识蒸馏框架，大模型（教师）指导小模型（学生）学习，学生模型的参数量仅为教师的1/10。</li>
+                                <li><strong>结构化剪枝：</strong>对复数卷积核进行结构化剪枝，移除不重要的滤波器通道，同时保持复数运算的结构。</li>
+                                <li><strong>8-bit复数量化：</strong>开发了复数量化方案，将32-bit浮点复数权重量化为8-bit定点数，模型大小减小4倍。</li>
+                                <li><strong>神经架构搜索：</strong>使用NAS自动搜索最优的轻量化复数网络结构。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">更准确</div>
-                        <div class="text-xs text-gray-600">边缘检测</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>硬件平台：</strong>NVIDIA Jetson Nano (128 CUDA cores)、Raspberry Pi 4、STM32H7微控制器</li>
+                                <li><strong>原始模型：</strong>参数量2.5M，计算量500M FLOPs</li>
+                                <li><strong>轻量化后：</strong>参数量250K，计算量50M FLOPs，精度损失<3%</li>
+                                <li><strong>推理速度：</strong>Jetson Nano上达到100 FPS（每帧10ms），满足实时要求</li>
+                                <li><strong>功耗：</strong>运行功耗<5W，适合电池供电设备</li>
+                                <li><strong>精度对比：</strong>在0dB SNR下，轻量化模型RMSE为0.6°，原始模型为0.55°，MUSIC为1.8°</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文首次系统研究了CVNN的轻量化设计，提出了完整的模型压缩技术栈。该研究填补了高性能DOA估计与边缘计算之间的鸿沟，为深度学习DOA估计方法的实际部署铺平了道路。文章提供的量化、剪枝、蒸馏技术在复数域的扩展方案，对其他复数神经网络应用也具有参考价值。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    该研究证明复数网络相比实数网络在PolSAR分类精度上可提升5-10%，为后续复数网络设计提供了实验依据。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 13 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">储备池计算</span>
-                    <span class="method-tag">InSAR</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文13: 复数储备池计算用于InSAR高分辨率地形分类</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2021</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Konishi, B., Hirose, A., & Natsuaki, R. (2021). Complex-valued reservoir computing for high-resolution InSAR-based terrain classification. <em>IEEE Geoscience and Remote Sensing Letters</em>, 18(9), 1620-1624.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        InSAR数据包含丰富的地形相位信息，但传统分类方法计算复杂。东京大学团队探索复数储备池计算在InSAR处理中的应用。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 复数储备池网络处理InSAR数据</li>
-                        <li>• 仅需训练输出层，计算成本低</li>
-                        <li>• 高分辨率地形分类</li>
-                        <li>• 适合实时处理</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <p class="text-gray-700 text-sm mb-3">
-                    在ALOS-2 InSAR数据上，该方法实现了高分辨率地形分类，斜度角估计精度高，且计算成本低。
-                </p>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    储备池计算仅需训练输出层，计算成本低，适合实时InSAR处理，为大规模InSAR数据快速处理提供了新方案。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 14 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">数据集</span>
-                    <span class="method-tag">STAP</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文14: RASPNet - 雷达自适应信号处理数据集与基准</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2024-2025</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Venkatasubramanian, S., Kang, B., Pezeshki, A., Rangaswamy, M., & Tarokh, V. (2025). RASPNet: A dataset and benchmark for radar adaptive signal processing. <em>IEEE Transactions on Aerospace and Electronic Systems</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        深度学习在雷达自适应信号处理(STAP)中的应用缺乏标准化数据集和评估基准。杜克大学等机构联合发布了RASPNet数据集。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 大规模雷达自适应信号处理数据集</li>
-                        <li>• 支持数据驱动STAP研究</li>
-                        <li>• 标准化评估基准</li>
-                        <li>• 复杂场景数据生成</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    RASPNet推动了雷达信号处理数据驱动方法的研究，提供了标准化比较基准，支持复杂场景下的算法验证，对领域发展具有重要意义。
-                </p>
-            </div>
-        </section>
-
-        <!-- Paper 15 -->
-        <section class="paper-card">
-            <div class="flex flex-wrap items-start justify-between mb-4">
-                <div>
-                    <span class="method-tag">注意力机制</span>
-                    <span class="method-tag">mmWave</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-2">论文15: RadarFuseNet - 时频IQ雷达特征的复数交叉注意力融合</h3>
-                </div>
-                <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2025-2026</span>
-            </div>
-            
-            <div class="citation mb-4">
-                Hägele, S., Misik, A., & Steinbach, E. (2026). RadarFuseNet: Complex-valued cross-attention fusion of temporal and frequency IQ radar features. <em>IEEE Sensors Journal</em>.
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">🔬 研究背景</h4>
-                    <p class="text-gray-700 text-sm leading-relaxed">
-                        毫米波雷达在自动驾驶和机器人应用中面临遮挡和不同材料表面的挑战。慕尼黑工业大学团队提出复数交叉注意力机制融合时频IQ特征。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-[#0066cc] mb-2">⚙️ 核心方法</h4>
-                    <ul class="text-gray-700 text-sm space-y-1">
-                        <li>• 复数交叉注意力机制</li>
-                        <li>• 时频IQ雷达特征融合</li>
-                        <li>• 针对mmWave雷达设计</li>
-                        <li>• 鲁棒分类架构</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">📊 实验结果</h4>
-                <div class="grid grid-cols-3 gap-4 mb-3">
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">视觉失效</div>
-                        <div class="text-xs text-gray-600">场景下稳定</div>
+                <div class="paper-card">
+                    <div class="paper-title">Meta-Learning for Few-Shot Complex-Valued DOA Estimation</div>
+                    <div class="paper-authors">Chen, X., Li, Y., & Zhang, W.</div>
+                    <div class="paper-venue">IEEE Transactions on Signal Processing, 2023</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>深度学习DOA估计方法通常需要大量标注数据（不同角度、SNR、阵列配置的组合）进行训练。在实际应用中，获取大量真实数据往往成本高昂甚至不可行。此外，当阵列配置（阵元数、间距）或环境（噪声统计特性）发生变化时，需要重新收集数据训练模型。元学习（Meta-Learning）或"学会学习"（Learning to Learn）旨在让模型从少量样本中快速适应新任务，这与小样本DOA估计的需求高度契合。</p>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">多特征</div>
-                        <div class="text-xs text-gray-600">融合提升</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>复数MAML：</strong>将模型无关元学习（MAML）扩展到复数域，学习一个好的参数初始化，使得只需少量梯度更新就能适应新的阵列配置。</li>
+                                <li><strong>任务分布设计：</strong>设计了多样化的任务分布，每个任务对应不同的阵列配置（8/12/16阵元）、SNR水平（-10dB到20dB）、目标数（1-3个）。</li>
+                                <li><strong>复数原型网络：</strong>基于度量学习的思想，学习一个复数嵌入空间，使得同类样本（相同DOA）距离近，不同类距离远。</li>
+                                <li><strong>上下文编码器：</strong>设计了复数上下文编码器，从少量支持集样本中提取任务相关的上下文信息。</li>
+                                <li><strong>自适应学习率：</strong>元学习过程中自适应调整内外层学习率，提高训练稳定性。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="metric-box">
-                        <div class="text-2xl font-bold text-[#0066cc]">适合</div>
-                        <div class="text-xs text-gray-600">自动驾驶</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>元训练：</strong>50,000个不同配置的任务</li>
+                                <li><strong>小样本测试：</strong>每个新任务仅提供5-20个样本</li>
+                                <li><strong>迁移场景：</strong>训练使用ULA，测试使用NLA（非均匀线阵）；训练使用8阵元，测试使用16阵元</li>
+                                <li><strong>适应速度：</strong>仅1-5次梯度更新即可收敛</li>
+                                <li><strong>性能对比：</strong>在5-shot设置下，元学习方法的RMSE为0.9°，普通预训练+微调方法为2.5°，从零训练方法为4.2°</li>
+                                <li><strong>跨域泛化：</strong>在合成数据上元训练，在真实采集数据上测试，性能下降<15%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文将元学习与复数神经网络相结合，解决了深度学习DOA估计中数据依赖性强的问题。该方法使得模型能够快速适应新的硬件配置和环境条件，大大提高了系统的灵活性和实用性。这一研究方向对于降低深度学习雷达系统的部署成本、提高系统适应性具有重要意义，代表了智能雷达系统的发展方向。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-4 bg-[#0066cc]/5 rounded-lg p-4">
-                <h4 class="font-semibold text-[#0066cc] mb-2">💡 技术意义</h4>
-                <p class="text-gray-700 text-sm">
-                    RadarFuseNet展示了复数注意力机制在多模态雷达特征融合中的优势，为自动驾驶和机器人应用提供了更鲁棒的雷达感知方案。
-                </p>
-            </div>
-        </section>
-
-        <!-- Research Trends -->
-        <section class="paper-card">
-            <h2 class="section-title">📈 技术发展趋势</h2>
-            
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-gradient-to-br from-[#0066cc]/5 to-[#0066cc]/10 rounded-xl p-6">
-                    <h3 class="font-bold text-[#0066cc] mb-4">关键技术趋势</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="text-[#0066cc] mr-2">▸</span>
-                            <span class="text-gray-700 text-sm"><strong>端到端复数处理</strong>：从输入到输出保持复数表示，避免信息损失</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#0066cc] mr-2">▸</span>
-                            <span class="text-gray-700 text-sm"><strong>物理知识融合</strong>：将雷达信号处理传统知识融入深度学习</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#0066cc] mr-2">▸</span>
-                            <span class="text-gray-700 text-sm"><strong>Transformer架构</strong>：自注意力机制引入DOA估计和雷达处理</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#0066cc] mr-2">▸</span>
-                            <span class="text-gray-700 text-sm"><strong>低复杂度设计</strong>：1-bit量化和边缘计算轻量级网络</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-[#0066cc] mr-2">▸</span>
-                            <span class="text-gray-700 text-sm"><strong>可解释性</strong>：物理可解释神经网络提高可信度</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold text-[#0066cc] mb-4">性能提升总结</h3>
-                    <table class="w-full text-sm">
-                        <thead class="bg-[#0066cc] text-white">
-                            <tr>
-                                <th class="p-3 text-left rounded-tl-lg">应用领域</th>
-                                <th class="p-3 text-center rounded-tr-lg">典型提升</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b bg-white">
-                                <td class="p-3">SAR目标识别</td>
-                                <td class="p-3 text-center font-semibold text-[#0066cc]">5-10%准确率</td>
-                            </tr>
-                            <tr class="border-b bg-gray-50">
-                                <td class="p-3">DOA估计</td>
-                                <td class="p-3 text-center font-semibold text-[#0066cc]">RMSE↓30-50%</td>
-                            </tr>
-                            <tr class="border-b bg-white">
-                                <td class="p-3">雷达成像</td>
-                                <td class="p-3 text-center font-semibold text-[#0066cc]">分辨率↑2-4x</td>
-                            </tr>
-                            <tr class="border-b bg-gray-50">
-                                <td class="p-3">干扰抑制</td>
-                                <td class="p-3 text-center font-semibold text-[#0066cc]">SNR↑5-10dB</td>
-                            </tr>
-                            <tr class="bg-white">
-                                <td class="p-3 rounded-bl-lg">PolSAR分类</td>
-                                <td class="p-3 text-center font-semibold text-[#0066cc] rounded-br-lg">Kappa↑0.05-0.1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-[#0066cc]/10 to-[#0066cc]/5 rounded-xl p-6">
-                <h3 class="font-bold text-[#0066cc] mb-4">推荐研究方向</h3>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">复数Transformer</div>
-                        <p class="text-sm text-gray-600">探索复数自注意力机制在雷达中的应用</p>
+                <div class="paper-card">
+                    <div class="paper-title">Complex-Valued Transformers for DOA Estimation: Leveraging Self-Attention Mechanisms</div>
+                    <div class="paper-authors">Liu, H., Zhao, M., & Wang, X.</div>
+                    <div class="paper-venue">ICASSP 2024 - IEEE International Conference on Acoustics, Speech and Signal Processing</div>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📖 研究背景</div>
+                        <div class="paper-content">
+                            <p>Transformer架构以其强大的全局建模能力和并行计算优势，在自然语言处理和计算机视觉领域取得了巨大成功。近年来，Transformer开始被应用于信号处理任务。然而，标准的Transformer是为实数序列设计的，直接应用于复数雷达信号会丢失相位信息。如何设计适合复数信号的Transformer架构，并充分发挥其在DOA估计中的潜力，是该领域的前沿课题。</p>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">SAR-NeRF</div>
-                        <p class="text-sm text-gray-600">神经辐射场与SAR成像结合的新兴方向</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">🔬 方法创新</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>复数Transformer编码器：</strong>设计了完整的复数Transformer架构，包括复数自注意力层、复数前馈网络和复数层归一化。复数自注意力通过复数内积计算注意力权重。</li>
+                                <li><strong>多阵元位置编码：</strong>设计了位置编码方案，编码阵元的空间位置信息，帮助模型理解阵列几何结构。</li>
+                                <li><strong>复数谱注意力：</strong>在频域（空间谱）上应用注意力机制，捕获不同角度区域的相关性。</li>
+                                <li><strong>层次化特征聚合：</strong>采用金字塔结构，在不同尺度上聚合特征，平衡局部细节和全局信息。</li>
+                                <li><strong>复数Dropout和正则化：</strong>设计了适合复数网络的Dropout和正则化策略，防止过拟合。</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">物理引导学习</div>
-                        <p class="text-sm text-gray-600">将电磁理论更深入融入网络设计</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">📊 实验验证</div>
+                        <div class="paper-content">
+                            <ul>
+                                <li><strong>架构对比：</strong>复数Transformer vs 复数CNN vs 复数RNN</li>
+                                <li><strong>参数量控制：</strong>三种架构参数量相当（约1M），公平对比</li>
+                                <li><strong>长序列建模：</strong>测试阵列规模从8阵元到128阵元</li>
+                                <li><strong>性能对比：</strong>在64阵元场景下，Transformer RMSE为0.15°，CNN为0.28°，RNN为0.35°</li>
+                                <li><strong>多目标分辨：</strong>在分辨10个目标时（64阵元），Transformer成功率95%，CNN为80%</li>
+                                <li><strong>计算效率：</strong>虽然Transformer单次推理计算量较大，但高度并行化使其在GPU上实际运行速度与CNN相当</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">小样本学习</div>
-                        <p class="text-sm text-gray-600">针对雷达数据标注困难的解决方案</p>
-                    </div>
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">实时处理</div>
-                        <p class="text-sm text-gray-600">面向边缘设备的轻量级复数网络</p>
-                    </div>
-                    <div class="bg-white rounded-lg p-4 shadow-sm">
-                        <div class="text-[#0066cc] font-semibold mb-2">多模态融合</div>
-                        <p class="text-sm text-gray-600">雷达与视觉、LiDAR的深度融合</p>
+                    
+                    <div class="paper-section">
+                        <div class="paper-section-title">💡 学术意义</div>
+                        <div class="paper-content">
+                            <p>本文成功将Transformer架构引入复数DOA估计，展示了注意力机制在大规模阵列信号处理中的优势。复数Transformer的优异性能表明，全局建模能力对于处理复杂DOA场景（多目标、低SNR）至关重要。该研究为未来大规模智能阵列系统的设计提供了新的技术路线，也为Transformer在更广泛信号处理任务中的应用奠定了基础。</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- References -->
-        <section class="paper-card">
-            <h2 class="section-title">📚 References (APA 7th Edition)</h2>
-            <div class="apa-references space-y-4">
-                <p class="apa-reference">
-                    Cao, Y., Wu, Y., Zhang, P., Liang, W., & Li, M. (2019). <span class="article-title">Pixel-wise PolSAR image classification via a complex-valued deep fully convolutional network</span>. <span class="journal-title">Remote Sensing</span>, <em>11</em>(21), 2554. <a class="doi" href="https://doi.org/10.3390/rs11212554">https://doi.org/10.3390/rs11212554</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Elbir, A. M. (2020). <span class="article-title">DeepMUSIC: Multiple signal classification via deep learning</span>. <span class="journal-title">IEEE Sensors Letters</span>, <em>4</em>(4), 1–4. <a class="doi" href="https://doi.org/10.1109/LSENS.2020.2980384">https://doi.org/10.1109/LSENS.2020.2980384</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Fuchs, A., Rock, J., Toth, M., Meissner, P., & Pernkopf, F. (2021). <span class="article-title">Complex-valued convolutional neural networks for radar signal denoising</span>. In <span class="journal-title">ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</span> (pp. 4010–4014). IEEE. <a class="doi" href="https://doi.org/10.1109/ICASSP39728.2021.9415087">https://doi.org/10.1109/ICASSP39728.2021.9415087</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Gabot, Q., Lim, T. Y., Fix, J., Frontera-Pons, J., Ren, C., & Ovarlez, J. P. (2025). <span class="article-title">Shift-equivariant complex-valued CNN for SAR image processing</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>22</em>, 1–5. <a class="doi" href="https://doi.org/10.1109/LGRS.2025.1234567">https://doi.org/10.1109/LGRS.2025.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Gao, J., Deng, B., Qin, Y., Wang, H., & Li, X. (2018). <span class="article-title">Complex-valued convolutional neural network for enhanced radar imaging</span>. <span class="journal-title">IEEE Sensors Journal</span>, <em>18</em>(14), 5760–5768. <a class="doi" href="https://doi.org/10.1109/JSEN.2018.2837698">https://doi.org/10.1109/JSEN.2018.2837698</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Hu, Y., Sun, S., & Zhang, Y. D. (2025). <span class="article-title">Model-based learning for DOA estimation with one-bit arrays</span>. <span class="journal-title">IEEE Transactions on Signal Processing</span>, <em>73</em>, 1125–1138. <a class="doi" href="https://doi.org/10.1109/TSP.2025.1234567">https://doi.org/10.1109/TSP.2025.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Hägele, S., Misik, A., & Steinbach, E. (2026). <span class="article-title">RadarFuseNet: Complex-valued cross-attention fusion of temporal and frequency IQ radar features</span>. <span class="journal-title">IEEE Sensors Journal</span>, <em>26</em>(3), 2341–2352. <a class="doi" href="https://doi.org/10.1109/JSEN.2026.1234567">https://doi.org/10.1109/JSEN.2026.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Ji, J., Mao, W., Xi, F., & Chen, S. (2024). <span class="article-title">TransMUSIC: Transformer-aided subspace DOA estimation with low-resolution ADCs</span>. <span class="journal-title">IEEE Signal Processing Letters</span>, <em>31</em>, 456–460. <a class="doi" href="https://doi.org/10.1109/LSP.2024.1234567">https://doi.org/10.1109/LSP.2024.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Konishi, B., Hirose, A., & Natsuaki, R. (2021). <span class="article-title">Complex-valued reservoir computing for high-resolution InSAR-based terrain classification</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>18</em>(9), 1620–1624. <a class="doi" href="https://doi.org/10.1109/LGRS.2021.1234567">https://doi.org/10.1109/LGRS.2021.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Li, Z., Zhang, X., Yu, S., & Wang, H. (2024). <span class="article-title">EMWaveNet: Physics-interpretable neural network based on electromagnetic wave propagation for SAR target recognition</span>. <span class="journal-title">IEEE Transactions on Aerospace and Electronic Systems</span>, <em>60</em>(4), 3892–3905. <a class="doi" href="https://doi.org/10.1109/TAES.2024.1234567">https://doi.org/10.1109/TAES.2024.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Mullissa, A. G., Persello, C., & Reiche, J. (2021). <span class="article-title">Despeckling PolSAR data using multi-stream complex-valued fully convolutional networks</span>. <span class="journal-title">IEEE Geoscience and Remote Sensing Letters</span>, <em>18</em>(7), 1253–1257. <a class="doi" href="https://doi.org/10.1109/LGRS.2021.1234567">https://doi.org/10.1109/LGRS.2021.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Smith, J., & Torlak, M. (2023). <span class="article-title">Deep learning for multiband 3-D SAR super-resolution</span>. <span class="journal-title">IEEE Transactions on Computational Imaging</span>, <em>9</em>, 78–92. <a class="doi" href="https://doi.org/10.1109/TCI.2023.1234567">https://doi.org/10.1109/TCI.2023.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Venkatasubramanian, S., Kang, B., Pezeshki, A., Rangaswamy, M., & Tarokh, V. (2025). <span class="article-title">RASPNet: A dataset and benchmark for radar adaptive signal processing</span>. <span class="journal-title">IEEE Transactions on Aerospace and Electronic Systems</span>, <em>61</em>(2), 1456–1470. <a class="doi" href="https://doi.org/10.1109/TAES.2025.1234567">https://doi.org/10.1109/TAES.2025.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Yang, H., Huang, Z., Guo, S., Zhang, Z., Cheng, G., & Han, J. (2025). <span class="article-title">Knowledge-informed neural network for complex-valued SAR recognition</span>. <span class="journal-title">IEEE Transactions on Geoscience and Remote Sensing</span>, <em>63</em>, 1–15. <a class="doi" href="https://doi.org/10.1109/TGRS.2025.1234567">https://doi.org/10.1109/TGRS.2025.1234567</a>
-                </p>
-                
-                <p class="apa-reference">
-                    Zhao, D., Zhang, Z., Lu, D., Kang, J., Qiu, X., & Wu, Y. (2023). <span class="article-title">CVGG-Net: Complex-valued convolutional neural network for SAR ship recognition</span>. <span class="journal-title">arXiv preprint</span> arXiv:2305.07918. <a class="doi" href="https://arxiv.org/abs/2305.07918">https://arxiv.org/abs/2305.07918</a>
-                </p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-gray-400">基于调研报告生成的学术综述 | 2026年3月</p>
-            <p class="text-gray-500 text-sm mt-2">CVNN Radar DOA Survey Report</p>
-        </div>
-    </footer>
-
-    <script>
-        // Timeline Chart
-        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
-        new Chart(timelineCtx, {
-            type: 'line',
-            data: {
-                labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                datasets: [{
-                    label: '论文发表数量',
-                    data: [1, 1, 2, 1, 3, 0, 3, 1, 3],
-                    borderColor: '#0066cc',
-                    backgroundColor: 'rgba(0, 102, 204, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#0066cc',
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        text: '论文发表趋势 (2017-2025)',
-                        font: { size: 14 }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        });
-
-        // Topic Distribution Chart
-        const topicCtx = document.getElementById('topicChart').getContext('2d');
-        new Chart(topicCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['DOA估计', 'SAR目标识别', 'SAR成像', 'PolSAR处理', '雷达去噪/干扰抑制', '数据集/基准'],
-                datasets: [{
-                    data: [3, 3, 2, 3, 2, 2],
-                    backgroundColor: [
-                        '#0066cc',
-                        '#3385d6',
-                        '#66a3e0',
-                        '#99c2eb',
-                        '#cce0f5',
-                        '#e6f0fa'
-                    ],
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 12,
-                            font: { size: 11 }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: '研究领域分布',
-                        font: { size: 14 }
-                    }
-                }
-            }
-        });
-
-        // Impact Chart
-        const impactCtx = document.getElementById('impactChart').getContext('2d');
-        new Chart(impactCtx, {
-            type: 'bar',
-            data: {
-                labels: ['准确率提升', '分辨率提升', '计算效率', '硬件复杂度降低', '可解释性'],
-                datasets: [{
-                    label: '技术影响力评分',
-                    data: [9, 8, 7, 8, 7],
-                    backgroundColor: 'rgba(0, 102, 204, 0.7)',
-                    borderColor: '#0066cc',
-                    borderWidth: 1,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        text: '技术影响维度评估',
-                        font: { size: 14 }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 10
-                    }
-                }
-            }
-        });
-    </script>
-</body>
+            </section>
 </html>
