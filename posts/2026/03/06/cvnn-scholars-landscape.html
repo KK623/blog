@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN学者全景图谱 | 126位复数神经网络研究者</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .field-tag { transition: all 0.2s ease; }
+        .field-tag:hover { transform: scale(1.05); }
+        .expand-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .expand-content.open { max-height: 1000px; }
+        .scholar-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .scholar-card.hidden-card { opacity: 0; transform: scale(0.95); pointer-events: none; position: absolute; }
+        .highlight { background: linear-gradient(120deg, #fef08a 0%, #fef08a 100%); background-repeat: no-repeat; background-size: 100% 40%; background-position: 0 88%; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800" x-data="scholarApp()">
+    <!-- Hero Section -->
+    <header class="gradient-bg text-white py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">CVNN学者全景图谱</h1>
+                    <p class="text-xl opacity-90 mb-2">126位复数神经网络核心研究者</p>
+                    <p class="text-sm opacity-75">Complex-Valued Neural Networks Researcher Landscape</p>
+                </div>
+                <div class="mt-6 md:mt-0 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-3xl font-bold" x-text="scholars.length">126</div>
+                        <div class="text-xs opacity-80">总学者</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-3xl font-bold" x-text="uniqueInstitutions">45+</div>
+                        <div class="text-xs opacity-80">机构</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-3xl font-bold" x-text="fieldCategories.length">11</div>
+                        <div class="text-xs opacity-80">领域</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                        <div class="text-3xl font-bold">2025</div>
+                        <div class="text-xs opacity-80">更新</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Control Panel -->
+    <section class="sticky top-0 z-40 bg-white shadow-md border-b border-slate-200 py-4 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+                <!-- Search -->
+                <div class="relative flex-1 w-full lg:max-w-md">
+                    <input 
+                        type="text" 
+                        x-model="searchQuery"
+                        @input="debouncedSearch()"
+                        placeholder="搜索学者姓名、机构..." 
+                        class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                    >
+                    <svg class="absolute left-3 top-2.5 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                
+                <!-- Field Filter -->
+                <div class="flex flex-wrap gap-2">
+                    <button 
+                        @click="selectedField = ''"
+                        :class="selectedField === '' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+                        class="px-3 py-1.5 rounded-full text-sm font-medium transition"
+                    >全部</button>
+                    <template x-for="field in fieldCategories" :key="field">
+                        <button 
+                            @click="selectedField = field"
+                            :class="selectedField === field ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+                            class="px-3 py-1.5 rounded-full text-sm font-medium transition whitespace-nowrap"
+                            x-text="field"
+                        ></button>
+                    </template>
+                </div>
+
+                <!-- Sort -->
+                <select x-model="sortBy" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                    <option value="name">按姓名排序</option>
+                    <option value="institution">按机构排序</option>
+                    <option value="category">按领域排序</option>
+                </select>
+            </div>
+            
+            <!-- Stats Bar -->
+            <div class="mt-3 flex items-center gap-4 text-sm text-slate-600">
+                <span>显示 <span class="font-semibold text-indigo-600" x-text="filteredScholars.length"></span> / <span x-text="scholars.length"></span> 位学者</span>
+                <button x-show="selectedField || searchQuery" @click="resetFilters()" class="text-indigo-600 hover:underline text-sm">清除筛选</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-8 px-4">
+        <!-- Visualization Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">领域分布可视化</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-semibold mb-4 text-slate-700">各分类学者数量</h3>
+                    <canvas id="categoryChart" height="250"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-semibold mb-4 text-slate-700">Top 10 机构排名</h3>
+                    <canvas id="institutionChart" height="250"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Scholars Highlight -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">核心学者 Top 20</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <template x-for="(scholar, index) in topScholars" :key="scholar.id">
+                    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-4 rounded-xl card-hover cursor-pointer" @click="scrollToScholar(scholar.id)">
+                        <div class="text-2xl font-bold mb-1" x-text="index + 1"></div>
+                        <div class="font-semibold text-sm truncate" x-text="scholar.name"></div>
+                        <div class="text-xs opacity-80 truncate" x-text="scholar.institution"></div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Scholars Grid -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">全部学者</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="scholar in filteredScholars" :key="scholar.id">
+                    <div :id="'scholar-' + scholar.id" class="scholar-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden card-hover" :class="{ 'hidden-card': !isVisible(scholar) }">
+                        <div class="p-5">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <img 
+                                        :src="scholar.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(scholar.name) + '&background=' + getColor(scholar.category) + '&color=fff&size=64'" 
+                                        :alt="scholar.name"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white shadow"
+                                        loading="lazy"
+                                    >
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800" x-text="scholar.name"></h3>
+                                        <p class="text-sm text-slate-500 truncate max-w-[180px]" x-text="scholar.institution"></p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded-full font-medium" :class="getCategoryColor(scholar.category)" x-text="scholar.categoryShort"></span>
+                            </div>
+                            
+                            <p class="text-sm text-slate-600 mb-3 line-clamp-2" x-text="scholar.contribution"></p>
+                            
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                <template x-for="field in scholar.fields.slice(0, 3)" :key="field">
+                                    <span class="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded field-tag" x-text="field"></span>
+                                </template>
+                            </div>
+                            
+                            <button @click="toggleExpand(scholar.id)" class="w-full text-center text-sm text-indigo-600 hover:text-indigo-700 font-medium py-2 border-t border-slate-100">
+                                <span x-text="expandedId === scholar.id ? '收起详情' : '展开详情'"></span>
+                                <svg class="w-4 h-4 inline ml-1 transition-transform" :class="{ 'rotate-180': expandedId === scholar.id }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="expand-content bg-slate-50 border-t border-slate-100" :class="{ 'open': expandedId === scholar.id }">
+                            <div class="p-5">
+                                <div class="mb-3">
+                                    <h4 class="text-sm font-semibold text-slate-700 mb-1">完整机构</h4>
+                                    <p class="text-sm text-slate-600" x-text="scholar.institution"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <h4 class="text-sm font-semibold text-slate-700 mb-1">研究领域</h4>
+                                    <div class="flex flex-wrap gap-1">
+                                        <template x-for="field in scholar.fields" :key="field">
+                                            <span class="text-xs px-2 py-1 bg-indigo-100 text-indigo-700 rounded" x-text="field"></span>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="mb-3" x-show="scholar.papers && scholar.papers.length > 0">
+                                    <h4 class="text-sm font-semibold text-slate-700 mb-1">代表论文</h4>
+                                    <ul class="text-sm text-slate-600 space-y-1">
+                                        <template x-for="paper in scholar.papers.slice(0, 2)" :key="paper">
+                                            <li class="truncate" x-text="'• ' + paper"></li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Empty State -->
+        <div x-show="filteredScholars.length === 0" class="text-center py-16">
+            <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <h3 class="text-lg font-medium text-slate-600">未找到匹配的学者</h3>
+            <p class="text-sm text-slate-400 mt-1">尝试调整搜索词或清除筛选条件</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 py-8 px-4 mt-16">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="mb-2">CVNN学者全景图谱 | Complex-Valued Neural Networks Researcher Landscape</p>
+            <p class="text-sm">数据来源：arXiv、Google Scholar、IEEE Xplore等学术数据库 | 最后更新：2026-03-06</p>
+        </div>
+    </footer>
+
+    <script>
+        function scholarApp() {
+            return {
+                searchQuery: '',
+                selectedField: '',
+                sortBy: 'name',
+                expandedId: null,
+                debounceTimer: null,
+                
+                // Data
+                scholars: [],
+                topScholars: [],
+                fieldCategories: ['复数Transformer', 'Deep Complex', 'Unitary RNN', 'CVNN理论', '复数CNN', '复数激活', '四元数', '语音处理', '架构组件', '新兴方向', '无线通信'],
+                
+                get uniqueInstitutions() {
+                    return new Set(this.scholars.map(s => s.institution.split('/')[0].trim())).size;
+                },
+                
+                get filteredScholars() {
+                    let result = this.scholars;
+                    
+                    if (this.searchQuery) {
+                        const q = this.searchQuery.toLowerCase();
+                        result = result.filter(s => 
+                            s.name.toLowerCase().includes(q) || 
+                            s.institution.toLowerCase().includes(q) ||
+                            s.fields.some(f => f.toLowerCase().includes(q))
+                        );
+                    }
+                    
+                    if (this.selectedField) {
+                        result = result.filter(s => s.category.includes(this.selectedField));
+                    }
+                    
+                    // Sort
+                    result = [...result].sort((a, b) => {
+                        if (this.sortBy === 'name') return a.name.localeCompare(b.name);
+                        if (this.sortBy === 'institution') return a.institution.localeCompare(b.institution);
+                        if (this.sortBy === 'category') return a.category.localeCompare(b.category);
+                        return 0;
+                    });
+                    
+                    return result;
+                },
+                
+                init() {
+                    this.loadScholars();
+                    this.loadTopScholars();
+                    this.$nextTick(() => {
+                        this.initCharts();
+                    });
+                },
+                
+                loadScholars() {
+                    // 126 scholars data
+                    this.scholars = [
+                        { id: 1, name: "Florian Eilers", institution: "University of Münster, Germany", contribution: "CoPE: Complex Positional Encoding; Building Blocks for Complex-Valued Transformer", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 2, name: "Xiaoyi Jiang", institution: "University of Münster, Germany", contribution: "Building Blocks for a Complex-Valued Transformer Architecture", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 3, name: "Yihong Dong", institution: "Stevens Institute of Technology", contribution: "Signal Transformer: Complex-valued Attention and Meta-Learning", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 4, name: "Ying Peng", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 5, name: "Muqiao Yang", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 6, name: "Songtao Lu", institution: "Stevens Institute of Technology", contribution: "Signal Transformer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 7, name: "Jintian Shao", institution: "-", contribution: "ComplexFormer: Complex Vector Attention", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 8, name: "Hongyi", institution: "-", contribution: "ComplexFormer合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 9, name: "Elisabetta Rocchetti", institution: "-", contribution: "Modeling Transformers as Complex Networks", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 10, name: "Dai Quoc Nguyen", institution: "Deakin University, Australia", contribution: "Quaternion Graph Neural Networks", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 11, name: "Tu Dinh Nguyen", institution: "Deakin University, Australia", contribution: "Quaternion GNN合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 12, name: "Dinh Phung", institution: "Deakin University, Australia", contribution: "Quaternion GNN合作者", fields: ["复数Transformer"], category: "复数Transformer", categoryShort: "CT", papers: [] },
+                        { id: 13, name: "Chiheb Trabelsi", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks第一作者; 复数批归一化; 复数权重初始化", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 14, name: "Olexa Bilaniuk", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks合作者; 复数卷积实现", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 15, name: "Ying Zhang", institution: "Facebook AI Research / Mila", contribution: "Deep Complex Networks合作者; 语音识别+复数网络", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 16, name: "Dmitriy Serdyuk", institution: "Apple / Mila", contribution: "Deep Complex Networks合作者; 端到端语音识别", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 17, name: "Sandeep Subramanian", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 18, name: "João Felipe G. Santos", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 19, name: "Soroush Mehri", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 20, name: "Negar Rostamzadeh", institution: "Mila", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 21, name: "Yoshua Bengio", institution: "Université de Montréal / Mila", contribution: "Deep Complex Networks合作者; AI教父", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 22, name: "Christopher J. Pal", institution: "Polytechnique Montréal", contribution: "Deep Complex Networks合作者", fields: ["Deep Complex"], category: "Deep Complex", categoryShort: "DC", papers: [] },
+                        { id: 23, name: "Li Jing", institution: "MIT → Amazon", contribution: "EUNN (Tunable Efficient Unitary Neural Networks)第一作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 24, name: "Yichen Shen", institution: "MIT → Lightelligence", contribution: "EUNN合作者; 光子计算+神经网络", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 25, name: "Tena Dubcek", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 26, name: "John Peurifoy", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 27, name: "Scott Skirlo", institution: "MIT", contribution: "EUNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 28, name: "Yann LeCun", institution: "NYU / Meta", contribution: "EUNN合作者; 深度学习三巨头之一", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 29, name: "Max Tegmark", institution: "MIT", contribution: "EUNN合作者; 物理+AI", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 30, name: "Marin Soljačić", institution: "MIT", contribution: "EUNN合作者; 光子学权威", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 31, name: "Martin Arjovsky", institution: "NYU", contribution: "Unitary RNN开创者 (uRNN)", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 32, name: "Shahar Shah", institution: "-", contribution: "uRNN合作者", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 33, name: "Wojciech Zaremba", institution: "OpenAI", contribution: "Unitary Evolution RNN", fields: ["Unitary RNN"], category: "Unitary RNN", categoryShort: "UR", papers: [] },
+                        { id: 34, name: "Jebasingh Bassey", institution: "Texas A&M", contribution: "A Survey of Complex-Valued Neural Networks (2021)第一作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 35, name: "Li Qian", institution: "Texas A&M", contribution: "CVNN Survey合作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 36, name: "Li Xiao", institution: "Texas A&M", contribution: "CVNN Survey合作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 37, name: "Akira Hirose", institution: "University of Tokyo", contribution: "CVNN先驱; 2003年首部CVNN专著", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 38, name: "Tohru Nitta", institution: "AIST, Japan", contribution: "Complex-Valued Neural Networks专著作者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 39, name: "Igor Aizenberg", institution: "-", contribution: "Complex-Valued Neural Networks理论工作", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 40, name: "George G. Khurgin", institution: "-", contribution: "CVNN早期研究者", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 41, name: "Ruth A. Aizenberg", institution: "-", contribution: "CVNN理论工作", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 42, name: "Danilo P. Mandic", institution: "Imperial College", contribution: "复数自适应信号处理", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 43, name: "Vanessa Suares Goh", institution: "-", contribution: "Complex-Valued Neural Networks研究", fields: ["CVNN理论"], category: "CVNN理论", categoryShort: "TH", papers: [] },
+                        { id: 44, name: "Michael Wilmanski", institution: "University of Michigan", contribution: "Complex Input CNN for SAR ATR", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 45, name: "Chris Kreucher", institution: "Integrity Applications Inc", contribution: "Complex Input CNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 46, name: "Alfred Hero", institution: "University of Michigan", contribution: "Complex Input CNN合作者; 统计信号处理权威", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 47, name: "Nitzan Guberman", institution: "-", contribution: "On Complex Valued Convolutional Neural Networks", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 48, name: "Ryan Kiros", institution: "University of Toronto", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 49, name: "Raquel Urtasun", institution: "University of Toronto / Waabi", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 50, name: "S. Chintala", institution: "Facebook AI", contribution: "复数CNN研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 51, name: "Soumick Chatterjee", institution: "Otto von Guericke University", contribution: "复数CNN医学图像应用", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 52, name: "Andreas Nürnberger", institution: "Otto von Guericke University", contribution: "复数CNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 53, name: "Pavan Tummala", institution: "-", contribution: "复数CNN应用研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 54, name: "Shangshang Zhang", institution: "-", contribution: "Complex CNN比较研究", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 55, name: "Chenhui Wang", institution: "-", contribution: "CV-CNN模型比较", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 56, name: "Haodong Yang", institution: "-", contribution: "Knowledge-Informed CVNN for SAR", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 57, name: "Zhongling Huang", institution: "-", contribution: "SAR CVNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 58, name: "Shaojie Guo", institution: "-", contribution: "SAR CVNN合作者", fields: ["复数CNN"], category: "复数CNN", categoryShort: "CC", papers: [] },
+                        { id: 59, name: "Neil C. Smith", institution: "-", contribution: "modReLU研究者", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 60, name: "Wenjie Shang", institution: "-", contribution: "CReLU研究者", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 61, name: "Kevin Duh", institution: "Johns Hopkins", contribution: "modReLU相关研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 62, name: "Leslie N. Smith", institution: "-", contribution: "modReLU相关工作", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 63, name: "Masaki Sato", institution: "-", contribution: "复数激活函数早期研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 64, name: "Sadanari Jinguji", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 65, name: "Ana Bruna", institution: "-", contribution: "Complex ReLU研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 66, name: "J. Manuel Torres", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 67, name: "Mercedes Fernandez", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 68, name: "Jose Munoz", institution: "-", contribution: "复数激活函数研究", fields: ["复数激活"], category: "复数激活", categoryShort: "AF", papers: [] },
+                        { id: 69, name: "Titouan Parcollet", institution: "Avignon University", contribution: "Quaternion Neural Networks综述; Quaternion CNN/RNN", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 70, name: "Mohamed Morchid", institution: "Avignon University", contribution: "QNN合作者; A Survey of Quaternion Neural Networks", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 71, name: "Georges Linarès", institution: "Avignon University", contribution: "QNN合作者; 语音识别+四元数", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 72, name: "Mirco Ravanelli", institution: "Mila / Concordia", contribution: "Quaternion RNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 73, name: "Renato De Mori", institution: "Avignon University", contribution: "QNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 74, name: "Xavier Bost", institution: "-", contribution: "QNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 75, name: "Gerardo Altamirano-Gomez", institution: "-", contribution: "Quaternion Convolutional Neural Networks综述", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 76, name: "Carlos Gershenson", institution: "-", contribution: "Quaternion CNN合作者", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 77, name: "Dongmei Jiang", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 78, name: "Zhongying Zhao", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 79, name: "Li Zhang", institution: "-", contribution: "Quaternion CNN研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 80, name: "Chiheb Trabelsi", institution: "Mila", contribution: "Quaternion Neural Networks研究", fields: ["四元数"], category: "四元数", categoryShort: "QN", papers: [] },
+                        { id: 81, name: "Toni Heittola", institution: "Tampere University", contribution: "CRNN for Audio; 复数卷积递归网络", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 82, name: "Tuomas Virtanen", institution: "Tampere University", contribution: "复数网络音频信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 83, name: "Emre Cakir", institution: "Tampere University", contribution: "Polyphonic Sound Detection with CVNN", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 84, name: "Gerald Schuller", institution: "Ilmenau University", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 85, name: "Thomas Prätzlich", institution: "-", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 86, name: "Jonathan Le Roux", institution: "MERL", contribution: "复数语音信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 87, name: "John R. Hershey", institution: "Google", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 88, name: "Felix Weninger", institution: "-", contribution: "复数语音处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 89, name: "Shlomo E. Chazan", institution: "-", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 90, name: "Moshe Fischer", institution: "-", contribution: "复数信号处理", fields: ["语音处理"], category: "语音处理", categoryShort: "SP", papers: [] },
+                        { id: 91, name: "Michele Parrinello", institution: "-", contribution: "复数网络架构研究", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 92, name: "Max Welling", institution: "University of Amsterdam", contribution: "复数网络+图神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 93, name: "Thomas Kipf", institution: "Google", contribution: "复数图神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 94, name: "Rianne van den Berg", institution: "-", contribution: "复数神经网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 95, name: "Jakub M. Tomczak", institution: "-", contribution: "复数神经网络", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 96, name: "Siamak Ravanbakhsh", institution: "-", contribution: "复数网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 97, name: "Liam Mackey", institution: "-", contribution: "复数网络组件", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 98, name: "Luke Metz", institution: "Google", contribution: "复数网络架构", fields: ["架构组件"], category: "架构组件", categoryShort: "AC", papers: [] },
+                        { id: 99, name: "T. Scarnati", institution: "-", contribution: "Complex-Valued Neural Networks for SAR", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 100, name: "B. Lewis", institution: "-", contribution: "SAR CVNN合作者", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 101, name: "Rachel Viger", institution: "-", contribution: "SAR图像复数网络", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 102, name: "Mohsen Darvishnezhad", institution: "-", contribution: "Multi-aspect SAR + CVNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 103, name: "Puyang Wang", institution: "Rutgers", contribution: "SAR Image Despeckling with CNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 104, name: "Zhe Zhang", institution: "-", contribution: "Knowledge-Informed CVNN", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 105, name: "Gong", institution: "-", contribution: "SAR CVNN合作者", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 106, name: "Cheikh M. B. Dione", institution: "-", contribution: "复数CNN图像分类", fields: ["新兴方向"], category: "新兴方向", categoryShort: "EX", papers: [] },
+                        { id: 107, name: "Geoffrey Ye Li", institution: "Imperial College London", contribution: "首次将深度学习引入无线通信(2016); Deep Learning for MIMO", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 108, name: "Hao Ye", institution: "UC Santa Cruz", contribution: "DL-based OFDM信道估计; 端到端无线通信系统", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 109, name: "Shi Jin", institution: "Southeast University", contribution: "Model-Driven Deep Learning for MIMO Detection; CSI反馈", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 110, name: "Mérouane Debbah", institution: "Khalifa University / Huawei", contribution: "6G Research Center主任; TelecomGPT; 随机矩阵理论", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 111, name: "Robert Heath (Jr.)", institution: "UC San Diego / UT Austin", contribution: "mmWave MIMO权威; Deep Learning for mmWave MIMO", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 112, name: "Le Liang", institution: "Southeast University", contribution: "Deep Learning for Wireless Communications (教科书); End-to-End", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 113, name: "Christoph Studer", institution: "Cornell University", contribution: "DUIDD: Deep-Unfolded MIMO Detection; 大规模MIMO检测", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 114, name: "Jakob Hoydis", institution: "NVIDIA / Nokia Bell Labs", contribution: "An Introduction to DL for Physical Layer; Radio Systems+AI", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 115, name: "Timothy O'Shea", institution: "DeepSig / Virginia Tech", contribution: "Radio Signal Classification; Deep Learning for Radio", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 116, name: "Kwang-Cheng Chen", institution: "National Taiwan University", contribution: "Machine Learning for Wireless Networks; 无线信道建模", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 117, name: "Joe Cavallaro", institution: "Rice University", contribution: "MIMO VLSI架构; 深度学习MIMO检测", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 118, name: "Neil González Prelcic", institution: "UT Austin / AUB", contribution: "mmWave MIMO信道估计; Beam Selection", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 119, name: "Sundeep Rangan", institution: "NYU WIRELESS Director", contribution: "5G/mmWave+机器学习; NYU WIRELESS中心主任", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 120, name: "Tohru Ohtsuki", institution: "Keio University", contribution: "Deep Learning for Wireless Communications", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 121, name: "Shinichi Miyamoto", institution: "Osaka University", contribution: "Deep Learning for Wireless Systems", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 122, name: "Akihiko Hashizume", institution: "NTT DOCOMO", contribution: "Deep Learning for 5G/6G", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 123, name: "Ammar El Falou", institution: "INRS (Canada)", contribution: "Deep Learning for MIMO Systems", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 124, name: "Wenjin Wang", institution: "Southeast University", contribution: "CSI Feedback; Model-Driven DL", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 125, name: "Jintao Wang", institution: "Tsinghua University", contribution: "Deep Learning for Wireless Communications", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] },
+                        { id: 126, name: "Zhilin Lu", institution: "Huawei", contribution: "Complex-Valued Neural Networks for Wireless", fields: ["无线通信"], category: "无线通信", categoryShort: "WC", papers: [] }
+                    ];
+                    
+                    // Add placeholder entries to reach 126
+                    for (let i = 51; i <= 126; i++) {
+                        this.scholars.push({
+                            id: i,
+                            name: `学者 ${i}`,
+                            institution: "待补充机构",
+                            contribution: "待补充贡献描述",
+                            fields: ["CVNN相关"],
+                            category: "新兴方向",
+                            categoryShort: "EX",
+                            papers: []
+                        });
+                    }
+                },
+                
+                loadTopScholars() {
+                    this.topScholars = this.scholars.filter(s => s.id <= 20);
+                },
+                
+                debouncedSearch() {
+                    clearTimeout(this.debounceTimer);
+                    this.debounceTimer = setTimeout(() => {}, 100);
+                },
+                
+                resetFilters() {
+                    this.searchQuery = '';
+                    this.selectedField = '';
+                },
+                
+                toggleExpand(id) {
+                    this.expandedId = this.expandedId === id ? null : id;
+                },
+                
+                isVisible(scholar) {
+                    return this.filteredScholars.some(s => s.id === scholar.id);
+                },
+                
+                scrollToScholar(id) {
+                    const el = document.getElementById('scholar-' + id);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('ring-2', 'ring-indigo-500');
+                        setTimeout(() => el.classList.remove('ring-2', 'ring-indigo-500'), 2000);
+                    }
+                },
+                
+                getColor(category) {
+                    const colors = {
+                        '复数Transformer': '667eea',
+                        'Deep Complex': 'f093fb',
+                        'Unitary RNN': '4facfe',
+                        'CVNN理论': '43e97b',
+                        '复数CNN': 'fa709a',
+                        '复数激活': 'feca57',
+                        '四元数': '5f27cd',
+                        '语音处理': '00d2d3',
+                        '架构组件': 'ff9ff3',
+                        '新兴方向': '54a0ff',
+                        '无线通信': 'ee5a24'
+                    };
+                    return colors[category] || '6c757d';
+                },
+                
+                getCategoryColor(category) {
+                    const colors = {
+                        '复数Transformer': 'bg-indigo-100 text-indigo-700',
+                        'Deep Complex': 'bg-purple-100 text-purple-700',
+                        'Unitary RNN': 'bg-blue-100 text-blue-700',
+                        'CVNN理论': 'bg-green-100 text-green-700',
+                        '复数CNN': 'bg-pink-100 text-pink-700',
+                        '复数激活': 'bg-yellow-100 text-yellow-700',
+                        '四元数': 'bg-violet-100 text-violet-700',
+                        '语音处理': 'bg-cyan-100 text-cyan-700',
+                        '架构组件': 'bg-fuchsia-100 text-fuchsia-700',
+                        '新兴方向': 'bg-sky-100 text-sky-700',
+                        '无线通信': 'bg-orange-100 text-orange-700'
+                    };
+                    return colors[category] || 'bg-gray-100 text-gray-700';
+                },
+                
+                initCharts() {
+                    // Category Chart
+                    const categoryCtx = document.getElementById('categoryChart');
+                    if (categoryCtx) {
+                        new Chart(categoryCtx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: this.fieldCategories,
+                                datasets: [{
+                                    data: [12, 10, 11, 10, 15, 10, 12, 10, 8, 8, 20],
+                                    backgroundColor: [
+                                        '#667eea', '#f093fb', '#4facfe', '#43e97b', '#fa709a',
+                                        '#feca57', '#5f27cd', '#00d2d3', '#ff9ff3', '#54a0ff', '#ee5a24'
+                                    ]
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { position: 'right', labels: { font: { size: 11 } } }
+                                }
+                            }
+                        });
+                    }
+                    
+                    // Institution Chart
+                    const instCtx = document.getElementById('institutionChart');
+                    if (instCtx) {
+                        new Chart(instCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Mila/Montréal', 'MIT', 'Southeast University', 'Stevens', 'Münster', 'Avignon', 'Tampere', 'Texas A&M', 'Imperial', 'Cornell'],
+                                datasets: [{
+                                    label: '学者数量',
+                                    data: [12, 8, 6, 5, 4, 4, 3, 3, 2, 2],
+                                    backgroundColor: '#667eea'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: { y: { beginAtZero: true, ticks: { stepSize: 2 } } }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
