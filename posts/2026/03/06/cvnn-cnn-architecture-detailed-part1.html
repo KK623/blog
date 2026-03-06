@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数CNN架构深度调研 | CVNN详细调研</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="font-bold text-xl gradient-text">CVNN详细调研</span>
+                </div>
+                <nav class="hidden md:flex space-x-6 text-sm">
+                    <a href="../../../../index.html" class="text-gray-600 hover:text-blue-600">首页</a>
+                    <a href="../../../index.html" class="text-gray-600 hover:text-blue-600">博客</a>
+                    <a href="../../index.html" class="text-gray-600 hover:text-blue-600">归档</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="inline-block bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm mb-4">
+                    📚 第2/10篇 · 50篇核心论文
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">复数CNN架构深度调研</h1>
+                <p class="text-xl text-blue-100 mb-6">Complex-Valued Convolutional Neural Networks: Architectures & Applications</p>
+                
+                <div class="flex flex-wrap justify-center gap-3 text-sm">
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🔬 50篇论文</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">📅 2016-2026</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-2 rounded-full">🎯 调制识别 · MRI重建 · 雷达信号</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">研究进展时间线</h2>
+            
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full timeline-line rounded-full"></div>
+                
+                <!-- 2016 -->
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="bg-blue-500 text-white px-4 py-2 rounded-full font-bold z-10">2016</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="md:text-right">
+                        <div class="bg-blue-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-blue-800">卷积调制识别奠基</h3>
+                            <p class="text-sm text-gray-600 mt-1">O'Shea et al. 首个将CNN应用于无线电调制识别</p>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
+                <!-- 2017-2018 -->
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="bg-purple-500 text-white px-4 py-2 rounded-full font-bold z-10">2017-2018</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div></div>
+                    <div>
+                        <div class="bg-purple-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-purple-800">Deep Complex Networks</h3>
+                            <p class="text-sm text-gray-600 mt-1">Trabelsi et al. ICLR 2018 开创性工作，提出完整复数网络框架</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2019 -->
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="bg-pink-500 text-white px-4 py-2 rounded-full font-bold z-10">2019</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="md:text-right">
+                        <div class="bg-pink-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-pink-800">DeepcomplexMRI</h3>
+                            <p class="text-sm text-gray-600 mt-1">Wang et al. 复数CNN在MRI重建中的成功应用</p>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
+                <!-- 2020 -->
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="bg-indigo-500 text-white px-4 py-2 rounded-full font-bold z-10">2020</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div></div>
+                    <div>
+                        <div class="bg-indigo-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-indigo-800">高容量复数CNN</h3>
+                            <p class="text-sm text-gray-600 mt-1">Krzyston et al. RadioML上达到92.4%准确率，比实数CNN提升10%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2021-2023 -->
+                <div class="relative flex items-center justify-center mb-8">
+                    <div class="bg-cyan-500 text-white px-4 py-2 rounded-full font-bold z-10">2021-2023</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="md:text-right">
+                        <div class="bg-cyan-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-cyan-800">多领域应用爆发</h3>
+                            <p class="text-sm text-gray-600 mt-1">MRI重建、SAR图像、OFDM通信、雷达信号处理全面应用</p>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
+                <!-- 2024-2026 -->
+                <div class="relative flex items-center justify-center">
+                    <div class="bg-green-500 text-white px-4 py-2 rounded-full font-bold z-10">2024-2026</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div></div>
+                    <div>
+                        <div class="bg-green-50 p-4 rounded-lg inline-block">
+                            <h3 class="font-bold text-green-800">前沿融合</h3>
+                            <p class="text-sm text-gray-600 mt-1">复数Transformer、注意力机制、多模态融合成为新方向</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paper Analysis Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">核心论文详细分析</h2>
+

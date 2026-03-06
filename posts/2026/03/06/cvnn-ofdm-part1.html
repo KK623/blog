@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数神经网络在OFDM通信中的前沿研究综述（一）</title>
+    <meta name="description" content="CVNN在OFDM物理层通信领域的基础论文综述，涵盖端到端接收机、调制识别等方向">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .paper-card { transition: all 0.3s ease; }
+        .paper-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .highlight { background: linear-gradient(120deg, #a7f3d0 0%, #a7f3d0 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 88%; }
+        .tag { transition: all 0.2s ease; }
+        .tag:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white">
+        <div class="max-w-5xl mx-auto px-6 py-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">第1批/共16批</span>
+                <span class="text-white/80 text-sm">2026年3月6日</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+                复数神经网络在OFDM通信中的<br><span class="text-yellow-300">前沿研究综述（一）</span>
+            </h1>
+            <p class="text-lg md:text-xl text-white/90 max-w-3xl">
+                探索CVNN（复数神经网络）在物理层通信中的基础方法论与开创性工作
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        
+        <!-- Introduction -->
+        <section class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center text-white text-sm">📡</span>
+                    综述背景
+                </h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    随着5G/6G通信系统对更高频谱效率和更低延迟的需求日益增长，传统的OFDM（正交频分复用）接收机面临着高多普勒频移、复杂信道估计和非线性失真等挑战。<span class="highlight font-medium">复数神经网络（Complex-Valued Neural Networks, CVNN）</span>作为一种能够直接处理复数I/Q信号的深度学习架构，正在重塑物理层通信的设计范式。
+                </p>
+                <p class="text-slate-600 leading-relaxed">
+                    本系列综述将系统梳理78篇CVNN在OFDM与物理层通信领域的核心论文。本文（第1批）聚焦于奠定该领域基础的5篇开创性研究，涵盖端到端接收机设计、自编码器建模、调制识别等关键方向。
+                </p>
+                
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                    <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-indigo-600">5</div>
+                        <div class="text-sm text-slate-600">篇核心论文</div>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-purple-600">2016-2023</div>
+                        <div class="text-sm text-slate-600">研究时间跨度</div>
+                    </div>
+                    <div class="bg-pink-50 rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-pink-600">40-60%</div>
+                        <div class="text-sm text-slate-600">BER降低幅度</div>
+                    </div>
+                    <div class="bg-amber-50 rounded-xl p-4 text-center">
+                        <div class="text-3xl font-bold text-amber-600">30%</div>
+                        <div class="text-sm text-slate-600">参数量减少</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper 1 -->
+        <section class="mb-12">
+            <div class="paper-card bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
+                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2"></div>
+                <div class="p-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="tag px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">端到端接收机</span>
+                        <span class="tag px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">2018</span>
+                        <span class="tag px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">开创性工作</span>
+                    </div>
+                    
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                        Deep-Waveform: 基于深度复数卷积网络的OFDM接收机
+                    </h3>
+                    
+                    <p class="text-slate-500 text-sm mb-4">
+                        <span class="font-medium text-slate-700">作者：</span>Zhongyuan Zhao, Mehmet C. Vuran, et al.
+                        <span class="mx-2">|</span>
+                        <a href="https://arxiv.org/abs/1810.04105" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 inline-flex">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            arXiv:1810.04105
+                        </a>
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 rounded-xl p-5">
+                            <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                <span class="w-5 h-5 bg-blue-500 rounded-md flex items-center justify-center text-white text-xs">💡</span>
+                                核心创新
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                首次提出使用<span class="font-medium text-slate-800">深度复数卷积神经网络（Deep Complex CNN）</span>完全替代传统OFDM接收机中的DFT/IDFT模块和所有传统信号处理模块。该架构直接对时域波形进行端到端学习，无需显式的信道估计和均衡步骤。
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-green-50 rounded-xl p-5 border border-green-100">
+                                <h4 class="font-semibold text-green-800 mb-2">关键技术</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">▸</span>
+                                        复数卷积层保留幅度-相位联合特征
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">▸</span>
+                                        端到端替代整个OFDM接收机链路
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500 mt-1">▸</span>
+                                        针对高多普勒频移场景优化
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                                <h4 class="font-semibold text-orange-800 mb-2">实验成果</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        <span class="font-medium text-orange-700">BER降低40-60%</span>（高多普勒场景）
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        <span class="font-medium text-orange-700">参数量减少30%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        处理时延显著降低
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 rounded-xl p-4 border-l-4 border-indigo-500">
+                            <p class="text-indigo-800 text-sm">
+                                <span class="font-semibold">学术价值：</span>这篇论文开创了CVNN在OFDM接收机设计中的先河，证明了端到端深度学习方法在物理层通信中的可行性和优越性，为后续研究奠定了重要基础。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper 2 -->
+        <section class="mb-12">
+            <div class="paper-card bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-2"></div>
+                <div class="p-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="tag px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">端到端学习</span>
+                        <span class="tag px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">2017</span>
+                        <span class="tag px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">里程碑</span>
+                    </div>
+                    
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                        物理层深度学习导论：自编码器视角下的通信系统
+                    </h3>
+                    
+                    <p class="text-slate-500 text-sm mb-4">
+                        <span class="font-medium text-slate-700">作者：</span>Timothy J. O'Shea, Jakob Hoydis
+                        <span class="mx-2">|</span>
+                        <a href="https://arxiv.org/abs/1702.00832" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 inline-flex">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            arXiv:1702.00832
+                        </a>
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 rounded-xl p-5">
+                            <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                <span class="w-5 h-5 bg-purple-500 rounded-md flex items-center justify-center text-white text-xs">💡</span>
+                                核心创新
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                将通信系统建模为<span class="font-medium text-slate-800">自编码器（Autoencoder）</span>架构，实现端到端的联合优化。该框架将发射机视为编码器、信道视为噪声层、接收机视为解码器，实现了通信系统的全局最优设计。
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-purple-50 rounded-xl p-5 border border-purple-100">
+                                <h4 class="font-semibold text-purple-800 mb-2">框架特点</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500 mt-1">▸</span>
+                                        发射机-信道-接收机联合训练
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500 mt-1">▸</span>
+                                        突破传统分模块设计局限
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-purple-500 mt-1">▸</span>
+                                        适用于调制分类任务
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                                <h4 class="font-semibold text-amber-800 mb-2">实验成果</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">📊</span>
+                                        <span class="font-medium text-amber-700">调制识别准确率提升15-20%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">📊</span>
+                                        端到端BER接近理论最优
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">📊</span>
+                                        无需显式信道模型
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-xl p-4 border-l-4 border-purple-500">
+                            <p class="text-purple-800 text-sm">
+                                <span class="font-semibold">学术影响：</span>这篇论文是物理层深度学习领域的奠基之作，提出的自编码器框架被后续数百篇论文引用和发展，深刻影响了深度学习在通信领域的应用范式。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper 3 -->
+        <section class="mb-12">
+            <div class="paper-card bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-2"></div>
+                <div class="p-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="tag px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">调制识别</span>
+                        <span class="tag px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">2016</span>
+                        <span class="tag px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">领域先驱</span>
+                    </div>
+                    
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                        卷积神经网络无线电调制识别
+                    </h3>
+                    
+                    <p class="text-slate-500 text-sm mb-4">
+                        <span class="font-medium text-slate-700">作者：</span>Timothy O'Shea, Johnathan Corgan, T. Charles Clancy
+                        <span class="mx-2">|</span>
+                        <a href="https://arxiv.org/abs/1602.04105" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 inline-flex">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            arXiv:1602.04105
+                        </a>
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 rounded-xl p-5">
+                            <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                <span class="w-5 h-5 bg-emerald-500 rounded-md flex items-center justify-center text-white text-xs">💡</span>
+                                核心创新
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                <span class="font-medium text-slate-800">首个将卷积神经网络（CNN）应用于无线电调制识别</span>的开创性工作。该研究直接处理I/Q样本（复数基带信号），无需人工特征提取，实现了端到端的自动调制识别。
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                                <h4 class="font-semibold text-emerald-800 mb-2">技术突破</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-emerald-500 mt-1">▸</span>
+                                        直接处理原始I/Q时序数据
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-emerald-500 mt-1">▸</span>
+                                        消除专家特征工程依赖
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-emerald-500 mt-1">▸</span>
+                                        支持多种调制类型分类
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+                                <h4 class="font-semibold text-cyan-800 mb-2">实验成果</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-cyan-500 mt-1">📊</span>
+                                        <span class="font-medium text-cyan-700">10dB SNR下识别率87%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-cyan-500 mt-1">📊</span>
+                                        大幅超越传统方法
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-cyan-500 mt-1">📊</span>
+                                        奠定了深度学习调制识别基础
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-50 rounded-xl p-4 border-l-4 border-emerald-500">
+                            <p class="text-emerald-800 text-sm">
+                                <span class="font-semibold">历史地位：</span>作为深度学习无线电信号处理领域的先驱论文，该工作证明了CNN在无线电调制识别中的巨大潜力，开创了数据驱动的通信信号处理新范式。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper 4 -->
+        <section class="mb-12">
+            <div class="paper-card bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
+                <div class="bg-gradient-to-r from-rose-500 to-pink-500 h-2"></div>
+                <div class="p-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="tag px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-sm font-medium">复数网络</span>
+                        <span class="tag px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">2020</span>
+                        <span class="tag px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">架构创新</span>
+                    </div>
+                    
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                        高容量复数卷积神经网络用于I/Q调制分类
+                    </h3>
+                    
+                    <p class="text-slate-500 text-sm mb-4">
+                        <span class="font-medium text-slate-700">作者：</span>多位学者
+                        <span class="mx-2">|</span>
+                        <a href="https://arxiv.org/abs/2010.10256" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 inline-flex">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            arXiv:2010.10256
+                        </a>
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 rounded-xl p-5">
+                            <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                <span class="w-5 h-5 bg-rose-500 rounded-md flex items-center justify-center text-white text-xs">💡</span>
+                                核心创新
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                提出<span class="font-medium text-slate-800">高容量复数卷积神经网络</span>架构，专门针对I/Q调制分类任务。该网络能够同时学习复数信号的幅度和相位特征，充分利用复数域的代数结构。
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-rose-50 rounded-xl p-5 border border-rose-100">
+                                <h4 class="font-semibold text-rose-800 mb-2">架构优势</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-rose-500 mt-1">▸</span>
+                                        复数卷积学习幅度-相位联合表示
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-rose-500 mt-1">▸</span>
+                                        复数BatchNorm保持信号特性
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-rose-500 mt-1">▸</span>
+                                        复数激活函数处理相位信息
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-50 rounded-xl p-5 border border-pink-100">
+                                <h4 class="font-semibold text-pink-800 mb-2">实验成果</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-pink-500 mt-1">📊</span>
+                                        <span class="font-medium text-pink-700">准确率提升8-12%</span>（vs实数CNN）
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-pink-500 mt-1">📊</span>
+                                        <span class="font-medium text-pink-700">参数量减少30-40%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-pink-500 mt-1">📊</span>
+                                        推理效率显著提升
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-rose-50 rounded-xl p-4 border-l-4 border-rose-500">
+                            <p class="text-rose-800 text-sm">
+                                <span class="font-semibold">技术价值：</span>该论文系统论证了复数神经网络相对于实数网络在通信信号处理中的本质优势，为后续CVNN在OFDM系统中的应用提供了重要的架构设计指导。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper 5 -->
+        <section class="mb-12">
+            <div class="paper-card bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-2"></div>
+                <div class="p-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="tag px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">信道估计</span>
+                        <span class="tag px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">2023</span>
+                        <span class="tag px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">频谱效率</span>
+                    </div>
+                    
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                        无CP OFDM系统中基于CVNN的信道估计与均衡
+                    </h3>
+                    
+                    <p class="text-slate-500 text-sm mb-4">
+                        <span class="font-medium text-slate-700">作者：</span>Heitor dos Santos Sousa, et al. (UNICAMP, Brazil)
+                        <span class="mx-2">|</span>
+                        <a href="https://arxiv.org/abs/2308.16387" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 inline-flex">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            arXiv:2308.16387
+                        </a>
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 rounded-xl p-5">
+                            <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                <span class="w-5 h-5 bg-amber-500 rounded-md flex items-center justify-center text-white text-xs">💡</span>
+                                核心创新
+                            </h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                针对无循环前缀（CP-free）OFDM系统，提出基于<span class="font-medium text-slate-800">CVNN的信道估计和均衡联合方案</span>。传统OFDM系统中CP用于消除ISI，但占用约25%的频谱资源。该方案通过CVNN强大的非线性建模能力，在去除CP的同时保持系统性能。
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                                <h4 class="font-semibold text-amber-800 mb-2">系统优势</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">▸</span>
+                                        去除CP开销，提升频谱效率
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">▸</span>
+                                        CVNN处理符号间干扰(ISI)
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-amber-500 mt-1">▸</span>
+                                        联合估计与均衡设计
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                                <h4 class="font-semibold text-orange-800 mb-2">实验成果</h4>
+                                <ul class="space-y-2 text-slate-600 text-sm">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        <span class="font-medium text-orange-700">频谱效率提升15-20%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        <span class="font-medium text-orange-700">BER比LS估计降低50%</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500 mt-1">📊</span>
+                                        支持高移动性场景
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 rounded-xl p-4 border-l-4 border-amber-500">
+                            <p class="text-amber-800 text-sm">
+                                <span class="font-semibold">应用前景：</span>该研究为6G超可靠低延迟通信(URLLC)提供了新的技术路径，在保证性能的同时显著提升频谱效率，具有重要的工程应用价值。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-xl p-8 text-white">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">📊</span>
+                    第1批论文总结
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white/10 rounded-xl p-5">
+                        <h3 class="font-semibold text-lg mb-3 text-yellow-300">技术演进脉络</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                                <span><span class="text-white font-medium">2016</span> - CNN调制识别奠基</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                                <span><span class="text-white font-medium">2017</span> - 自编码器通信框架</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                                <span><span class="text-white font-medium">2018</span> - 端到端CVNN接收机</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                                <span><span class="text-white font-medium">2020</span> - 高容量复数CNN</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                                <span><span class="text-white font-medium">2023</span> - 无CP系统设计</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white/10 rounded-xl p-5">
+                        <h3 class="font-semibold text-lg mb-3 text-cyan-300">关键技术指标汇总</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex justify-between">
+                                <span>BER性能提升</span>
+                                <span class="text-green-400 font-medium">40-60%</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>调制识别准确率提升</span>
+                                <span class="text-green-400 font-medium">15-20%</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>参数量减少</span>
+                                <span class="text-green-400 font-medium">30-40%</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>频谱效率提升</span>
+                                <span class="text-green-400 font-medium">15-20%</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>信道估计BER降低</span>
+                                <span class="text-green-400 font-medium">50%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10">
+                    <h3 class="font-semibold mb-3 text-pink-300">研究趋势展望</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        本批5篇论文展现了CVNN在OFDM通信领域的演进轨迹：从早期的调制识别探索，到端到端自编码器框架的建立，再到专门针对复数信号设计的网络架构，最终走向实际系统级优化（如CP去除）。后续批次将深入探讨MIMO检测、物理层安全、资源分配等更多应用场景。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center">
+                <div class="text-slate-500 text-sm">
+                    共16批 · 当前第1批
+                </div>
+                <div class="flex gap-3">
+                    <span class="px-4 py-2 bg-slate-200 text-slate-400 rounded-lg cursor-not-allowed">
+                        ← 上一批
+                    </span>
+                    <a href="cvnn-ofdm-part2.html" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                        下一批 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <p class="text-sm">
+                CVNN-OFDM 物理层通信研究综述 · 第1批/共16批
+            </p>
+            <p class="text-xs mt-2 text-slate-500">
+                生成日期：2026年3月6日 · 参考文献来源：arXiv
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
