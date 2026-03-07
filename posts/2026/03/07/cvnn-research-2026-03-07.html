@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月7日</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #27272a;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+        
+        .header-glow {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .intro {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-2);
+            border-radius: 16px 0 0 16px;
+        }
+        
+        .intro h2 {
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .paper-section {
+            margin: 3rem 0;
+        }
+        
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+        
+        .paper-header {
+            background: var(--bg-secondary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .paper-number {
+            position: absolute;
+            top: -12px;
+            right: 2rem;
+            background: var(--gradient-1);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .paper-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .paper-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .paper-meta .arxiv-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+        
+        .paper-meta .arxiv-link:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-content {
+            padding: 2rem;
+        }
+        
+        .paper-section-content {
+            margin-bottom: 1.5rem;
+        }
+        
+        .paper-section-content:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+        }
+        
+        .section-content {
+            color: var(--text-secondary);
+            padding-left: 1rem;
+            border-left: 2px solid var(--border-color);
+        }
+        
+        .highlight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .highlight-box.cyan {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .highlight-box h4 {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box.cyan h4 {
+            color: var(--accent-cyan);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tag.cyan {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+        }
+        
+        .tag.purple {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-secondary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .paper-header, .paper-content {
+                padding: 1rem;
+            }
+            
+            .paper-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-glow"></div>
+        <h1>CVNN Research Daily</h1>
+        <p class="subtitle">复数神经网络与复数Transformer在信号处理应用的前沿研究</p>
+        <p class="date">2026年3月7日</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>📊 本期概览</h2>
+            <p>本期CVNN Research Daily聚焦于<strong>复数神经网络(Complex-Valued Neural Networks, CVNN)</strong>、<strong>复数Transformer</strong>以及它们在<strong>信号处理应用</strong>方面的最新进展。我们精选了6篇过去30天内发表的高质量论文，涵盖雷达信号处理、不确定性量化、序列建模、SAR成像等多个应用领域。</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">精选论文</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">信号处理应用</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">复数架构创新</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">量子启发方法</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <span class="tag">CVNN</span>
+                <span class="tag cyan">复数Transformer</span>
+                <span class="tag purple">信号处理</span>
+                <span class="tag">雷达</span>
+                <span class="tag cyan">SAR成像</span>
+                <span class="tag purple">不确定性量化</span>
+            </div>
+        </div>
+        
+        <div class="paper-section">
+            <!-- Paper 1 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">1</div>
+                    <h3 class="paper-title">Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification in Deep Neural Networks</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-17</span>
+                        <span>👤 Akbar Anbar Jafari et al.</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2602.15283" class="arxiv-link" target="_blank">arXiv:2602.15283</a></span>
+                        <span>🏷️ cs.LG, cs.AI</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>现代深度神经网络在预测准确性方面取得了巨大成功，但在<strong>校准性(Calibration)</strong>方面仍存在严重问题。神经网络的置信度分数往往不能可靠地反映预测正确的真实概率，这在安全关键应用中是一个重大隐患。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>受量子力学中复数值表示和酉变换的启发，作者提出了一种新的分类头架构。核心思想是利用复数值希尔伯特空间的特性来改善深度神经网络的不确定性量化能力。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>提出量子启发的分类头架构，将主干特征投影到复数值希尔伯特空间</li>
+                                <li>使用<strong>Cayley映射</strong>参数化的学习酉变换进行特征演化</li>
+                                <li>设计了两种读出方式：幅度读出和Born规则测量</li>
+                                <li>通过控制实验设计隔离复数酉表示对校准的影响</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <div class="highlight-box">
+                                <h4>关键性能指标</h4>
+                                <p>在CIFAR-10数据集上，酉幅度头(Complex features + Cayley unitary + magnitude readout)取得了：</p>
+                                <ul style="margin: 0.5rem 0 0 1rem;">
+                                    <li><strong>ECE (Expected Calibration Error):</strong> 0.0146</li>
+                                    <li>相比标准softmax头提升 <strong>2.4倍</strong> (ECE: 0.0355)</li>
+                                    <li>相比温度缩放提升 <strong>3.5倍</strong> (ECE: 0.0510)</li>
+                                </ul>
+                            </div>
+                            <p>在CIFAR-10H人类不确定性基准上，波函数头达到了最低的KL散度(0.336)，表明复数表示能更好地捕捉人类感知模糊性的结构。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>显著改善校准性：</strong>ECE降低超过50%</li>
+                                <li><strong>理论可解释性强：</strong>通过特征空间几何连接保范酉动态与校准</li>
+                                <li><strong>计算开销小：</strong>仅需替换轻量级分类头，主干网络共享</li>
+                                <li><strong>人类感知对齐：</strong>复数表示更符合人类不确定性模式</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>Born规则测量层的表现不如预期，可能需要进一步优化</li>
+                                <li>在分布外检测和情感分析任务上的负面结果表明方法适用范围有限</li>
+                                <li>目前仅在图像分类任务上验证，需要扩展到其他领域</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>该论文成功将量子力学中的复数酉表示引入深度学习，提出了一种简单有效的分类头架构，显著改善了神经网络的校准性。这一工作为CVNN在不确定性量化领域的应用开辟了新的方向。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Paper 2 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">2</div>
+                    <h3 class="paper-title">Detecting radar targets swarms in range profiles with a partially complex-valued neural network</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-10</span>
+                        <span>👤 Martin Bauw</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2602.09597" class="arxiv-link" target="_blank">arXiv:2602.09597</a></span>
+                        <span>🏷️ cs.AI, eess.SP</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>雷达目标检测面临两个主要挑战：杂波和波形失真。此外，多个目标相对接近时会相互影响检测阈值，最坏情况下会被感知为单一目标。目标接近度的负面影响主要取决于雷达参数定义的距离分辨率和采用的自适应阈值。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>针对包含多个不同接近度目标和失真回波的雷达距离轮廓，需要一种能够自适应处理复数信号特性的方法。部分复数神经网络能够更好地保留雷达信号的相位信息。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>提出<strong>部分复数神经网络</strong>作为自适应距离轮廓处理方法</li>
+                                <li>生成式架构一次性处理整个接收信号生成完整检测轮廓</li>
+                                <li>网络部分参数采用复数值定义，保留相位信息</li>
+                                <li>与脉冲压缩方法对比验证</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <p>通过生成模拟数据集进行实验对比，验证了部分复数神经网络在处理多目标雷达距离轮廓方面的有效性。相比传统脉冲压缩方法，神经网络方法能够同时处理整个信号，实现端到端的检测轮廓生成。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>端到端处理：</strong>一次性生成完整检测轮廓</li>
+                                <li><strong>相位信息保留：</strong>复数参数保留雷达信号的相位特性</li>
+                                <li><strong>自适应性：</strong>神经网络自适应学习复杂信号模式</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>目前仅在模拟数据上验证</li>
+                                <li>"部分复数"的具体架构设计需要进一步探索</li>
+                                <li>实际雷达系统的实时性能有待验证</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>该论文将部分复数神经网络应用于雷达目标检测，展示了CVNN在雷达信号处理中的潜力。这种端到端的生成式方法为多目标检测提供了新的解决方案。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Paper 3 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">3</div>
+                    <h3 class="paper-title">Neural Implicit Representations for 3D Synthetic Aperture Radar Imaging</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-19</span>
+                        <span>👤 Nithin Sugavanam, Emre Ertin</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2602.17556" class="arxiv-link" target="_blank">arXiv:2602.17556</a></span>
+                        <span>🏷️ eess.SP, cs.CV</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>合成孔径雷达(SAR)是一种断层扫描传感器，测量场景3D空间傅里叶变换的2D切片。在实际应用中，测量的2D切片集合往往不能填满傅里叶域的3D空间，导致重建图像出现严重伪影。传统上使用简单先验（如图像域稀疏性）来正则化逆问题。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>利用神经隐式表示建模主导SAR回波的表面散射，实现高质量的3D SAR成像。作者指出未来研究方向是学习<strong>复数值神经表示</strong>以从体积神经隐式表示合成新的采集。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>使用神经结构以<strong>符号距离函数(SDF)</strong>形式编码物体表面</li>
+                                <li>从稀疏散射数据学习表面表示</li>
+                                <li>通过从隐式表面表示采样点来正则化表面估计</li>
+                                <li>提出复数值神经表示作为未来研究方向</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <div class="highlight-box cyan">
+                                <h4>实验验证</h4>
+                                <p>使用单辆车的测量和模拟数据以及包含大量车辆的更大场景数据，验证了模型表示目标散射的能力，取得了SOTA结果。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>SOTA性能：</strong>在3D SAR成像方面达到最先进结果</li>
+                                <li><strong>稀疏数据处理：</strong>能够从稀疏噪声点云估计平滑表面</li>
+                                <li><strong>物理约束：</strong>神经隐式表示自然地编码物理约束</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <div class="highlight-box">
+                                <h4>作者明确指出的未来方向</h4>
+                                <p>需要开发<strong>学习复数值神经表示</strong>的方法，以从体积神经隐式表示合成新的采集。这是CVNN在SAR成像中的重要应用机会。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>该论文展示了神经隐式表示在3D SAR成像中的成功应用，并明确指出了复数值神经表示作为未来研究方向的重要性，为CVNN在雷达成像领域的应用提供了明确方向。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Paper 4 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">4</div>
+                    <h3 class="paper-title">Deep Sequence Modeling with Quantum Dynamics: Language as a Wave Function</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-24</span>
+                        <span>👤 Ahmed Nebli et al.</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2602.22255" class="arxiv-link" target="_blank">arXiv:2602.22255</a></span>
+                        <span>🏷️ cs.LG, cs.AI, quant-ph</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>标准循环架构依赖门控机制来抑制竞争假设。本研究提出使用量子干涉的替代框架，通过哈密顿量引导复数幅度的相位，使冲突的解释相互抵消而兼容的解释相互增强。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>探索复数值波函数在序列建模中的表示优势。核心假设是量子启发的复数表示可能提供比实数表示更强的表达能力。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>潜在状态是<strong>复数值波函数</strong>，在有限维希尔伯特空间上演化</li>
+                                <li>使用学习的时变哈密顿量驱动演化</li>
+                                <li>通过<strong>Cayley (Crank-Nicolson)离散化</strong>确保每一步严格酉性</li>
+                                <li>使用<strong>Born规则</strong>提取token概率</li>
+                                <li>理论贡献：分离定理表征复数酉模型的表示优势</li>
+                            </ul>
+                            <div class="highlight-box">
+                                <h4>表示优势的理论结果</h4>
+                                <p>复数酉模型维度N可以精确解决的消歧任务族，需要实数正交模型状态维度为<strong>Ω(N²)</strong>才能解决。这种二次差距源于Born规则隐式地将N维状态提升为秩一厄米矩阵。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <p>通过理论分析证明了复数模型相对于实数模型的指数级表示优势。推导了潜在概率质量的连续性方程，产生了守恒的成对电流作为维度间信息流的内建诊断工具。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>指数级表示优势：</strong>理论上证明了复数相对于实数的表达能力优势</li>
+                                <li><strong>量子干涉机制：</strong>利用量子干涉实现竞争假设的自然选择</li>
+                                <li><strong>严格酉性保证：</strong>通过Cayley离散化确保状态范数守恒</li>
+                                <li><strong>理论可解释性：</strong>连续性方程提供信息流的诊断工具</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>目前主要提供理论分析，大规模实验验证有待开展</li>
+                                <li>复数运算的计算开销需要优化</li>
+                                <li>在其他序列任务上的泛化能力需要验证</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>该论文从理论上严格证明了复数表示在序列建模中的指数级优势，为CVNN和复数Transformer的发展提供了坚实的理论基础。量子启发的建模方式为深度学习开辟了新的范式。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Paper 5 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">5</div>
+                    <h3 class="paper-title">Mag-Mamba: Modeling Coupled spatiotemporal Asymmetry for POI Recommendation</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-10</span>
+                        <span>👤 Zhuoxuan Li et al.</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2603.00053" class="arxiv-link" target="_blank">arXiv:2603.00053</a></span>
+                        <span>🏷️ cs.LG, cs.AI</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>下一个兴趣点(POI)推荐是位置服务中的关键任务，面临城市移动中固有的<strong>耦合时空非对称性</strong>挑战。具体而言，位置间的转移意图表现出高度非对称性，并且动态地以时间为条件。现有方法通常基于图或序列主干，依赖对称算子或实数聚合，难以统一建模时变全局方向性。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>核心洞察是将时空非对称性建模为复数域中的<strong>相位驱动旋转动力学</strong>。通过在复数域中引入相位信息，可以更好地捕捉位置转移的方向性和时变特性。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>时间条件磁相位编码器：</strong>构建时间条件磁拉普拉斯矩阵，利用边相位差表征全局演化的空间方向性</li>
+                                <li><strong>复数Mamba模块：</strong>将传统标量状态衰减推广为<strong>联合衰减-旋转动力学</strong></li>
+                                <li>显式调制时间间隔和磁地理先验</li>
+                                <li>磁拉普拉斯矩阵捕获非对称转移关系</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <div class="highlight-box">
+                                <h4>性能提升</h4>
+                                <p>在三个真实世界数据集上的大量实验表明，Mag-Mamba相比SOTA基线取得了显著的性能提升。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>非对称性建模：</strong>复数相位有效建模转移非对称性</li>
+                                <li><strong>时变动态：</strong>联合衰减-旋转动力学捕获时空耦合</li>
+                                <li><strong>计算效率：</strong>Mamba架构保持线性复杂度</li>
+                                <li><strong>SOTA性能：</strong>在POI推荐任务上达到最先进结果</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>磁拉普拉斯的构建依赖地理信息</li>
+                                <li>相位编码的泛化到其他任务需要验证</li>
+                                <li>复数Mamba的硬件优化有待探索</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>Mag-Mamba成功将复数表示与Mamba架构结合，通过相位驱动旋转动力学有效建模时空非对称性。这项工作展示了CVNN与现代序列建模架构结合的潜力。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Paper 6 -->
+            <article class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-number">6</div>
+                    <h3 class="paper-title">FDR Control for Complex-Valued Data with Application in Single Snapshot Multi-Source Detection and DOA Estimation</h3>
+                    <div class="paper-meta">
+                        <span>📅 2026-02-28</span>
+                        <span>👤 Fabian Scheidt et al.</span>
+                        <span>📄 <a href="https://arxiv.org/abs/2603.00633" class="arxiv-link" target="_blank">arXiv:2603.00633</a></span>
+                        <span>🏷️ eess.SP (ICASSP 2025)</span>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究背景</h4>
+                        <div class="section-content">
+                            <p>错误发现率(FDR)控制是维护统计分析完整性的流行方法，特别是在高维数据设置中。FDR控制在实数数据上已被广泛研究，但<strong>复数数据</strong>的情况（与许多信号处理应用相关）仍然 largely unexplored。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">研究动机</h4>
+                        <div class="section-content">
+                            <p>针对复数高维数据，提出能够快速控制FDR的变量选择器。应用于单快照多源检测和DOA估计，弥合复数数据信号处理中的关键空白。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">核心技术点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>提出<strong>复数终止随机实验(CT-Rex)选择器</strong></li>
+                                <li>在控制用户定义目标FDR的同时最大化选择变量数</li>
+                                <li>通过最优融合多个早期终止复数随机实验的解实现</li>
+                                <li>适用于DOA估计、通信、机械工程和磁共振成像等领域</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">实验结果</h4>
+                        <div class="section-content">
+                            <div class="highlight-box cyan">
+                                <h4>实验验证</h4>
+                                <p>在稀疏复数回归模拟研究中进行了基准测试，展示了FDR控制的压缩感知单快照多源检测和DOA估计应用。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">收益点</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li><strong>填补空白：</strong>首次系统研究复数数据的FDR控制</li>
+                                <li><strong>快速算法：</strong>CT-Rex选择器计算效率高</li>
+                                <li><strong>广泛应用：</strong>适用于多种信号处理应用</li>
+                                <li><strong>统计保证：</strong>提供严格的FDR控制</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">局限性/未来工作</h4>
+                        <div class="section-content">
+                            <ul style="margin-left: 1rem; color: var(--text-secondary);">
+                                <li>仅适用于高维稀疏设置</li>
+                                <li>早期终止策略的阈值选择需要进一步研究</li>
+                                <li>与深度学习方法结合的可能性待探索</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paper-section-content">
+                        <h4 class="section-title">总结</h4>
+                        <div class="section-content">
+                            <p>该论文填补了复数数据FDR控制的研究空白，为复数信号处理应用提供了重要的统计工具。虽然这不是深度学习方法，但为CVNN输出的统计验证提供了理论基础。</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="intro">
+            <h2>🔮 趋势展望</h2>
+            <p>基于本期论文的分析，我们观察到以下几个重要趋势：</p>
+            
+            <div class="highlight-box">
+                <h4>1. 量子启发的CVNN架构成为热点</h4>
+                <p>两篇论文(Anbar Jafari et al. 和 Nebli et al.)都从量子力学中汲取灵感，使用复数酉表示和波函数演化，展示了CVNN在理论上的优越性。</p>
+            </div>
+            
+            <div class="highlight-box cyan">
+                <h4>2. 复数表示与Mamba架构的结合</h4>
+                <p>Mag-Mamba展示了复数表示与现代状态空间模型(Mamba)的融合，通过相位驱动旋转动力学有效建模非对称性。</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>3. 雷达信号处理是CVNN的重要应用领域</h4>
+                <p>多篇论文聚焦雷达和SAR成像应用，复数表示天然适合处理雷达信号的相位信息。</p>
+            </div>
+            
+            <p style="margin-top: 1.5rem;">未来，我们期待看到更多复数Transformer架构的出现，以及在更多信号处理任务中的应用验证。</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>CVNN Research Daily | 由 OpenClaw 自动生成</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">报告日期: 2026年3月7日</p>
+    </footer>
+</body>
+</html>
