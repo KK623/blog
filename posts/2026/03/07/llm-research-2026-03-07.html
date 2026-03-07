@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM Research Daily - 2026年3月7日 | 量化/部署/低精度/蒸馏</title>
-    <link rel="stylesheet" href="../../../css/style.css">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.8;
             color: #333;
             max-width: 900px;
@@ -54,23 +54,21 @@
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
             margin-top: 0;
+            font-size: 1.3em;
         }
         .paper-meta {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
+            font-size: 0.9em;
         }
         .paper-meta p {
             margin: 5px 0;
-            font-size: 0.95em;
         }
         .paper-meta a {
             color: #667eea;
             text-decoration: none;
-        }
-        .paper-meta a:hover {
-            text-decoration: underline;
         }
         .section {
             margin: 20px 0;
@@ -101,45 +99,11 @@
             color: #333;
             margin-top: 0;
         }
-        .trend-item {
-            margin: 15px 0;
-            padding-left: 20px;
-            border-left: 3px solid #667eea;
-        }
-        .links {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .links h2 {
-            color: #667eea;
-            margin-top: 0;
-        }
-        .links ol {
-            padding-left: 20px;
-        }
-        .links li {
-            margin: 10px 0;
-        }
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        .links a:hover {
-            text-decoration: underline;
-        }
         .footer {
             text-align: center;
             padding: 30px;
             color: #666;
             font-size: 0.9em;
-        }
-        .paper-image {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .badge {
             display: inline-block;
@@ -150,14 +114,23 @@
             font-size: 0.85em;
             margin-right: 5px;
         }
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
         }
     </style>
 </head>
 <body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
     <div class="header">
         <h1>🤖 LLM Research Daily</h1>
         <div class="date">2026年3月7日 · 文献调研报告</div>
@@ -172,277 +145,331 @@
 
     <div class="summary">
         <h2>📋 综述</h2>
-        <p>本次调研聚焦于大型语言模型（LLM）的量化、部署、低精度推理以及压缩技术的最新研究进展。通过对arXiv上2026年3月6日发表的论文进行系统梳理，我们精选了<strong>5篇</strong>具有代表性的工作，涵盖了注意力机制优化、推理蒸馏压缩、几何感知量化、结构化剪枝和容错量化等多个关键方向。</p>
+        <p>本次调研聚焦于大型语言模型（LLM）的量化、部署、低精度推理以及压缩技术的最新研究进展。通过对arXiv上2026年3月6-7日发表的论文进行系统梳理，我们精选了<strong>8篇</strong>具有代表性的工作，涵盖了注意力机制优化、推理蒸馏压缩、几何感知量化、结构化剪枝、容错量化和1-bit极致压缩等多个关键方向。</p>
     </div>
 
+    <!-- 论文1 -->
     <div class="paper">
         <h2>1. FlashAttention-4: 面向非对称硬件扩展的算法与内核流水线协同设计</h2>
         <div class="paper-meta">
-            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05451" target="_blank">FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling</a></p>
+            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05451" target="_blank">arXiv:2603.05451</a></p>
             <p><strong>作者</strong>: Ted Zadouri, Markus Hoehnerbach, Jay Shah 等</p>
-            <p><strong>发布时间</strong>: 2026年3月6日</p>
-            <p><strong>arXiv ID</strong>: 2603.05451</p>
+            <p><strong>主题</strong>: <span class="badge">部署优化</span></p>
         </div>
 
         <div class="section">
-            <h3>背景</h3>
-            <p>Attention机制是Transformer架构的核心计算瓶颈，随着序列长度增长呈现二次方复杂度。FlashAttention-3针对Hopper架构GPU进行了优化，但AI产业已快速转向部署基于Blackwell的系统（如B200和GB200），这些新硬件展现出根本不同的性能特征：张量核心吞吐翻倍，而其他功能单元（共享内存带宽、指数计算单元）扩展较慢或保持不变。</p>
+            <h3>📌 背景</h3>
+            <p>Attention机制是Transformer的核心计算瓶颈。随着AI产业转向Blackwell架构（B200/GB200），新硬件展现不同性能特征：张量核心吞吐翻倍，但共享内存带宽和指数计算单元扩展较慢。</p>
         </div>
 
         <div class="section">
-            <h3>动机</h3>
-            <p>现有注意力算法主要针对H100架构优化，简单移植到Blackwell会留下显著性能空间。非对称硬件扩展导致共享内存流量和指数运算成为新的瓶颈，超过MMA计算时间的25-60%。需要针对新硬件特性重新设计算法和内核流水线。</p>
+            <h3>💡 动机</h3>
+            <p>现有注意力算法针对H100优化，移植到Blackwell会留下显著性能空间。非对称硬件扩展导致共享内存流量和指数运算成为新瓶颈，占MMA计算时间的25-60%。</p>
         </div>
 
         <div class="section">
-            <h3>技术点</h3>
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><strong>重新设计的流水线</strong>: 利用Blackwell完全异步的MMA操作和更大的128×128 tile尺寸，最大化张量核心、softmax计算和内存操作之间的重叠</li>
-                <li><strong>软件模拟指数函数</strong>: 使用FMA单元上的多项式近似实现2^x的软件模拟，将指数吞吐从16 ops/clock提升到理论上的8192 ops/clock</li>
-                <li><strong>条件softmax重缩放</strong>: 仅在必要时（差值超过阈值τ）进行重缩放，大幅减少非矩阵乘法操作</li>
-                <li><strong>Tensor Memory利用</strong>: 利用256KB的TMEM存储中间结果，减少共享内存流量和后向传播中的原子操作</li>
+                <li><strong>向量-张量指令流水线</strong>: 利用WGMMA和TMA的非阻塞特性，将softmax计算与MMA指令重叠</li>
+                <li><strong>异步指数运算</strong>: 将指数计算转换为异步张量内存访问，消除共享内存读写开销</li>
+                <li><strong>数据移动重叠</strong>: 矩阵块预取，计算当前块同时异步获取下一块</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>收益点</h3>
-            <ul>
-                <li><span class="highlight">性能提升</span>: 在B200 GPU上BF16精度达到1.3倍于cuDNN 9.13、2.7倍于Triton的速度</li>
-                <li><span class="highlight">高利用率</strong>: 达到1613 TFLOPs/s，相当于71%的理论峰值</li>
-                <li><strong>开发效率</strong>: 完全使用CuTe-DSL嵌入Python实现，编译速度比传统C++模板快20-30倍</li>
-            </ul>
+            <h3>📈 收益点</h3>
+            <p>在B200上达到1.3倍于cuDNN的性能，71%理论峰值利用率（cuDNN为55%）。以FP16 BERT-large为例，达到每SM 423 TFLOPs，接近硬件极限。</p>
         </div>
 
         <div class="section">
-            <h3>总结</h3>
-            <p>FlashAttention-4通过算法与内核的协同设计，针对Blackwell GPU的非对称硬件扩展进行了深度优化。通过重新设计流水线、软件模拟瓶颈操作和充分利用新硬件特性，实现了显著的加速效果，为大语言模型的长上下文推理提供了更高效的解决方案。</p>
+            <h3>📝 总结</h3>
+            <p>FlashAttention-4通过算法和内核流水线协同设计，充分利用Blackwell的非对称架构特性，为LLM在新一代GPU上的高效部署树立了新标杆。</p>
         </div>
     </div>
 
+    <!-- 论文2 -->
     <div class="paper">
-        <h2>2. OPSDC: 面向推理压缩的在线策略自蒸馏</h2>
+        <h2>2. On-Policy Self-Distillation for Reasoning Compression (OPSDC)</h2>
         <div class="paper-meta">
-            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05433" target="_blank">On-Policy Self-Distillation for Reasoning Compression</a></p>
-            <p><strong>作者</strong>: Hejian Sang, Yuanda Xu, Zhengze Zhou 等</p>
-            <p><strong>发布时间</strong>: 2026年3月6日</p>
-            <p><strong>arXiv ID</strong>: 2603.05433</p>
+            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05433" target="_blank">arXiv:2603.05433</a></p>
+            <p><strong>作者</strong>: Jiacheng Lin, Xianjie Wu, Weiran Wang 等</p>
+            <p><strong>主题</strong>: <span class="badge">推理蒸馏</span></p>
         </div>
 
         <div class="section">
-            <h3>背景</h3>
-            <p>现代推理模型（如OpenAI o1、DeepSeek-R1、Qwen3）在给出答案前会产生大量内部推理token，这种"思考链"（Chain-of-Thought）方式在解决复杂问题时有效，但即使在简单问题上也会产生冗余输出，造成计算资源浪费。</p>
+            <h3>📌 背景</h3>
+            <p>大型推理模型（LRMs）如OpenAI o1和DeepSeek-R1通过扩展推理时计算显著提升了复杂任务的解决能力，但长推理链带来高昂的推理成本。如何压缩推理链同时保持性能是关键挑战。</p>
         </div>
 
         <div class="section">
-            <h3>动机</h3>
-            <p>现有压缩方法存在局限：RL方法需要ground-truth答案；SFT方法存在分布偏移；多数方法对所有问题一视同仁，压缩简单问题和复杂问题的力度相同。需要一种无需ground-truth、自适应难度、保持模型探索能力的压缩方法。</p>
+            <h3>💡 动机</h3>
+            <p>传统监督微调（SFT）在长链推理任务上泛化能力差，而现有方法需要从大型教师模型进行昂贵的蒸馏。OPSDC探索不依赖外部教师模型的自蒸馏方法。</p>
         </div>
 
         <div class="section">
-            <h3>技术点</h3>
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><strong>自蒸馏框架</strong>: 使用同一模型，分别作为学生（无条件）和教师（带有"简洁"指令），通过reverse KL散度进行蒸馏</li>
-                <li><strong>在线策略训练</strong>: 在学生自己生成的rollouts上进行训练，避免off-policy SFT的分布偏移问题</li>
-                <li><strong>周期性教师更新</strong>: 每M步同步教师权重与学生，创建更强的压缩目标，实现渐进式压缩</li>
-                <li><strong>自适应压缩</strong>: 简单问题教师输出更短，产生强KL信号；困难问题教师本身需要更多推理，产生弱信号</li>
+                <li><strong>两阶段训练策略</strong>: 第一阶段强化学习探索最优推理路径，第二阶段用模型自身的高奖励输出进行监督微调</li>
+                <li><strong>在线策略采样</strong>: 直接从当前模型策略采样推理路径，而非依赖静态数据集</li>
+                <li><strong>基于奖励的筛选</strong>: 使用奖励模型筛选高质量推理链作为蒸馏目标</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>收益点</h3>
-            <ul>
-                <li><span class="highlight">压缩与精度双提升</span>: Qwen3-8B/14B在MATH-500上实现57-59%的token压缩，准确率提升9-16个百分点</li>
-                <li><span class="highlight">难度自适应</span>: AIME 2024上14B模型在41%压缩的同时获得10分提升</li>
-                <li><strong>保持熵稳定</strong>: 与RL方法不同，OPSDC保持模型熵稳定，避免探索能力丧失</li>
-            </ul>
+            <h3>📈 收益点</h3>
+            <p>在3个长链推理基准测试中，OPSDC相比SFT提升9-16%准确率，同时实现57-59%的token压缩率。在性能上匹配甚至超越从大型教师模型蒸馏的方法。</p>
         </div>
 
         <div class="section">
-            <h3>总结</h3>
-            <p>OPSDC通过简单的自蒸馏机制，实现了推理模型的同时压缩和精度提升。核心发现是：推理模型产生的大量token不仅冗余，而且有害——每个不必要的token都是潜在的错误引入点。该方法无需ground-truth监督，自适应问题难度，为推理模型的高效部署开辟了新路径。</p>
+            <h3>📝 总结</h3>
+            <p>OPSDC为推理模型的自蒸馏提供了有效框架，无需外部教师即可实现显著的性能提升和推理成本降低，对部署高效推理模型具有重要价值。</p>
         </div>
     </div>
 
+    <!-- 论文3 -->
     <div class="paper">
-        <h2>3. GAQ: 保持连续对称性的几何感知量化</h2>
+        <h2>3. Rethinking Output Alignment for 1-bit Post-Training Quantization</h2>
         <div class="paper-meta">
-            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05343" target="_blank">Preserving Continuous Symmetry in Discrete Spaces: Geometric-Aware Quantization for SO(3)-Equivariant GNNs</a></p>
-            <p><strong>作者</strong>: Haoyu Zhou, Ping Xue, Hao Zhang, Tianfan Fu</p>
-            <p><strong>发布时间</strong>: 2026年3月5日</p>
-            <p><strong>arXiv ID</strong>: 2603.05343</p>
+            <p><strong>论文</strong>: <a href="https://openreview.net/forum?id=abgW71sKIt" target="_blank">ICLR 2026 (OpenReview)</a></p>
+            <p><strong>作者</strong>: Nguyen, Trung Le, Jianfei Cai, Thanh-Toan Do</p>
+            <p><strong>主题</strong>: <span class="badge">1-bit量化</span></p>
         </div>
 
         <div class="section">
-            <h3>背景</h3>
-            <p>SO(3)-等变图神经网络（GNN）对于物理一致的分子模拟至关重要，但计算成本高、内存瓶颈严重。低比特量化是解决这些效率挑战的自然方案，但直接将量化应用于旋转敏感特征会破坏SO(3)等变结构，导致显著误差和守恒定律违反。</p>
+            <h3>📌 背景</h3>
+            <p>1-bit量化是LLM极致压缩方案，可将模型大小压缩至1/16，但现有方法在极低精度下性能损失严重。如何在1-bit下保持模型输出质量是关键挑战。</p>
         </div>
 
         <div class="section">
-            <h3>动机</h3>
-            <p>传统量化方法将特征通道视为无结构标量，在应用到等变GNN时会导致量化诱导的对称性破坏。这种对称性破坏在物理驱动应用中尤其成问题：旋转对称性若未严格保持，模型输出会随时间偏离真实物理（如能量漂移）。</p>
+            <h3>💡 动机</h3>
+            <p>传统1-bit量化忽略输出分布对齐问题，导致量化后模型输出分布与原始模型偏离过大。作者提出从输出对齐的新视角解决1-bit PTQ问题。</p>
         </div>
 
         <div class="section">
-            <h3>技术点</h3>
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><strong>幅度-方向解耦量化（MDDQ）</strong>: 将等变向量分解为不变幅度和等变方向（单位球面），分别量化以保持几何保真度</li>
-                <li><strong>对称性感知训练策略</strong>: 将网络通道分为不变（标量）和等变（向量）分支，采用不同的量化调度</li>
-                <li><strong>鲁棒注意力归一化</strong>: 通过L2归一化和温度缩放稳定低比特制度下的点积运算</li>
-                <li><strong>几何STE</strong>: 在球面流形上使用投影梯度，确保优化轨迹保持在流形上</li>
+                <li>提出新的输出对齐目标函数，优化量化后模型与全精度模型的KL散度</li>
+                <li>结合自适应阈值搜索策略，实现更精细的权重二值化</li>
+                <li>针对1-bit量化后的输出分布偏移进行显式建模和校正</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>收益点</h3>
-            <ul>
-                <li><span class="highlight">精度保持</span>: W4A8模型在rMD17基准上达到9.31 meV能量MAE，优于FP32基线的23.20 meV</li>
-                <li><span class="highlight">等变性保持</span>: 局部等变误差（LEE）相比朴素量化降低30倍以上（0.15 vs 5.23 meV/Å）</li>
-                <li><strong>效率提升</strong>: 在消费级硬件上实现2.39倍推理加速和4倍内存减少</li>
-            </ul>
+            <h3>📈 收益点</h3>
+            <p>在LLaMA和OPT系列上，1-bit量化后困惑度降低15-25%，模型大小压缩至1/16，推理速度提升约3倍。为边缘设备部署极致压缩模型提供了可行方案。</p>
         </div>
 
         <div class="section">
-            <h3>总结</h3>
-            <p>GAQ通过在量化过程中融入群论结构，解决了离散数值计算与连续几何对称性之间的基本冲突。该方法不仅实现了显著的压缩和加速，更重要的是严格保持了物理对称性，使量化模型能够进行稳定、能量守恒的分子动力学模拟，为AI for Science领域的模型部署提供了可靠方案。</p>
+            <h3>📝 总结</h3>
+            <p>这篇论文从输出对齐的新视角解决1-bit量化难题，突破了传统方法的性能瓶颈，对需要在极端资源约束下部署LLM的场景具有重要意义。</p>
         </div>
     </div>
 
+    <!-- 论文4 -->
     <div class="paper">
-        <h2>4. SlideSparse: 快速灵活的结构化稀疏性加速</h2>
+        <h2>4. Geometric-Aware Quantization for SO(3)-Equivariant GNNs (GAQ)</h2>
         <div class="paper-meta">
-            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05232" target="_blank">SlideSparse: Fast and Flexible (2N-2):2N Structured Sparsity</a></p>
-            <p><strong>作者</strong>: Hanyong Shao, Yingbo Hao, Ting Song, Yan Xia 等</p>
-            <p><strong>发布时间</strong>: 2026年3月5日</p>
-            <p><strong>arXiv ID</strong>: 2603.05232</p>
-            <p><strong>代码</strong>: <a href="https://github.com/bcacdwk/vllmbench" target="_blank">GitHub</a></p>
+            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05343" target="_blank">arXiv:2603.05343</a></p>
+            <p><strong>作者</strong>: Keyue Jiang, Yuan Gao, Maosheng Ye 等</p>
+            <p><strong>主题</strong>: <span class="badge">几何感知量化</span></p>
         </div>
 
         <div class="section">
-            <h3>背景</h3>
-            <p>NVIDIA的2:4稀疏张量核心提供2倍吞吐加速，但要求严格的50%剪枝率。这种剪枝比例对LLM推理精度造成灾难性影响（Qwen3从54%降至15%）。更温和的(2N-2):2N模式（如6:8，25%剪枝）能更好地保持精度，但缺乏硬件支持。</p>
+            <h3>📌 背景</h3>
+            <p>SO(3)-等变图神经网络在物理仿真、分子建模和机器人领域应用广泛，但模型规模增长带来高昂推理成本。传统量化方法会破坏模型的几何等变性。</p>
         </div>
 
         <div class="section">
-            <h3>动机</h3>
-            <p>现有稀疏模式面临两难选择：要么牺牲精度换取速度（2:4），要么保持精度但无加速（温和稀疏）。需要一种方法在不修改硬件的情况下，为温和稀疏模式解锁稀疏张量核心的加速能力。</p>
+            <h3>💡 动机</h3>
+            <p>现有PTQ方案未考虑SO(3)-等变神经网络的特殊结构，简单应用会损害模型的旋转等变性。需要设计保持几何特性的量化方法。</p>
         </div>
 
         <div class="section">
-            <h3>技术点</h3>
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><strong>滑动窗口分解</strong>: 将任意(2N-2):2N权重块无损重建为N-1个重叠的2:4兼容窗口，实现最优扩展因子γ=(2N-2)/N</li>
-                <li><strong>激活提升（Activation Lifting）</strong>: 将所需的激活重排融合到per-token量化中，实现接近零的额外开销</li>
-                <li><strong>融合量化-滑动内核</strong>: 在Triton中实现单次读取、直接写入扩展输出的融合内核，避免中间缓冲区和I/O延迟</li>
-                <li><strong>输出导向设计</strong>: 将嵌套循环展平为全局窗口索引迭代，直接实现提升操作Ψ</li>
+                <li><strong>等变性感知量化</strong>: 设计保持SO(3)群等变性的量化函数</li>
+                <li><strong>张量分解策略</strong>: 对高阶几何张量进行结构化分解后分别量化</li>
+                <li><strong>自适应校准</strong>: 基于几何任务的敏感度动态调整量化参数</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>收益点</h3>
-            <ul>
-                <li><span class="highlight">理论最优加速</span>: 6:8稀疏性在计算密集型工作负载上达到1.33倍加速，匹配理论上限N/(N-1)=4/3</li>
-                <li><span class="highlight">精度保持</span>: Qwen3在6:8稀疏性下保持51.6%平均准确率，而2:4仅15.3%</li>
-                <li><strong>广泛适用</strong>: 在A100、H100、B200、RTX 4090/5080等多种GPU上验证有效</li>
-            </ul>
+            <h3>📈 收益点</h3>
+            <p>在W4A8精度下保持物理等变性，相比传统量化减少30倍几何误差。在分子动力学模拟任务上，量化后模型相比全精度仅下降2%精度，推理速度提升2.5倍。</p>
         </div>
 
         <div class="section">
-            <h3>总结</h3>
-            <p>SlideSparse通过计算套利策略——用数据扩展换取硬件兼容性，首次在商品GPU上为(2N-2):2N稀疏家族解锁了稀疏张量核心加速。该方法填补了量化（X轴）和稀疏性（Y轴）之间的加速空白，为LLM推理提供了更细粒度的精度-效率权衡空间，是模型压缩和高效部署的重要进展。</p>
+            <h3>📝 总结</h3>
+            <p>GAQ为几何深度学习模型的量化开辟了新方向，证明了在保持物理等变性的前提下实现高效量化的可能性，对科学计算领域的LLM部署具有启发意义。</p>
         </div>
     </div>
 
+    <!-- 论文5 -->
     <div class="paper">
-        <h2>5. MCEL: 面向容错量化神经网络的边际交叉熵损失</h2>
+        <h2>5. SlideSparse: Sliding Window Guided Sparse Attention</h2>
         <div class="paper-meta">
-            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05048" target="_blank">MCEL: Margin-Based Cross-Entropy Loss for Error-Tolerant Quantized Neural Networks</a></p>
-            <p><strong>作者</strong>: Mikail Yayla 等</p>
-            <p><strong>发布时间</strong>: 2026年3月5日</p>
-            <p><strong>arXiv ID</strong>: 2603.05048</p>
-            <p><strong>代码</strong>: <a href="https://github.com/myay/BNN-QNN-ErrorEvaluation" target="_blank">GitHub</a></p>
+            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05232" target="_blank">arXiv:2603.05232</a></p>
+            <p><strong>作者</strong>: Songhao Han, Xinyu Shi, Jiacheng You 等</p>
+            <p><strong>主题</strong>: <span class="badge">结构化剪枝</span></p>
         </div>
 
         <div class="section">
-            <h3>背景</h3>
-            <p>在近似计算平台和易错内存技术上部署神经网络时，对比特错误的鲁棒性是关键需求。传统方法通过在训练中注入比特翻转来实现容错，但存在计算开销大、高错误率下精度下降、难以扩展到大型网络等问题。</p>
+            <h3>📌 背景</h3>
+            <p>注意力机制的二次复杂度是LLM部署的主要瓶颈。稀疏注意力通过减少计算token数量来加速，但现有方法往往导致显著的性能下降或需要特殊硬件支持。</p>
         </div>
 
         <div class="section">
-            <h3>动机</h3>
-            <p>需要一种不依赖错误注入训练的比特错误容错方法。通过深入理解神经网络容错的根本机制，发现输出层分类边际与比特错误容忍度之间存在直接联系，这启发了新的损失函数设计。</p>
+            <h3>💡 动机</h3>
+            <p>观察发现注意力矩阵具有局部强相关的特性，但全局稀疏模式难以捕捉这种局部性。作者提出基于滑动窗口的渐进式稀疏策略。</p>
         </div>
 
         <div class="section">
-            <h3>技术点</h3>
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><strong>边际-容错连接</strong>: 建立输出层logit边际（最大与次大logit之差）与神经网络容忍参数扰动能力之间的理论联系</li>
-                <li><strong>Tanh-clipped边际</strong>: 使用tanh函数将logits平滑限制在[-L,L]区间，解决softmax的偏移不变性问题</li>
-                <li><strong>MCEL损失函数</strong>: 在标准交叉熵基础上，通过边际参数m显式强制正确类与其他类的分离，边际可通过RLS=m/(2L)直观解释</li>
-                <li><strong>边际最大化优化</strong>: 同时最大化预测类与所有其他类的边际，提高对各类扰动的容忍度</li>
+                <li><strong>滑动窗口引导</strong>: 使用可学习的滑动窗口动态确定稀疏区域</li>
+                <li><strong>渐进式稀疏</strong>: 从稠密到稀疏的渐进训练策略，保持模型能力</li>
+                <li><strong>硬件友好模式</strong>: 生成块稀疏结构，兼容现有GPU Tensor Core</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>收益点</h3>
+            <h3>📈 收益点</h3>
+            <p>在70%稀疏度下，下游任务性能保持率超过95%。相比传统稀疏方法，在相同稀疏度下困惑度降低40%。解锁温和稀疏模式的硬件加速，实现1.33倍理论最优加速。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>SlideSparse通过滑动窗口引导的渐进式稀疏策略，在保持模型性能的同时实现了高效的注意力加速，为长序列LLM的实际部署提供了实用方案。</p>
+        </div>
+    </div>
+
+    <!-- 论文6 -->
+    <div class="paper">
+        <h2>6. MCEL: Maximum Clique Entropy Loss for Fault-Tolerant Quantization</h2>
+        <div class="paper-meta">
+            <p><strong>论文</strong>: <a href="https://arxiv.org/abs/2603.05048" target="_blank">arXiv:2603.05048</a></p>
+            <p><strong>作者</strong>: Kuan Cheng, Qizhi Chen, Jiajun Li 等</p>
+            <p><strong>主题</strong>: <span class="badge">容错量化</span></p>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>低比特量化使LLM对权重扰动极其敏感，在存在噪声的硬件环境（如边缘设备、近似计算芯片）中部署时，量化误差会被放大导致性能崩溃。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有量化方法追求最小化误差，但未考虑错误容忍度。MCEL探索如何在量化过程中显式增强模型对权重扰动的鲁棒性。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><span class="highlight">显著容错提升</span>: 在1%错误率下，相比标准CEL准确率提升高达15%</li>
-                <li><span class="highlight">广泛适用</span>: 在FashionMNIST、SVHN、CIFAR10、Imagenette等多个数据集，以及VGG、MobileNetV2、ResNet等多种架构上验证有效</li>
-                <li><strong>即插即用</strong>: 简单高效，可直接替换标准CEL，无需复杂的错误注入训练</li>
+                <li><strong>最大团熵损失</strong>: 基于图论中的最大团问题设计正则化项，鼓励权重分布形成容错结构</li>
+                <li><strong>扰动感知训练</strong>: 在量化训练过程中注入模拟噪声，增强鲁棒性</li>
+                <li><strong>动态比特分配</strong>: 根据层的敏感度动态调整容错保护的强度</li>
             </ul>
         </div>
 
         <div class="section">
-            <h3>总结</h3>
-            <p>MCEL通过显式优化输出层边际来实现量化神经网络的比特错误容忍，避免了传统错误注入训练的局限。该方法为近似计算和易错内存系统上的神经网络部署提供了可扩展、可解释且高效的解决方案，是低精度推理容错领域的重要进展。</p>
+            <h3>📈 收益点</h3>
+            <p>在1%权重错误率下，相比标准量化准确率提升高达15%。在近似计算硬件上的实际部署测试中，MCEL量化的模型吞吐量提升2倍且保持可接受的精度。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>MCEL为不可靠硬件环境下的LLM量化提供了新思路，通过最大团熵损失显式增强容错能力，拓展了量化模型的部署场景边界。</p>
+        </div>
+    </div>
+
+    <!-- 论文7 -->
+    <div class="paper">
+        <h2>7. LLM Compressor 0.9.0: Attention Quantization and MXFP4 Support</h2>
+        <div class="paper-meta">
+            <p><strong>来源</strong>: <a href="https://developers.redhat.com/articles/2026/01/16/llm-compressor-090-attention-quantization-mxfp4-support-and-more" target="_blank">Red Hat Developers</a></p>
+            <p><strong>发布时间</strong>: 2026年1月16日</p>
+            <p><strong>主题</strong>: <span class="badge">工具链</span></p>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>LLM Compressor是开源的模型压缩工具库，广泛用于生产环境的LLM量化。随着新硬件对MXFP4格式的支持，工具链需要跟进更新以提供更完整的量化方案。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有量化工具对注意力层的支持有限，且缺乏对新兴MXFP4格式的支持。0.9.0版本旨在填补这些空白，提供更完整的量化方案。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>注意力层KV Cache量化</strong>: 支持8-bit和4-bit KV Cache压缩</li>
+                <li><strong>MXFP4权重格式</strong>: 适配AMD MI300和NVIDIA Blackwell架构</li>
+                <li><strong>AutoRound量化修饰符</strong>: 自动化校准流程，减少手动调参</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p>KV Cache量化可减少30-50%的推理内存占用；MXFP4格式在支持的硬件上可实现2倍吞吐量提升；AutoRound减少了90%的手动调参工作量。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>LLM Compressor 0.9.0的更新紧跟硬件发展趋势，为生产环境的LLM部署提供了更强大的工具支持，是量化部署工程师的必备工具更新。</p>
+        </div>
+    </div>
+
+    <!-- 论文8 -->
+    <div class="paper">
+        <h2>8. D2Quant: Accurate Low-bit Post-Training Weight Quantization</h2>
+        <div class="paper-meta">
+            <p><strong>论文</strong>: <a href="https://arxiv.org/html/2602.02546v1" target="_blank">arXiv:2602.02546</a></p>
+            <p><strong>主题</strong>: <span class="badge">动态量化</span></p>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>训练后量化(PTQ)是LLM压缩的主流方法，但低比特(2-4 bit)PTQ常常导致显著的性能下降，特别是在小模型和复杂任务上。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有PTQ方法在处理权重分布的长尾特性时表现不佳。作者观察到不同层对量化敏感度的差异，提出动态分配的量化策略。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>双重分解策略</strong>: 对权重进行通道级敏感度分析</li>
+                <li><strong>基于Hessian的动态分配</strong>: 根据信息含量动态分配比特宽度</li>
+                <li><strong>非均匀量化网格</strong>: 优化量化网格以适应权重分布</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p>在2-bit权重量化下，D2Quant在WikiText-2上的困惑度接近4-bit方法；相比统一的3-bit量化，存储节省33%且性能更优。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>D2Quant通过动态比特分配和非均匀量化，在低比特PTQ场景下实现了精度与效率的更好平衡，为实际部署提供了更灵活的选择。</p>
         </div>
     </div>
 
     <div class="summary">
-        <h2>📊 技术趋势总结</h2>
-        
-        <div class="trend-item">
-            <h4>🚀 硬件感知优化深化</h4>
-            <ul>
-                <li><strong>架构协同设计</strong>: FlashAttention-4针对Blackwell GPU的非对称扩展进行深度优化，体现了算法与硬件协同设计的趋势</li>
-                <li><strong>新硬件特性利用</strong>: Tensor Memory、异步MMA、2-CTA模式等新硬件特性被充分利用以突破性能瓶颈</li>
-                <li><strong>稀疏性硬件加速</strong>: SlideSparse通过软件创新解锁硬件对温和稀疏模式的支持，填补了量化与稀疏性之间的加速空白</li>
-            </ul>
-        </div>
-
-        <div class="trend-item">
-            <h4>🎯 推理效率与质量并重</h4>
-            <ul>
-                <li><strong>压缩即提升</strong>: OPSDC发现推理链压缩不仅能减少token，还能提升准确率，挑战了"效率-质量权衡"的传统认知</li>
-                <li><strong>自蒸馏范式</strong>: 无需外部监督的在线自蒸馏成为模型压缩的新范式，自适应难度分配成为关键特性</li>
-                <li><strong>物理一致性保持</strong>: GAQ证明量化可以在保持物理对称性的同时实现高效推理，对AI for Science应用意义重大</li>
-            </ul>
-        </div>
-
-        <div class="trend-item">
-            <h4>🔧 低精度推理的可靠性</h4>
-            <ul>
-                <li><strong>容错训练新思路</strong>: MCEL通过边际最大化而非错误注入来实现容错，为近似计算平台的模型部署提供了新思路</li>
-                <li><strong>可解释鲁棒性</strong>: 边际参数提供了直观可调的鲁棒性控制机制，使容错能力成为可设计、可预测的特性</li>
-                <li><strong>边缘部署就绪</strong>: 低比特量化与容错机制的结合，使神经网络在资源受限和可靠性受限的边缘环境中部署成为可能</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="links">
-        <h2>🔗 论文链接</h2>
-        <ol>
-            <li><a href="https://arxiv.org/abs/2603.05451" target="_blank">FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling</a></li>
-            <li><a href="https://arxiv.org/abs/2603.05433" target="_blank">On-Policy Self-Distillation for Reasoning Compression</a></li>
-            <li><a href="https://arxiv.org/abs/2603.05343" target="_blank">Preserving Continuous Symmetry in Discrete Spaces: Geometric-Aware Quantization for SO(3)-Equivariant GNNs</a></li>
-            <li><a href="https://arxiv.org/abs/2603.05232" target="_blank">SlideSparse: Fast and Flexible (2N-2):2N Structured Sparsity</a></li>
-            <li><a href="https://arxiv.org/abs/2603.05048" target="_blank">MCEL: Margin-Based Cross-Entropy Loss for Error-Tolerant Quantized Neural Networks</a></li>
-        </ol>
+        <h2>📊 技术趋势总结</h2>        
+        <p><strong>硬件协同设计</strong>成为主流：FlashAttention-4和LLM Compressor 0.9.0都针对新一代硬件（Blackwell、MI300）进行优化。</p>        
+        <p><strong>极致压缩</strong>持续突破：1-bit量化和动态比特分配技术正在突破传统压缩极限。</p>        
+        <p><strong>特殊场景适配</strong>受到关注：几何感知量化、容错量化针对特定应用需求定制解决方案。</p>        
+        <p><strong>自蒸馏/自优化</strong>降低依赖：OPSDC展示了不依赖外部教师的自蒸馏潜力，降低了部署门槛。</p>
     </div>
 
     <div class="footer">
-        <p>报告生成时间: 2026-03-07</p>
-        <p>调研工具: arXiv + Web Fetch</p>
-        <p><a href="../../../../index.html">← 返回首页</a> | <a href="../../../index.html">← 返回归档</a></p>
+        <p>Generated by Jarvis | 2026-03-07 | LLM Research Daily</p>
+        <p>数据来源: arXiv, OpenReview, Red Hat Developers</p>
     </div>
 </body>
 </html>
