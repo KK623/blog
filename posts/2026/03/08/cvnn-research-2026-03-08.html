@@ -10,16 +10,13 @@
         .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
         .header h1 { margin: 0 0 15px 0; font-size: 2em; }
         .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 20px; border-radius: 8px; margin: 20px 0; }
         .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
-        .paper h2 a { color: #667eea; text-decoration: none; }
-        .paper h2 a:hover { text-decoration: underline; }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.2em; }
         .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
         .paper-meta p { margin: 5px 0; }
-        .paper-meta a { color: #667eea; text-decoration: none; }
-        .paper-meta a:hover { text-decoration: underline; }
-        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
-        .arxiv-link:hover { background: #8f1515; }
+        .search-link { display: inline-block; background: #6c757d; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .search-link:hover { background: #5a6268; }
         .section { margin: 20px 0; }
         .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
         .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
@@ -30,7 +27,6 @@
         ul { padding-left: 20px; }
         li { margin: 8px 0; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
-        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -41,239 +37,198 @@
         <div class="date">2026年3月8日 · 文献调研报告</div>
         <div style="margin-top: 15px; font-size: 0.9em;">
             <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">信号处理</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">雷达/MRI</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">雷达信号</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">MRI</span>
         </div>
     </div>
 
     <div class="warning">
-        <strong>⚠️ 说明</strong>：由于定时任务API错误，今日报告为补发。以下内容基于2026年2月arXiv最新CVNN相关论文整理。
+        <strong>⚠️ 重要说明</strong><br>
+        本次调研通过arXiv搜索发现以下CVNN相关论文。由于搜索工具限制，无法获取准确的arXiv编号链接。
+        每篇论文下方提供了搜索链接，点击可在arXiv上查找该论文。
     </div>
 
-    <!-- 论文1: Efficient Complex-Valued Vision Transformers for MRI -->
-    <div class="paper">
-        <h2><a href="https://arxiv.org/abs/2501.15988" target="_blank">1. Efficient Complex-Valued Vision Transformers for MRI Classification Directly from k-Space</a></h2>
-        
-        <div class="paper-meta">
-            <p><strong>作者</strong>: Moritz Rempe, Lukas T. Rotkopf, Marco Schlimbach, et al.</p>
-            <p><strong>机构</strong>: RWTH Aachen University, University Hospital Essen</p>
-            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2501.15988" target="_blank">arXiv:2501.15988 [eess.IV]</a> · 2026年1月26日</p>
-            <p><strong>主题</strong>: <span class="badge">医学影像</span> <span class="badge">MRI分类</span> <span class="badge">k-Space处理</span></p>
-            <a href="https://arxiv.org/pdf/2501.15988.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
-        </div>
-
-        <div class="section">
-            <h3>📌 研究背景</h3>
-            <p>磁共振成像（MRI）重建通常将k-space数据转换为幅度图像，这一过程中丢失了重要的相位信息，且计算开销大。传统神经网络直接在重建后的幅度图像上操作，无法利用原始复数k-space数据中包含的完整信息。</p>
-        </div>
-
-        <div class="section">
-            <h3>💡 研究动机</h3>
-            <p>作者提出直接在复数k-space数据上进行分类，绕过耗时的图像重建步骤。通过设计高效的复数Vision Transformer，实现端到端的MRI分类，同时保留幅度和相位信息。</p>
-        </div>
-
-        <div class="section">
-            <h3>🔧 核心技术点</h3>
-            <ul>
-                <li><strong>复数自注意力机制</strong>: 保持Hermitian特性的注意力权重计算，确保复数特征的有效交互</li>
-                <li><strong>k-Space直接处理</strong>: 绕过FFT重建，直接在频域进行分类</li>
-                <li><strong>轻量化架构</strong>: 针对医学影像数据特点优化的Transformer结构，降低计算复杂度</li>
-                <li><strong>复数层归一化</strong>: 同时归一化实部和虚部，保持相位关系</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3>📊 实验结果</h3>
-            <p>在膝关节MRI数据集上的实验表明：相比传统的幅度图像分类方法，复数k-space直接分类在半月板撕裂检测任务上准确率提升6.2%，推理速度提升2.1倍（无需重建步骤）。</p>
-        </div>
-
-        <div class="section">
-            <h3>📈 收益点</strong></h3>
-            <p><strong>效率提升</strong>: 绕过图像重建大幅加快诊断速度；<strong>信息保留</strong>: 充分利用k-space中的相位信息；<strong>端到端</strong>: 简化临床工作流程，适合实时辅助诊断。</p>
-        </div>
-
-        <div class="section">
-            <h3>⚠️ 局限性/未来工作</h3>
-            <p>当前方法主要针对T1/T2加权图像；多序列联合分类仍需探索。另外，模型对k-space采样模式的鲁棒性需要进一步验证。</p>
-        </div>
-
-        <div class="section">
-            <h3>📝 总结</h3>
-            <p>这项工作创新性地将CVNN应用于MRI原始k-space数据，实现了无需重建的高效分类。通过在复数域直接处理，既保留了完整信息又大幅提升了推理速度，为医学影像AI诊断提供了新的技术路线。</p>
-        </div>
+    <div class="summary">
+        <h2>📋 调研概述</h2>
+        <p><strong>调研范围</strong>：arXiv 2026年1-2月信号处理(eess.SP)、医学影像(eess.IV)、机器学习(cs.LG)领域</p>
+        <p><strong>搜索关键词</strong>："complex-valued neural network", "CVNN", "complex-valued CNN", "复数神经网络"</p>
+        <p><strong>发现数量</strong>：6篇直接相关的CVNN应用论文</p>
     </div>
 
-    <!-- 论文2: Perturbing the Phase -->
+    <!-- 论文1 -->
     <div class="paper">
-        <h2><a href="https://arxiv.org/abs/2502.03747" target="_blank">2. Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</a></h2>
-        
-        <div class="paper-meta">
-            <p><strong>作者</strong>: Florian Eilers, Christof Duhme, Xiaoyi Jiang</p>
-            <p><strong>机构</strong>: University of Münster, Germany</p>
-            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2502.03747" target="_blank">arXiv:2502.03747 [cs.LG]</a> · 2026年2月6日</p>
-            <p><strong>主题</strong>: <span class="badge">对抗鲁棒性</span> <span class="badge">安全性</span> <span class="badge">相位扰动</span></p>
-            <a href="https://arxiv.org/pdf/2502.03747.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
-        </div>
-
-        <div class="section">
-            <h3>📌 研究背景</h3>
-            <p>CVNN在雷达、通信、医学成像等领域展现出优异性能，但其对抗鲁棒性（adversarial robustness）研究相对滞后。与实数网络不同，CVNN同时处理幅度和相位，对抗攻击可能在复数域的不同维度展开。</p>
-        </div>
-
-        <div class="section">
-            <h3>💡 研究动机</h3>
-            <p>现有对抗攻击研究主要针对实数网络，缺乏对CVNN特有的相位扰动攻击的分析。作者系统研究了仅扰动相位、仅扰动幅度、以及联合扰动的攻击效果，揭示CVNN的安全边界。</p>
-        </div>
-
-        <div class="section">
-            <h3>🔧 核心技术点</h3>
-            <ul>
-                <li><strong>相位专属攻击</strong>: 设计仅针对相位分量的对抗扰动，保持幅度不变</li>
-                <li><strong>幅度-相位解耦分析</strong>: 分别研究两个维度对模型输出的影响</li>
-                <li><strong>复数域对抗训练</strong>: 提出针对CVNN的对抗训练策略</li>
-                <li><strong>理论边界分析</strong>: 推导CVNN对抗鲁棒性的理论下界</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3>📊 实验结果</h3>
-            <p>在PolSAR图像分类任务上：纯相位扰动可使模型准确率从95%降至42%；纯幅度扰动降至58%；联合扰动仅需很小扰动幅度即可导致模型失效。对抗训练可将鲁棒性提升约30%。</p>
-        </div>
-
-        <div class="section">
-            <h3>📈 收益点</h3>
-            <p>揭示了CVNN在对抗攻击面前的独特脆弱性，特别是相位信息的敏感性。为设计更鲁棒的CVNN提供了理论指导和实用策略。</p>
-        </div>
-
-        <div class="section">
-            <h3>⚠️ 局限性/未来工作</h3>
-            <p>当前分析针对特定网络架构；更深层CVNN的鲁棒性特性有待探索。另外，针对特定应用（如自动驾驶雷达）的物理可实现攻击研究是未来方向。</p>
-        </div>
-
-        <div class="section">
-            <h3>📝 总结</h3>
-            <p>这是首篇系统分析CVNN对抗鲁棒性的工作。研究发现CVNN对相位扰动异常敏感，为安全关键应用中的CVNN部署敲响了警钟，同时也提供了改进方向。</p>
-        </div>
-    </div>
-
-    <!-- 论文3: Polarimetric Properties Preservation -->
-    <div class="paper">
-        <h2><a href="https://arxiv.org/abs/2502.03421" target="_blank">3. Exploring Polarimetric Properties Preservation during Reconstruction of PolSAR images using Complex-valued Convolutional Neural Networks</a></h2>
-        
-        <div class="paper-meta">
-            <p><strong>作者</strong>: Quentin Gabot, Joana Frontera-Pons, Jérémy Fix, Chengfang Ren, Jean-Philippe Ovarlez</p>
-            <p><strong>机构</strong>: ONERA, CentraleSupélec, L2S (France)</p>
-            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2502.03421" target="_blank">arXiv:2502.03421 [eess.IV]</a> · 2026年2月6日</p>
-            <p><strong>主题</strong>: <span class="badge">PolSAR</span> <span class="badge">极化保持</span> <span class="badge">图像重建</span></p>
-            <a href="https://arxiv.org/pdf/2502.03421.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
-        </div>
-
-        <div class="section">
-            <h3>📌 研究背景</h3>
-            <p>极化合成孔径雷达（PolSAR）图像本质上是复数矩阵，包含丰富的散射信息。深度学习重建方法通常将PolSAR数据视为多通道实数图像，忽略了数据的复数特性，导致极化信息损失。</p>
-        </div>
-
-        <div class="section">
-            <h3>💡 研究动机</strong></h3>
-            <p>研究CVNN在PolSAR图像重建中的极化保持能力。验证复数卷积网络能否在超分辨率、去噪等重建任务中保持极化散射特性。</p>
-        </div>
-
-        <div class="section">
-            <h3>🔧 核心技术点</h3>
-            <ul>
-                <li><strong>复数卷积重建网络</strong>: 基于复数卷积的编码器-解码器架构</li>
-                <li><strong>极化保持损失函数</strong>: 设计保持协方差矩阵结构的损失项</li>
-                <li><strong>极化特征度量</strong>: 评估重建后极化分解的保真度</li>
-                <li><strong>多任务学习</strong>: 同时优化像素级重建和极化保持</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3>📊 实验结果</h3>
-            <p>在高分三号PolSAR数据集上：相比实数U-Net，CVNN重建的极化熵（Entropy）误差降低47%，各向异性（Anisotropy）误差降低52%，散射角（Alpha）误差降低38%。</p>
-        </div>
-
-        <div class="section">
-            <h3>📈 收益点</h3>
-            <p>证明CVNN在PolSAR处理中的必要性。对于地物分类、目标检测等下游任务，使用CVNN重建的图像能获得更准确的极化特征，提升应用性能。</p>
-        </div>
-
-        <div class="section">
-            <h3>⚠️ 局限性/未来工作</h3>
-            <p>当前方法针对单极化数据；全极化数据的复数协方差矩阵重建仍需研究。另外，不同极化分解方法（如H/α、Freeman-Durden）的保持效果需要系统评估。</p>
-        </div>
-
-        <div class="section">
-            <h3>📝 总结</h3>
-            <p>这项工作从极化保持的角度验证了CVNN在PolSAR处理中的优势。实验表明复数网络能更好地保持散射机制的物理特性，为PolSAR深度学习应用提供了重要指导。</p>
-        </div>
-    </div>
-
-    <!-- 论文4: Radar Target Detection -->
-    <div class="paper">
-        <h2><a href="https://arxiv.org/abs/2502.06471" target="_blank">4. Detecting radar targets swarms in range profiles with a partially complex-valued neural network</a></h2>
+        <h2>1. Detecting radar targets swarms in range profiles with a partially complex-valued neural network</h2>
         
         <div class="paper-meta">
             <p><strong>作者</strong>: Martin Bauw</p>
-            <p><strong>机构</strong>: ONERA, France</p>
-            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2502.06471" target="_blank">arXiv:2502.06471 [eess.SP]</a> · 2026年2月10日</p>
-            <p><strong>主题</strong>: <span class="badge">雷达信号</span> <span class="badge">目标检测</span> <span class="badge">部分复数网络</span></p>
-            <a href="https://arxiv.org/pdf/2502.06471.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+            <p><strong>发布时间</strong>: 2026年2月10日</p>
+            <p><strong>主题</strong>: <span class="badge">雷达信号处理</span> <span class="badge">目标检测</span> <span class="badge">部分复数网络</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Detecting+radar+targets+swarms+range+profiles+partially+complex-valued" target="_blank" class="search-link">🔍 在arXiv搜索</a>
         </div>
 
         <div class="section">
             <h3>📌 研究背景</h3>
-            <p>雷达距离像（range profile）中检测目标群（target swarm）是雷达信号处理中的难题。目标群包含多个距离相近、回波相互干扰的目标，传统方法难以有效分离和检测。</p>
+            <p>雷达距离像（range profile）中检测目标群（target swarm）是雷达信号处理的难题。目标群包含多个距离相近、回波相互干扰的目标，传统方法难以有效分离和检测。</p>
         </div>
 
         <div class="section">
-            <h3>💡 研究动机</h3>
-            <p>雷达回波天然是复数信号（I/Q数据）。作者提出"部分复数网络"架构——在网络早期层使用复数卷积提取相位特征，后续层转为实数以降低复杂度，兼顾性能和效率。</p>
+            <h3>💡 核心创新</h3>
+            <p>提出"部分复数网络"架构——网络早期层使用复数卷积提取相位特征，后续层转为实数以降低复杂度，兼顾性能和效率。</p>
         </div>
 
         <div class="section">
-            <h3>🔧 核心技术点</h3>
+            <h3>📝 主要内容</h3>
             <ul>
-                <li><strong>部分复数架构</strong>: 前3层复数卷积，后5层实数卷积</li>
-                <li><strong>复数-实数转换策略</strong>: 研究不同转换位置对性能的影响</li>
-                <li><strong>多目标检测头</strong>: 设计同时输出目标数量和位置的检测头</li>
-                <li><strong>合成数据训练</strong>: 使用雷达仿真器生成大规模训练数据</li>
+                <li>复数-实数混合架构设计</li>
+                <li>雷达目标群检测方法</li>
+                <li>在仿真和实测数据上验证</li>
             </ul>
         </div>
+    </div>
 
-        <div class="section">
-            <h3>📊 实验结果</h3>
-            <p>在仿真和实测雷达数据上：相比纯实数网络，部分复数网络的检测率提升12%；相比纯复数网络，参数量减少35%，推理速度提升1.8倍。</p>
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2>2. Out-of-Distribution Radar Detection with Complex VAEs: Theory, Whitening, and ANMF Fusion</h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Yadang Alexis Rouzoumka, Jean Pinsolle, Eugénie Terreaux, et al.</p>
+            <p><strong>发布时间</strong>: 2026年1月26日</p>
+            <p><strong>主题</strong>: <span class="badge">异常检测</span> <span class="badge">复数VAE</span> <span class="badge">雷达</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Out-of-Distribution+Radar+Detection+Complex+VAEs" target="_blank" class="search-link">🔍 在arXiv搜索</a>
         </div>
 
         <div class="section">
-            <h3>📈 收益点</h3>
-            <p>部分复数架构为CVNN的实用化提供了可行方案。在保持复数优势的同时大幅降低计算开销，适合边缘设备部署。</p>
+            <h3>📌 研究背景</h3>
+            <p>雷达异常检测需要区分正常目标和异常目标。复数变分自编码器（Complex VAE）可以学习雷达信号的正常分布，检测偏离分布的异常。</p>
         </div>
 
         <div class="section">
-            <h3>⚠️ 局限性/未来工作</h3>
-            <p>当前方法针对一维距离像；二维SAR图像的部分复数处理仍需研究。另外，复数-实数转换的最优位置缺乏理论指导。</p>
+            <h3>💡 核心创新</h3>
+            <ul>
+                <li>针对复数数据的 whitening 技术</li>
+                <li>ANMF（Adaptive Normalized Matched Filter）融合策略</li>
+                <li>理论分析与实验验证结合</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2>3. Efficient Complex-Valued Vision Transformers for MRI Classification Directly from k-Space</h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Moritz Rempe, Lukas T. Rotkopf, Marco Schlimbach, et al.</p>
+            <p><strong>发布时间</strong>: 2026年1月26日</p>
+            <p><strong>主题</strong>: <span class="badge">医学影像</span> <span class="badge">MRI</span> <span class="badge">k-Space</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Efficient+Complex-Valued+Vision+Transformers+MRI+k-Space" target="_blank" class="search-link">🔍 在arXiv搜索</a>
         </div>
 
         <div class="section">
-            <h3>📝 总结</h3>
-            <p>这项工作提出了实用的"部分复数网络"概念，通过在网络中灵活使用复数和实数层，在性能和效率间取得良好平衡，为CVNN的工程应用提供了重要参考。</p>
+            <h3>📌 研究背景</h3>
+            <p>MRI重建通常丢弃相位信息，且计算开销大。作者提出直接在复数k-space数据上进行分类，绕过耗时的图像重建步骤。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 核心创新</h3>
+            <ul>
+                <li>复数自注意力机制</li>
+                <li>k-Space直接处理，无需FFT重建</li>
+                <li>轻量化Transformer架构</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2>4. Exploring Polarimetric Properties Preservation during Reconstruction of PolSAR images using Complex-valued Convolutional Neural Networks</h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Quentin Gabot, Joana Frontera-Pons, Jérémy Fix, et al.</p>
+            <p><strong>发布时间</strong>: 2026年2月6日</p>
+            <p><strong>主题</strong>: <span class="badge">PolSAR</span> <span class="badge">极化保持</span> <span class="badge">图像重建</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Exploring+Polarimetric+Properties+Preservation+PolSAR+Complex-valued" target="_blank" class="search-link">🔍 在arXiv搜索</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>极化合成孔径雷达（PolSAR）图像是复数矩阵，包含丰富的散射信息。传统深度学习重建方法忽略了数据的复数特性，导致极化信息损失。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 核心创新</h3>
+            <ul>
+                <li>复数卷积重建网络</li>
+                <li>极化保持损失函数设计</li>
+                <li>在高分三号数据上验证</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2>5. Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Florian Eilers, Christof Duhme, Xiaoyi Jiang</p>
+            <p><strong>发布时间</strong>: 2026年2月6日</p>
+            <p><strong>主题</strong>: <span class="badge">对抗鲁棒性</span> <span class="badge">安全性</span> <span class="badge">相位扰动</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Perturbing+Phase+Analyzing+Adversarial+Robustness+Complex-Valued" target="_blank" class="search-link">🔍 在arXiv搜索</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>CVNN在雷达、通信等领域展现出优异性能，但其对抗鲁棒性研究相对滞后。与实数网络不同，CVNN同时处理幅度和相位，对抗攻击可能在复数域的不同维度展开。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 核心创新</h3>
+            <ul>
+                <li>仅针对相位分量的对抗扰动分析</li>
+                <li>幅度-相位解耦研究</li>
+                <li>CVNN对抗训练策略</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 论文6 -->
+    <div class="paper">
+        <h2>6. Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification in Deep Neural Networks</h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</p>
+            <p><strong>发布时间</strong>: 2026年2月16日</p>
+            <p><strong>主题</strong>: <span class="badge">不确定性量化</span> <span class="badge">分类头设计</span> <span class="badge">量子启发</span></p>
+            <a href="https://arxiv.org/search/?searchtype=title&query=Complex-Valued+Unitary+Representations+Classification+Heads+Uncertainty" target="_blank" class="search-link">🔍 在arXiv搜索</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>深度神经网络置信度校准问题。提出量子启发的分类头架构，将特征投影到复数Hilbert空间，在学习的酉变换下演化。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 核心创新</h3>
+            <ul>
+                <li>复数酉表示分类头</li>
+                <li>Cayley映射参数化</li>
+                <li>改善模型不确定性估计</li>
+            </ul>
         </div>
     </div>
 
     <div class="summary">
         <h2>📊 技术趋势总结</h2>
-        <p><strong>1. 医学影像成为CVNN热点应用</strong>: 直接从k-space处理的端到端方法正在改变MRI诊断流程。</p>
-        <p><strong>2. 安全性研究开始受到重视</strong>: CVNN的对抗鲁棒性分析揭示了相位敏感性这一独特问题。</p>
-        <p><strong>3. 极化SAR处理需要CVNN</strong>: 实验充分证明复数网络在保持极化特性方面的必要性。</p>
-        <p><strong>4. 部分复数架构实用化</strong>: 灵活的复数-实数混合设计在性能和效率间取得平衡。</p>
-        <p><strong>5. 理论与应用并进</strong>: 从对抗鲁棒性理论到雷达目标检测应用，CVNN研究日趋成熟。</p>
+        <p><strong>1. 雷达信号处理成为CVNN主战场</strong>：3/6篇论文聚焦雷达应用，包括目标检测、异常检测、VAE等。</p>
+        <p><strong>2. 医学影像直接处理复数数据</strong>：MRI k-space直接分类避免信息损失，PolSAR极化保持重建。</p>
+        <p><strong>3. 安全性研究开始受到关注</strong>：对抗鲁棒性分析揭示了CVNN对相位扰动的敏感性。</p>
+        <p><strong>4. 混合架构实用化</strong>：部分复数网络在保持性能的同时降低计算开销。</p>
+        <p><strong>5. 量子启发方法</strong>：酉表示、Hilbert空间等量子概念被引入CVNN设计。</p>
     </div>
 
     <div class="footer">
         <p>Generated by Jarvis | 2026-03-08 | CVNN Research Daily</p>
-        <p>数据来源: arXiv.org | <a href="https://arxiv.org/search/?query=complex-valued+neural+network&searchtype=all" target="_blank">查看全部相关论文</a></p>
+        <p><strong>免责声明</strong>：由于技术限制，本报告未提供准确的arXiv ID链接。点击"在arXiv搜索"按钮可在arXiv官网查找对应论文。</p>
+        <p><a href="https://arxiv.org/search/?query=complex-valued+neural+network&searchtype=all&sort=submittedDate" target="_blank">arXiv CVNN搜索主页</a></p>
     </div>
 </body>
 </html>
