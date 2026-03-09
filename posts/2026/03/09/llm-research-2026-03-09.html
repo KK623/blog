@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily - 2026年3月9日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🚀 LLM Research Daily</h1>
+        <div class="date">2026年3月9日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">LLM训练优化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">内存效率</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：由于API限流，今日报告为手动补做。在arXiv过去24小时论文中，找到1篇高相关性的LLM训练优化论文。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.05500" target="_blank">1. POET-X: Memory-efficient LLM Training by Scaling Orthogonal Transformation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>作者</strong>: Weiyang Liu et al.</p>
+            <p><strong>机构</strong>: Sphere Lab</p>
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.05500" target="_blank">arXiv:2603.05500 [cs.LG]</a> · 2026年3月5日</p>
+            <p><strong>主题</strong>: <span class="badge">LLM训练</span> <span class="badge">内存优化</span> <span class="badge">正交变换</span></p>
+            <a href="https://arxiv.org/pdf/2603.05500.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>大语言模型（LLM）的高效稳定训练一直是机器学习系统的核心挑战。POET（Reparameterized Orthogonal Equivalence Training）是一种保持频谱的框架，通过正交等价变换优化每个权重矩阵，提供了强大的训练稳定性。然而，原始实现由于密集的矩阵乘法导致高内存消耗和计算开销。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何在保持POET稳定性和泛化优势的同时，大幅降低内存占用和计算成本？作者提出POET-X，一种可扩展的内存高效变体，通过优化的正交等价变换实现显著的性能提升。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>可扩展正交变换</strong>: 优化正交等价变换的计算流程，显著降低内存占用</li>
+                <li><strong>频谱保持特性</strong>: 保持POET原有的频谱保持优势，确保训练稳定性</li>
+                <li><strong>单卡大模型训练</strong>: 支持在单张Nvidia H100 GPU上预训练百亿参数模型</li>
+                <li><strong>吞吐量优化</strong>: 相比AdamW等标准优化器，显著提升训练吞吐量</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明，POET-X能够在单张H100 GPU上预训练百亿参数LLM，而标准优化器（如AdamW）在相同设置下会因内存不足而失败。在吞吐量和内存效率方面实现了显著提升，同时保持了模型的泛化能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</strong></h3>
+            <p><strong>内存效率</strong>: 大幅降低LLM训练内存需求；<strong>硬件友好</strong>: 单卡即可训练大模型，降低硬件门槛；<strong>稳定性</strong>: 保持POET的训练稳定性优势；<strong>实用性</strong>: 可直接替代现有优化器使用。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <p>当前实验主要针对预训练场景；在微调（fine-tuning）和特定领域适配中的表现需要进一步验证。另外，与其他内存优化技术（如梯度检查点、ZeRO优化）的兼容性有待测试。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>POET-X通过优化正交等价变换的计算流程，在不牺牲训练稳定性和模型泛化能力的前提下，实现了LLM训练的内存效率和吞吐量显著提升。这项技术使得在消费级硬件上训练更大规模的LLM成为可能，对LLM民主化具有重要意义。</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📋 调研总结</h2>
+        <p><strong>今日发现</strong>：在arXiv过去24小时的论文中，找到1篇高相关性的LLM训练优化论文。</p>
+        <p><strong>技术趋势</strong>：内存高效的LLM训练方法持续受到关注，正交变换等数学优化技术在训练稳定性与效率平衡方面展现出潜力。</p>
+        <p><strong>实用价值</strong>：POET-X的单卡大模型训练能力可显著降低LLM研究和应用的硬件门槛。</p>
+        <p><strong>发布时间</strong>：2026-03-09 08:42 (GMT+8)</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | 2026-03-09 | LLM Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
