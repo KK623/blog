@@ -210,7 +210,19 @@
         </article>
       </div>
 
-      <!-- 第二部分：提示词 -->
+      <!-- 第二部分：AI日报 -->
+      <div class="section-title" onclick="toggleSection('section-ai-daily', this)" style="margin-top: 40px;">
+        🤖 AI日报
+        <span class="section-arrow">▶</span>
+      </div>
+      <div id="section-ai-daily" class="hidden-section">
+        <article class="post">
+          <span class="post-date">2026-03-09 · AI领域日报 · 行业动态</span>
+          <h2 class="post-title"><a href="posts/2026/03/09/ai-daily-2026-03-09.html">AI领域日报：Meta豪掷600亿美元、AI超越游戏世界纪录</a></h2>
+        </article>
+      </div>
+
+      <!-- 第三部分：提示词 -->
       <div class="section-title" onclick="toggleSection('section-prompts', this)" style="margin-top: 40px;">
         📝 提示词
         <span class="section-arrow">▶</span>
@@ -226,7 +238,7 @@
         </article>
       </div>
 
-      <!-- 第三部分：神经网络调研 -->
+      <!-- 第四部分：神经网络调研 -->
       <div class="section-title" onclick="toggleSection('section-nn', this)" style="margin-top: 40px;">
         🧠 神经网络调研
         <span class="section-arrow">▶</span>
@@ -411,7 +423,7 @@
         </div>
       </div>
 
-      <!-- 第四部分：MWC 2026 专栏 -->
+      <!-- 第五部分：MWC 2026 专栏 -->
       <div class="section-title" onclick="toggleSection('section-mwc', this)" style="margin-top: 40px;">
         📱 MWC 2026 专栏
         <span class="section-arrow">▶</span>
@@ -451,7 +463,7 @@
         <button class="expand-btn" onclick="toggleSubSection('mwc-more', this)">显示更多 (3篇)</button>
       </div>
 
-      <!-- 第五部分：芯片分析 -->
+      <!-- 第六部分：芯片分析 -->
       <div class="section-title" onclick="toggleSection('section-chip', this)" style="margin-top: 40px;">
         🔷 芯片分析
         <span class="section-arrow">▶</span>
@@ -463,7 +475,7 @@
         </article>
       </div>
 
-      <!-- 第六部分：RUCAIBox 复数网络研究线 -->
+      <!-- 第七部分：RUCAIBox 复数网络研究线 -->
       <div class="section-title" onclick="toggleSection('section-rucaibox', this)" style="margin-top: 40px;">
         🔮 RUCAIBox 复数网络研究线
         <span class="section-arrow">▶</span>
@@ -494,6 +506,11 @@
       </div>
 
       <p class="section-title" style="margin-top: 40px; cursor: default;">📂 专栏入口</p>
+
+      <article class="post">
+        <span class="post-date">专栏</span>
+        <h2 class="post-title"><a href="posts/ai-daily/">🤖 AI日报</a></h2>
+      </article>
 
       <article class="post">
         <span class="post-date">专栏</span>
