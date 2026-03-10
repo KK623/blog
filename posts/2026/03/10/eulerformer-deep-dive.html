@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EulerFormer 深度解析 | 复数向量注意力机制 - K's Blog</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --code-bg: #f1f5f9;
+            --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; padding: 40px 0; }
+        header h1 { font-size: 2rem; margin-bottom: 10px; }
+        .meta { color: var(--secondary); font-size: 0.9rem; }
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h2 { color: var(--primary); margin: 30px 0 15px; font-size: 1.5rem; }
+        h3 { color: var(--text); margin: 25px 0 12px; font-size: 1.2rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+        pre {
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+        code { font-family: 'Consolas', 'Monaco', monospace; }
+        .highlight { background: #fef3c7; padding: 2px 6px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--code-bg); font-weight: 600; }
+        .flow-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .flow-box h3 { color: white; border-left-color: rgba(255,255,255,0.5); }
+        .param-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .param-card { background: var(--code-bg); padding: 15px; border-radius: 8px; }
+        .param-card strong { color: var(--primary); }
+        .back-link { display: inline-block; margin-top: 30px; color: var(--primary); text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .comparison-box { padding: 20px; border-radius: 8px; }
+        .rope-box { background: #dbeafe; }
+        .euler-box { background: #dcfce7; }
+        @media (max-width: 600px) {
+            .comparison { grid-template-columns: 1fr; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 EulerFormer 深度解析</h1>
+            <p class="meta">复数向量注意力机制 | SIGIR 2024 | 发布时间: 2026-03-10 20:00</p>
+        </header>
+
+        <div class="card">
+            <h2>📋 论文信息</h2>
+            <table>
+                <tr><th>属性</th><th>详情</th></tr>
+                <tr><td>标题</td><td>EulerFormer: Sequential User Behavior Modeling with Complex Vector Attention</td></tr>
+                <tr><td>会议</td><td>SIGIR 2024</td></tr>
+                <tr><td>作者</td><td>Ethan-TZ 团队</td></tr>
+                <tr><td>代码</td><td><a href="https://github.com/Ethan-TZ/EulerFormer">github.com/Ethan-TZ/EulerFormer</a></td></tr>
+                <tr><td>任务</td><td>序列推荐 / 用户行为建模</td></tr>
+                <tr><td>核心创新</td><td>复数向量注意力 + 欧拉公式位置编码</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🎯 核心思想</h2>
+            <p><strong>一句话总结：</strong>EulerFormer 是一个增强版的 RoPE（旋转位置编码），通过<strong>可学习的位置编码</strong>和<strong>语义自适应融合</strong>，在 Transformer 注意力机制中同时编码位置和语义信息。</p>
+            
+            <h3>核心公式</h3>
+            <p style="text-align: center; font-size: 1.1rem; margin: 20px 0;">
+                $$\\theta' = \\theta \\times \\delta + \\alpha \\; (+ b \\text{ for query})$$
+            </p>
+            
+            <div class="param-grid">
+                <div class="param-card">
+                    <strong>θ (theta)</strong><br>
+                    原始语义角度，从输入向量计算得到
+                </div>
+                <div class="param-card">
+                    <strong>δ (delta)</strong><br>
+                    可学习的语义缩放因子
+                </div>
+                <div class="param-card">
+                    <strong>α (alpha)</strong><br>
+                    可学习的位置编码角度
+                </div>
+                <div class="param-card">
+                    <strong>b (bias)</strong><br>
+                    query 专用的旋转偏置
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔧 代码逐行解析</h2>
+            
+            <h3>1. __init__ 方法 - 初始化参数</h3>
+            <pre><code>def __init__(self, config = None) -> None:
+    super().__init__()                          # 调用父类 nn.Module 初始化
+    self.alpha = None                           # 位置编码，延迟初始化
+    
+    if config.euler_bias:                       # 是否启用偏置
+        self.b = nn.Parameter(torch.zeros(1))   # 可学习标量偏置
+    else:
+        self.b = 0                              # 无偏置
+    
+    self.delta = nn.Parameter(torch.ones(1) * config.init_factor)  
+    # delta: 语义旋转缩放因子
+
+    self.get_alpha(1, 1, config.MAX_ITEM_LIST_LENGTH, config.hidden_size)  
+    # 预初始化位置编码</code></pre>
+
+            <h3>2. forward 方法 - 核心欧拉变换</h3>
+            <pre><code>def forward(self, v, type = 'ro'):
+    v = v.unsqueeze(1)                          # [B, 1, seq, dim]
+    
+    # Step 1: 拆分为实部和虚部
+    r = v[..., ::2]      # 偶数索引 → 实部
+    p = v[..., 1::2]     # 奇数索引 → 虚部
+    
+    # Step 2: 直角坐标 → 极坐标
+    lam = torch.sqrt(r ** 2 + p ** 2)   # 模长 λ = √(r²+p²)
+    theta = torch.atan2(p, r)            # 相位角 θ = arctan(p/r)
+    
+    # Step 3: 旋转（核心）
+    if 'ro' in type:
+        alpha = self.get_alpha(...)       # 获取位置编码
+        theta = theta * self.delta + alpha  # θ' = θ×δ + α
+        if 'query' in type:
+            theta = theta + self.b        # query 加偏置
+    
+    # Step 4: 极坐标 → 直角坐标
+    r, p = lam * torch.cos(theta), lam * torch.sin(theta)
+    
+    # Step 5: 重新组合
+    embeddings = torch.stack([r, p], dim=-1)
+    return embeddings.squeeze(1)</code></pre>
+
+            <h3>3. get_alpha 方法 - 可学习位置编码</h3>
+            <pre><code>def get_alpha(self, batch_size, nums_head, max_len, output_dim):
+    if self.alpha is None:                      # 延迟初始化
+        position = torch.arange(0, max_len).unsqueeze(-1)  # [max_len, 1]
+        ids = torch.arange(0, output_dim // 2)              # [dim//2]
+        
+        # RoPE 公式: θ_i = 10000^(-2i/d)
+        theta = torch.pow(10000, -2 * ids / output_dim)
+        
+        embeddings = position * theta           # [max_len, dim//2]
+        embeddings = torch.stack([embeddings, embeddings], dim=-1)
+        
+        self.alpha = nn.Parameter(embeddings)   # 设为可学习参数！
+    
+    # 扩展到 batch 和 head 维度
+    embeddings = self.alpha.repeat((batch_size, nums_head, ...))
+    return embeddings[...,::2]</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>🔗 与 MultiHeadAttention 集成</h2>
+            <pre><code>class MultiHeadAttention(nn.Module):
+    def __init__(self, ...):
+        ...
+        self.euler = EulerFormer(config)        # 创建实例
+        
+    def forward(self, input_tensor, attention_mask):
+        # Q/K/V 投影
+        mixed_query = self.query(input_tensor)
+        mixed_key = self.key(input_tensor)
+        mixed_value = self.value(input_tensor)
+        
+        # 应用 EulerFormer 旋转
+        mixed_query = self.euler(mixed_query, 'queryro')  # query 带偏置
+        mixed_key = self.euler(mixed_key, 'ro')           # key 不带偏置
+        # value 不旋转（同 RoPE）
+        
+        # 标准注意力计算...</code></pre>
+            
+            <p><strong>关键点：</strong></p>
+            <ul>
+                <li>在 Q/K 投影后调用 EulerFormer</li>
+                <li>query 使用 <code>'queryro'</code> 类型（带偏置 b）</li>
+                <li>key 使用默认 <code>'ro'</code> 类型（不带偏置）</li>
+                <li>value 保持原始值（不旋转）</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>📊 与 RoPE 对比</h2>
+            <div class="comparison">
+                <div class="comparison-box rope-box">
+                    <h4>🔵 RoPE</h4>
+                    <ul>
+                        <li>位置编码：固定公式</li>
+                        <li>语义融合：无</li>
+                        <li>Query偏置：无</li>
+                        <li>正则化：无</li>
+                        <li>理论：旋转位置编码</li>
+                    </ul>
+                </div>
+                <div class="comparison-box euler-box">
+                    <h4>🟢 EulerFormer</h4>
+                    <ul>
+                        <li>位置编码：<strong>可学习</strong></li>
+                        <li>语义融合：<strong>delta缩放</strong></li>
+                        <li>Query偏置：<strong>有 b 参数</strong></li>
+                        <li>正则化：<strong>对比学习损失</strong></li>
+                        <li>理论：<strong>复数向量注意力</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🗂️ 工程文件结构</h2>
+            <pre><code>EulerFormer/
+├── modeling_llama_w_EulerFormer.py  ← LLaMA集成（独立）
+├── EulerFormer_models/
+│   ├── layers.py                     ← 🔥 核心（67KB）
+│   │   ├── class EulerFormer         # 欧拉变换
+│   │   └── class MultiHeadAttention  # 集成
+│   └── sequential_recommender/
+│       ├── sasrec.py                 ← 调用 layers
+│       ├── bert4rec.py
+│       ├── fdsa.py
+│       └── sasrecf.py
+└── config_files/                     ← YAML配置</code></pre>
+            
+            <h3>调用链</h3>
+            <pre><code>run_recbole.py → SASRec/BERT4Rec → layers.py → EulerFormer</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>💡 总结</h2>
+            <p><strong>EulerFormer = RoPE的增强版 + 可学习位置编码 + 语义自适应融合 + 对比学习正则</strong></p>
+            
+            <h3>核心创新</h3>
+            <ol>
+                <li><strong>欧拉变换</strong>：直角坐标 ↔ 极坐标，仅旋转相位保持模长</li>
+                <li><strong>可学习位置编码</strong>：alpha 是可学习参数，比 RoPE 更灵活</li>
+                <li><strong>delta 缩放</strong>：语义角度 × 可学习因子，动态平衡语义与位置</li>
+                <li><strong>query 偏置</strong>：给 query 额外旋转角度，增加表达能力</li>
+                <li><strong>对比学习</strong>：辅助损失增强表示判别性</li>
+            </ol>
+            
+            <h3>适用场景</h3>
+            <ul>
+                <li>序列推荐（SASRec, BERT4Rec）</li>
+                <li>长序列建模（LLaMA 改造）</li>
+                <li>需要细粒度位置控制的场景</li>
+            </ul>
+        </div>
+
+        <a href="/blog/index.html" class="back-link">← 返回首页</a>
+    </div>
+</body>
+</html>
