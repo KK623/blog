@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月10日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月10日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">对抗鲁棒性</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">MRI分类</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：凌晨4点定时任务因API限流失败，本报告为手动补做。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.06577" target="_blank">1. Perturbing the Phase: Analyzing Adversarial Robustness of CVNNs</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.06577" target="_blank">arXiv:2602.06577 [cs.LG]</a> · 2026年2月</p>
+            <p><strong>主题</strong>: <span class="badge">对抗鲁棒性</span> <span class="badge">相位攻击</span> <span class="badge">安全分析</span></p>
+            <a href="https://arxiv.org/pdf/2602.06577.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络(CVNNs)在各类应用中越来越受欢迎，但在实际应用中安全使用CVNNs需要分析其对异常值的鲁棒性。对抗攻击是理解深度神经网络行为的重要技术，可视为最坏情况下的最小扰动。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何评估CVNNs对对抗攻击的鲁棒性？特别是针对复数输入的相位信息，是否存在特定的攻击方式？CVNNs与实数神经网络(RVNNs)在鲁棒性上有何差异？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Phase Attacks</strong>: 专门针对复数输入相位信息设计的攻击方式</li>
+                <li><strong>复数对抗攻击</strong>: 将常用对抗攻击方法扩展到复数域</li>
+                <li><strong>相位vs幅值</strong>: 分析仅攻击相位与同时攻击相位和幅值的效果差异</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明，在某些场景下CVNNs比RVNNs更具鲁棒性；但两者都对相位变化非常敏感。Phase Attacks对模型性能的降低效果优于同等强度的常规攻击（可同时攻击相位和幅值）。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>安全洞察</strong>: 揭示了CVNNs对相位扰动的脆弱性；<strong>攻击方法</strong>: 提供了专门针对CVNN的Phase Attacks基准测试方法；<strong>防御指导</strong>: 为设计更鲁棒的CVNN架构提供方向。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</strong></h3>
+            <p>实验主要在标准数据集上进行，在特定领域（如雷达信号处理、医学成像）的CVNN鲁棒性有待进一步验证。防御机制的设计未在本文中深入探讨。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究首次系统分析了CVNNs的对抗鲁棒性，提出了专门针对相位的Phase Attacks。发现CVNNs虽然整体鲁棒性较好，但对相位扰动异常敏感。这一发现对CVNN在安全敏感领域的应用具有重要指导意义。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.18392" target="_blank">2. Efficient Complex-Valued Vision Transformers for MRI Classification Directly from k-Space</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.18392" target="_blank">arXiv:2601.18392 [eess.IV]</a> · 2026年1月</p>
+            <p><strong>主题</strong>: <span class="badge">MRI分类</span> <span class="badge">k-Space</span> <span class="badge">Vision Transformer</span> <span class="badge">效率优化</span></p>
+            <a href="https://arxiv.org/pdf/2601.18392.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>深度学习在磁共振成像(MRI)中的应用主要在重建后的幅值图像上进行，这个过程丢弃了相位信息，且需要计算昂贵的变换。标准神经网络架构（卷积或网格分块）不适合原始频域(k-Space)数据的全局、非局部特性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否直接在原始k-Space数据上进行分类，避免重建步骤的计算开销和相位信息损失？如何设计适合k-Space几何特性的神经网络架构？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>kViT</strong>: 专为k-Space数据设计的复数Vision Transformer</li>
+                <li><strong>径向k-Space分块</strong>: 尊重频域谱能量分布的几何结构的分块策略</li>
+                <li><strong>端到端k-Space学习</strong>: 直接从原始频率域数据进行分类，无需图像重建</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在fastMRI和内部数据集上的实验表明，kViT的分类性能与最先进的图像域基线（ResNet、EfficientNet、ViT）相当。关键的是，kViT在高加速因子下表现出更强的鲁棒性，且计算效率显著提升，训练时VRAM消耗相比标准方法减少<strong>68倍</strong>。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</strong></h3>
+            <p><strong>计算效率</strong>: 训练VRAM消耗减少68倍；<strong>信息保留</strong>: 直接处理k-Space，保留相位信息；<strong>流程简化</strong>: 无需图像重建步骤；<strong>鲁棒性</strong>: 在高加速因子下表现稳定。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</strong></h3>
+            <p>目前仅针对MRI分类任务验证，在MRI重建、其他医学影像模态（CT、超声）上的适用性有待探索。径向分块策略对其他频域数据（如雷达、无线通信）的通用性需要进一步研究。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>kViT提出了一种直接在k-Space上进行MRI分类的新范式，通过径向分块策略适应频域数据的特性。实现了与图像域方法相当的性能，同时大幅降低计算资源需求（68倍VRAM减少），对实时MRI分析应用具有重要价值。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2504.19176" target="_blank">3. Newton-Puiseux Analysis for Interpretability and Calibration of CVNNs</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2504.19176" target="_blank">arXiv:2504.19176 [cs.LG]</a> · 2025年4月 · 发表在Neural Networks 2026</p>
+            <p><strong>主题</strong>: <span class="badge">可解释性</span> <span class="badge">概率校准</span> <span class="badge">Newton-Puiseux分析</span></p>
+            <a href="https://arxiv.org/pdf/2504.19176.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络(CVNNs)特别适合处理相位敏感信号，包括心电图(ECG)、雷达/声纳、无线同相/正交(I/Q)流。然而，它们的<em>可解释性</em>和<em>概率校准</em>研究仍不充分。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何理解CVNNs在不确定输入附近的局部决策行为？能否通过数学框架分析CVNNs的预测置信度，并进行校准改进？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Newton-Puiseux框架</strong>: 通过多项式代理和牛顿-皮瑟展开分析CVNN的局部决策几何</li>
+                <li><strong>分支描述符</strong>: 推导包括指数、重数、方向的解析分支描述符</li>
+                <li><strong>相位感知校准</strong>: 基于重数引导的温度调整方法改善期望校准误差(ECE)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在两类时间序列分类任务上的实验表明，Newton-Puiseux分析能够有效识别敏感方向（相位对齐的方向，可诱导类别翻转），并显著提升期望校准误差(ECE)。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</strong></h3>
+            <p><strong>可解释性</strong>: 提供数学上严格的CVNN局部行为分析方法；<strong>校准改进</strong>: 显著降低期望校准误差；<strong>敏感方向识别</strong>: 发现导致类别翻转的相位敏感方向；<strong>理论基础</strong>: 为CVNN的可靠性分析提供新的数学工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</strong></h3>
+            <p>对于分段全纯激活函数（如modReLU）可能存在失效模式。目前仅在时间序列分类任务上验证，在图像、语音等其他CVNN应用领域的效果有待研究。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究将Newton-Puiseux数学框架引入CVNN分析，首次系统研究了CVNNs的可解释性和概率校准问题。提出的方法能够识别相位敏感方向并显著改善模型校准，为CVNNs在安全关键领域的可靠应用提供了理论基础。</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：3篇</p>
+        <ul>
+            <li><strong>对抗鲁棒性</strong>: Phase Attacks揭示CVNN对相位扰动的脆弱性</li>
+            <li><strong>MRI分类</strong>: kViT直接从k-Space分类，VRAM消耗减少68倍</li>
+            <li><strong>可解释性</strong>: Newton-Puiseux框架分析CVNN决策几何</li>
+        </ul>
+
+        <p><strong>主题聚焦</strong>：</p>
+        <ul>
+            <li>CVNNs的安全性分析（对抗鲁棒性）</li>
+            <li>CVNNs在医学影像的高效应用</li>
+            <li>CVNNs的可解释性与校准理论</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-10 09:15 (GMT+8) · 手动补做</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | CVNN Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
