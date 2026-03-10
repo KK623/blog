@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily - 2026年3月10日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🚀 LLM Research Daily</h1>
+        <div class="date">2026年3月10日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">蒸馏</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">边缘部署</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：凌晨3点定时任务生成，本报告为当日LLM领域最新研究进展。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.09865" target="_blank">1. Muon-Optimized Distillation and Quantization for LLM Deployment</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.09865" target="_blank">arXiv:2601.09865 [cs.LG]</a> · 2026年1月</p>
+            <p><strong>主题</strong>: <span class="badge">量化</span> <span class="badge">蒸馏</span> <span class="badge">边缘部署</span> <span class="badge">Muon优化器</span></p>
+            <a href="https://arxiv.org/pdf/2601.09865.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>大型语言模型(LLMs)在自然语言处理方面表现出色，但由于高计算、内存和能耗需求，在资源受限的边缘设备上面临部署挑战。优化这些模型需要解决三个关键挑战：获取任务特定数据、微调性能、以及压缩模型以加速推理同时减少资源需求。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何在不牺牲性能的前提下，将LLMs部署到边缘设备？现有的GPTQ量化方法在微调后精度衰减严重，需要一个综合框架来协调量化、微调和蒸馏过程。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>GPTQ+LoRA+蒸馏集成框架</strong>: 结合GPTQ量化、低秩适配和专用数据蒸馏流程</li>
+                <li><strong>数据蒸馏</strong>: 通过KL散度进行知识蒸馏，生成高质量任务特定数据</li>
+                <li><strong>贝叶斯超参数优化</strong>: 自动优化量化配置和训练参数</li>
+                <li><strong>Muon优化器</strong>: 增强微调模型对量化精度衰减的抵抗力</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明，该流程可实现高达<strong>2倍内存压缩</strong>（如将6GB模型压缩至3GB），并在标准LLM基准测试中相比单独使用GPTQ量化表现出更优性能。Muon优化器显著增强了微调模型在量化过程中的精度保持能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</strong></h3>
+            <p><strong>内存效率</strong>: 2倍压缩比，适合边缘设备；<strong>性能保持</strong>: 相比单独GPTQ，任务性能提升显著；<strong>自动化</strong>: 贝叶斯优化减少人工调参；<strong>鲁棒性</strong>: Muon优化器减少量化精度损失。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</strong></h3>
+            <p>实验主要在标准LLM基准测试上进行，在特定垂直领域（如医疗、法律）的适用性有待验证。贝叶斯优化过程计算开销较大，可能需要较长时间进行超参数搜索。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究提出了一个集成框架，通过协调GPTQ量化、LoRA微调和知识蒸馏，实现了LLMs在边缘设备的高效部署。Muon优化器的引入显著提升了模型对量化的鲁棒性，为资源受限场景下的LLM部署提供了实用解决方案。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.03484" target="_blank">2. From Bits to Chips: An LLM-based Hardware-Aware Quantization Agent</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.03484" target="_blank">arXiv:2601.03484 [cs.LG]</a> · 2026年1月</p>
+            <p><strong>主题</strong>: <span class="badge">硬件感知量化</span> <span class="badge">自动化部署</span> <span class="badge">LLM Agent</span></p>
+            <a href="https://arxiv.org/pdf/2601.03484.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>模型部署，特别是大型语言模型(LLMs)的部署，正变得越来越吸引广泛用户。然而，将LLMs部署到不同硬件平台时，需要考虑特定的硬件约束（如内存带宽、计算单元类型、功耗限制等），手动配置量化策略既复杂又耗时。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否利用LLM自身的推理能力来自动化硬件感知量化？如何根据目标硬件特性自动选择最优的量化配置（比特宽度、分组大小、校准数据量等）？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>LLM-based Agent</strong>: 使用LLM作为核心决策引擎，理解硬件规格和模型特性</li>
+                <li><strong>硬件感知</strong>: 将硬件约束（内存、带宽、计算单元）纳入量化决策</li>
+                <li><strong>端到端自动化</strong>: 从模型和硬件规格输入到部署就绪模型的全流程</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</strong></h3>
+            <p><strong>自动化</strong>: 减少人工调参工作量；<strong>硬件适配</strong>: 针对不同硬件平台自动优化；<strong>效率提升</strong>: 加速LLM部署流程。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3e>
+            <p>该研究探索了使用LLM作为量化Agent来自动化硬件感知部署的可能性。虽然摘要信息有限，但这一方向代表了LLM在系统优化领域的创新应用，值得关注后续进展。</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：2篇</p>
+        <ul>
+            <li><strong>Muon优化蒸馏量化</strong>: 集成框架实现2倍内存压缩，边缘部署更高效</li>
+            <li><strong>硬件感知量化Agent</strong>: LLM作为决策引擎自动化部署流程</li>
+        </ul>
+
+        <p><strong>主题聚焦</strong>：</p>
+        <ul>
+            <li>LLMs的边缘部署优化</li>
+            <li>量化+蒸馏+微调的协同优化</li>
+            <li>自动化硬件感知部署</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-10 03:00 (GMT+8)</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | LLM Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
