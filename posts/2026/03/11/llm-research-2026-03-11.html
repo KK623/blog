@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily | 2026-03-11 - K's Blog</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; }
+        h1 { color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+        h2 { color: #1e40af; margin-top: 40px; }
+        .meta { color: #6b7280; font-size: 0.9rem; margin-bottom: 30px; }
+        .paper { background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2563eb; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; color: #1e40af; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; }
+        .arxiv-link:hover { background: #9a1818; }
+        .back-link { display: inline-block; margin-top: 40px; color: #2563eb; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+    
+    <h1>🔬 LLM Research Daily</h1>
+    <div class="meta">2026年3月11日 · LLM量化/部署/蒸馏 · 2篇真实论文</div>
+    
+    <div class="paper">
+        <h2>论文1: Muon-Optimized Distillation and Quantization for LLM Deployment</h2>
+        
+        <div class="section">
+            <span class="section-title">基本信息</span><br>
+            <a href="https://arxiv.org/abs/2601.09865" class="arxiv-link" target="_blank">arXiv:2601.09865</a> · 
+            <a href="https://arxiv.org/pdf/2601.09865.pdf" target="_blank">📄 PDF</a><br>
+            Jacob Sander, Brian Jalaian, Venkat R. Dasari · 2026-01-14
+        </div>
+        
+        <div class="section">
+            <span class="section-title">研究背景</span><br>
+            大语言模型(LLMs)在自然语言处理方面表现出色，但由于高计算、内存和能耗需求，在资源受限的边缘设备上面临部署挑战。优化这些模型需要解决三个关键挑战：获取任务特定数据、微调性能、以及压缩模型以加速推理同时减少资源需求。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">研究动机</span><br>
+            如何在不牺牲性能的前提下，将LLMs部署到边缘设备？现有的GPTQ量化方法在微调后精度衰减严重，需要一个综合框架来协调量化、微调和蒸馏过程。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">核心技术点</span><br>
+            1. <strong>GPTQ+LoRA+蒸馏集成框架</strong>: 结合GPTQ量化、低秩适配和专用数据蒸馏流程<br>
+            2. <strong>数据蒸馏</strong>: 通过KL散度进行知识蒸馏，生成高质量任务特定数据<br>
+            3. <strong>贝叶斯超参数优化</strong>: 自动优化量化配置和训练参数<br>
+            4. <strong>Muon优化器</strong>: 增强微调模型对量化精度衰减的抵抗力
+        </div>
+        
+        <div class="section">
+            <span class="section-title">实验结果</span><br>
+            实验表明，该流程可实现高达<strong>2倍内存压缩</strong>（如将6GB模型压缩至3GB），并在标准LLM基准测试中相比单独使用GPTQ量化表现出更优性能。Muon优化器显著增强了微调模型在量化过程中的精度保持能力。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">收益点</span><br>
+            <strong>内存效率</strong>: 2倍压缩比，适合边缘设备；<strong>性能保持</strong>: 相比单独GPTQ，任务性能提升显著；<strong>自动化</strong>: 贝叶斯优化减少人工调参；<strong>鲁棒性</strong>: Muon优化器减少量化精度损失。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">总结</span><br>
+            该框架通过集成GPTQ量化、LoRA微调和知识蒸馏，为LLM边缘部署提供了实用的解决方案。Muon优化器的引入显著改善了量化后的模型性能，是模型压缩领域的重要进展。
+        </div>
+    </div>
+    
+    <div class="paper">
+        <h2>论文2: Compressed Code: Quantization and Distillation Effects on Programming Tokens</h2>
+        
+        <div class="section">
+            <span class="section-title">基本信息</span><br>
+            <a href="https://arxiv.org/abs/2601.02563" class="arxiv-link" target="_blank">arXiv:2601.02563</a> · 
+            <a href="https://arxiv.org/pdf/2601.02563.pdf" target="_blank">📄 PDF</a><br>
+            2026-01 · 代码生成与压缩
+        </div>
+        
+        <div class="section">
+            <span class="section-title">研究背景</span><br>
+            大语言模型在代码生成方面表现出色，但其token级机制在压缩模型中仍然研究不足。量化和蒸馏对编程token的影响尚未被充分探索。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">研究动机</span><br>
+            压缩技术（量化、蒸馏）如何影响代码生成模型的token级别机制？这些压缩方法是否会改变模型的编程能力？
+        </div>
+        
+        <div class="section">
+            <span class="section-title">核心技术点</span><br>
+            1. <strong>Token级分析</strong>: 系统研究量化和蒸馏对编程token的影响<br>
+            2. <strong>隐藏效应发现</strong>: 揭示压缩对代码生成能力的潜在影响<br>
+            3. <strong>性能评估</strong>: 评估不同压缩方法对代码质量的影响
+        </div>
+        
+        <div class="section">
+            <span class="section-title">收益点</span><br>
+            深入理解压缩技术对代码生成模型的影响，为部署代码LLM到边缘设备提供理论指导。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">总结</span><br>
+            该研究通过token级分析揭示了量化和蒸馏对代码生成模型的隐藏影响，为代码LLM的压缩和部署提供了重要的理论依据。
+        </div>
+    </div>
+    
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+</body>
+</html>
