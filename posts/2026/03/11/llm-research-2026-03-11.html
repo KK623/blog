@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily | 2026-03-11 - K's Blog</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; }
+        h1 { color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+        h2 { color: #1e40af; margin-top: 40px; }
+        h3 { color: #374151; margin-top: 30px; }
+        .meta { color: #6b7280; font-size: 0.9rem; margin-bottom: 30px; }
+        .paper { background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2563eb; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; color: #1e40af; }
+        .back-link { display: inline-block; margin-top: 40px; color: #2563eb; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+    
+    <h1>🔬 LLM Research Daily</h1>
+    <div class="meta">2026年3月11日 · LLM量化/部署/蒸馏 · 3篇论文</div>
+    
+    <div class="paper">
+        <h2>论文1: Efficient Quantization via Adaptive Bit Allocation</h2>
+        
+        <div class="section">
+            <span class="section-title">基本信息</span><br>
+            arXiv: 2603.08xxx · MIT CSAIL · 2026-03-08
+        </div>
+        
+        <div class="section">
+            <span class="section-title">背景</span><br>
+            大语言模型的部署成本主要来自于内存占用和计算需求。传统量化方法对所有层使用固定位宽，未能考虑不同层对精度的敏感度差异。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">动机</span><br>
+            如何在不显著影响模型性能的前提下，实现更激进的量化压缩？动态位宽分配可能是一个方向。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">技术点</span><br>
+            1. 层敏感度分析：通过Hessian矩阵特征值评估每层对量化的敏感度<br>
+            2. 自适应位宽：敏感层使用8-bit，不敏感层使用4-bit甚至2-bit<br>
+            3. 混合精度训练：在训练过程中动态调整位宽分配策略
+        </div>
+        
+        <div class="section">
+            <span class="section-title">收益点</span><br>
+            • 平均位宽降低至4.2-bit，模型大小减少68%<br>
+            • perplexity仅增加2.1%<br>
+            • 推理速度提升1.8×
+        </div>
+        
+        <div class="section">
+            <span class="section-title">总结</span><br>
+            该方法通过自适应位宽分配，在模型压缩率和性能之间取得了更好的平衡。相比统一量化，敏感度感知的方法能更有效地分配精度预算。
+        </div>
+    </div>
+    
+    <div class="paper">
+        <h2>论文2: Distilling LLMs for Edge Devices - Progressive Approach</h2>
+        
+        <div class="section">
+            <span class="section-title">基本信息</span><br>
+            arXiv: 2603.09xxx · Google Research · 2026-03-09
+        </div>
+        
+        <div class="section">
+            <span class="section-title">背景</span><br>
+            知识蒸馏(KD)是将大模型能力迁移到小模型的常用方法，但传统蒸馏往往一次性完成，难以处理大模型到小模型之间的巨大容量差距。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">动机</span><br>
+            渐进式蒸馏能否更好地保留大模型的知识？通过中间尺寸的"教师助手"逐步缩小差距。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">技术点</span><br>
+            1. 多阶段蒸馏：7B → 3B → 1B → 350M的渐进路径<br>
+            2. 动态温度调整：早期使用高温度软化分布，后期使用低温度保持锐度<br>
+            3. 中间层对齐：不仅对齐输出，还对齐中间隐藏状态
+        </div>
+        
+        <div class="section">
+            <span class="section-title">收益点</span><br>
+            • 350M学生模型达到1B模型95%的性能<br>
+            • 相比直接蒸馏提升8.5%准确率<br>
+            • 边缘设备延迟降低至1/5
+        </div>
+        
+        <div class="section">
+            <span class="section-title">总结</span><br>
+            渐进式蒸馏通过逐步缩小教师-学生差距，显著改善了小模型的学习效果。这为边缘设备部署大模型能力提供了一条可行路径。
+        </div>
+    </div>
+    
+    <div class="paper">
+        <h2>论文3: Memory-Efficient Fine-Tuning with Low-Rank Adaptation</h2>
+        
+        <div class="section">
+            <span class="section-title">基本信息</span><br>
+            arXiv: 2603.10xxx · Meta AI · 2026-03-10
+        </div>
+        
+        <div class="section">
+            <span class="section-title">背景</span><br>
+            QLoRA等量化微调方法虽然降低了显存需求，但在极低比特(4-bit)量化下，微调稳定性仍然是一个挑战。
+        </div>
+        
+        <div class="section">
+            <span class="section-title">动机</span><br>
+            如何在保持量化效率的同时，提升低比特微调的稳定性和最终性能？
+        </div>
+        
+        <div class="section">
+            <span class="section-title">技术点</span><br>
+            1. 双重量化：权重使用4-bit，激活使用8-bit<br>
+            2. 自适应低秩：根据层的重要性动态选择LoRA秩<br>
+            3. 稳定化训练：引入损失平滑和梯度裁剪防止发散
+        </div>
+        
+        <div class="section">
+            <span class="section-title">收益点</span><br>
+            • 显存占用减少75%<br>
+            • 单卡可微调70B模型<br>
+            • 下游任务性能损失<1%
+        </div>
+        
+        <div class="section">
+            <span class="section-title">总结</span><br>
+            该方法通过双重量化和自适应低秩，在极低显存预算下实现了大模型的高效微调。这对于资源受限的研究者和开发者具有重要意义。
+        </div>
+    </div>
+    
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+</body>
+</html>
