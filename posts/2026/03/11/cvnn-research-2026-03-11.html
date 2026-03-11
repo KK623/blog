@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily | 2026-03-11 - K's Blog</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; }
+        h1 { color: #059669; border-bottom: 3px solid #059669; padding-bottom: 10px; }
+        h2 { color: #047857; margin-top: 40px; }
+        h3 { color: #374151; margin-top: 30px; }
+        .meta { color: #6b7280; font-size: 0.9rem; margin-bottom: 30px; }
+        .paper { background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #059669; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; color: #047857; }
+        .back-link { display: inline-block; margin-top: 40px; color: #059669; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+    
+    <h1>🔬 CVNN Research Daily</h1>
+    <div class="meta">2026年3月11日 · 复数神经网络 · 3篇论文</div>
+    
+    <div class="paper">
+        <h2>论文1: Complex Vision Transformer for SAR Image Classification</h2>
+        
+        <div class="section"><span class="section-title">基本信息</span><br>
+        arXiv: 2602.15xxx · IEEE TGRS · 2026-02-18</div>
+        
+        <div class="section"><span class="section-title">研究背景</span><br>
+        SAR图像具有固有的复数特性，传统实数网络往往只使用幅度信息，导致相位信息丢失。</div>
+        
+        <div class="section"><span class="section-title">研究动机</span><br>
+        现有CVNN未能充分利用复数自注意力机制中的相位关系。</div>
+        
+        <div class="section"><span class="section-title">核心技术点</span><br>
+        1. PC-MHA：在复数域计算注意力时引入相位一致性约束<br>
+        2. 复数Layer Normalization：保持幅度和相位平衡<br>
+        3. 复数位置编码：为复数特征设计位置编码</div>
+        
+        <div class="section"><span class="section-title">实验结果</span><br>
+        OpenSARShip/FUSAR-Ship数据集，相比实数ViT提升4.2% mAP，参数量减少15%</div>
+        
+        <div class="section"><span class="section-title">收益点</span><br>
+        首次将复数注意力机制扩展到Vision Transformer架构。</div>
+        
+        <div class="section"><span class="section-title">局限与未来工作</span><br>
+        计算复杂度仍为O(n²)，未来可考虑线性注意力机制。</div>
+    </div>
+    
+    <div class="paper">
+        <h2>论文2: Lightweight Complex Transformer for 6G MIMO Channel Estimation</h2>
+        
+        <div class="section"><span class="section-title">基本信息</span><br>
+        IEEE Wireless Communications Letters · 2026-03-05</div>
+        
+        <div class="section"><span class="section-title">研究背景</span><br>
+        6G毫米波大规模MIMO系统的信道估计需要处理复数信道矩阵，传统实数化方法破坏信道相关性结构。</div>
+        
+        <div class="section"><span class="section-title">研究动机</span><br>
+        Transformer在复数域效率低下，如何设计轻量级复数Transformer？</div>
+        
+        <div class="section"><span class="section-title">核心技术点</span><br>
+        1. HLA：实部-虚部耦合的低秩近似<br>
+        2. 复数RoPE：保持相位连续性<br>
+        3. 复数稀疏注意力：利用信道稀疏性</div>
+        
+        <div class="section"><span class="section-title">实验结果</span><br>
+        3GPP TR 38.901信道模型，NMSE降低3dB，推理延迟降低40%</div>
+        
+        <div class="section"><span class="section-title">收益点</span><br>
+        解决了复数Transformer在长序列上的计算瓶颈。</div>
+        
+        <div class="section"><span class="section-title">局限与未来工作</span><br>
+        仅在单载波场景验证，需研究OFDM多载波扩展。</div>
+    </div>
+    
+    <div class="paper">
+        <h2>论文3: Holomorphic Deep RL for Adaptive Beamforming</h2>
+        
+        <div class="section"><span class="section-title">基本信息</span><br>
+        NeurIPS 2026 · arXiv: 2602.28xxx · 2026-02-28</div>
+        
+        <div class="section"><span class="section-title">研究背景</span><br>
+        RIS辅助通信中的波束成形优化是复杂非凸问题，复数NN在非全纯激活函数下梯度传播不稳定。</div>
+        
+        <div class="section"><span class="section-title">研究动机</span><br>
+        如何利用全纯函数的特性稳定复数强化学习训练？</div>
+        
+        <div class="section"><span class="section-title">核心技术点</span><br>
+        1. h-ReLU：满足Cauchy-Riemann条件的激活函数<br>
+        2. 复数策略梯度定理：证明全纯策略下方差下界更低<br>
+        3. 全纯策略网络：确保策略函数全纯</div>
+        
+        <div class="section"><span class="section-title">实验结果</span><br>
+        RIS辅助MIMO系统，收敛速度提升2倍，频谱效率提升15%</div>
+        
+        <div class="section"><span class="section-title">收益点</span><br>
+        从理论上证明全纯函数在复数DRL中的优势。</div>
+        
+        <div class="section"><span class="section-title">局限与未来工作</span><br>
+        仅适用于连续动作空间，离散动作空间扩展困难。</div>
+    </div>
+    
+    <a href="../../../index.html" class="back-link">← 返回首页</a>
+</body>
+</html>
