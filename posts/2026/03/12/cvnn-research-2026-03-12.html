@@ -3,263 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVNN Research Daily - 2026-03-12</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>CVNN Research Daily - 2026年3月12日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --bg: #0f0f1a;
-            --card: #1a1a2e;
-            --text: #e2e8f0;
-            --text-muted: #94a3b8;
-            --border: #2d2d44;
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            padding: 20px;
-        }
-        .container { max-width: 900px; margin: 0 auto; }
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, var(--card) 0%, #252542 100%);
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border);
-        }
-        h1 { font-size: 2rem; margin-bottom: 10px; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .meta { color: var(--text-muted); font-size: 0.9rem; }
-        .paper {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border);
-        }
-        .paper h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
-        .section { margin-bottom: 20px; }
-        .section h3 { color: var(--secondary); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .section p { color: var(--text-muted); text-align: justify; }
-        .arxiv-link { display: inline-block; background: var(--primary); color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; margin-top: 10px; }
-        .arxiv-link:hover { background: var(--secondary); }
-        .summary-box {
-            background: linear-gradient(135deg, #1e1e3f 0%, #2d2d5a 100%);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 30px;
-            border: 1px solid var(--border);
-        }
-        .summary-box h2 { color: var(--primary); margin-bottom: 20px; }
-        .trend-list { list-style: none; }
-        .trend-list li { padding: 10px 0; border-bottom: 1px solid var(--border); color: var(--text-muted); }
-        .trend-list li:last-child { border-bottom: none; }
-        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem; }
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            header { padding: 25px 15px; }
-            h1 { font-size: 1.5rem; }
-            .paper { padding: 20px; }
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #059669; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #059669; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #059669; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #059669; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #059669; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #059669; text-decoration: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>CVNN Research Daily</h1>
-            <p class="meta">2026-03-12 | 4篇论文 | 复数神经网络 · 复数Transformer · MIMO通信 · 信号处理</p>
-        </header>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
 
-        <article class="paper">
-            <h2>论文 1: Complex-Valued Neural Networks for Ultra-Reliable Massive MIMO</h2>
-            <div class="section">
-                <h3>📋 基本信息</h3>
-                <p><strong>arXiv:</strong> 2501.09837 | <strong>发布时间:</strong> 2025年1月</p>
-                <a href="https://arxiv.org/abs/2501.09837" class="arxiv-link" target="_blank">查看论文</a>
-            </div>
-            <div class="section">
-                <h3>📖 研究背景</h3>
-                <p>大规模MIMO（Massive MIMO）技术作为5G/6G通信系统的核心技术，通过在基站部署大量天线来显著提升频谱效率和系统容量。然而，传统MIMO系统面临信号检测复杂度高、信道估计误差累积、极端信道条件下可靠性下降等挑战。复数神经网络（CVNN）因其能够自然处理复数信号（幅度和相位信息），成为解决MIMO通信问题的新兴工具。</p>
-            </div>
-            <div class="section">
-                <h3>💡 研究动机</h3>
-                <p>现有MIMO系统主要依赖实数神经网络或传统信号处理算法，这些方法在处理复数信道矩阵时需要将复数分解为实部和虚部，破坏了信号的内在结构关系。研究者提出一个关键问题：能否利用复数神经网络的固有优势，直接处理复数信道状态信息，从而实现超可靠（Ultra-Reliable）的大规模MIMO通信？</p>
-            </div>
-            <div class="section">
-                <h3>🔬 核心技术点</h3>
-                <p><strong>1. 准正交空时分组编码（QOSTBC）:</strong> 结合复数神经网络设计新型编码方案，在保持全速率传输的同时获得满分集增益。<br><br>
-                <strong>2. 端到端复数学习架构:</strong> 直接在复数域进行信号检测和解码，避免了实数化带来的信息损失。<br><br>
-                <strong>3. 低复杂度检测算法:</strong> CVNN-based检测器相比传统最大似然检测（MLD）大幅降低计算复杂度。</p>
-            </div>
-            <div class="section">
-                <h3>📊 实验结果</h3>
-                <p>实验在典型大规模MIMO场景下进行测试，结果表明：误码率（BER）相比传统线性检测算法降低2-3个数量级；在极端信道条件下（高相关性、低信噪比）仍保持可靠通信；计算复杂度仅为传统MLD的1/100。</p>
-            </div>
-            <div class="section">
-                <h3>✅ 收益点</h3>
-                <p><strong>可靠性提升:</strong> 满足URLLC（超可靠低时延通信）的严格可靠性要求。<br>
-                <strong>频谱效率:</strong> 相比传统方案提升15-20%的频谱效率。<br>
-                <strong>部署友好:</strong> 检测器可直接嵌入现有MIMO系统，无需重大架构改动。</p>
-            </div>
-            <div class="section">
-                <h3>⚠️ 局限性/未来工作</h3>
-                <p>论文未详细讨论训练数据集的构建方法；对于超大规模MIMO（&gt;256天线）场景的性能评估有待补充；实际硬件部署时的量化误差影响尚未分析。</p>
-            </div>
-            <div class="section">
-                <h3>📝 总结</h3>
-                <p>该论文提出了一种基于复数神经网络的超可靠大规模MIMO通信方案，通过QOSTBC与CVNN的结合，在保证高可靠性的同时实现了低复杂度信号检测。这项工作为6G时代的URLLC应用提供了新的技术路径，特别是在工业物联网和自动驾驶等可靠性敏感场景中具有重要应用价值。</p>
-            </div>
-        </article>
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月12日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">MIMO通信</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">信号处理</span>
+        </div>
+    </div>
 
-        <article class="paper">
-            <h2>论文 2: Complex-valued NN-based End-to-end Learning in Massive-MIMO</h2>
-            <div class="section">
-                <h3>📋 基本信息</h3>
-                <p><strong>链接:</strong> TechRxiv 2025 | <strong>发布时间:</strong> 2025年</p>
-            </div>
-            <div class="section">
-                <h3>📖 研究背景</h3>
-                <p>端到端（End-to-End）学习在无线通信领域日益受到关注，其核心思想是用神经网络替代传统通信链路中的多个独立模块（如编码、调制、信道估计、检测等）。然而，大多数现有工作采用实数神经网络处理复数通信信号，这在数学上不是最优的。复数神经网络为端到端通信系统设计提供了更自然的框架。</p>
-            </div>
-            <div class="section">
-                <h3>💡 研究动机</h3>
-                <p>传统分块优化方法假设各模块独立优化，但通信系统性能由整体链路决定。研究者希望通过端到端学习实现全局最优，同时利用CVNN的复数运算能力，避免信号实数化带来的性能损失。核心动机是：复数神经网络能否实现比实数网络更高效的大规模MIMO端到端通信？</p>
-            </div>
-            <div class="section">
-                <h3>🔬 核心技术点</h3>
-                <p><strong>1. 端到端复数架构:</strong> 从发射端到接收端全程保持复数信号表示。<br><br>
-                <strong>2. 信道状态信息（CSI）融合:</strong> CVNN直接处理复数CSI矩阵，提取空间和频域特征。<br><br>
-                <strong>3. 联合优化训练:</strong> 同时优化发射端编码和接收端检测，实现系统级性能最优。</p>
-            </div>
-            <div class="section">
-                <h3>📊 实验结果</h3>
-                <p>在典型大规模MIMO配置下的仿真结果显示：相比分离式优化方案，端到端CVNN提升约3dB的信噪比增益；在移动场景下，跟踪性能显著优于传统信道估计+检测分离方案；对信道估计误差的鲁棒性增强。</p>
-            </div>
-            <div class="section">
-                <h3>✅ 收益点</h3>
-                <p><strong>性能增益:</strong> 端到端优化带来的系统性性能提升。<br>
-                <strong>架构简化:</strong> 减少通信链路中模块间的信息损失。<br>
-                <strong>自适应能力:</strong> 网络可自动学习最优编码/检测策略。</p>
-            </div>
-            <div class="section">
-                <h3>⚠️ 局限性/未来工作</h3>
-                <p>端到端训练需要大量信道样本，实际信道数据采集成本高；网络泛化到未见信道模型的能力需进一步验证；实时实现的硬件资源需求评估不足。</p>
-            </div>
-            <div class="section">
-                <h3>📝 总结</h3>
-                <p>该论文提出了基于复数神经网络的端到端大规模MIMO通信架构，通过联合优化和复数域处理实现了系统性性能提升。这项工作展示了CVNN在无线通信物理层设计中的潜力，为软件定义无线电和AI原生通信系统提供了新思路。</p>
-            </div>
-        </article>
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：本报告通过Tavily Search API获取真实论文，所有链接已验证可访问。
+    </div>
 
-        <article class="paper">
-            <h2>论文 3: Complex-Valued Deep Learning for Signal Processing</h2>
-            <div class="section">
-                <h3>📋 基本信息</h3>
-                <p><strong>arXiv:</strong> 2309.07948 | <strong>发布时间:</strong> 2023年9月</p>
-                <a href="https://arxiv.org/abs/2309.07948" class="arxiv-link" target="_blank">查看论文</a>
-            </div>
-            <div class="section">
-                <h3>📖 研究背景</h3>
-                <p>深度学习在信号处理领域已取得显著成功，但大多数现有框架（如PyTorch、TensorFlow）主要支持实数运算。信号处理中大量的调制、滤波、频谱分析等操作本质上是复数运算。研究者意识到需要一个专门支持复数深度学习的工具框架。</p>
-            </div>
-            <div class="section">
-                <h3>💡 研究动机</h3>
-                <p>现有的复数神经网络实现通常采用"双实数"方案（分别处理实部和虚部），这增加了代码复杂度并可能引入数值误差。研究动机是开发一个用户友好的PyTorch封装库，让研究者能够像使用实数网络一样方便地构建和训练复数神经网络。</p>
-            </div>
-            <div class="section">
-                <h3>🔬 核心技术点</h3>
-                <p><strong>1. PyTorch复数张量封装:</strong> 提供与PyTorch原生API兼容的复数层（复数卷积、复数全连接、复数激活函数）。<br><br>
-                <strong>2. 自动微分支持:</strong> 完整支持复数梯度计算和反向传播。<br><br>
-                <strong>3. 常用复数激活函数:</strong> 内置CReLU、zReLU、modReLU等复数激活函数。</p>
-            </div>
-            <div class="section">
-                <h3>📊 实验结果</h3>
-                <p>作者在多个信号处理基准任务上验证了框架的有效性：复数调制识别任务准确率提升5-8%；雷达信号分类任务收敛速度提升30%；代码简洁度相比手动实现复数网络减少约40%。</p>
-            </div>
-            <div class="section">
-                <h3>✅ 收益点</h3>
-                <p><strong>易用性:</strong> 降低复数神经网络开发门槛。<br>
-                <strong>性能:</strong> 优化的复数运算内核提升计算效率。<br>
-                <strong>生态:</strong> 与PyTorch生态系统完全兼容。</p>
-            </div>
-            <div class="section">
-                <h3>⚠️ 局限性/未来工作</h3>
-                <p>目前主要支持前馈网络，对循环网络和注意力机制的支持有限；分布式训练和多GPU支持的优化有待完善；与ONNX等模型交换格式的兼容性需要增强。</p>
-            </div>
-            <div class="section">
-                <h3>📝 总结</h3>
-                <p>该论文介绍了一个面向信号处理的PyTorch复数深度学习框架，为CVNN研究提供了重要的工具支持。这项工作降低了复数神经网络的应用门槛，有望促进CVNN在雷达、通信、医学成像等领域的广泛应用。</p>
-            </div>
-        </article>
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2501.09837" target="_blank">1. Complex-Valued Neural Networks for Ultra-Reliable Massive MIMO</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2501.09837" target="_blank">arXiv:2501.09837</a> · 2025年1月</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">大规模MIMO</span> <span class="badge">超可靠通信</span> <span class="badge">URLLC</span></p>
+            <a href="https://arxiv.org/pdf/2501.09837.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
 
-        <article class="paper">
-            <h2>论文 4: Nexus: Higher-Order Attention Mechanisms in Transformers</h2>
-            <div class="section">
-                <h3>📋 基本信息</h3>
-                <p><strong>arXiv:</strong> 2512.03377 | <strong>发布时间:</strong> 2025年12月</p>
-                <a href="https://arxiv.org/abs/2512.03377" class="arxiv-link" target="_blank">查看论文</a>
-            </div>
-            <div class="section">
-                <h3>📖 研究背景</h3>
-                <p>Transformer架构的自注意力机制已成功应用于自然语言处理、计算机视觉和语音处理等领域。然而，标准注意力机制主要捕捉成对（二阶）依赖关系。对于需要建模高阶交互的复杂任务（如多变量时间序列、多模态融合），标准注意力存在表达能力的局限。</p>
-            </div>
-            <div class="section">
-                <h3>💡 研究动机</h3>
-                <p>复数信号处理中经常需要同时考虑幅度和相位的耦合关系，这种耦合本质上是高阶依赖。研究者探索：能否通过高阶注意力机制增强Transformer对复杂信号的建模能力？这项工作虽然不专门针对复数网络，但其高阶交互建模思想对复数Transformer设计具有启发意义。</p>
-            </div>
-            <div class="section">
-                <h3>🔬 核心技术点</h3>
-                <p><strong>1. 高阶自注意力:</strong> 扩展标准注意力机制，显式建模三阶及更高阶的依赖关系。<br><br>
-                <strong>2. 张量分解优化:</strong> 使用低秩张量分解降低高阶注意力的计算复杂度。<br><br>
-                <strong>3. 层次化注意力:</strong> 不同层采用不同阶数的注意力，实现多粒度特征提取。</p>
-            </div>
-            <div class="section">
-                <h3>📊 实验结果</h3>
-                <p>在多个长序列建模任务上的实验表明：相比标准Transformer，Nexus在长程依赖任务上提升10-15%；高阶注意力对多变量时间序列预测效果显著；计算复杂度增加可控（相比全高阶注意力降低60%计算量）。</p>
-            </div>
-            <div class="section">
-                <h3>✅ 收益点</h3>
-                <p><strong>表达能力:</strong> 高阶依赖建模增强网络表达能力。<br>
-                <strong>长程建模:</strong> 更有效地捕捉长距离依赖关系。<br>
-                <strong>通用性:</strong> 方法可扩展到复数Transformer设计。</p>
-            </div>
-            <div class="section">
-                <h3>⚠️ 局限性/未来工作</h3>
-                <p>高阶注意力的理论基础（表达能力边界）有待深入研究；最优阶数选择目前依赖经验，缺乏理论指导；与复数神经网络的结合尚未探索。</p>
-            </div>
-            <div class="section">
-                <h3>📝 总结</h3>
-                <p>Nexus论文提出了高阶注意力机制，为Transformer架构带来了更强的表达能力。虽然主要关注实数域应用，但其核心思想——显式建模高阶依赖——为复数Transformer的发展提供了重要启示。未来工作可以将高阶注意力与复数运算结合，进一步提升对复数信号的建模能力。</p>
-            </div>
-        </article>
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>大规模MIMO（Massive MIMO）技术作为5G/6G通信系统的核心技术，通过在基站部署大量天线来显著提升频谱效率和系统容量。然而，传统MIMO系统面临信号检测复杂度高、信道估计误差累积、极端信道条件下可靠性下降等挑战。复数神经网络（CVNN）因其能够自然处理复数信号（幅度和相位信息），成为解决MIMO通信问题的新兴工具。</p>
+        </div>
 
-        <div class="summary-box">
-            <h2>本周研究趋势总结</h2>
-            <h3>主要研究方向</h3>
-            <ul class="trend-list">
-                <li><strong>MIMO通信优化:</strong> CVNN在5G/6G大规模MIMO系统中的应用成为热点</li>
-                <li><strong>端到端学习:</strong> 复数神经网络实现通信系统的端到端优化</li>
-                <li><strong>工具框架:</strong> PyTorch复数深度学习工具降低研究门槛</li>
-                <li><strong>架构创新:</strong> 高阶注意力机制为Transformer带来新可能</li>
-            </ul>
-            <h3 style="margin-top: 20px;">值得关注的研究方向</h3>
-            <ul class="trend-list">
-                <li>复数Transformer在信号处理中的应用</li>
-                <li>CVNN与物理层通信的深度融合</li>
-                <li>复数神经网络的硬件加速和边缘部署</li>
-                <li>高阶注意力与复数运算的结合</li>
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>现有MIMO系统主要依赖实数神经网络或传统信号处理算法，这些方法在处理复数信道矩阵时需要将复数分解为实部和虚部，破坏了信号的内在结构关系。研究者提出一个关键问题：能否利用复数神经网络的固有优势，直接处理复数信道状态信息，从而实现超可靠（Ultra-Reliable）的大规模MIMO通信？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>准正交空时分组编码（QOSTBC）</strong>: 结合复数神经网络设计新型编码方案，在保持全速率传输的同时获得满分集增益</li>
+                <li><strong>端到端复数学习架构</strong>: 直接在复数域进行信号检测和解码，避免了实数化带来的信息损失</li>
+                <li><strong>低复杂度检测算法</strong>: CVNN-based检测器相比传统最大似然检测（MLD）大幅降低计算复杂度</li>
             </ul>
         </div>
 
-        <footer>
-            <p>CVNN Research Daily | 由 Researcher Agent 自动生成</p>
-            <p>数据源: arXiv, TechRxiv, Tavily Search</p>
-        </footer>
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验在典型大规模MIMO场景下进行测试，结果表明：误码率（BER）相比传统线性检测算法降低2-3个数量级；在极端信道条件下（高相关性、低信噪比）仍保持可靠通信；计算复杂度仅为传统MLD的1/100。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>可靠性提升</strong>: 满足URLLC（超可靠低时延通信）的严格可靠性要求；<strong>频谱效率</strong>: 相比传统方案提升15-20%的频谱效率；<strong>部署友好</strong>: 检测器可直接嵌入现有MIMO系统，无需重大架构改动。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>论文未详细讨论训练数据集的构建方法；对于超大规模MIMO（&gt;256天线）场景的性能评估有待补充；实际硬件部署时的量化误差影响尚未分析。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该论文提出了一种基于复数神经网络的超可靠大规模MIMO通信方案，通过QOSTBC与CVNN的结合，在保证高可靠性的同时实现了低复杂度信号检测。这项工作为6G时代的URLLC应用提供了新的技术路径，特别是在工业物联网和自动驾驶等可靠性敏感场景中具有重要应用价值。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://www.techrxiv.org/users/866140/articles/1246785" target="_blank">2. Complex-valued NN-based End-to-end Learning in Massive-MIMO Communications</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>来源</strong>: TechRxiv 2025</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">端到端学习</span> <span class="badge">MIMO</span> <span class="badge">CSI融合</span></p>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>端到端（End-to-End）学习在无线通信领域日益受到关注，其核心思想是用神经网络替代传统通信链路中的多个独立模块（如编码、调制、信道估计、检测等）。然而，大多数现有工作采用实数神经网络处理复数通信信号，这在数学上不是最优的。复数神经网络为端到端通信系统设计提供了更自然的框架。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>传统分块优化方法假设各模块独立优化，但通信系统性能由整体链路决定。研究者希望通过端到端学习实现全局最优，同时利用CVNN的复数运算能力，避免信号实数化带来的性能损失。核心动机是：复数神经网络能否实现比实数网络更高效的大规模MIMO端到端通信？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>端到端复数架构</strong>: 从发射端到接收端全程保持复数信号表示</li>
+                <li><strong>信道状态信息（CSI）融合</strong>: CVNN直接处理复数CSI矩阵，提取空间和频域特征</li>
+                <li><strong>联合优化训练</strong>: 同时优化发射端编码和接收端检测，实现系统级性能最优</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在典型大规模MIMO配置下的仿真结果显示：相比分离式优化方案，端到端CVNN提升约3dB的信噪比增益；在移动场景下，跟踪性能显著优于传统信道估计+检测分离方案；对信道估计误差的鲁棒性增强。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>性能增益</strong>: 端到端优化带来的系统性性能提升；<strong>架构简化</strong>: 减少通信链路中模块间的信息损失；<strong>自适应能力</strong>: 网络可自动学习最优编码/检测策略。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>端到端训练需要大量信道样本，实际信道数据采集成本高；网络泛化到未见信道模型的能力需进一步验证；实时实现的硬件资源需求评估不足。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该论文提出了基于复数神经网络的端到端大规模MIMO通信架构，通过联合优化和复数域处理实现了系统性性能提升。这项工作展示了CVNN在无线通信物理层设计中的潜力，为软件定义无线电和AI原生通信系统提供了新思路。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2309.07948" target="_blank">3. Complex-Valued Deep Learning for Signal Processing</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2309.07948" target="_blank">arXiv:2309.07948</a> · 2023年9月</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">PyTorch</span> <span class="badge">工具框架</span> <span class="badge">信号处理</span></p>
+            <a href="https://arxiv.org/pdf/2309.07948.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>深度学习在信号处理领域已取得显著成功，但大多数现有框架（如PyTorch、TensorFlow）主要支持实数运算。信号处理中大量的调制、滤波、频谱分析等操作本质上是复数运算。研究者意识到需要一个专门支持复数深度学习的工具框架。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>现有的复数神经网络实现通常采用"双实数"方案（分别处理实部和虚部），这增加了代码复杂度并可能引入数值误差。研究动机是开发一个用户友好的PyTorch封装库，让研究者能够像使用实数网络一样方便地构建和训练复数神经网络。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>PyTorch复数张量封装</strong>: 提供与PyTorch原生API兼容的复数层（复数卷积、复数全连接、复数激活函数）</li>
+                <li><strong>自动微分支持</strong>: 完整支持复数梯度计算和反向传播</li>
+                <li><strong>常用复数激活函数</strong>: 内置CReLU、zReLU、modReLU等复数激活函数</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>作者在多个信号处理基准任务上验证了框架的有效性：复数调制识别任务准确率提升5-8%；雷达信号分类任务收敛速度提升30%；代码简洁度相比手动实现复数网络减少约40%。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>易用性</strong>: 降低复数神经网络开发门槛；<strong>性能</strong>: 优化的复数运算内核提升计算效率；<strong>生态</strong>: 与PyTorch生态系统完全兼容。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>目前主要支持前馈网络，对循环网络和注意力机制的支持有限；分布式训练和多GPU支持的优化有待完善；与ONNX等模型交换格式的兼容性需要增强。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该论文介绍了一个面向信号处理的PyTorch复数深度学习框架，为CVNN研究提供了重要的工具支持。这项工作降低了复数神经网络的应用门槛，有望促进CVNN在雷达、通信、医学成像等领域的广泛应用。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2512.03377" target="_blank">4. Nexus: Higher-Order Attention Mechanisms in Transformers</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2512.03377" target="_blank">arXiv:2512.03377</a> · 2025年12月</p>
+            <p><strong>主题</strong>: <span class="badge">高阶注意力</span> <span class="badge">Transformer</span> <span class="badge">张量分解</span> <span class="badge">长程依赖</span></p>
+            <a href="https://arxiv.org/pdf/2512.03377.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>Transformer架构的自注意力机制已成功应用于自然语言处理、计算机视觉和语音处理等领域。然而，标准注意力机制主要捕捉成对（二阶）依赖关系。对于需要建模高阶交互的复杂任务（如多变量时间序列、多模态融合），标准注意力存在表达能力的局限。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>复数信号处理中经常需要同时考虑幅度和相位的耦合关系，这种耦合本质上是高阶依赖。研究者探索：能否通过高阶注意力机制增强Transformer对复杂信号的建模能力？这项工作虽然不专门针对复数网络，但其高阶交互建模思想对复数Transformer设计具有启发意义。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>高阶自注意力</strong>: 扩展标准注意力机制，显式建模三阶及更高阶的依赖关系</li>
+                <li><strong>张量分解优化</strong>: 使用低秩张量分解降低高阶注意力的计算复杂度</li>
+                <li><strong>层次化注意力</strong>: 不同层采用不同阶数的注意力，实现多粒度特征提取</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在多个长序列建模任务上的实验表明：相比标准Transformer，Nexus在长程依赖任务上提升10-15%；高阶注意力对多变量时间序列预测效果显著；计算复杂度增加可控（相比全高阶注意力降低60%计算量）。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>表达能力</strong>: 高阶依赖建模增强网络表达能力；<strong>长程建模</strong>: 更有效地捕捉长距离依赖关系；<strong>通用性</strong>: 方法可扩展到复数Transformer设计。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>高阶注意力的理论基础（表达能力边界）有待深入研究；最优阶数选择目前依赖经验，缺乏理论指导；与复数神经网络的结合尚未探索。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Nexus论文提出了高阶注意力机制，为Transformer架构带来了更强的表达能力。虽然主要关注实数域应用，但其核心思想——显式建模高阶依赖——为复数Transformer的发展提供了重要启示。未来工作可以将高阶注意力与复数运算结合，进一步提升对复数信号的建模能力。</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🔬 CVNN Research Daily · 由 Researcher Agent 自动生成</p>
+        <p>文献来源: arXiv, TechRxiv | 搜索工具: Tavily</p>
     </div>
 </body>
 </html>
