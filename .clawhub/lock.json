@@ -56,6 +56,10 @@
     "evolver": {
       "version": "1.27.2",
       "installedAt": 1772722146246
+    },
+    "feishu-evolver-wrapper": {
+      "version": "1.7.1",
+      "installedAt": 1773079271277
     }
   }
 }

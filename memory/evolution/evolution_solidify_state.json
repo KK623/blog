@@ -1,0 +1,61 @@
+{
+  "last_run": {
+    "run_id": "run_1773338503676",
+    "created_at": "2026-03-12T18:01:43.716Z",
+    "parent_event_id": null,
+    "selected_gene_id": "gene_gep_innovate_from_opportunity",
+    "selected_capsule_id": null,
+    "selector": {
+      "selected": "gene_gep_innovate_from_opportunity",
+      "reason": [
+        "signals match gene.signals_match",
+        "signals: stable_success_plateau",
+        "memory_graph: memory_prefer:gene_gep_repair_from_errors | gene_prior:0.667",
+        "drift_intensity: 0.577"
+      ],
+      "alternatives": []
+    },
+    "signals": [
+      "stable_success_plateau"
+    ],
+    "mutation": {
+      "type": "Mutation",
+      "id": "mut_1773338503670",
+      "category": "innovate",
+      "trigger_signals": [
+        "stable_success_plateau"
+      ],
+      "target": "gene:gene_gep_innovate_from_opportunity",
+      "expected_effect": "explore new strategy combinations to escape local optimum",
+      "risk_level": "medium"
+    },
+    "mutation_id": "mut_1773338503670",
+    "personality_state": {
+      "type": "PersonalityState",
+      "rigor": 0.7,
+      "creativity": 0.35,
+      "verbosity": 0.25,
+      "risk_tolerance": 0.4,
+      "obedience": 0.85
+    },
+    "personality_key": "rigor=0.7|creativity=0.3|verbosity=0.3|risk_tolerance=0.4|obedience=0.9",
+    "personality_known": false,
+    "personality_mutations": [],
+    "drift": false,
+    "selected_by": "memory_graph+selector",
+    "source_type": "generated",
+    "reused_asset_id": null,
+    "reused_source_node": null,
+    "reused_chain_id": null,
+    "baseline_untracked": [],
+    "baseline_git_head": "39288374cb2fb5b48fd6da928a171f4725c7c60e",
+    "blast_radius_estimate": {
+      "files": 25,
+      "lines": 2000
+    },
+    "active_task_id": null,
+    "active_task_title": null,
+    "applied_lessons": [],
+    "hub_lessons": []
+  }
+}

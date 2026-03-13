@@ -1,30 +1,71 @@
-# HOT Memory — Template
+# HOT Memory — Core Principles
 
-> This file is created in `~/self-improving/memory.md` when you first use the skill.
 > Keep it ≤100 lines. Most-used patterns live here.
 
-## Example Entries
+## 🔴 P0: 绝不编造（致命错误）
+- **触发**: 2026-03-08 CVNN报告造假
+- **后果**: 用户怒批，严重失信
+- **原则**: 找不到资料 → 诚实告知；无法完成 → 明确说明；宁可说"做不到"也不造假
 
-```markdown
-## Preferences
-- Code style: Prefer explicit over implicit
-- Communication: Direct, no fluff
-- Time zone: Europe/Madrid
+## 🟡 P1: 主动通知
+- **触发**: 2026-03-09 提示词分类完成未通知 / 定时任务失败未提醒
+- **原则**: 完成任务立即主动告知；失败时立即补做并通知
 
-## Patterns (promoted from corrections)
-- Always use TypeScript strict mode
-- Prefer pnpm over npm
-- Format: ISO 8601 for dates
+## 🟡 P1: 验证任务完成
+- **触发**: 2026-03-08 误以为CVNN任务已完成
+- **原则**: 任务启动≠完成；必须检查输出文件存在；必须验证GitHub已推送
 
-## Project defaults
-- Tests: Jest with coverage >80%
-- Commits: Conventional commits format
+## 🟡 P1: 验证Cron任务真实完成
+- **触发**: 2026-03-10 Cron报告完成但实际文件不存在，用户点击404
+- **原则**: Cron报告"完成"≠任务真的完成，必须手动验证：
+  1. 检查本地文件系统确认文件存在
+  2. 验证GitHub已推送且Pages可访问
+  3. 确认首页/博客页面链接已更新
+  4. 全部通过后再发送完成通知
+- **警示**: 系统报告可能有误，永远要手动验证
+
+## 🟡 P1: 发布后链接更新
+- **触发**: 2026-03-10 发布CVNN报告后首页和博客页面都看不到
+- **原则**: 发布任何文章后必须立即做三件事：
+  1. 更新首页 (index.html) 的"最新文章"区块
+  2. 更新博客页面 (posts/index.html) 的对应分类
+  3. 验证链接可点击、文章可访问
+- **检查清单**: 发布→GitHub推送→更新首页→更新博客页→验证
+
+## 🟡 P1: 公式渲染规范
+- **触发**: 2026-03-09 博客文章LaTeX公式未渲染
+- **原则**: 生成HTML文章时，如果包含数学公式（$...$ 或 \\(...\\) 或 \\[...\\]），必须自动添加MathJax脚本；标准代码：
+```html
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 ```
 
-## Usage
+## 🟡 P1: API故障及时汇报
+- **触发**: 2026-03-09 用户强调API问题需及时汇报
+- **原则**: 遇到API限流/故障→立即标记→恢复后第一时间主动汇报用户；不能让用户发现才说
 
-The agent will:
-1. Load this file on every session
-2. Add entries when patterns are used 3x in 7 days
-3. Demote unused entries to WARM after 30 days
-4. Never exceed 100 lines (compacts automatically)
+## 🟡 P1: 报告信源规范
+- **触发**: 2026-03-09 AI日报信源格式不规范
+- **原则**: 每条引用信息必须有独立、醒目、可点击的信源区块；格式：📰 信源：[来源名称](链接) · 日期；信源区块与正文分开，确保可追溯性
+
+## 🟡 P1: API Key 管理
+- **触发**: 2026-03-09 Tavily API key给过但未保存，导致搜索功能失效
+- **原则**: 收到API key立即保存到对应目录的.env文件；保存后立即验证功能正常；记住哪个skill需要什么key
+
+## User Preferences
+- **Name:** K
+- **Timezone:** GMT+8 (Asia/Shanghai)
+- **Comm style:** 直接、不啰嗦，但关键信息必须主动告知
+- **Quality:** 绝不容忍编造，宁可少做也要做好
+
+## Patterns
+- 定时任务：凌晨3-4点执行，早上6点Heartbeat检查
+- 文献调研：LLM搜24h，CVNN搜30天，找不到如实报告
+- 报告格式：必须包含完整8部分（CVNN）或5部分（LLM）

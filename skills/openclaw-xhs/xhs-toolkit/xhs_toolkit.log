@@ -1,0 +1,92 @@
+2026-03-08 21:15:19.813 | INFO     | src.auth.cookie_manager:save_cookies_auto:105 - 🚀 开始MCP自动登录流程...
+2026-03-08 21:15:19.814 | INFO     | src.auth.cookie_manager:save_cookies_auto:106 - ⏰ 超时时间: 300秒
+2026-03-08 21:15:19.815 | INFO     | src.auth.cookie_manager:save_cookies_auto:110 - 🌐 正在启动浏览器...
+2026-03-08 21:15:19.815 | INFO     | src.core.browser:create_driver:50 - 🚀 初始化Chrome浏览器驱动...
+2026-03-08 21:15:19.815 | INFO     | src.core.browser:_create_chrome_options:87 - 🖥️ 启用本地浏览器模式
+2026-03-08 21:15:34.230 | INFO     | src.core.browser:create_driver:73 - ✅ Chrome浏览器驱动初始化成功
+2026-03-08 21:15:34.253 | INFO     | src.auth.cookie_manager:save_cookies_auto:112 - ✅ 浏览器启动成功
+2026-03-08 21:15:34.253 | INFO     | src.auth.cookie_manager:save_cookies_auto:116 - 🔗 正在访问登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:40.388 | INFO     | src.auth.cookie_manager:save_cookies_auto:118 - ✅ 登录页面加载完成
+2026-03-08 21:15:40.397 | INFO     | src.auth.cookie_manager:save_cookies_auto:121 - ⏳ 等待用户完成登录...
+2026-03-08 21:15:40.398 | INFO     | src.auth.cookie_manager:save_cookies_auto:122 - 💡 请在浏览器中完成登录，程序将自动检测登录完成状态
+2026-03-08 21:15:40.398 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:236 - ⏰ 开始智能检测登录状态，超时时间: 300秒
+2026-03-08 21:15:40.398 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:237 - 💡 请在浏览器中完成登录，包括：输入验证码 → 点击登录 → 进入创作者中心
+2026-03-08 21:15:41.306 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:41.307 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:41.307 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:41.308 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (0/300秒)
+2026-03-08 21:15:45.994 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:46.001 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:46.002 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:46.002 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (5/300秒)
+2026-03-08 21:15:49.371 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:49.416 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:49.416 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:49.417 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (8/300秒)
+2026-03-08 21:15:52.673 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:52.682 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:52.683 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:52.683 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (12/300秒)
+2026-03-08 21:15:56.765 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:56.766 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:56.766 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:56.767 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (16/300秒)
+2026-03-08 21:15:59.913 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:15:59.913 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:15:59.914 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:15:59.914 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (19/300秒)
+2026-03-08 21:16:03.190 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/login
+2026-03-08 21:16:03.190 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:336 - ❌ URL包含登录关键词，确认仍在登录页面
+2026-03-08 21:16:03.191 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: True
+2026-03-08 21:16:03.191 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:261 - ⏳ 仍在登录流程中... (22/300秒)
+2026-03-08 21:16:16.802 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:253 - 🔄 检测到页面跳转: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.828 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:331 - 🔍 检查是否仍在登录页面: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.828 | INFO     | src.auth.cookie_manager:_is_still_on_login_page:342 - ✅ URL包含创作者中心路径，确定不在登录页面
+2026-03-08 21:16:16.829 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:259 - 🔍 登录页面检查结果: False
+2026-03-08 21:16:16.830 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:269 - 🔍 开始检查是否进入创作者中心: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.830 | INFO     | src.auth.cookie_manager:_is_on_creator_center:377 - 🔍 检查是否进入创作者中心，当前URL: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.830 | INFO     | src.auth.cookie_manager:_is_on_creator_center:389 - ✅ URL包含创作者中心路径'/home'，确认已进入创作者中心: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.830 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:271 - 🔍 创作者中心检查结果: True
+2026-03-08 21:16:16.830 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:274 - 🎯 已进入创作者中心页面: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:16.831 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:275 - ✅ 检测到页面跳转到创作者中心，立即认为登录成功！
+2026-03-08 21:16:16.831 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:278 - ⏳ 等待3秒让页面完全加载...
+2026-03-08 21:16:21.161 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:283 - 🔍 最终页面URL: https://creator.xiaohongshu.com/new/home
+2026-03-08 21:16:21.286 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:288 - 🍪 预检测到 14 个cookies
+2026-03-08 21:16:21.286 | INFO     | src.auth.cookie_manager:_wait_for_login_completion:292 - ✅ 登录检测完成，返回成功状态
+2026-03-08 21:16:21.288 | INFO     | src.auth.cookie_manager:save_cookies_auto:125 - 🔍 登录检测结果: 成功
+2026-03-08 21:16:21.289 | INFO     | src.auth.cookie_manager:save_cookies_auto:131 - 🍪 登录检测成功，开始获取cookies...
+2026-03-08 21:16:21.309 | INFO     | src.auth.cookie_manager:save_cookies_auto:136 - 📊 第一次获取到 14 个cookies
+2026-03-08 21:16:21.310 | INFO     | src.auth.cookie_manager:save_cookies_auto:154 - 🔍 开始验证cookies...
+2026-03-08 21:16:21.310 | INFO     | src.auth.cookie_manager:save_cookies_auto:164 - 🔑 关键cookies数量: 8
+2026-03-08 21:16:21.311 | INFO     | src.auth.cookie_manager:save_cookies_auto:165 - 🔑 关键cookies列表: ['customer-sso-sid', 'a1', 'gid', 'webId', 'x-user-id-creator.xiaohongshu.com', 'access-token-creator.xiaohongshu.com', 'galaxy_creator_session_id', 'galaxy.creator.beaker.session.id']
+2026-03-08 21:16:21.311 | INFO     | src.auth.cookie_manager:save_cookies_auto:177 - 💾 开始保存cookies到文件...
+2026-03-08 21:16:21.312 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:543 - 📁 开始准备保存cookies...
+2026-03-08 21:16:21.315 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:547 - 📁 cookies目录: /root/.openclaw/credentials
+2026-03-08 21:16:21.316 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:549 - ✅ cookies目录创建成功
+2026-03-08 21:16:21.317 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:552 - 📦 构建cookies数据结构...
+2026-03-08 21:16:21.318 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:560 - 📦 数据结构构建完成，包含 14 个cookies
+2026-03-08 21:16:21.319 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:564 - 💾 准备写入文件: /root/.openclaw/credentials/xhs_cookies.json
+2026-03-08 21:16:21.329 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:572 - ✅ 文件写入成功: /root/.openclaw/credentials/xhs_cookies.json
+2026-03-08 21:16:21.329 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:573 - 📊 文件大小: 3987 字节
+2026-03-08 21:16:21.329 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:574 - 📊 共保存了 14 个cookies
+2026-03-08 21:16:21.329 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:575 - 🔑 关键创作者cookies: 8/9
+2026-03-08 21:16:21.329 | INFO     | src.auth.cookie_manager:_save_cookies_to_file:579 - 🔑 关键cookies列表: ['customer-sso-sid', 'a1', 'gid', 'webId', 'x-user-id-creator.xiaohongshu.com', 'access-token-creator.xiaohongshu.com', 'galaxy_creator_session_id', 'galaxy.creator.beaker.session.id']
+2026-03-08 21:16:21.330 | INFO     | src.auth.cookie_manager:save_cookies_auto:180 - 💾 保存结果: 成功
+2026-03-08 21:16:21.330 | INFO     | src.auth.cookie_manager:save_cookies_auto:183 - 🎉 MCP自动登录完成！Cookies已成功保存
+2026-03-08 21:16:21.331 | INFO     | src.auth.cookie_manager:save_cookies_auto:189 - ✅ 验证：cookies文件已创建，大小: 3987 字节
+2026-03-08 21:16:21.331 | INFO     | src.auth.cookie_manager:save_cookies_auto:210 - 🔒 正在关闭浏览器...
+2026-03-08 21:16:22.203 | INFO     | src.auth.cookie_manager:save_cookies_auto:213 - ✅ 浏览器已关闭
+2026-03-08 21:24:46.268 | INFO     | src.utils.image_processor:__init__:40 - 图片处理器初始化，临时目录: /tmp/xhs_images
+2026-03-08 21:24:46.270 | INFO     | src.utils.image_processor:process_images:70 - ✅ 处理图片成功 [1/1]: /tmp/xhs_covers/cover1.png
+2026-03-08 21:24:46.271 | INFO     | src.utils.image_processor:process_images:75 - 📸 图片处理完成，共处理 1/1 张
+2026-03-08 21:24:46.272 | INFO     | src.xiaohongshu.client:publish_note:75 - 📝 开始发布小红书笔记: 周报写到头秃？ChatGPT3分钟搞定✨
+2026-03-08 21:24:46.272 | INFO     | src.core.browser:create_driver:50 - 🚀 初始化Chrome浏览器驱动...
+2026-03-08 21:24:46.273 | INFO     | src.core.browser:_create_chrome_options:87 - 🖥️ 启用本地浏览器模式
+2026-03-08 21:25:05.885 | INFO     | src.utils.image_processor:__init__:40 - 图片处理器初始化，临时目录: /tmp/xhs_images
+2026-03-08 21:25:05.886 | INFO     | src.utils.image_processor:process_images:70 - ✅ 处理图片成功 [1/1]: /tmp/xhs_covers/cover1.png
+2026-03-08 21:25:05.887 | INFO     | src.utils.image_processor:process_images:75 - 📸 图片处理完成，共处理 1/1 张
+2026-03-08 21:25:05.888 | INFO     | src.xiaohongshu.client:publish_note:75 - 📝 开始发布小红书笔记: 周报写到头秃？ChatGPT3分钟搞定✨
+2026-03-08 21:25:05.889 | INFO     | src.core.browser:create_driver:50 - 🚀 初始化Chrome浏览器驱动...
+2026-03-08 21:25:05.890 | INFO     | src.core.browser:_create_chrome_options:87 - 🖥️ 启用本地浏览器模式
+2026-03-08 21:25:08.478 | INFO     | src.core.browser:create_driver:73 - ✅ Chrome浏览器驱动初始化成功
+2026-03-08 21:25:08.487 | INFO     | src.xiaohongshu.client:publish_note:82 - 🌐 访问发布页面...
