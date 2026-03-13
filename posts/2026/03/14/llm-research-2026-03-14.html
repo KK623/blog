@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏研究进展 | 2026-03-14</title>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #21262d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #a371f7;
+            --accent-orange: #f0883e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .meta-info span {
+            background: var(--bg-secondary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .paper-number {
+            background: var(--accent-blue);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .paper-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .paper-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .paper-meta a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        
+        .paper-meta a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 18px;
+        }
+        
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-content {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .highlight-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box strong {
+            color: var(--accent-blue);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        footer a {
+            color: var(--accent-blue);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .tag-distillation {
+            background: rgba(163, 113, 247, 0.2);
+            color: var(--accent-purple);
+        }
+        
+        .tag-deployment {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .tag-efficiency {
+            background: rgba(240, 136, 62, 0.2);
+            color: var(--accent-orange);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-card {
+                padding: 18px;
+            }
+            
+            .paper-title {
+                font-size: 1.05rem;
+            }
+            
+            .meta-info {
+                font-size: 0.75rem;
+            }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 LLM 量化/部署/蒸馏研究进展</h1>
+            <div class="meta-info">
+                <span>📅 2026-03-14 03:00 AM</span>
+                <span>📊 第11周</span>
+                <span>🔬 5篇论文</span>
+                <span>🤖 AI Research Agent</span>
+            </div>
+        </header>
+
+        <div class="highlight-box">
+            <strong>研究范围：</strong>本次报告涵盖过去24小时内arXiv发布的LLM量化、部署优化、知识蒸馏、资源效率相关最新研究。
+        </div>
+
+        <!-- Paper 1 -->
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title-section">
+                    <div class="paper-title">
+                        Long-Context Encoder Models for Polish Language Understanding
+                        <span class="tag tag-distillation">蒸馏</span>
+                    </div>
+                    <div class="paper-meta">
+                        arXiv:2603.12191 | 
+                        <a href="https://arxiv.org/abs/2603.12191" target="_blank">查看原文</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📖 背景</div>
+                <div class="section-content">
+                    Encoder-only架构在判别任务中仍是成本效益和参数效率的标准选择，但传统编码器如BERT受限于短上下文窗口。Decoder-only LLM虽主导NLP领域，但在长文档处理任务中面临效率和成本的挑战。波兰语等中等资源语言的长上下文理解能力仍有待提升。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 动机</div>
+                <div class="section-content">
+                    本文旨在解决波兰语长上下文理解的问题，开发能够处理8192 token序列的高质量模型。同时探索如何通过知识蒸馏技术创建压缩模型变体，以在保持性能的同时降低计算成本。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🔧 技术点</div>
+                <div class="section-content">
+                    <strong>1. 两阶段训练流程：</strong>包括位置嵌入适配和全参数持续预训练。<br>
+                    <strong>2. 知识蒸馏压缩：</strong>训练压缩模型变体，通过知识蒸馏技术将大模型的能力迁移到小模型。<br>
+                    <strong>3. 长上下文适配：</strong>将传统编码器的上下文窗口从512扩展到8192 token。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📈 收益点</div>
+                <div class="section-content">
+                    • 在长上下文任务上显著优于竞争解决方案<br>
+                    • 在短文本任务上保持可比质量<br>
+                    • 压缩模型在25个任务上取得最佳平均性能<br>
+                    • 在KLEJ基准和FinBench金融任务套件上表现优异
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">💡 总结</div>
+                <div class="section-content">
+                    该研究为中等资源语言的长上下文编码器开发提供了有效范式，证明了知识蒸馏在创建高效压缩模型方面的价值。两阶段训练方法可推广到其他语言和领域。
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 2 -->
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title-section">
+                    <div class="paper-title">
+                        Cornserve: A Distributed Serving System for Any-to-Any Multimodal Models
+                        <span class="tag tag-deployment">部署</span>
+                    </div>
+                    <div class="paper-meta">
+                        arXiv:2603.12118 | 
+                        <a href="https://arxiv.org/abs/2603.12118" target="_blank">查看原文</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📖 背景</div>
+                <div class="section-content">
+                    Any-to-Any模型是一类新兴的多模态模型，接受文本、图像、视频、音频等多种模态组合作为输入和输出。服务这类模型面临挑战：不同请求根据输入输出模态遍历不同的模型计算图路径，每个模型组件具有不同的扩展特性。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 动机</div>
+                <div class="section-content">
+                    现有推理服务系统主要针对单一模态模型设计，缺乏对任意模态模型的原生支持。需要一个能够灵活处理多模态输入输出、支持组件独立扩展的分布式服务系统。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🔧 技术点</div>
+                <div class="section-content">
+                    <strong>1. 任务抽象机制：</strong>提供灵活的任务抽象来表达Any-to-Any模型计算图。<br>
+                    <strong>2. 组件解耦与独立扩展：</strong>支持组件解耦和独立扩展。<br>
+                    <strong>3. 记录-重放执行模型：</strong>高效的记录-重放执行模型，跟踪数据依赖。<br>
+                    <strong>4. 直接张量传输：</strong>张量数据在生产者和消费者之间直接传输。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📈 收益点</div>
+                <div class="section-content">
+                    • 吞吐量提升 <strong>3.81倍</strong><br>
+                    • 尾部延迟降低 <strong>5.79倍</strong><br>
+                    • 支持多样化的Any-to-Any模型<br>
+                    • 系统开源，基于Kubernetes构建（约23K行Python代码）
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">💡 总结</div>
+                <div class="section-content">
+                    Cornserve填补了Any-to-Any模型服务基础设施的空白，其组件化设计和高效的执行模型为复杂多模态应用的生产部署提供了可行方案。
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 3 -->
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title-section">
+                    <div class="paper-title">
+                        Resource-Efficient Iterative LLM-Based NAS with Feedback Memory
+                        <span class="tag tag-efficiency">资源效率</span>
+                    </div>
+                    <div class="paper-meta">
+                        arXiv:2603.12091 | 
+                        <a href="https://arxiv.org/abs/2603.12091" target="_blank">查看原文</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📖 背景</div>
+                <div class="section-content">
+                    神经架构搜索（NAS）自动化网络设计，但传统方法需要大量计算资源。近期LLM驱动的NAS方法展示了潜力，但如何在有限资源下高效迭代优化仍是一个挑战。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 动机</div>
+                <div class="section-content">
+                    本文旨在在单张消费级GPU上实现高效的LLM驱动NAS，无需LLM微调。核心问题是如何利用历史反馈信息指导迭代搜索，避免重复犯错。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🔧 技术点</div>
+                <div class="section-content">
+                    <strong>1. 反馈记忆机制：</strong>受马尔可夫链启发的历史反馈记忆，使用K=5的滑动窗口。<br>
+                    <strong>2. 结构化诊断三元组：</strong>每个历史条目记录问题、建议修改和结果。<br>
+                    <strong>3. 双LLM专业化：</strong>代码生成器生成PyTorch架构，提示优化器处理诊断推理。<br>
+                    <strong>4. 隐式硬件感知：</strong>LLM和架构训练共享有限VRAM，搜索隐式偏好紧凑模型。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📈 收益点</div>
+                <div class="section-content">
+                    • CIFAR-10上DeepSeek-Coder-6.7B准确率从28.2%提升至<strong>69.2%</strong><br>
+                    • Qwen2.5-7B从50.0%提升至<strong>71.5%</strong><br>
+                    • GLM-5从43.2%提升至<strong>62.0%</strong><br>
+                    • 2000次迭代仅需约<strong>18 GPU小时</strong>（单张RTX 4090）
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">💡 总结</div>
+                <div class="section-content">
+                    该研究展示了LLM驱动NAS在资源受限环境下的可行性，反馈记忆机制有效利用了历史信息，为边缘设备上的自动化模型设计开辟了新途径。
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 4 -->
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title-section">
+                    <div class="paper-title">
+                        MobileKernelBench: Can LLMs Write Efficient Kernels for Mobile Devices?
+                        <span class="tag tag-deployment">部署</span>
+                    </div>
+                    <div class="paper-meta">
+                        arXiv:2603.11935 | 
+                        <a href="https://arxiv.org/abs/2603.11935" target="_blank">查看原文</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📖 背景</div>
+                <div class="section-content">
+                    LLM在代码生成方面展示了显著能力，但针对移动设备生成高效内核的潜力尚未充分探索。移动框架的工程复杂性和数据稀缺性带来了独特挑战。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 动机</div>
+                <div class="section-content">
+                    构建专门针对移动设备内核生成的评估框架，调查LLM是否能为移动设备编写高效内核，并开发多智能体系统克服现有方法的局限性。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🔧 技术点</div>
+                <div class="section-content">
+                    <strong>1. MobileKernelBench评估框架：</strong>包含 prioritize 算子多样性和跨框架互操作性的基准。<br>
+                    <strong>2. 自动化管道：</strong>桥接主机-设备差距，支持设备端验证。<br>
+                    <strong>3. MoKA多智能体系统：</strong>仓库感知推理 + 计划-执行范式。<br>
+                    <strong>4. MNN移动推理框架支持：</strong>针对Mobile Neural Network后端优化。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📈 收益点</div>
+                <div class="section-content">
+                    • 编译成功率从54%提升至 <strong>93.7%</strong><br>
+                    • <strong>27.4%</strong>的生成内核实现可测量的加速<br>
+                    • 建立了移动设备内核生成的系统性评估方法<br>
+                    • 开源代码和数据集
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">💡 总结</div>
+                <div class="section-content">
+                    MobileKernelBench为移动AI推理优化提供了重要工具，MoKA系统展示了多智能体协作在特定领域代码生成中的潜力，对端侧AI部署具有实际价值。
+                </div>
+            </div>
+        </div>
+
+        <!-- Paper 5 -->
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">5</div>
+                <div class="paper-title-section">
+                    <div class="paper-title">
+                        Simple Recipe Works: VLA Models are Natural Continual Learners with RL
+                        <span class="tag tag-efficiency">持续学习</span>
+                    </div>
+                    <div class="paper-meta">
+                        arXiv:2603.11653 | 
+                        <a href="https://arxiv.org/abs/2603.11653" target="_blank">查看原文</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📖 背景</div>
+                <div class="section-content">
+                    持续强化学习（CRL）使自改进具身智能体能够适应开放、不断演变的环境。传统观点认为朴素的顺序微调会导致灾难性遗忘，需要复杂的CRL策略。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 动机</div>
+                <div class="section-content">
+                    挑战"复杂CRL方法必要"的传统观念，探索简单方法是否能取得竞争性能。研究预训练VLA模型、参数高效适应和on-policy RL的组合效应。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🔧 技术点</div>
+                <div class="section-content">
+                    <strong>1. 顺序微调基线：</strong>使用LoRA进行参数高效适应的简单顺序微调。<br>
+                    <strong>2. 预训练模型优势：</strong>利用大规模预训练VLA模型（OpenVLA、π₀等）。<br>
+                    <strong>3. on-policy RL协同：</strong>结合on-policy RL与参数高效适应。<br>
+                    <strong>4. 稳定性-可塑性平衡：</strong>分析大规模模型、LoRA和RL如何重塑这一平衡。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📈 收益点</div>
+                <div class="section-content">
+                    • 在3个模型和5个终身RL基准上的系统研究显示：简单顺序微调极具竞争力<br>
+                    • 高可塑性，几乎无遗忘<br>
+                    • 强大的零样本泛化能力<br>
+                    • 频繁超越更复杂的CRL方法
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">💡 总结</div>
+                <div class="section-content">
+                    该研究颠覆了持续学习的传统认知，证明简单配方在适当组件（大预训练模型+LoRA+RL）配合下可以非常有效。这对机器人学习系统的实际部署具有重要意义。
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="paper-card">
+            <h2 style="margin-bottom: 20px; color: var(--text-primary);">📊 实验对比</h2>
+            
+            <h3 style="font-size: 1rem; margin-bottom: 15px; color: var(--accent-blue);">部署优化效果对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>方向</th>
+                        <th>吞吐量提升</th>
+                        <th>延迟降低</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cornserve</td>
+                        <td>多模态服务</td>
+                        <td>3.81x</td>
+                        <td>5.79x</td>
+                    </tr>
+                    <tr>
+                        <td>MoKA</td>
+                        <td>移动内核</td>
+                        <td>-</td>
+                        <td>编译成功率93.7%</td>
+                    </tr>
+                    <tr>
+                        <td>长上下文编码器</td>
+                        <td>蒸馏压缩</td>
+                        <td>-</td>
+                        <td>长文档理解SOTA</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="font-size: 1rem; margin: 25px 0 15px; color: var(--accent-blue);">资源效率对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>场景</th>
+                        <th>GPU需求</th>
+                        <th>性能提升</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NAS+反馈记忆</td>
+                        <td>架构搜索</td>
+                        <td>单张RTX 4090</td>
+                        <td>21-41%</td>
+                    </tr>
+                    <tr>
+                        <td>蒸馏编码器</td>
+                        <td>模型压缩</td>
+                        <td>中等</td>
+                        <td>保持性能</td>
+                    </tr>
+                    <tr>
+                        <td>LoRA持续学习</td>
+                        <td>机器人学习</td>
+                        <td>低</td>
+                        <td>竞争性能</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary -->
+        <div class="paper-card">
+            <h2 style="margin-bottom: 20px; color: var(--text-primary);">📝 总结与展望</h2>
+            
+            <div class="section">
+                <div class="section-title">主要发现</div>
+                <div class="section-content">
+                    <strong>1. 部署系统创新：</strong>Cornserve针对Any-to-Any模型的分布式服务系统，通过组件解耦和高效执行模型，显著提升了多模态应用的部署效率。<br><br>
+                    
+                    <strong>2. 移动AI突破：</strong>MobileKernelBench和MoKA系统展示了LLM在移动设备特定代码生成中的潜力，编译成功率超过93%，为端侧AI优化开辟新途径。<br><br>
+                    
+                    <strong>3. 简单方法的力量：</strong>VLA持续学习研究表明，简单顺序微调结合LoRA和RL可以匹敌甚至超越复杂的持续学习方法，挑战了传统认知。<br><br>
+                    
+                    <strong>4. 资源受限优化：</strong>反馈记忆机制的NAS方法在单张消费级GPU上实现高效架构搜索，为资源受限环境下的自动化模型设计提供了可行方案。
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">实践建议</div>
+                <div class="section-content">
+                    • <strong>企业部署：</strong>考虑Any-to-Any模型的Cornserve架构，关注组件独立扩展能力<br>
+                    • <strong>移动应用：</strong>关注MobileKernelBench评估框架，探索MoKA多智能体系统优化<br>
+                    • <strong>持续学习：</strong>尝试简单顺序微调+LoRA方案，而非复杂的专用CRL方法<br>
+                    • <strong>资源受限：</strong>采用反馈记忆机制的迭代优化方法，利用历史信息指导搜索
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📄 报告生成时间: 2026-03-14 03:00 AM | 数据来源: arXiv.org</p>
+            <p style="margin-top: 10px;">
+                🔗 <a href="https://kk623.github.io/blog/">返回博客首页</a> | 
+                <a href="https://github.com/KK623/blog">GitHub仓库</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
