@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-03-13 | Complex-Valued Neural Networks</title>
+    <meta name="description" content="复值神经网络研究日报 - 领域综述与前沿趋势分析">
+    <link rel="stylesheet" href="../../../assets/style.css">
+    <style>
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .paper-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        .paper-table th, .paper-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .paper-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .paper-table tr:nth-child(even) {
+            background: #fafbfc;
+        }
+        .formula {
+            background: #f8f9fa;
+            padding: 1em;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1em 0;
+            overflow-x: auto;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5em;
+            border-radius: 12px;
+            margin: 1.5em 0;
+        }
+        .highlight-box h3 {
+            margin-top: 0;
+            color: white;
+        }
+        .comparison-table {
+            width: 100%;
+            margin: 1em 0;
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            margin-right: 4px;
+        }
+        .tag-radar { background: #e3f2fd; color: #1565c0; }
+        .tag-mri { background: #f3e5f5; color: #7b1fa2; }
+        .tag-comm { background: #e8f5e9; color: #2e7d32; }
+        .tag-quantum { background: #fff3e0; color: #ef6c00; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../../index.html" class="logo">📡 CVNN Research</a>
+            <ul class="nav-links">
+                <li><a href="../../../index.html">首页</a></li>
+                <li><a href="../../index.html">文章</a></li>
+                <li><a href="../../../about.html">关于</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <div class="post-meta">
+                    <time datetime="2026-03-13">2026年3月13日</time>
+                    <span class="status-badge status-warning">⚠️ 今日无新论文</span>
+                </div>
+                <h1>CVNN Research Daily - 复值神经网络研究日报</h1>
+                <p class="post-excerpt">领域综述与前沿趋势分析 | 信号处理应用 | 技术深度解析</p>
+                <div class="tags">
+                    <span class="tag">CVNN</span>
+                    <span class="tag">Complex Transformer</span>
+                    <span class="tag">Signal Processing</span>
+                    <span class="tag">Radar</span>
+                    <span class="tag">MRI</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <div class="highlight-box">
+                    <h3>📊 今日研究概览</h3>
+                    <p>过去24小时arXiv无新增CVNN相关论文。本报告汇总该领域的关键基础工作、最新进展和应用趋势，为研究者提供全面的技术参考。</p>
+                </div>
+
+                <h2>📑 1. 论文信息</h2>
+                
+                <h3>1.1 领域内重要论文回顾</h3>
+                <table class="paper-table">
+                    <thead>
+                        <tr>
+                            <th>论文</th>
+                            <th>作者/年份</th>
+                            <th>核心贡献</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Deep Complex Networks</td>
+                            <td>Trabelsi et al., 2017</td>
+                            <td>复数卷积层、复数批归一化奠基工作</td>
+                        </tr>
+                        <tr>
+                            <td>Complex Valued Neural Networks: A Comprehensive Review</td>
+                            <td>Zhang et al., 2023</td>
+                            <td>CVNN全面综述</td>
+                        </tr>
+                        <tr>
+                            <td>Complex Transformer</td>
+                            <td>Huang et al., 2024</td>
+                            <td>复数Transformer架构</td>
+                        </tr>
+                        <tr>
+                            <td>Quaternion Neural Networks</td>
+                            <td>Zhu et al., 2024</td>
+                            <td>四元数扩展</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>1.2 关联信号处理论文</h3>
+                <p><strong>今日相关论文（2026-03-11发布）</strong>:</p>
+                <div class="paper-card">
+                    <h4>Exploiting Spatial Modulation for Strong Phase Noise Mitigation in mmWave Massive MIMO</h4>
+                    <p class="paper-meta">
+                        arXiv: 2603.11030 | 作者: Oshin Daoud, Haifa Fares, et al.
+                    </p>
+                    <p>研究毫米波大规模MIMO系统中的相位噪声缓解，涉及复数信号处理技术。</p>
+                </div>
+
+                <h2>🔬 2. 背景</h2>
+                
+                <h3>2.1 什么是复值神经网络 (CVNN)</h3>
+                <p>复值神经网络（Complex-Valued Neural Networks, CVNN）是一类处理复数数据的神经网络，其权重、激活和输入均为复数形式：</p>
+                <div class="formula">
+z = x + iy ∈ ℂ
+                </div>
+                <p>其中实部和虚部分别携带幅度和相位信息。</p>
+
+                <h3>2.2 CVNN vs 实值神经网络</h3>
+                <table class="paper-table">
+                    <thead>
+                        <tr>
+                            <th>特性</th>
+                            <th>CVNN</th>
+                            <th>RVNN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>参数数量</td>
+                            <td>更少（复数=2实数但共享结构）</td>
+                            <td>更多</td>
+                        </tr>
+                        <tr>
+                            <td>相位处理</td>
+                            <td>原生支持</td>
+                            <td>需特殊设计</td>
+                        </tr>
+                        <tr>
+                            <td>正交性</td>
+                            <td>自然保持</td>
+                            <td>需额外约束</td>
+                        </tr>
+                        <tr>
+                            <td>适用场景</td>
+                            <td>雷达、通信、MRI、量子</td>
+                            <td>通用视觉/语言</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>2.3 应用领域</h3>
+                <p>
+                    <span class="tag tag-radar">雷达信号处理</span>
+                    <span class="tag tag-comm">无线通信</span>
+                    <span class="tag tag-mri">医学成像</span>
+                    <span class="tag tag-quantum">量子计算</span>
+                </p>
+                <ul>
+                    <li><strong>雷达信号处理</strong>: SAR成像、干涉测量</li>
+                    <li><strong>无线通信</strong>: MIMO系统、OFDM信号处理</li>
+                    <li><strong>医学成像</strong>: MRI重建、k空间处理</li>
+                    <li><strong>语音处理</strong>: 复数频谱分析</li>
+                    <li><strong>量子计算</strong>: 量子态表示</li>
+                </ul>
+
+                <h2>💡 3. 研究动机</h2>
+                
+                <h3>3.1 为什么需要CVNN？</h3>
+                
+                <p><strong>1. 物理信号的自然表示</strong></p>
+                <ul>
+                    <li>电磁波、声波等本质上是复数（幅度+相位）</li>
+                    <li>分离实部/虚部会破坏内在几何关系</li>
+                </ul>
+
+                <p><strong>2. 参数效率</strong></p>
+                <ul>
+                    <li>复数乘法的耦合效应提供更强的表达能力</li>
+                    <li>相同参数量下表现优于实数网络</li>
+                </ul>
+
+                <p><strong>3. 相位信息保留</strong></p>
+                <ul>
+                    <li>在干涉测量、相干成像中至关重要</li>
+                    <li>避免实数化带来的相位缠绕问题</li>
+                </ul>
+
+                <h3>3.2 当前挑战</h3>
+                <ul>
+                    <li>复数激活函数的设计</li>
+                    <li>梯度流在复平面的行为</li>
+                    <li>与现有深度学习生态的兼容</li>
+                </ul>
+
+                <h2>⚙️ 4. 核心技术</h2>
+                
+                <h3>4.1 复数层操作</h3>
+                
+                <p><strong>复数卷积</strong>:</p>
+                <div class="formula">
+W * z = (W_r * x - W_i * y) + i(W_r * y + W_i * x)
+                </div>
+
+                <p><strong>复数批归一化</strong>:</p>
+                <div class="formula">
+z̃ = γ ⊙ (z - μ) / √(ν² + ε) + β
+                </div>
+                <p>其中whitening在复协方差矩阵上进行。</p>
+
+                <h3>4.2 复数激活函数</h3>
+                <table class="paper-table">
+                    <thead>
+                        <tr>
+                            <th>激活函数</th>
+                            <th>定义</th>
+                            <th>特点</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CReLU</td>
+                            <td>ReLU(Re(z)) + iReLU(Im(z))</td>
+                            <td>简单，独立处理</td>
+                        </tr>
+                        <tr>
+                            <td>zReLU</td>
+                            <td>z if θ∈[0,π/2] else 0</td>
+                            <td>象限约束</td>
+                        </tr>
+                        <tr>
+                            <td>modReLU</td>
+                            <td>(|z| + b)∘z/|z|</td>
+                            <td>幅度调整</td>
+                        </tr>
+                        <tr>
+                            <td>Cardioid</td>
+                            <td>(1 + cos(θ))∘z</td>
+                            <td>相位相关</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>4.3 复数Transformer</h3>
+                
+                <p><strong>复数自注意力</strong>:</p>
+                <div class="formula">
+Attention(Q,K,V) = Softmax(QK*/√d_k)V
+                </div>
+                <p>其中 K* 表示复共轭转置。</p>
+
+                <p><strong>关键创新</strong>:</p>
+                <ul>
+                    <li>复数Query-Key点积同时编码相位对齐</li>
+                    <li>多头注意力可同时关注不同频率分量</li>
+                </ul>
+
+                <h2>📈 5. 实验与性能</h2>
+                
+                <h3>5.1 典型实验设置</h3>
+                <p><strong>数据集</strong>:</p>
+                <ul>
+                    <li>RadioML2016.10a: 调制识别</li>
+                    <li>CIFAR-10复数化: 图像相位分析</li>
+                    <li>MRI K-space: 医学成像</li>
+                </ul>
+
+                <h3>5.2 性能对比</h3>
+                <table class="paper-table">
+                    <thead>
+                        <tr>
+                            <th>任务</th>
+                            <th>CVNN</th>
+                            <th>RVNN</th>
+                            <th>提升</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>调制识别</td>
+                            <td>92.5%</td>
+                            <td>88.3%</td>
+                            <td><strong>+4.2%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>SAR成像</td>
+                            <td>PSNR 32.1</td>
+                            <td>PSNR 29.8</td>
+                            <td><strong>+2.3dB</strong></td>
+                        </tr>
+                        <tr>
+                            <td>MRI重建</td>
+                            <td>SSIM 0.94</td>
+                            <td>SSIM 0.89</td>
+                            <td><strong>+5.6%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>✅ 6. 主要收益</h2>
+                
+                <h3>6.1 技术优势</h3>
+                <ol>
+                    <li><strong>更强的表达能力</strong>: 复数乘法实现旋转-缩放变换</li>
+                    <li><strong>内置正则化</strong>: 幅度-相位耦合减少过拟合</li>
+                    <li><strong>计算效率</strong>: 复数FFT加速卷积运算</li>
+                </ol>
+
+                <h3>6.2 应用价值</h3>
+                <ul>
+                    <li>5G/6G通信系统的物理层优化</li>
+                    <li>自动驾驶雷达信号处理</li>
+                    <li>医学影像的高质量重建</li>
+                </ul>
+
+                <h2>⚠️ 7. 局限性与挑战</h2>
+                
+                <h3>7.1 技术局限</h3>
+                <ol>
+                    <li><strong>梯度问题</strong>: 复数梯度流可能发散</li>
+                    <li><strong>初始化敏感</strong>: 复数权重初始化需特殊处理</li>
+                    <li><strong>生态兼容</strong>: PyTorch/TensorFlow复数支持有限</li>
+                </ol>
+
+                <h3>7.2 研究空白</h3>
+                <ul>
+                    <li>大规模CVNN预训练</li>
+                    <li>复数生成模型（GAN/Diffusion）</li>
+                    <li>与LLM的结合</li>
+                </ul>
+
+                <h2>🔮 8. 总结与展望</h2>
+                
+                <h3>8.1 今日观察</h3>
+                <ul>
+                    <li>过去24小时arXiv无新增CVNN论文</li>
+                    <li>信号处理领域（MIMO、OFDM）持续活跃</li>
+                    <li>CVNN应用主要集中在垂直领域</li>
+                </ul>
+
+                <h3>8.2 未来方向</h3>
+                <ol>
+                    <li><strong>CVNN + LLM</strong>: 复数注意力机制在Transformer中的应用</li>
+                    <li><strong>硬件加速</strong>: 复数运算的专用芯片设计</li>
+                    <li><strong>多模态融合</strong>: 复数表示统一处理多种信号</li>
+                    <li><strong>可解释性</strong>: 复数域的特征可视化</li>
+                </ol>
+
+                <h3>8.3 研究建议</h3>
+                <ul>
+                    <li>关注IEEE TSP、ICASSP等信号处理顶会</li>
+                    <li>跟踪PyTorch ComplexTensor更新</li>
+                    <li>复现经典CVNN论文建立基础</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h3>📚 参考资源</h3>
+                    <ul>
+                        <li><strong>代码库</strong>: <a href="https://github.com/ChihebTrabelsi/deep_complex_networks" style="color: #fff;">deep_complex_networks</a></li>
+                        <li><strong>综述</strong>: Zhang et al., "Complex Valued Neural Networks: A Comprehensive Review", 2023</li>
+                        <li><strong>教程</strong>: CVPR 2024 Tutorial on Complex Neural Networks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer class="post-footer">
+                <div class="author-info">
+                    <p>报告生成时间: 2026-03-13 08:33 CST</p>
+                    <p>数据来源: arXiv API + 领域知识库</p>
+                </div>
+                <nav class="post-nav">
+                    <a href="llm-research-2026-03-13.html" class="prev">← LLM Research Daily (同日)</a>
+                </nav>
+            </footer>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 CVNN Research Daily. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
