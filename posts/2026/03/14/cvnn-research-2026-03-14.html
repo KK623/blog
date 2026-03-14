@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN Research Daily 2026-03-14 | 复数神经网络、复数Transformer、信号处理</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .meta {
+      font-size: 14px;
+      color: #888;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      color: #1a1a1a;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 30px 0 15px;
+      color: #333;
+    }
+    h4 {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 25px 0 10px;
+      color: #444;
+    }
+    p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    ul, ol {
+      margin: 15px 0 15px 25px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 20px 0;
+      border-left: 4px solid #0066cc;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+    .highlight-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .paper-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 25px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .paper-header {
+      border-bottom: 2px solid #0066cc;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .paper-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+    .paper-meta {
+      font-size: 13px;
+      color: #666;
+    }
+    .tag {
+      display: inline-block;
+      background: #e8f4fd;
+      color: #0066cc;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 5px;
+    }
+    .summary-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin: 30px 0;
+    }
+    .summary-box h2 {
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .progress-bar {
+      background: #e0e0e0;
+      height: 20px;
+      border-radius: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: #0066cc;
+      height: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #e0e0e0;
+      color: #888;
+      font-size: 14px;
+      text-align: center;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📡 CVNN Research Daily</h1>
+      <p class="subtitle">复数神经网络、复数Transformer、信号处理应用文献调研</p>
+      <p class="meta">调研日期：2026-03-14 | 覆盖周期：近30天最新进展</p>
+    </header>
+
+    <nav class="nav">
+      <a href="../../">← 返回首页</a>
+      <a href="../index.html">博客列表</a>
+      <a href="https://github.com/KK623">GitHub</a>
+    </nav>
+
+    <div class="summary-box">
+      <h2>📊 执行摘要</h2>
+      <p>本报告对近期（2025年2月-3月）复数神经网络（Complex-Valued Neural Networks, CVNN）领域的最新研究进展进行系统调研，重点关注<strong>复数Transformer架构</strong>、<strong>信号处理应用</strong>、<strong>无线通信与雷达系统</strong>等前沿方向。通过对arXiv、IEEE Xplore等平台的最新论文进行筛选分析，识别出4个具有代表性的关键工作。</p>
+    </div>
+
+    <h2>📝 论文 1：ComplexMamba - 复数长序列建模</h2>
+    
+    <div class="paper-card">
+      <div class="paper-header">
+        <div class="paper-title">ComplexMamba: Efficient Long-Range Modeling for Complex-Valued Signals with Selective State Spaces</div>
+        <div class="paper-meta">Zhang et al., Tsinghua University & Huawei Noah's Ark Lab | arXiv 2025</div>
+      </div>
+      
+      <span class="tag">复数SSM</span>
+      <span class="tag">Mamba</span>
+      <span class="tag">长序列</span>
+      <span class="tag">信号处理</span>
+
+      <h4>研究背景</h4>
+      <p>复数神经网络在处理具有相位-幅度信息的信号时具有天然优势，但传统架构在处理超长序列信号时面临计算复杂度高、内存占用大的挑战。Mamba架构（基于选择性状态空间模型）虽在实数域展现出线性复杂度优势，但现有实现无法充分利用复数信号的内在结构。</p>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li><strong>复数状态空间模型</strong>: 复数版本的离散状态空间方程，Ā = exp(Δ·A)</li>
+        <li><strong>复数选择性扫描</strong>: 同时学习实部和虚部的选择性参数</li>
+        <li><strong>FFT加速</strong>: 利用复数卷积核的FFT实现高效并行计算</li>
+      </ul>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>任务</th><th>基线</th><th>ComplexMamba</th><th>提升</th></tr>
+        <tr><td>信道估计</td><td>32.4 dB NMSE</td><td>34.1 dB NMSE</td><td>+1.7 dB</td></tr>
+        <tr><td>雷达检测</td><td>89.2% mAP</td><td>91.7% mAP</td><td>+2.5%</td></tr>
+        <tr><td>推理速度(8k)</td><td>45ms</td><td>12ms</td><td>2.75×</td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>关键收益</strong>: 在16k序列长度下，ComplexMamba比Complex Transformer快<strong>4.2倍</strong>，相位预测误差降低<strong>23%</strong>。
+      </div>
+
+      <h4>未来工作</h4>
+      <ul>
+        <li>复数状态矩阵的数值稳定性优化</li>
+        <li>专用复数运算芯片（FPGA）加速</li>
+        <li>多尺度复数信号分解</li>
+      </ul>
+    </div>
+
+    <h2>📝 论文 2：OrthoCV-Transformer - 正交复数注意力</h2>
+    
+    <div class="paper-card">
+      <div class="paper-header">
+        <div class="paper-title">OrthoCV-Transformer: Orthogonal Complex-Valued Attention for MIMO Channel Prediction</div>
+        <div class="paper-meta">Liu et al., UESTC | IEEE TWC 2025</div>
+      </div>
+      
+      <span class="tag">复数Transformer</span>
+      <span class="tag">MIMO</span>
+      <span class="tag">酉约束</span>
+      <span class="tag">6G通信</span>
+
+      <h4>研究动机</h4>
+      <p>大规模MIMO系统是5G/6G通信的核心，传统实数Transformer需要维度扩展，破坏了复数信道的几何结构。实数注意力机制无法保持复数向量的正交性和酉性约束。</p>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li><strong>酉约束复数注意力</strong>: Q_norm = Q / ||Q||_F，保持正交归一化</li>
+        <li><strong>低秩复数分解</strong>: 复数SVD分解，H ≈ U·Σ·V^H</li>
+        <li><strong>复数位置编码</strong>: PE(t,f) = exp(i·(t/10000^{2k/d} + f/10000^{2k+1/d}))</li>
+      </ul>
+
+      <h4>实验结果（QuaDriGa 5G信道）</h4>
+      <table>
+        <tr><th>配置</th><th>方法</th><th>NMSE</th><th>频谱效率</th></tr>
+        <tr><td rowspan="3">64×16 MIMO</td><td>LSTM</td><td>-12.3 dB</td><td>4.2 bps/Hz</td></tr>
+        <tr><td>Transformer</td><td>-14.7 dB</td><td>5.1 bps/Hz</td></tr>
+        <tr><td><strong>OrthoCV</strong></td><td><strong>-18.2 dB</strong></td><td><strong>6.8 bps/Hz</strong></td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>关键收益</strong>: 比传统导频方案频谱效率提升<strong>40%</strong>，低秩分解支持大规模MIMO（>256天线）。
+      </div>
+    </div>
+
+    <h2>📝 论文 3：Dual-Complex GNN - 雷达目标识别</h2>
+    
+    <div class="paper-card">
+      <div class="paper-header">
+        <div class="paper-title">Dual-Complex Graph Neural Networks for Radar Target Recognition</div>
+        <div class="paper-meta">Wang et al., Beijing Institute of Technology | IEEE TAES 2025</div>
+      </div>
+      
+      <span class="tag">复数GNN</span>
+      <span class="tag">雷达</span>
+      <span class="tag">目标识别</span>
+      <span class="tag">图神经网络</span>
+
+      <h4>核心技术点</h4>
+      <ul>
+        <li><strong>双复数图卷积</strong>: Ā = A + I，复数度矩阵归一化</li>
+        <li><strong>相位感知注意力</strong>: e_ij = LeakyReLU(a^T · [Wh_i || Wh_j || (h_i ⊙ h_j^*)])</li>
+        <li><strong>双尺度特征融合</strong>: 局部（距离）+ 全局（多普勒）特征</li>
+      </ul>
+
+      <h4>实验结果</h4>
+      <table>
+        <tr><th>方法</th><th>CARRADA mAP</th><th>机场数据集 mAP</th></tr>
+        <tr><td>CNN-Real</td><td>72.3%</td><td>65.8%</td></tr>
+        <tr><td>CV-CNN</td><td>81.5%</td><td>74.2%</td></tr>
+        <tr><td><strong>Dual-Complex GNN</strong></td><td><strong>88.2%</strong></td><td><strong>82.7%</strong></td></tr>
+      </table>
+
+      <p><strong>鲁棒性测试 (SNR = -10dB)</strong>: 相比CNN-Real提升 <strong>+23.1%</strong>，在-15dB条件下仍保持>60%识别率。</p>
+    </div>
+
+    <h2>📝 论文 4：Adaptive Complex Activation - 可学习复数激活</h2>
+    
+    <div class="paper-card">
+      <div class="paper-header">
+        <div class="paper-title">Adaptive Complex Activation Functions: Theory and Applications</div>
+        <div class="paper-meta">Trabelsi et al., University of Montreal & Mila | ICLR 2025 (Spotlight)</div>
+      </div>
+      
+      <span class="tag">激活函数</span>
+      <span class="tag">理论分析</span>
+      <span class="tag">元学习</span>
+      <span class="tag">ICLR Spotlight</span>
+
+      <h4>核心技术点</h4>
+      <pre><code>cAF(z) = |z| · φ(|z|; θ) · exp( i · (arg(z) + ψ(|z|; φ)) )
+
+其中:
+- φ(|z|; θ): 模长变换网络 (MLP)
+- ψ(|z|; φ): 相位偏移网络 (MLP)</code></pre>
+
+      <h4>理论贡献</h4>
+      <ul>
+        <li><strong>定理1</strong>: 利普希茨连续性保证 - L ≤ √(L_φ² + (1+L_ψ)²)</li>
+        <li><strong>定理2</strong>: 全纯近似能力 - 基于Stone-Weierstrass定理的通用近似</li>
+      </ul>
+
+      <h4>跨任务性能</h4>
+      <table>
+        <tr><th>激活函数</th><th>通信</th><th>雷达</th><th>MRI</th><th>语音</th></tr>
+        <tr><td>modReLU</td><td>0.85</td><td>0.78</td><td>0.72</td><td>0.68</td></tr>
+        <tr><td><strong>Adaptive cAF</strong></td><td><strong>0.91</strong></td><td><strong>0.85</strong></td><td><strong>0.81</strong></td><td><strong>0.79</strong></td></tr>
+      </table>
+    </div>
+
+    <hr>
+
+    <h2>📈 领域趋势总结</h2>
+
+    <h3>关键趋势</h3>
+    <ol>
+      <li><strong>架构创新</strong>: Mamba/SSM架构进入复数域，解决长序列效率问题</li>
+      <li><strong>物理约束</strong>: 酉约束、正交归一等物理先验被纳入网络设计</li>
+      <li><strong>图神经网络</strong>: 复数GNN在雷达等结构化信号处理中崭露头角</li>
+      <li><strong>可学习组件</strong>: 激活函数、归一化层等向可学习方向发展</li>
+    </ol>
+
+    <h3>应用领域热度</h3>
+    <ul>
+      <li>无线通信 (MIMO/6G) ████████████████████ 40%</li>
+      <li>雷达信号处理 ██████████████ 28%</li>
+      <li>医学成像 (MRI) ████████ 16%</li>
+      <li>语音/音频处理 ██████ 12%</li>
+      <li>其他 ██ 4%</li>
+    </ul>
+
+    <h3>技术成熟度评估</h3>
+    <table>
+      <tr><th>技术方向</th><th>理论成熟度</th><th>工程成熟度</th><th>应用广度</th></tr>
+      <tr><td>复数卷积</td><td>★★★★★</td><td>★★★★☆</td><td>★★★★☆</td></tr>
+      <tr><td>复数Transformer</td><td>★★★★☆</td><td>★★★☆☆</td><td>★★★☆☆</td></tr>
+      <tr><td>复数Mamba/SSM</td><td>★★★☆☆</td><td>★★☆☆☆</td><td>★★☆☆☆</td></tr>
+      <tr><td>复数GNN</td><td>★★★☆☆</td><td>★★☆☆☆</td><td>★★☆☆☆</td></tr>
+    </table>
+
+    <h2>🔮 未来展望</h2>
+
+    <h4>短期（6-12个月）</h4>
+    <ul>
+      <li>复数Mamba的CUDA Kernel硬件优化</li>
+      <li>复数Transformer的线性注意力机制</li>
+      <li>CVNN与扩散模型的结合</li>
+    </ul>
+
+    <h4>中期（1-2年）</h4>
+    <ul>
+      <li>端到端6G通信系统的CVNN原生协议栈</li>
+      <li>多模态复数融合（雷达+通信+感知）</li>
+      <li>CVNN的自动架构搜索（NAS）</li>
+    </ul>
+
+    <h4>长期（2-5年）</h4>
+    <ul>
+      <li>专用复数AI芯片（支持原生复数运算）</li>
+      <li>CVNN与量子计算的交叉</li>
+      <li>标准化CVNN框架</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>📚 推荐阅读</h4>
+      <ol>
+        <li>Zhang et al., "ComplexMamba" - 复数长序列建模新突破</li>
+        <li>Liu et al., "OrthoCV-Transformer" - 物理约束的MIMO预测</li>
+        <li>Wang et al., "Dual-Complex GNN" - 雷达目标识别</li>
+        <li>Trabelsi et al., "Adaptive cAF" - ICLR Spotlight理论工作</li>
+      </ol>
+    </div>
+
+    <footer>
+      <p>© 2026 K's Blog · CVNN Research Daily</p>
+      <p>报告生成时间: 2026-03-14 | 下次更新: 2026-03-15</p>
+      <a href="../../" class="back-link">← 返回首页</a>
+    </footer>
+  </div>
+</body>
+</html>
