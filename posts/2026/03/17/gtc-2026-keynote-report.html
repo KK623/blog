@@ -140,7 +140,7 @@
 </div>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/keynote-opening.jpg?v=3" alt="GTC 2026 主会场">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/keynote-opening.jpg?v=3" alt="GTC 2026 主会场" loading="lazy" decoding="async">
   <div class="caption">NVIDIA GTC 2026在圣何塞SAP中心盛大开幕，现场座无虚席</div>
 </div>
 
@@ -153,12 +153,13 @@
   <h3>📑 目录</h3>
   <ul>
     <li><a href="#section1">一、Vera Rubin平台：7芯片全栈AI架构</a></li>
-    <li><a href="#section2">二、DLSS 5：神经渲染的GPT时刻</a></li>
-    <li><a href="#section3">三、NemoClaw/OpenClaw：企业级AI代理平台</a></li>
-    <li><a href="#section4">四、太空数据中心：AI进入轨道</a></li>
-    <li><a href="#section5">五、DGX Spark/Station：桌面级AI超算</a></li>
-    <li><a href="#section6">六、行业合作与生态扩展</a></li>
-    <li><a href="#summary">七、总结与展望</a></li>
+    <li><a href="#section2">二、Groq 3 LPU：推理加速的革命</a></li>
+    <li><a href="#section3">三、DLSS 5：神经渲染的GPT时刻</a></li>
+    <li><a href="#section4">四、NemoClaw/OpenClaw：企业级AI代理平台</a></li>
+    <li><a href="#section5">五、太空数据中心：AI进入轨道</a></li>
+    <li><a href="#section6">六、DGX Spark/Station：桌面级AI超算</a></li>
+    <li><a href="#section7">七、行业合作与生态扩展</a></li>
+    <li><a href="#summary">八、总结与展望</a></li>
   </ul>
 </div>
 
@@ -166,7 +167,7 @@
 <h2 id="section1">🖥️ 一、Vera Rubin平台：7芯片全栈AI架构</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/vera-rubin-system.png?v=3" alt="Vera Rubin NVL72">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/vera-rubin-system.png?v=3" alt="Vera Rubin NVL72" loading="lazy" decoding="async">
   <div class="caption">NVIDIA Vera Rubin NVL72机架系统，集成72颗Rubin GPU和36颗Vera CPU</div>
 </div>
 
@@ -230,11 +231,108 @@
   <strong>—— Jensen Huang</strong>, NVIDIA创始人兼CEO
 </blockquote>
 
-<!-- 第二章 -->
-<h2 id="section2">🎮 二、DLSS 5：神经渲染的GPT时刻</h2>
+<!-- 第二章：LPU专题 -->
+<h2 id="section2">⚡ 二、Groq 3 LPU：推理加速的革命</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/dlss5-how-it-works.jpg?v=3" alt="DLSS 5技术原理">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/cu-aether_corp-blog_v002.png?v=3" alt="LPU推理架构" loading="lazy" decoding="async">
+  <div class="caption">NVIDIA与Groq合作推出LPU推理加速器 - 专为低延迟AI推理设计</div>
+</div>
+
+<h3>2.1 LPU技术背景</h3>
+
+<p><strong>LPU（Language Processing Unit，语言处理单元）</strong>是专为AI推理工作负载设计的专用加速器。与通用GPU不同，LPU从架构层面针对大语言模型的<strong>低延迟、高吞吐推理</strong>进行了深度优化。</p>
+
+<div class="highlight-box">
+  <strong>💡 为什么需要LPU？</strong><br>
+  传统GPU在训练方面表现卓越，但在推理延迟方面存在瓶颈。随着Agentic AI的兴起，实时交互需求激增，<strong>低延迟推理</strong>成为关键挑战。
+</div>
+
+<h3>2.2 Groq 3 LPX技术规格</h3>
+
+<table>
+  <tr>
+    <th>参数</th>
+    <th>规格</th>
+    <th>优势</th>
+  </tr>
+  <tr>
+    <td>LPU处理器</td>
+    <td>256颗</td>
+    <td>大规模并行推理</td>
+  </tr>
+  <tr>
+    <td>片上SRAM</td>
+    <td>128GB</td>
+    <td>超低延迟内存访问</td>
+  </tr>
+  <tr>
+    <td>扩展带宽</td>
+    <td>640 TB/s</td>
+    <td>万亿参数模型支持</td>
+  </tr>
+  <tr>
+    <td>冷却方案</td>
+    <td>全液冷</td>
+    <td>高密度部署</td>
+  </tr>
+  <tr>
+    <td>基础架构</td>
+    <td>NVIDIA MGX</td>
+    <td>与GPU无缝协同</td>
+  </tr>
+</table>
+
+<h3>2.3 GPU与LPU的分工协作</h3>
+
+<p>LLM推理分为两个阶段，Vera Rubin平台采用<strong>异构计算架构</strong>优化每个阶段：</p>
+
+<table>
+  <tr>
+    <th>阶段</th>
+    <th>特点</th>
+    <th>负责芯片</th>
+  </tr>
+  <tr>
+    <td><strong>预填充 (Prefill)</strong></td>
+    <td>处理输入prompt，计算量大，可并行</td>
+    <td>Rubin GPU</td>
+  </tr>
+  <tr>
+    <td><strong>解码 (Decode)</strong></td>
+    <td>自回归生成token，延迟敏感</td>
+    <td>Groq 3 LPU</td>
+  </tr>
+</table>
+
+<h3>2.4 性能突破</h3>
+
+<p>与Vera Rubin NVL72联合部署时：</p>
+<ul>
+  <li><strong>推理吞吐量</strong>：每兆瓦提升 <span class="key-point">35倍</span></li>
+  <li><strong>收入机会</strong>：万亿参数模型提升 <span class="key-point">10倍</span></li>
+  <li><strong>延迟降低</strong>：实时对话AI响应时间显著缩短</li>
+</ul>
+
+<h3>2.5 应用场景</h3>
+
+<ul>
+  <li><strong>实时对话AI</strong>：ChatGPT类应用的低延迟响应</li>
+  <li><strong>Agentic AI系统</strong>：自主代理的快速决策</li>
+  <li><strong>高频推理</strong>：金融交易、实时推荐</li>
+  <li><strong>大上下文窗口</strong>：百万token长文档处理</li>
+</ul>
+
+<blockquote>
+  "通过将Groq 3 LPU与Vera Rubin GPU联合部署，我们实现了推理性能的代际飞跃。这是AI工厂架构的重要组成。"<br>
+  <strong>—— Jensen Huang</strong>
+</blockquote>
+
+<!-- 第三章 -->
+<h2 id="section3">🎮 三、DLSS 5：神经渲染的GPT时刻</h2>
+
+<div class="figure">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/dlss5-how-it-works.jpg?v=3" alt="DLSS 5技术原理" loading="lazy" decoding="async">
   <div class="caption">DLSS 5工作原理 - 实时神经渲染将游戏画面提升至照片级真实感</div>
 </div>
 
@@ -274,15 +372,15 @@
 </table>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/owl_superwide_720.png?v=3" alt="DLSS 5演示画面">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/owl_superwide_720.png?v=3" alt="DLSS 5演示画面" loading="lazy" decoding="async">
   <div class="caption">DLSS 5实时渲染演示 - 4K游戏画面达到电影级品质</div>
 </div>
 
 <!-- 第三章 -->
-<h2 id="section3">🤖 三、NemoClaw/OpenClaw：企业级AI代理平台</h2>
+<h2 id="section4">🤖 四、NemoClaw/OpenClaw：企业级AI代理平台</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/Build-a-claw_v004-4K_v007-scaled.png?v=3" alt="Build a Claw演示">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/Build-a-claw_v004-4K_v007-scaled.png?v=3" alt="Build a Claw演示" loading="lazy" decoding="async">
   <div class="caption">NemoClaw可视化演示 - 企业级AI代理构建平台</div>
 </div>
 
@@ -302,10 +400,10 @@
 <p>GeForce RTX PC/笔记本 | RTX PRO工作站 | DGX Station | DGX Spark</p>
 
 <!-- 第四章 -->
-<h2 id="section4">🛰️ 四、太空数据中心：AI进入轨道</h2>
+<h2 id="section5">🛰️ 五、太空数据中心：AI进入轨道</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/IGX-Thor.jpg?v=3" alt="IGX Thor边缘计算">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/IGX-Thor.jpg?v=3" alt="IGX Thor边缘计算" loading="lazy" decoding="async">
   <div class="caption">NVIDIA IGX Thor边缘计算平台 - 用于太空及极端环境AI计算</div>
 </div>
 
@@ -341,10 +439,10 @@
 </table>
 
 <!-- 第五章 -->
-<h2 id="section5">💻 五、DGX Spark/Station：桌面级AI超算</h2>
+<h2 id="section6">💻 六、DGX Spark/Station：桌面级AI超算</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/dgx-products.jpg?v=3" alt="DGX Spark和DGX Station">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/dgx-products.jpg?v=3" alt="DGX Spark和DGX Station" loading="lazy" decoding="async">
   <div class="caption">NVIDIA DGX Spark（桌面级）和DGX Station - 世界上最小的AI超级计算机</div>
 </div>
 
@@ -369,15 +467,15 @@
 </ul>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/Copy-of-workstation-blog-rtx-pro-general-kv-1920x1080-4016600.jpg?v=3" alt="RTX PRO工作站">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/Copy-of-workstation-blog-rtx-pro-general-kv-1920x1080-4016600.jpg?v=3" alt="RTX PRO工作站" loading="lazy" decoding="async">
   <div class="caption">NVIDIA RTX PRO专业工作站 - 支持从桌面到数据中心的无缝扩展</div>
 </div>
 
 <!-- 第六章 -->
-<h2 id="section6">🌐 六、行业合作与生态扩展</h2>
+<h2 id="section7">🌐 七、行业合作与生态扩展</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/blog-1920x1080-1.jpg?v=3" alt="AWS合作">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/blog-1920x1080-1.jpg?v=3" alt="AWS合作" loading="lazy" decoding="async">
   <div class="caption">AWS与NVIDIA扩大合作，部署超过100万颗GPU</div>
 </div>
 
@@ -403,10 +501,10 @@
 </blockquote>
 
 <!-- 第七章 -->
-<h2 id="summary">📊 七、总结与展望</h2>
+<h2 id="summary">📊 八、总结与展望</h2>
 
 <div class="figure">
-  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/jensen-huang-stage.jpg?v=3" alt="Jensen Huang">
+  <img src="https://kk623.github.io/blog/posts/2026/03/17/images/jensen-huang-stage.jpg?v=3" alt="Jensen Huang" loading="lazy" decoding="async">
   <div class="caption">Jensen Huang："我相信计算需求在过去几年增加了100万倍"</div>
 </div>
 
