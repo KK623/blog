@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>gtc-2026-keynote-report</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="nvidia-gtc-2026-keynote-深度调研报告">NVIDIA GTC 2026 Keynote 深度调研报告</h1>
+<blockquote>
+<p><strong>报告时间</strong>: 2026-03-17<br />
+<strong>会议时间</strong>: 2026年3月16-19日<br />
+<strong>地点</strong>: San Jose, CA<br />
+<strong>演讲者</strong>: Jensen Huang (NVIDIA创始人兼CEO)</p>
+</blockquote>
+<hr />
+<h2 id="核心发布概览">🔥 核心发布概览</h2>
+<p>本次GTC 2026 Keynote围绕五大主题展开： 1. <strong>推理 (Inference)</strong> - AI工厂的规模化部署 2. <strong>AI基础设施</strong> - 从芯片到超算的全栈架构 3. <strong>Agentic AI</strong> - 自主智能体与OpenClaw生态 4. <strong>物理AI</strong> - 机器人与自动驾驶 5. <strong>图形技术</strong> - DLSS 5神经渲染革命</p>
+<hr />
+<h2 id="一feynman架构下一代ai计算平台重点">一、Feynman架构：下一代AI计算平台（重点）</h2>
+<h3 id="架构命名背景">1.1 架构命名背景</h3>
+<p><strong>Feynman架构</strong>以诺贝尔物理学奖得主<strong>理查德·费曼 (Richard Feynman)</strong>命名。费曼在量子计算和计算物理学领域做出了开创性贡献，曾提出“量子计算机”概念并推动计算物理的发展。</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="核心组件架构">1.2 核心组件架构</h3>
+<p>Feynman平台包含以下关键组件，构成完整的AI基础设施栈：</p>
+<table>
+<thead>
+<tr class="header">
+<th>组件</th>
+<th>命名来源</th>
+<th>功能定位</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>NVIDIA Rosa CPU</strong></td>
+<td>Rosalind Franklin</td>
+<td>数据移动与Token管理</td>
+</tr>
+<tr class="even">
+<td><strong>LP40 LPU</strong></td>
+<td>-</td>
+<td>下一代LPU处理器</td>
+</tr>
+<tr class="odd">
+<td><strong>BlueField-5</strong></td>
+<td>-</td>
+<td>网络与存储卸载</td>
+</tr>
+<tr class="even">
+<td><strong>CX10</strong></td>
+<td>-</td>
+<td>新一代SmartNIC</td>
+</tr>
+<tr class="odd">
+<td><strong>Kyber</strong></td>
+<td>-</td>
+<td>铜缆+共封装光学扩展</td>
+</tr>
+<tr class="even">
+<td><strong>Spectrum-class光学</strong></td>
+<td>-</td>
+<td>网络扩展</td>
+</tr>
+</tbody>
+</table>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="rosa-cpu以dna发现者命名的新处理器">1.3 Rosa CPU：以DNA发现者命名的新处理器</h3>
+<p><strong>命名背景</strong>: Rosalind Franklin（罗莎琳德·富兰克林）是发现DNA双螺旋结构关键的X射线晶体学家。她的工作揭示了生命的隐藏架构，彻底改变了现代生物学。</p>
+<p><strong>设计理念</strong>: 正如Franklin揭示了生命的隐藏架构，<strong>Rosa CPU专为在Agentic AI基础设施全栈中高效移动数据、工具和Token而设计</strong>。</p>
+<p><strong>技术定位</strong>: - 作为Feynman平台的核心CPU，负责跨计算、内存、存储、网络和安全的数据流管理 - 配合LP40 LPU实现高效AI推理 - 通过Kyber技术支持铜缆和共封装光学扩展</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="与vera-rubin的代际关系">1.4 与Vera Rubin的代际关系</h3>
+<table>
+<thead>
+<tr class="header">
+<th>平台</th>
+<th>时间</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Blackwell</strong></td>
+<td>2024-2025</td>
+<td>当前主流平台</td>
+</tr>
+<tr class="even">
+<td><strong>Vera Rubin</strong></td>
+<td>2025-2026</td>
+<td>下一代AI工厂平台（已发布）</td>
+</tr>
+<tr class="odd">
+<td><strong>Feynman</strong></td>
+<td>2027+</td>
+<td>再下一代平台（预览）</td>
+</tr>
+</tbody>
+</table>
+<p>Feynman代表了NVIDIA在Vera Rubin之后的<strong>再下一代架构演进</strong>，专注于： - 更高效的Token处理 - 全栈Agentic AI优化 - 先进的光学互连技术</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<hr />
+<h2 id="二vera-rubin平台7芯片全栈ai架构">二、Vera Rubin平台：7芯片全栈AI架构</h2>
+<h3 id="平台概览">2.1 平台概览</h3>
+<p>Vera Rubin是NVIDIA发布的<strong>完整垂直整合AI超算平台</strong>，包含7颗芯片、5种机架系统、1个超级计算机。</p>
+<p><strong>核心芯片</strong>: 1. <strong>NVIDIA Vera CPU</strong> - 专为Agentic AI设计的CPU 2. <strong>NVIDIA Rubin GPU</strong> - 下一代AI加速器 3. <strong>NVIDIA NVLink 6 Switch</strong> - 高速互联 4. <strong>NVIDIA ConnectX-9 SuperNIC</strong> - 网络接口 5. <strong>NVIDIA BlueField-4 DPU</strong> - 数据处理单元 6. <strong>NVIDIA Spectrum-6 Ethernet</strong> - 以太网交换 7. <strong>NVIDIA Groq 3 LPU</strong> - 新增的低延迟推理处理器</p>
+<p><strong>信源</strong>: NVIDIA Vera Rubin Platform Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</p>
+<h3 id="vera-rubin-nvl72机架">2.2 Vera Rubin NVL72机架</h3>
+<ul>
+<li><strong>配置</strong>: 72个Rubin GPU + 36个Vera CPU</li>
+<li><strong>互联</strong>: NVLink 6 + ConnectX-9 + BlueField-4</li>
+<li><strong>效率提升</strong>:
+<ul>
+<li>训练MoE模型仅需Blackwell平台1/4的GPU数量</li>
+<li>推理吞吐量提升<strong>10倍/瓦</strong></li>
+<li>成本降低至<strong>1/10每Token</strong></li>
+</ul></li>
+</ul>
+<p><strong>信源</strong>: NVIDIA Vera Rubin Platform Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</p>
+<h3 id="groq-3-lpx低延迟推理加速器">2.3 Groq 3 LPX：低延迟推理加速器</h3>
+<ul>
+<li><strong>定位</strong>: 专为低延迟和大上下文Agentic系统设计的LPU</li>
+<li><strong>配置</strong>: 每个LPX机架256个LPU处理器</li>
+<li><strong>内存</strong>: 128GB片上SRAM + 640TB/s扩展带宽</li>
+<li><strong>性能提升</strong>:
+<ul>
+<li>与Vera Rubin联合使用可达<strong>35倍推理吞吐量/兆瓦</strong></li>
+<li>万亿参数模型收入机会提升<strong>10倍</strong></li>
+</ul></li>
+</ul>
+<p><strong>信源</strong>: NVIDIA Vera Rubin Platform Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</p>
+<h3 id="生态系统支持">2.4 生态系统支持</h3>
+<p><strong>云服务商</strong>: AWS、Google Cloud、Microsoft Azure、Oracle Cloud<br />
+<strong>云合作伙伴</strong>: CoreWeave、Crusoe、Lambda、Nebius、Nscale、Together AI<br />
+<strong>系统制造商</strong>: Cisco、Dell、HPE、Lenovo、Supermicro等</p>
+<p><strong>信源</strong>: NVIDIA Vera Rubin Platform Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</p>
+<hr />
+<h2 id="三dlss-5图形界的gpt时刻">三、DLSS 5：图形界的“GPT时刻”</h2>
+<h3 id="技术突破">3.1 技术突破</h3>
+<p><strong>Jensen Huang评价</strong>: &gt; “DLSS 5是图形界的GPT时刻——将手工渲染与生成式AI融合，在保持艺术家创作控制权的同时，实现视觉真实感的巨大飞跃。”</p>
+<p><strong>核心创新</strong>: - <strong>实时神经渲染模型</strong>: 为像素注入照片级光照和材质 - <strong>4K实时性能</strong>: 在本地硬件上实现实时4K渲染 - <strong>确定性输出</strong>: 相比离线视频AI模型，DLSS 5提供确定性、帧间稳定的实时输出</p>
+<p><strong>信源</strong>: NVIDIA DLSS 5 Press Release<br />
+<strong>链接</strong>: https://www.nvidia.com/en-us/geforce/news/dlss5-breakthrough-in-visual-fidelity-for-games/</p>
+<h3 id="工作原理">3.2 工作原理</h3>
+<p>DLSS 5接收每帧的颜色和运动向量作为输入，使用AI模型为场景注入： - 次表面散射（皮肤） - 织物光泽 - 头发的光材质交互</p>
+<p>同时保持原始场景的结构和语义。</p>
+<p><strong>信源</strong>: NVIDIA DLSS 5 Press Release<br />
+<strong>链接</strong>: https://www.nvidia.com/en-us/geforce/news/dlss5-breakthrough-in-visual-fidelity-for-games/</p>
+<h3 id="支持游戏与开发商">3.3 支持游戏与开发商</h3>
+<p><strong>首发支持</strong>: Bethesda、CAPCOM、Hotta Studio、NetEase、NCSOFT、S-GAME、Tencent、Ubisoft、Warner Bros. Games</p>
+<p><strong>游戏列表</strong>: - Assassin’s Creed Shadows - Starfield - Hogwarts Legacy - Resident Evil™ Requiem - The Elder Scrolls IV: Oblivion Remastered - 等20+款游戏</p>
+<p><strong>发布时间</strong>: 2025年秋季</p>
+<p><strong>信源</strong>: NVIDIA DLSS 5 Press Release<br />
+<strong>链接</strong>: https://www.nvidia.com/en-us/geforce/news/dlss5-breakthrough-in-visual-fidelity-for-games/</p>
+<hr />
+<h2 id="四nemoclawnvidia拥抱openclaw生态">四、NemoClaw：NVIDIA拥抱OpenClaw生态</h2>
+<h3 id="openclaw的历史地位">4.1 OpenClaw的历史地位</h3>
+<p><strong>Jensen Huang评价</strong>: &gt; “OpenClaw是历史上增长最快的开源项目。Mac和Windows是个人电脑的操作系统，OpenClaw是个人AI的操作系统。”</p>
+<p><strong>Peter Steinberger（OpenClaw创始人）</strong>: &gt; “OpenClaw让人们更接近AI，帮助创造一个每个人都拥有自己Agent的世界。”</p>
+<p><strong>信源</strong>: NVIDIA NemoClaw Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw</p>
+<h3 id="nemoclaw技术栈">4.2 NemoClaw技术栈</h3>
+<p><strong>核心功能</strong>: - 一行命令安装OpenClaw、Nemotron模型和OpenShell运行时 - 提供隔离沙盒，增加数据隐私和安全 - 支持本地和云端模型混合使用 - 策略引擎支持企业级安全和隐私控制</p>
+<p><strong>运行平台</strong>: - GeForce RTX PC/笔记本 - RTX PRO工作站 - DGX Station和DGX Spark</p>
+<p><strong>信源</strong>: NVIDIA NemoClaw Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw</p>
+<h3 id="openshell运行时">4.3 OpenShell运行时</h3>
+<p><strong>定位</strong>: 安全运行自主Agent的开源环境<br />
+<strong>功能</strong>: - 定义Agent如何访问数据 - 控制工具使用 - 策略边界内操作</p>
+<p><strong>信源</strong>: NVIDIA NemoClaw Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw</p>
+<hr />
+<h2 id="五太空数据中心vera-rubin-space-1">五、太空数据中心：Vera Rubin Space-1</h2>
+<h3 id="项目概述">5.1 项目概述</h3>
+<p>NVIDIA宣布正在开发<strong>Vera Rubin Space-1</strong>，将AI数据中心送入太空。</p>
+<p><strong>技术挑战</strong>: - 太空中无传导、无对流，仅有辐射散热 - 需要解决极端环境下的系统冷却问题</p>
+<p><strong>命名意义</strong>: Vera Rubin架构以天文学家Vera Rubin命名，她的工作揭示了暗物质的存在。未来Space-1系统将把加速计算从地球扩展到太空。</p>
+<p><strong>信源</strong>: The Verge GTC 2026报道<br />
+<strong>链接</strong>: https://www.theverge.com/tech/895363/how-to-watch-nvidias-gtc-2026-keynote-tap-here<br />
+<strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<hr />
+<h2 id="六dgx-spark与dgx-station桌面ai超级计算机">六、DGX Spark与DGX Station：桌面AI超级计算机</h2>
+<h3 id="dgx-station">6.1 DGX Station</h3>
+<p><strong>定位</strong>: 世界上最强大的桌面超级计算机<br />
+<strong>配置</strong>: - NVIDIA GB300 Grace Blackwell Ultra桌面超芯片 - 748GB统一内存 - 最高20 petaflops AI计算性能 - 72核Grace CPU + Blackwell Ultra GPU（NVLink-C2C互联）</p>
+<p><strong>应用场景</strong>: - 运行高达1万亿参数的开源模型 - 开发长思考自主Agent - 本地原型开发后直接迁移到数据中心</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="dgx-spark">6.2 DGX Spark</h3>
+<p><strong>定位</strong>: 可扩展的企业级AI基础设施<br />
+<strong>新功能</strong>: - 支持最多4台系统集群（“桌面数据中心”） - 线性性能扩展 - 支持Nemotron 3等最新AI模型</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<hr />
+<h2 id="七开放模型家族nemotron-coalition">七、开放模型家族：Nemotron Coalition</h2>
+<h3 id="六大模型家族">7.1 六大模型家族</h3>
+<p>NVIDIA宣布扩大开放模型生态，包括六大前沿模型家族：</p>
+<table>
+<thead>
+<tr class="header">
+<th>模型家族</th>
+<th>应用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>NVIDIA Nemotron</strong></td>
+<td>语言和推理</td>
+</tr>
+<tr class="even">
+<td><strong>NVIDIA Cosmos</strong></td>
+<td>世界和视觉</td>
+</tr>
+<tr class="odd">
+<td><strong>NVIDIA Isaac GR00T</strong></td>
+<td>通用机器人</td>
+</tr>
+<tr class="even">
+<td><strong>NVIDIA Alpamayo</strong></td>
+<td>自动驾驶</td>
+</tr>
+<tr class="odd">
+<td><strong>NVIDIA BioNeMo</strong></td>
+<td>生物学和化学</td>
+</tr>
+<tr class="even">
+<td><strong>NVIDIA Earth-2</strong></td>
+<td>天气和气候</td>
+</tr>
+</tbody>
+</table>
+<p><strong>信源</strong>: NVIDIA Open Models Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-expands-open-model-families-to-power-the-next-wave-of-agentic-physical-and-healthcare-ai</p>
+<h3 id="nemotron-3系列">7.2 Nemotron 3系列</h3>
+<ul>
+<li><strong>Nemotron 3 Ultra</strong>: 前沿级智能，5倍吞吐量效率（Blackwell平台NVFP4格式）</li>
+<li><strong>Nemotron 3 Omni</strong>: 音频、视觉、语言多模态理解</li>
+<li><strong>Nemotron 3 VoiceChat</strong>: 实时语音对话（听和说同时进行）</li>
+</ul>
+<p><strong>信源</strong>: NVIDIA Open Models Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-expands-open-model-families-to-power-the-next-wave-of-agentic-physical-and-healthcare-ai</p>
+<h3 id="物理ai新模型">7.3 物理AI新模型</h3>
+<ul>
+<li><strong>Cosmos 3</strong>: 首个统一合成世界生成、物理AI推理和动作模拟的世界基础模型</li>
+<li><strong>Isaac GR00T N1.7</strong>: 人形机器人VLA模型，现已商业部署就绪</li>
+<li><strong>Alpamayo 1.5</strong>: 自动驾驶VLA模型，增强推理能力</li>
+<li><strong>GR00T N2</strong>（预览）: 基于DreamZero研究的下一代机器人基础模型</li>
+</ul>
+<p><strong>信源</strong>: NVIDIA Open Models Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-expands-open-model-families-to-power-the-next-wave-of-agentic-physical-and-healthcare-ai</p>
+<hr />
+<h2 id="八物理ai与机器人">八、物理AI与机器人</h2>
+<h3 id="自动驾驶合作伙伴">8.1 自动驾驶合作伙伴</h3>
+<p><strong>新合作伙伴</strong>: BYD、Hyundai、Kia、Nissan、Geely<br />
+<strong>部署平台</strong>: Uber网约车网络</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="工业机器人合作">8.2 工业机器人合作</h3>
+<p><strong>合作伙伴</strong>: ABB、Universal Robots、KUKA</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="keynote彩蛋olaf机器人">8.3 Keynote彩蛋：Olaf机器人</h3>
+<p><strong>亮点</strong>: - Disney《冰雪奇缘》中的Olaf雪怪机器人亮相Keynote - 由NVIDIA物理AI栈驱动 - Newton物理引擎 + Omniverse模拟训练 - 使用Jetson计算平台</p>
+<p><strong>Jensen Huang现场互动</strong>: &gt; “Olaf，你好！我知道你的计算机——是我给你的Jetson。”</p>
+<p><strong>信源</strong>: The Verge GTC 2026报道<br />
+<strong>链接</strong>: https://www.theverge.com/tech/895363/how-to-watch-nvidias-gtc-2026-keynote-tap-here</p>
+<hr />
+<h2 id="九主要合作伙伴关系">九、主要合作伙伴关系</h2>
+<h3 id="云服务巨头">9.1 云服务巨头</h3>
+<p><strong>AWS</strong>: - 部署超过100万颗NVIDIA GPU - 支持Blackwell和Rubin架构 - 合作Spectrum网络技术</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<p><strong>Microsoft</strong>: - Azure率先上线Vera Rubin NVL72系统 - Microsoft Foundry集成Nemotron模型 - Azure Local支持RTX PRO GPU</p>
+<p><strong>信源</strong>: NVIDIA GTC 2026 Keynote Live Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/gtc-2026-news/</p>
+<h3 id="制药与医疗">9.2 制药与医疗</h3>
+<p><strong>Roche</strong>: - 全球部署3,500+ Blackwell GPU - 覆盖整个价值链（研发、诊断、制造）</p>
+<p><strong>信源</strong>: NVIDIA Roche Blog<br />
+<strong>链接</strong>: https://blogs.nvidia.com/blog/roche-ai-factories-omniverse/</p>
+<h3 id="ai实验室">9.3 AI实验室</h3>
+<p><strong>合作方</strong>: Anthropic、Meta、Mistral AI、OpenAI</p>
+<p><strong>Sam Altman（OpenAI CEO）</strong>: &gt; “使用NVIDIA Vera Rubin，我们将以更大规模运行更强大的模型和Agent，为数亿人提供更快、更可靠的系统。”</p>
+<p><strong>信源</strong>: NVIDIA Vera Rubin Platform Press Release<br />
+<strong>链接</strong>: https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</p>
+<hr />
+<h2 id="十总结与展望">十、总结与展望</h2>
+<h3 id="关键数字">10.1 关键数字</h3>
+<table>
+<thead>
+<tr class="header">
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>推理吞吐量提升</td>
+<td>35x (LPX)</td>
+</tr>
+<tr class="even">
+<td>每Token成本降低</td>
+<td>10x</td>
+</tr>
+<tr class="odd">
+<td>GPU需求量减少</td>
+<td>75% (训练MoE)</td>
+</tr>
+<tr class="even">
+<td>DLSS游戏支持</td>
+<td>750+</td>
+</tr>
+<tr class="odd">
+<td>AWS GPU部署</td>
+<td>100万+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="战略意义">10.2 战略意义</h3>
+<p>GTC 2026标志着NVIDIA从“GPU公司”向<strong>全栈AI基础设施公司</strong>的转型：</p>
+<ol type="1">
+<li><strong>垂直整合</strong>: 从芯片到超算的完整控制</li>
+<li><strong>开放生态</strong>: 通过OpenClaw拥抱开源Agent平台</li>
+<li><strong>多模态扩展</strong>: 从语言到物理世界的全面覆盖</li>
+<li><strong>长期布局</strong>: Feynman架构预告2027+愿景</li>
+</ol>
+<h3 id="信源汇总">10.3 信源汇总</h3>
+<table>
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>信源类型</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NVIDIA GTC Live Blog</td>
+<td>https://blogs.nvidia.com/blog/gtc-2026-news/</td>
+</tr>
+<tr class="even">
+<td>Vera Rubin Platform</td>
+<td>https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform</td>
+</tr>
+<tr class="odd">
+<td>DLSS 5</td>
+<td>https://www.nvidia.com/en-us/geForce/news/dlss5-breakthrough-in-visual-fidelity-for-games/</td>
+</tr>
+<tr class="even">
+<td>NemoClaw</td>
+<td>https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw</td>
+</tr>
+<tr class="odd">
+<td>Open Models</td>
+<td>https://nvidianews.nvidia.com/news/nvidia-expands-open-model-families-to-power-the-next-wave-of-agentic-physical-and-healthcare-ai</td>
+</tr>
+<tr class="even">
+<td>The Verge报道</td>
+<td>https://www.theverge.com/tech/895363/how-to-watch-nvidias-gtc-2026-keynote-tap-here</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>报告生成时间: 2026-03-17 09:45 GMT+8</em><br />
+<em>分析师: Jarvis</em></p>
+</body>
+</html>
