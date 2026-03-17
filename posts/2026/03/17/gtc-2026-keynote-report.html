@@ -12,6 +12,9 @@
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <style type="text/css">
+img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.figure { text-align: center; margin: 30px 0; }
+.caption { font-size: 0.9em; color: #666; margin-top: 10px; font-style: italic; }
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
@@ -92,6 +95,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>核心亮点包括： - <strong>Vera Rubin平台</strong> - 7芯片全栈AI架构正式量产 - <strong>DLSS 5</strong> - 实时神经渲染技术的重大突破 - <strong>NemoClaw/OpenClaw</strong> - 企业级AI代理开源平台 - <strong>太空数据中心</strong> - 将AI计算能力延伸至太空轨道 - <strong>DGX Spark/Station</strong> - 桌面级AI超级计算机</p>
 <hr />
 <h2 id="一vera-rubin平台7芯片全栈ai架构">🚀 一、Vera Rubin平台：7芯片全栈AI架构</h2>
+
+<div class="figure">
+<img src="https://s3.amazonaws.com/nvidia.press/vera-rubin-nvl72-rack.png" alt="Vera Rubin NVL72机架" />
+<div class="caption">NVIDIA Vera Rubin NVL72机架 - 集成72颗Rubin GPU和36颗Vera CPU</div>
+</div>
+
 <h3 id="架构概述">1.1 架构概述</h3>
 <p>NVIDIA Vera Rubin平台是NVIDIA历史上最雄心勃勃的AI基础设施项目，集成了<strong>7款全新芯片</strong>，构成一个完整的数据中心级AI超级计算机。</p>
 <p><strong>七大核心组件</strong>：</p>
@@ -228,6 +237,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <strong>信源</strong>: <a href="https://www.theregister.com/2026/03/16/nvidia_lpx_groq_3/">The Register - Nvidia slaps $20B Groq tech into massive new LPX racks</a></p>
 <hr />
 <h2 id="二dlss-5神经渲染技术的gpt时刻">🎮 二、DLSS 5：神经渲染技术的GPT时刻</h2>
+
+<div class="figure">
+<img src="images/dlss5-how-it-works.jpg" alt="DLSS 5工作原理" />
+<div class="caption">DLSS 5工作原理 - 输入颜色和动作向量，输出照片级光照和材质</div>
+</div>
+
 <h3 id="技术突破">2.1 技术突破</h3>
 <p>NVIDIA DLSS 5被黄仁勋称为<strong>“图形学的GPT时刻”</strong>，是自2018年实时光线追踪以来NVIDIA在计算机图形领域最重大的突破。</p>
 <p><strong>核心技术</strong>： - <strong>实时神经渲染模型</strong>：为像素注入照片级真实感的光照和材质 - <strong>3D引导生成</strong>：基于游戏3D内容和艺术意图的确定性生成 - <strong>端到端AI理解</strong>：单帧分析即可理解复杂场景语义</p>
@@ -304,6 +319,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>信源</strong>: <a href="https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw">NVIDIA NemoClaw Press Release</a></p>
 <hr />
 <h2 id="四太空数据中心计划ai进入轨道">🛰️ 四、太空数据中心计划：AI进入轨道</h2>
+
+<div class="figure">
+<img src="https://s3.amazonaws.com/nvidia.press/space-computing-odc.jpg" alt="太空数据中心" />
+<div class="caption">NVIDIA Space-1 Vera Rubin - 轨道数据中心（ODC）概念图</div>
+</div>
+
 <h3 id="space-1-vera-rubin模块">4.1 Space-1 Vera Rubin模块</h3>
 <p>NVIDIA宣布推出<strong>Space-1 Vera Rubin模块</strong>，将数据中心级AI性能带入太空轨道数据中心（ODC）。</p>
 <p><strong>技术规格</strong>： - 相比H100 GPU，AI计算性能提升<strong>25倍</strong> - 支持大型语言模型和基础模型在轨运行 - 紧凑型模块化设计 - 适用于尺寸、重量和功率（SWaP）受限环境</p>
@@ -356,6 +377,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>信源</strong>: <a href="https://nvidianews.nvidia.com/news/space-computing">NVIDIA Space Computing Press Release</a></p>
 <hr />
 <h2 id="五dgx-spark与dgx-station桌面级ai超级计算机">💻 五、DGX Spark与DGX Station：桌面级AI超级计算机</h2>
+
+<div class="figure">
+<img src="https://s3.amazonaws.com/nvidia.press/dgx-spark-station.jpg" alt="DGX Spark和DGX Station" />
+<div class="caption">NVIDIA DGX Spark（左）和DGX Station（右）- 桌面级AI超级计算机</div>
+</div>
+
 <h3 id="dgx-spark原project-digits">5.1 DGX Spark（原Project DIGITS）</h3>
 <p><strong>世界上最小的AI超级计算机</strong>，让数百万研究人员、数据科学家、机器人开发者和学生能够在桌面上进行生成式和物理AI开发。</p>
 <p><strong>核心技术</strong>： - <strong>GB10 Grace Blackwell超级芯片</strong> - 第五代Tensor Core - FP4支持 - 高达<strong>1,000万亿次/秒</strong>的AI计算性能 - NVLink-C2C互联技术（5倍于PCIe Gen5带宽）</p>
