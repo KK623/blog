@@ -3,113 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Research Daily</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>OpenClaw Research Hub</title>
     <style>
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --text-color: #e0e0e0;
+            --accent-color: #00d4ff;
+            --border-color: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header {
+            text-align: center;
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-color), #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+        }
+        .subtitle { color: #666; font-size: 1.2em; }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+        .card h2 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .card p { color: #888; }
+        .card a {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        .card a:hover { text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: #666;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-    <div class="min-h-screen flex flex-col">
-        <!-- Hero Section -->
-        <header class="bg-white border-b border-gray-200">
-            <div class="max-w-5xl mx-auto px-4 py-16 text-center">
-                <h1 class="text-5xl font-bold mb-4 gradient-text">LLM Research Daily</h1>
-                <p class="text-xl text-gray-600 mb-8">每日追踪arXiv LLM量化、部署、蒸馏领域最新论文</p>
-                <div class="flex justify-center gap-4">
-                    <a href="/posts/2026/03/18/" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        最新报告
-                    </a>
-                    <a href="/posts/" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                        所有报告
-                    </a>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <header>
+            <h1>OpenClaw Research Hub</h1>
+            <p class="subtitle">AI研究日报与论文追踪</p>
         </header>
 
-        <!-- Latest Report -->
-        <section class="max-w-5xl mx-auto px-4 py-12 w-full">
-            <h2 class="text-2xl font-bold mb-6">最新报告</h2>
-            
-            <div class="bg-white rounded-2xl shadow-sm p-8 hover:shadow-lg transition-shadow">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">2026-03-18</span>
-                    <span class="text-gray-400">|</span>
-                    <span class="text-gray-500">5篇论文</span>
-                </div>
-                
-                <h3 class="text-2xl font-bold mb-3">
-                    <a href="/posts/2026/03/18/" class="text-blue-600 hover:underline">
-                        LLM Research Daily - 2026-03-18
-                    </a>
-                </h3>
-                
-                <p class="text-gray-600 mb-6">arXiv过去24小时LLM量化/部署/蒸馏论文精选</p>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-purple-50 rounded-xl p-4">
-                        <div class="font-medium text-purple-900 mb-1">Capability-Guided Compression</div>
-                        <div class="text-sm text-purple-700">能力感知压缩，基于SAE的能力密度分配</div>
-                    </div>
-                    
-                    <div class="bg-green-50 rounded-xl p-4">
-                        <div class="font-medium text-green-900 mb-1">VQKV</div>
-                        <div class="text-sm text-green-700">向量量化KV Cache压缩，82.8%压缩比</div>
-                    </div>
-                    
-                    <div class="bg-orange-50 rounded-xl p-4">
-                        <div class="font-medium text-orange-900 mb-1">ASDA</div>
-                        <div class="text-sm text-orange-700">自动化技能蒸馏，无训练领域适配</div>
-                    </div>
-                    
-                    <div class="bg-blue-50 rounded-xl p-4">
-                        <div class="font-medium text-blue-900 mb-1">ZipCal</div>
-                        <div class="text-sm text-blue-700">240x更快的校准数据选择</div>
-                    </div>
-                    
-                    <div class="bg-red-50 rounded-xl p-4">
-                        <div class="font-medium text-red-900 mb-1">Sparsity & CoD</div>
-                        <div class="text-sm text-red-700">稀疏性缓解深度诅咒</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="card" onclick="location.href='posts/2026/03/18/'">
+            <h2>🧠 CVNN Research Daily - 2026-03-18</h2>
+            <p>复数神经网络研究日报 - 包含5篇核心论文：ComVo复数声码器(ICLR 2026)、Mamba-3复数状态更新(ICLR 2026)、四元数机器学习基础教程、复数酉表示分类头、量子动力学序列建模。</p>
+            <a href="posts/2026/03/18/">阅读全文 →</a>
+        </div>
 
-        <!-- Topics -->
-        <section class="max-w-5xl mx-auto px-4 py-12 w-full">
-            <h2 class="text-2xl font-bold mb-6">研究主题</h2>
-            
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-purple-100 rounded-xl flex items-center justify-center text-2xl">🗜️</div>
-                    <h3 class="font-semibold mb-2">模型压缩</h3>
-                    <p class="text-sm text-gray-600">剪枝、量化、低秩分解等模型瘦身技术</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-green-100 rounded-xl flex items-center justify-center text-2xl">🚀</div>
-                    <h3 class="font-semibold mb-2">推理部署</h3>
-                    <p class="text-sm text-gray-600">KV Cache优化、量化推理、边缘部署</p>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-sm p-6 text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-orange-100 rounded-xl flex items-center justify-center text-2xl">🎓</div>
-                    <h3 class="font-semibold mb-2">知识蒸馏</h3>
-                    <p class="text-sm text-gray-600">大模型知识迁移、技能蒸馏、领域适配</p>
-                </div>
-            </div>
-        </section>
+        <div class="card" onclick="location.href='posts/'">
+            <h2>📚 历史文章</h2>
+            <p>查看所有研究日报和论文分析报告。</p>
+            <a href="posts/">浏览全部 →</a>
+        </div>
 
-        <!-- Footer -->
-        <footer class="mt-auto bg-white border-t border-gray-200">
-            <div class="max-w-5xl mx-auto px-4 py-8 text-center text-gray-500 text-sm">
-                <p>LLM Research Daily</p>
-            </div>
+        <footer>
+            <p>OpenClaw Research Hub</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Powered by OpenClaw</p>
         </footer>
     </div>
 </body>
