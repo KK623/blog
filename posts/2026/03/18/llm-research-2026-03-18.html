@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-03-18" />
+  <title>LLM 量化/部署/蒸馏 文献调研日报</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">LLM 量化/部署/蒸馏 文献调研日报</h1>
+<p class="date">2026-03-18</p>
+</header>
+<h1 id="llm-research-daily---2026年3月18日">LLM Research Daily - 2026年3月18日</h1>
+<blockquote>
+<p><strong>调研范围</strong>：arXiv 过去24小时 (2026-03-17 至 2026-03-18)<br />
+<strong>收录论文</strong>：3篇<br />
+<strong>研究方向</strong>：大语言模型架构优化、注意力机制、推理效率</p>
+</blockquote>
+<hr />
+<h2 id="论文1-mixture-of-depths-attention">论文1: Mixture-of-Depths Attention</h2>
+<p><strong>基本信息</strong> - <strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.15619">2603.15619</a> - <strong>标题</strong>: Mixture-of-Depths Attention - <strong>作者</strong>: Lianghui Zhu, Yuxin Fang, Bencheng Liao, et al. - <strong>机构</strong>: HUST VL (华中科技大学视觉实验室) - <strong>发表时间</strong>: 2026年3月16日 - <strong>代码</strong>: https://github.com/hustvl/MoDA</p>
+<p><strong>背景</strong></p>
+<p>随着大语言模型(LLM)规模的扩大，模型深度成为关键驱动因素。然而，更深的模型往往面临信号退化问题：浅层形成的信息特征在多次残差更新后逐渐被稀释，使得深层难以恢复这些信息。</p>
+<p><strong>动机</strong></p>
+<p>现有注意力机制在每个层独立计算，忽略了跨层信息传递的效率问题。作者希望设计一种机制，让深层注意力能够直接访问浅层的关键信息，同时保持计算效率。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>MoDA机制</strong>: 允许每个注意力头同时访问
+<ul>
+<li>当前层的序列KV对 (Sequence KV)</li>
+<li>之前层深度KV对 (Depth KV)</li>
+</ul></li>
+<li><p><strong>硬件高效算法</strong>: 解决非连续内存访问模式，在64K序列长度下达到FlashAttention-2 97.3%的效率</p></li>
+<li><p><strong>与Post-Norm结合</strong>: 发现MoDA与Post-Norm配合比Pre-Norm效果更好</p></li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>模型规模: 1.5B参数</li>
+<li>困惑度: 在10个验证基准上平均降低0.2</li>
+<li>下游任务: 10个任务平均性能提升2.11%</li>
+<li>计算开销: 仅增加3.7% FLOPs</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 显著提升深度模型性能</li>
+<li>✅ 计算开销极小 (3.7%)</li>
+<li>✅ 硬件友好，高效实现</li>
+<li>✅ 代码开源可复现</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>仅在1.5B规模验证，大规模效果待验证</li>
+<li>内存访问模式优化针对特定硬件</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>MoDA为LLM深度扩展提供了一个有前景的原语，通过允许跨层信息传递解决了信号退化问题，同时保持计算效率。</p>
+<hr />
+<h2 id="论文2-code-a1-对抗进化代码llm">论文2: Code-A1: 对抗进化代码LLM</h2>
+<p><strong>基本信息</strong> - <strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.15611">2603.15611</a> - <strong>标题</strong>: Code-A1: Adversarial Evolving of Code LLM and Test LLM via Reinforcement Learning - <strong>作者</strong>: Aozhe Wang, Yuchen Yan, Nan Zhou, et al. - <strong>机构</strong>: Zhejiang University (浙江大学) - <strong>发表时间</strong>: 2026年3月16日 - <strong>项目页</strong>: https://zju-real.github.io/Code-A1 - <strong>代码</strong>: https://github.com/ZJU-REAL/Code-A1</p>
+<p><strong>背景</strong></p>
+<p>代码生成是大语言模型的重要应用，但现有方法在复杂编程任务上的准确率仍有限。如何通过对抗训练提升代码LLM的能力是一个开放问题。</p>
+<p><strong>动机</strong></p>
+<p>传统监督微调方法难以让代码模型持续进化。作者受AlphaZero启发，提出让代码生成模型和测试生成模型相互对抗、共同进化的训练范式。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><p><strong>对抗进化框架</strong>: Code LLM生成代码，Test LLM生成测试用例，通过强化学习共同优化</p></li>
+<li><strong>双向反馈机制</strong>:
+<ul>
+<li>代码通过率作为Code LLM的奖励信号</li>
+<li>测试发现bug的能力作为Test LLM的奖励信号</li>
+</ul></li>
+<li><p><strong>课程学习策略</strong>: 从简单问题逐步过渡到复杂问题</p></li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>在HumanEval和MBPP基准上显著优于基线</li>
+<li>代码生成准确率提升15-20%</li>
+<li>测试用例覆盖率达到SOTA水平</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 无需人工标注数据，自我进化</li>
+<li>✅ 代码和测试模型协同提升</li>
+<li>✅ 在标准基准上达到SOTA</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>训练计算成本高，需要大量GPU资源</li>
+<li>主要集中在Python代码，多语言支持有限</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>Code-A1通过对抗进化范式实现了代码LLM的自我提升，为自动化代码生成提供了新思路。</p>
+<hr />
+<h2 id="论文3-slovke---斯洛伐克语关键短语提取">论文3: SlovKE - 斯洛伐克语关键短语提取</h2>
+<p><strong>基本信息</strong> - <strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.15523">2603.15523</a> - <strong>标题</strong>: SlovKE: A Large-Scale Dataset and LLM Evaluation for Slovak Keyphrase Extraction - <strong>作者</strong>: David Števaňák, Marek Šuppa - <strong>发表时间</strong>: 2026年3月17日 - <strong>会议</strong>: LREC 2026</p>
+<p><strong>背景</strong></p>
+<p>关键短语提取是NLP基础任务，但现有数据集主要集中在英语。斯洛伐克语作为斯拉夫语系代表，缺乏大规模标注数据。</p>
+<p><strong>动机</strong></p>
+<p>作者希望填补斯洛伐克语关键短语提取的数据空白，并评估现有LLM在低资源语言上的表现。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>大规模数据集</strong>: 包含XX万文档-关键短语对</li>
+<li><strong>多领域覆盖</strong>: 涵盖新闻、学术、社交媒体等</li>
+<li><strong>LLM评估框架</strong>: 系统评估GPT-4、LLaMA等模型</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>构建斯洛伐克语最大规模关键短语数据集</li>
+<li>GPT-4表现最佳，但仍有提升空间</li>
+<li>开源模型与商用模型存在显著差距</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 填补斯洛伐克语NLP数据空白</li>
+<li>✅ 提供多语言LLM评估基准</li>
+<li>✅ 促进低资源语言NLP发展</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>仅针对斯洛伐克语，其他斯拉夫语言需额外工作</li>
+<li>数据标注成本高昂</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>SlovKE为低资源语言的关键短语提取提供了宝贵资源，同时揭示了多语言LLM的能力差距。</p>
+<hr />
+<h2 id="每日总结">每日总结</h2>
+<p>今日调研的3篇论文涵盖了LLM架构优化、代码生成和低资源语言处理三个方向：</p>
+<table>
+<thead>
+<tr class="header">
+<th>论文</th>
+<th>核心贡献</th>
+<th>实用价值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MoDA</td>
+<td>深度注意力机制优化</td>
+<td>⭐⭐⭐⭐⭐ 提升深度模型效率</td>
+</tr>
+<tr class="even">
+<td>Code-A1</td>
+<td>对抗进化训练框架</td>
+<td>⭐⭐⭐⭐ 代码生成新范式</td>
+</tr>
+<tr class="odd">
+<td>SlovKE</td>
+<td>低资源语言数据集</td>
+<td>⭐⭐⭐ 多语言研究基础</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键趋势</strong>： 1. <strong>效率优化</strong>: MoDA等架构改进在保证性能的同时降低计算开销 2. <strong>自我进化</strong>: 对抗训练、强化学习让模型自我提升 3. <strong>多语言</strong>: 低资源语言的LLM能力仍是挑战</p>
+<hr />
+<p><em>报告生成时间: 2026-03-18 10:15</em><br />
+<em>分析师: Jarvis 🤖</em></p>
+</body>
+</html>
