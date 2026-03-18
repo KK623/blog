@@ -1,0 +1,413 @@
+<h1 id="cvnn-research-daily---2026-03-18">CVNN Research Daily - 2026-03-18</h1>
+<h2 id="今日概览">📊 今日概览</h2>
+<ul>
+<li><strong>搜索日期</strong>: 2026-03-18</li>
+<li><strong>搜索范围</strong>: arXiv过去30天</li>
+<li><strong>关键词</strong>: complex-valued neural network, CVNN, quaternion, complex-valued, hypercomplex</li>
+<li><strong>新论文数</strong>: 5篇核心论文</li>
+</ul>
+<hr />
+<h2 id="论文1-comvo---面向波形生成的复数神经网络">论文1: ComVo - 面向波形生成的复数神经网络</h2>
+<h3 id="基本信息">基本信息</h3>
+<ul>
+<li><strong>标题</strong>: Toward Complex-Valued Neural Networks for Waveform Generation</li>
+<li><strong>作者</strong>: Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</li>
+<li><strong>arXiv ID</strong>: 2603.11589v1</li>
+<li><strong>发布日期</strong>: 2026-03-12</li>
+<li><strong>会议</strong>: ICLR 2026 (Accepted)</li>
+<li><strong>链接</strong>: https://arxiv.org/abs/2603.11589</li>
+<li><strong>代码</strong>: https://hs-oh-prml.github.io/ComVo/</li>
+</ul>
+<h3 id="背景">背景</h3>
+<p>神经声码器在波形生成方面取得了显著进展，能够产生自然且富有表现力的音频。其中，基于iSTFT的声码器近期受到广泛关注，它们预测复值频谱图，然后通过iSTFT合成波形，从而避免了增加计算成本的学习上采样阶段。然而，当前方法使用实值网络独立处理实部和虚部，这种分离方式限制了捕捉复值频谱图固有结构的能力。</p>
+<h3 id="动机">动机</h3>
+<ul>
+<li>实值网络独立处理复数的实部和虚部，无法充分利用复数的相位-幅度耦合关系</li>
+<li>现有iSTFT声码器缺乏对复值运算的原生支持</li>
+<li>需要一种能够在复数域中进行对抗训练的方法</li>
+</ul>
+<h3 id="技术点">技术点</h3>
+<ol type="1">
+<li><strong>原生复数运算架构</strong>
+<ul>
+<li>生成器和判别器均使用原生复数算术</li>
+<li>支持 adversarial training framework，提供复值表示的结构化反馈</li>
+</ul></li>
+<li><strong>相位量化 (Phase Quantization)</strong>
+<ul>
+<li>离散化相位值以结构化方式引导相位变换</li>
+<li>正则化训练过程，稳定复数域学习</li>
+</ul></li>
+<li><strong>块矩阵计算方案</strong>
+<ul>
+<li>减少冗余操作，提高训练效率</li>
+<li>训练时间减少25%</li>
+</ul></li>
+</ol>
+<h3 id="实验">实验</h3>
+<ul>
+<li><strong>数据集</strong>: 语音合成标准数据集</li>
+<li><strong>对比方法</strong>: 实值基线声码器</li>
+<li><strong>指标</strong>: 语音质量、合成速度、训练时间</li>
+<li><strong>结果</strong>: ComVo在合成质量上超越可比实值基线，块矩阵方案减少25%训练时间</li>
+</ul>
+<h3 id="收益">收益</h3>
+<ul>
+<li>✅ 首次实现了端到端的复数神经网络声码器</li>
+<li>✅ 原生复数运算更好地捕捉频谱图结构</li>
+<li>✅ 相位量化提供稳定的相位学习机制</li>
+<li>✅ 训练效率提升25%</li>
+</ul>
+<h3 id="局限">局限</h3>
+<ul>
+<li>❌ 仅在语音任务上验证，未测试其他音频类型</li>
+<li>❌ 块矩阵方案可能限制模型容量</li>
+<li>❌ 相位量化粒度需要精细调优</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>ComVo是首个完全基于复数神经网络的声码器，通过原生复数运算、相位量化和块矩阵优化，在语音合成质量上超越了实值基线。这项工作展示了CVNN在信号处理领域的巨大潜力，为后续研究提供了重要参考。</p>
+<hr />
+<h2 id="论文2-mamba-3---基于状态空间原理的序列建模改进">论文2: Mamba-3 - 基于状态空间原理的序列建模改进</h2>
+<h3 id="基本信息-1">基本信息</h3>
+<ul>
+<li><strong>标题</strong>: Mamba-3: Improved Sequence Modeling using State Space Principles</li>
+<li><strong>作者</strong>: Aakash Lahoti, Kevin Y. Li, Berlin Chen, Caitlin Wang, Aviv Bick, J. Zico Kolter, Tri Dao, Albert Gu</li>
+<li><strong>arXiv ID</strong>: 2603.15569v1</li>
+<li><strong>发布日期</strong>: 2026-03-16</li>
+<li><strong>会议</strong>: ICLR 2026</li>
+<li><strong>链接</strong>: https://arxiv.org/abs/2603.15569</li>
+</ul>
+<h3 id="背景-1">背景</h3>
+<p>Transformer模型虽然质量强劲，但二次计算复杂度和线性内存使其推理成本高昂。这催生了次二次模型的发展，但许多线性模型在算法效率和能力之间做出了权衡，在状态跟踪等任务上表现不佳。</p>
+<h3 id="动机-1">动机</h3>
+<ul>
+<li>现有线性模型在理论上具有线性复杂度，但硬件效率不高</li>
+<li>状态跟踪任务对复数表示有天然需求</li>
+<li>需要在不增加解码延迟的情况下提升模型性能</li>
+</ul>
+<h3 id="技术点-1">技术点</h3>
+<ol type="1">
+<li><strong>复数状态更新规则 (Complex-Valued State Update Rule)</strong>
+<ul>
+<li>基于状态空间模型(SSM)离散化导出更具表达力的递推</li>
+<li>复数值状态更新实现更丰富的状态跟踪能力</li>
+<li>关键创新: <code>x_{t+1} = A * x_t + B * u_t</code>，其中A、B、x为复数</li>
+</ul></li>
+<li><strong>MIMO (Multi-Input, Multi-Output) 公式</strong>
+<ul>
+<li>在不增加解码延迟的情况下提升模型性能</li>
+<li>状态大小减半但性能相当</li>
+</ul></li>
+<li><strong>硬件感知架构优化</strong>
+<ul>
+<li>针对现代加速器优化的计算图</li>
+<li>内存布局优化减少数据移动</li>
+</ul></li>
+</ol>
+<h3 id="实验-1">实验</h3>
+<ul>
+<li><strong>模型规模</strong>: 1.5B参数</li>
+<li><strong>任务</strong>: 检索、状态跟踪、下游语言建模</li>
+<li><strong>对比</strong>: Gated DeltaNet等次二次模型</li>
+<li><strong>结果</strong>:
+<ul>
+<li>平均下游准确率提升0.6个百分点</li>
+<li>MIMO变体额外提升1.2个百分点(总计1.8%)</li>
+<li>使用一半状态大小达到Mamba-2相当的困惑度</li>
+</ul></li>
+</ul>
+<h3 id="收益-1">收益</h3>
+<ul>
+<li>✅ 复数状态表示增强状态跟踪能力</li>
+<li>✅ 性能-效率帕累托前沿的显著提升</li>
+<li>✅ 状态大小减半但性能不打折</li>
+<li>✅ 在1.5B规模上验证有效</li>
+</ul>
+<h3 id="局限-1">局限</h3>
+<ul>
+<li>❌ 仅验证到1.5B规模，更大模型效果未知</li>
+<li>❌ 复数运算需要特定硬件优化</li>
+<li>❌ 状态跟踪任务以外的好处尚不明确</li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<p>Mamba-3通过引入复数状态更新规则，显著提升了线性序列模型的状态跟踪能力。这是CVNN思想在高效Transformer替代方案中的成功应用，展示了复数表示在捕捉复杂动态方面的优势。</p>
+<hr />
+<h2 id="论文3-超复数广义线性处理---四元数机器学习基础">论文3: 超复数广义线性处理 - 四元数机器学习基础</h2>
+<h3 id="基本信息-2">基本信息</h3>
+<ul>
+<li><strong>标题</strong>: Hypercomplex Widely Linear Processing: Fundamentals for Quaternion Machine Learning</li>
+<li><strong>作者</strong>: Sayed Pouria Talebi, Clive Cheong Took</li>
+<li><strong>arXiv ID</strong>: 2603.11835v1</li>
+<li><strong>发布日期</strong>: 2026-03-12</li>
+<li><strong>发表</strong>: Handbook of Statistics Volume 54, Elsevier, 2026</li>
+<li><strong>链接</strong>: https://arxiv.org/abs/2603.11835</li>
+</ul>
+<h3 id="背景-2">背景</h3>
+<p>将复数代数在工程和科学中的成功复制到其他超复数域(如四元数、tessarines、biquaternions和octonions)的尝试众多，但没有一个能与四元数的成功相媲美。四元数最有用的特性在于其建模三维旋转的能力，在航空和计算机图形学中有广泛应用。</p>
+<h3 id="动机-2">动机</h3>
+<ul>
+<li>机器学习中四元数的复兴需要理论基础</li>
+<li>缺乏系统性的超复数机器学习教程</li>
+<li>需要统一的框架来理解复数和四元数方法</li>
+</ul>
+<h3 id="技术点-2">技术点</h3>
+<ol type="1">
+<li><strong>增强统计 (Augmented Statistics)</strong>
+<ul>
+<li>四元数值随机过程的建模</li>
+<li>利用伪协方差信息</li>
+</ul></li>
+<li><strong>广义线性模型 (Widely Linear Models)</strong>
+<ul>
+<li>利用增强统计的高效算法</li>
+<li>扩展到四元数域的WLMS算法</li>
+</ul></li>
+<li><strong>四元数微积分与代数</strong>
+<ul>
+<li>算法推导的基础</li>
+<li>哈密顿算子和梯度计算</li>
+</ul></li>
+<li><strong>均方估计</strong>
+<ul>
+<li>实用的四元数MSE优化</li>
+<li>收敛性分析</li>
+</ul></li>
+</ol>
+<h3 id="实验-2">实验</h3>
+<ul>
+<li><strong>示例</strong>: 多个学习示例便于理解和采用</li>
+<li><strong>应用场景</strong>: 多维度信号处理任务</li>
+</ul>
+<h3 id="收益-2">收益</h3>
+<ul>
+<li>✅ 系统性的四元数机器学习入门材料</li>
+<li>✅ 连接复数和四元数方法的理论桥梁</li>
+<li>✅ 为新兴的四元数神经网络研究提供基础</li>
+<li>✅ 包含丰富的示例便于学习</li>
+</ul>
+<h3 id="局限-2">局限</h3>
+<ul>
+<li>❌ 主要是教程性质，非原创研究</li>
+<li>❌ 未涉及更深层的超复数(如octonions)</li>
+<li>❌ 实验验证相对有限</li>
+</ul>
+<h3 id="总结-2">总结</h3>
+<p>这是一篇重要的综述性章节，为四元数机器学习领域建立了完整的理论基础。随着CVNN研究的深入，四元数作为其自然的扩展，在多维度信号处理中显示出巨大潜力。该文为研究者进入这一领域提供了宝贵的入门资源。</p>
+<hr />
+<h2 id="论文4-复数酉表示---用于改进不确定性量化的分类头">论文4: 复数酉表示 - 用于改进不确定性量化的分类头</h2>
+<h3 id="基本信息-3">基本信息</h3>
+<ul>
+<li><strong>标题</strong>: Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification in Deep Neural Networks</li>
+<li><strong>作者</strong>: Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</li>
+<li><strong>arXiv ID</strong>: 2602.15283v1</li>
+<li><strong>发布日期</strong>: 2026-02-17</li>
+<li><strong>链接</strong>: https://arxiv.org/abs/2602.15283</li>
+</ul>
+<h3 id="背景-3">背景</h3>
+<p>现代深度神经网络虽预测准确率高，但校准性差：其置信度分数不能可靠反映真实的正确概率。这一问题在安全关键应用中尤为严重。</p>
+<h3 id="动机-3">动机</h3>
+<ul>
+<li>传统softmax分类头校准性差</li>
+<li>温度缩放等后处理方法效果有限</li>
+<li>量子力学启发的酉变换可能提供保范特征演化</li>
+</ul>
+<h3 id="技术点-3">技术点</h3>
+<ol type="1">
+<li><strong>量子启发的分类头架构</strong>
+<ul>
+<li>将backbone特征投影到复值希尔伯特空间</li>
+<li>通过Cayley映射参数化的学习酉变换进行演化</li>
+<li>状态范数严格保持，确保数值稳定性</li>
+</ul></li>
+<li><strong>受控混合实验设计</strong>
+<ul>
+<li>单一共享backbone训练</li>
+<li>可互换的轻量级分类头对比</li>
+<li>隔离复数酉表示对校准的影响</li>
+</ul></li>
+<li><strong>多种读出机制</strong>
+<ul>
+<li>酉幅值头 (Unitary Magnitude Head): 复特征经Cayley酉演化后通过幅值+softmax读出</li>
+<li>Born规则层: 量子力学启发的测量层</li>
+</ul></li>
+</ol>
+<h3 id="实验-3">实验</h3>
+<ul>
+<li><strong>数据集</strong>: CIFAR-10, CIFAR-10H (人类不确定性基准)</li>
+<li><strong>指标</strong>:
+<ul>
+<li>ECE (Expected Calibration Error): 0.0146 vs 标准softmax 0.0355 (2.4x提升)</li>
+<li>温度缩放对比: 3.5x提升 (0.0146 vs 0.0510)</li>
+<li>KL散度 (vs人类软标签): 0.336 (最低)</li>
+</ul></li>
+</ul>
+<h3 id="收益-3">收益</h3>
+<ul>
+<li>✅ 显著改善模型校准 (ECE降低2.4x)</li>
+<li>✅ 更好地捕捉人类感知歧义结构</li>
+<li>✅ 范数保持的动态提供稳定的特征演化</li>
+<li>✅ 轻量级实现，易于集成到现有模型</li>
+</ul>
+<h3 id="局限-3">局限</h3>
+<ul>
+<li>❌ OOD检测任务上效果不佳(负结果)</li>
+<li>❌ 情感分析任务上效果有限</li>
+<li>❌ 复数运算增加计算开销</li>
+<li>❌ Born规则读出反而降低校准</li>
+</ul>
+<h3 id="总结-3">总结</h3>
+<p>该论文提出了首个系统性的复数酉表示分类头，通过Cayley映射实现保范特征演化，在CIFAR-10上实现了SOTA的校准性能。尽管在某些任务上存在局限，但这项工作为CVNN在不确定性量化领域的应用开辟了新方向。</p>
+<hr />
+<h2 id="论文5-量子动力学深度序列建模---语言作为波函数">论文5: 量子动力学深度序列建模 - 语言作为波函数</h2>
+<h3 id="基本信息-4">基本信息</h3>
+<ul>
+<li><strong>标题</strong>: Deep Sequence Modeling with Quantum Dynamics: Language as a Wave Function</li>
+<li><strong>作者</strong>: Ahmed Nebli, Hadi Saadatdoorabi, Kevin Yam</li>
+<li><strong>arXiv ID</strong>: 2602.22255v1</li>
+<li><strong>发布日期</strong>: 2026-02-24</li>
+<li><strong>链接</strong>: https://arxiv.org/abs/2602.22255</li>
+</ul>
+<h3 id="背景-4">背景</h3>
+<p>标准循环架构依赖门控机制来抑制竞争假设，而量子力学使用波函数和酉演化来管理概率幅和相位。</p>
+<h3 id="动机-4">动机</h3>
+<ul>
+<li>传统RNN的门控机制复杂且难解释</li>
+<li>量子干涉提供自然的相长/相消机制</li>
+<li>复数域的内在结构可能更适合语言建模</li>
+</ul>
+<h3 id="技术点-4">技术点</h3>
+<ol type="1">
+<li><strong>复值波函数潜状态</strong>
+<ul>
+<li>潜状态是有限维希尔伯特空间上的复值波函数</li>
+<li>在学习的时变哈密顿量下演化</li>
+<li>严格酉动态确保每一步状态范数精确保持</li>
+</ul></li>
+<li><strong>Cayley (Crank-Nicolson) 离散化</strong>
+<ul>
+<li>保持酉性的数值离散方法</li>
+<li>无条件稳定，适合长序列建模</li>
+</ul></li>
+<li><strong>Born规则读出</strong>
+<ul>
+<li>使用Born规则提取token概率</li>
+<li>二次测量算子耦合幅值和相对相位</li>
+</ul></li>
+<li><strong>表达能力分离定理</strong>
+<ul>
+<li>证明复数酉模型在读出维度上具有N²的优势</li>
+<li>k层DCD SSM可表达具有长度k次正规序列的可解群状态跟踪</li>
+</ul></li>
+</ol>
+<h3 id="实验-4">实验</h3>
+<ul>
+<li><strong>任务</strong>: 状态跟踪、语言建模</li>
+<li><strong>理论分析</strong>: 表达能力分离定理</li>
+<li><strong>连续性方程</strong>: 导出潜概率质量的守恒对偶流</li>
+</ul>
+<h3 id="收益-4">收益</h3>
+<ul>
+<li>✅ 理论证明复数模型在状态跟踪上的表达能力优势</li>
+<li>✅ 酉演化提供可解释的信息流诊断</li>
+<li>✅ 范数保持消除梯度消失/爆炸问题</li>
+<li>✅ 量子-经典桥梁提供新的研究视角</li>
+</ul>
+<h3 id="局限-4">局限</h3>
+<ul>
+<li>❌ 实验规模相对较小</li>
+<li>❌ 实际语言建模任务上未与大模型对比</li>
+<li>❌ 复数运算的计算开销</li>
+<li>❌ 哈密顿量学习的稳定性挑战</li>
+</ul>
+<h3 id="总结-4">总结</h3>
+<p>这项工作从理论角度严格证明了复值序列模型在表达能力上的优势，建立了量子动力学与深度序列建模之间的形式化联系。尽管实验规模有限，但其理论贡献为CVNN研究提供了重要的数学基础。</p>
+<hr />
+<h2 id="研究趋势分析">🔍 研究趋势分析</h2>
+<h3 id="复数神经网络在语音音频领域爆发">1. 复数神经网络在语音/音频领域爆发</h3>
+<ul>
+<li>ComVo的ICLR接受标志着CVNN在语音合成领域的成熟</li>
+<li>复数运算天然适合频谱图表示</li>
+</ul>
+<h3 id="状态空间模型与cvnn的结合">2. 状态空间模型与CVNN的结合</h3>
+<ul>
+<li>Mamba-3和量子动力学论文都探索了复数状态表示</li>
+<li>复数状态为状态跟踪提供了更丰富的表达能力</li>
+</ul>
+<h3 id="不确定性量化的量子启发方法">3. 不确定性量化的量子启发方法</h3>
+<ul>
+<li>复数酉表示在模型校准方面显示出巨大潜力</li>
+<li>量子力学概念(保范、Born规则)为CVNN设计提供新思路</li>
+</ul>
+<h3 id="超复数扩展">4. 超复数扩展</h3>
+<ul>
+<li>四元数作为CVNN的自然扩展获得关注</li>
+<li>三维信号处理(如IMU、3D旋转)是潜在应用场景</li>
+</ul>
+<hr />
+<h2 id="关键指标汇总">📈 关键指标汇总</h2>
+<table>
+<thead>
+<tr class="header">
+<th>论文</th>
+<th>会议/期刊</th>
+<th>核心创新</th>
+<th>性能提升</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ComVo</td>
+<td>ICLR 2026</td>
+<td>复数声码器</td>
+<td>训练速度+25%, 质量提升</td>
+<td>03-12</td>
+</tr>
+<tr class="even">
+<td>Mamba-3</td>
+<td>ICLR 2026</td>
+<td>复数状态更新</td>
+<td>准确率+1.8%, 状态减半</td>
+<td>03-16</td>
+</tr>
+<tr class="odd">
+<td>Quaternion Tutorial</td>
+<td>Handbook 2026</td>
+<td>四元数基础</td>
+<td>教程性质</td>
+<td>03-12</td>
+</tr>
+<tr class="even">
+<td>Unitary Classification Head</td>
+<td>arXiv</td>
+<td>酉表示分类头</td>
+<td>ECE降低2.4x</td>
+<td>02-17</td>
+</tr>
+<tr class="odd">
+<td>Quantum Dynamics</td>
+<td>arXiv</td>
+<td>量子序列模型</td>
+<td>理论N²优势</td>
+<td>02-24</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="研究启示">💡 研究启示</h2>
+<h3 id="对cvnn研究者的建议">对CVNN研究者的建议</h3>
+<ol type="1">
+<li><strong>关注音频/语音领域</strong>: 这是CVNN当前最成熟的应用场景</li>
+<li><strong>探索状态空间模型</strong>: 复数状态表示在序列建模中潜力巨大</li>
+<li><strong>借鉴量子力学</strong>: 酉变换、Born规则等概念为CVNN设计提供新思路</li>
+<li><strong>考虑超复数扩展</strong>: 四元数在3D信号处理中有独特优势</li>
+</ol>
+<h3 id="值得关注的研究方向">值得关注的研究方向</h3>
+<ol type="1">
+<li>复数Transformer架构的完整实现</li>
+<li>CVNN与扩散模型的结合</li>
+<li>硬件友好的复数运算优化</li>
+<li>CVNN在科学计算(量子化学、电磁学)中的应用</li>
+</ol>
+<hr />
+<p><em>报告生成时间: 2026-03-18</em> <em>数据来源: arXiv.org</em></p>
