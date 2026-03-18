@@ -1,35 +1,46 @@
 {
   "last_run": {
-    "run_id": "run_1773425152366",
-    "created_at": "2026-03-13T18:05:52.440Z",
+    "run_id": "run_1773684289096",
+    "created_at": "2026-03-16T18:04:49.224Z",
     "parent_event_id": null,
-    "selected_gene_id": "gene_gep_innovate_from_opportunity",
-    "selected_capsule_id": null,
+    "selected_gene_id": "gene_gep_repair_from_errors",
+    "selected_capsule_id": "capsule_1770477654236",
     "selector": {
-      "selected": "gene_gep_innovate_from_opportunity",
+      "selected": "gene_gep_repair_from_errors",
       "reason": [
         "signals match gene.signals_match",
-        "signals: stable_success_plateau",
-        "memory_graph: memory_prefer:gene_gep_innovate_from_opportunity | gene_prior:0.667",
+        "capsule trigger matches signals",
+        "signals: log_error, recurring_error, recurring_errsig(4x):LLM ERROR] 429 {\"error\":{\"type\":\"rate_limit_error\",\"message\":\"The engine is currently overloaded, pl, perf_bottleneck, repeated_tool_usage:exec",
+        "memory_graph: memory_prefer:gene_gep_repair_from_errors | gene_prior:0.625",
         "drift_intensity: 0.577"
       ],
-      "alternatives": []
+      "alternatives": [
+        "gene_gep_innovate_from_opportunity"
+      ]
     },
     "signals": [
-      "stable_success_plateau"
+      "log_error",
+      "recurring_error",
+      "recurring_errsig(4x):LLM ERROR] 429 {\"error\":{\"type\":\"rate_limit_error\",\"message\":\"The engine is currently overloaded, pl",
+      "perf_bottleneck",
+      "repeated_tool_usage:exec"
     ],
     "mutation": {
       "type": "Mutation",
-      "id": "mut_1773425152351",
-      "category": "innovate",
+      "id": "mut_1773684289083",
+      "category": "repair",
       "trigger_signals": [
-        "stable_success_plateau"
+        "log_error",
+        "recurring_error",
+        "recurring_errsig(4x):LLM ERROR] 429 {\"error\":{\"type\":\"rate_limit_error\",\"message\":\"The engine is currently overloaded, pl",
+        "perf_bottleneck",
+        "repeated_tool_usage:exec"
       ],
-      "target": "gene:gene_gep_innovate_from_opportunity",
-      "expected_effect": "explore new strategy combinations to escape local optimum",
-      "risk_level": "medium"
+      "target": "gene:gene_gep_repair_from_errors",
+      "expected_effect": "reduce runtime errors, increase stability, and lower failure rate",
+      "risk_level": "low"
     },
-    "mutation_id": "mut_1773425152351",
+    "mutation_id": "mut_1773684289083",
     "personality_state": {
       "type": "PersonalityState",
       "rigor": 0.7,
@@ -48,10 +59,10 @@
     "reused_source_node": null,
     "reused_chain_id": null,
     "baseline_untracked": [],
-    "baseline_git_head": "4bd19100594ab40085ae25798e3a20df0c6b03a9",
+    "baseline_git_head": "dce9f41959ef833f4368cdccf6531a9da2787184",
     "blast_radius_estimate": {
-      "files": 25,
-      "lines": 2000
+      "files": 20,
+      "lines": 1600
     },
     "active_task_id": null,
     "active_task_title": null,

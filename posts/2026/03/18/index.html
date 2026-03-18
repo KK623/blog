@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-03-18</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --text-color: #e0e0e0;
+            --accent-color: #00d4ff;
+            --secondary-accent: #ff6b6b;
+            --border-color: #2a2a2a;
+            --success-color: #4ade80;
+            --warning-color: #fbbf24;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent-color), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { color: #666; font-size: 1.1em; }
+        .overview {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .stat-value { font-size: 2em; color: var(--accent-color); font-weight: 600; }
+        .stat-label { color: #888; font-size: 0.9em; margin-top: 5px; }
+        .paper-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+        .paper-header { margin-bottom: 20px; }
+        .paper-title {
+            font-size: 1.4em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #888;
+            font-size: 0.9em;
+        }
+        .paper-meta span {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .section { margin: 25px 0; }
+        .section h3 {
+            color: var(--secondary-accent);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .section ul { padding-left: 20px; }
+        .section li { margin: 8px 0; }
+        .highlights { background: rgba(74, 222, 128, 0.1); border-left: 3px solid var(--success-color); padding: 15px 20px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+        .limitations { background: rgba(251, 191, 36, 0.1); border-left: 3px solid var(--warning-color); padding: 15px 20px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+        .trend-section { background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 12px; padding: 30px; margin: 40px 0; border: 1px solid var(--border-color); }
+        .trend-section h2 { color: var(--accent-color); margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--accent-color); font-weight: 500; }
+        tr:hover { background: rgba(255, 255, 255, 0.02); }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: 600; }
+        .badge-iclr { background: rgba(0, 212, 255, 0.2); color: var(--accent-color); }
+        .badge-arxiv { background: rgba(255, 107, 107, 0.2); color: var(--secondary-accent); }
+        footer { text-align: center; padding: 40px 0; color: #666; border-top: 1px solid var(--border-color); margin-top: 60px; }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CVNN Research Daily</h1>
+            <p class="subtitle">复数神经网络研究日报 - 2026年3月18日</p>
+        </header>
+
+        <div class="overview">
+            <h2>📊 今日概览</h2>
+            <div class="overview-grid">
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">核心论文</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">ICLR 2026</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">30</div>
+                    <div class="stat-label">搜索天数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">699</div>
+                    <div class="stat-label">相关论文总数</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-title">ComVo - 面向波形生成的复数神经网络</div>
+                <div class="paper-meta">
+                    <span><span class="badge badge-iclr">ICLR 2026</span></span>
+                    <span>📅 2026-03-12</span>
+                    <span>👥 Oh et al.</span>
+                    <span>🔗 <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589</a></span>
+                </div>
+            </div>
+            <div class="section">
+                <h3>背景与动机</h3>
+                <p>神经声码器在波形生成方面取得了显著进展，其中基于iSTFT的声码器近期受到广泛关注。然而，当前方法使用实值网络独立处理复数的实部和虚部，这种分离方式限制了捕捉复值频谱图固有结构的能力。</p>
+            </div>
+            <div class="section">
+                <h3>核心技术</h3>
+                <ul>
+                    <li><strong>原生复数运算架构</strong> - 生成器和判别器均使用原生复数算术，支持复值表示的结构化反馈</li>
+                    <li><strong>相位量化</strong> - 离散化相位值以结构化方式引导相位变换，正则化训练过程</li>
+                    <li><strong>块矩阵计算</strong> - 减少冗余操作，训练时间减少25%</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>实验结果</h3>
+                <p>ComVo在合成质量上超越可比实值基线，块矩阵方案减少25%训练时间。</p>
+            </div>
+            <div class="highlights">
+                <strong>核心收益：</strong>首个端到端复数神经网络声码器 | 原生复数运算更好捕捉频谱图结构 | 训练效率提升25%
+            </div>
+            <div class="limitations">
+                <strong>局限：</strong>仅在语音任务验证 | 块矩阵方案可能限制模型容量 | 相位量化粒度需精细调优
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-title">Mamba-3 - 基于状态空间原理的序列建模改进</div>
+                <div class="paper-meta">
+                    <span><span class="badge badge-iclr">ICLR 2026</span></span>
+                    <span>📅 2026-03-16</span>
+                    <span>👥 Lahoti et al.</span>
+                    <span>🔗 <a href="https://arxiv.org/abs/2603.15569" target="_blank">arXiv:2603.15569</a></span>
+                </div>
+            </div>
+            <div class="section">
+                <h3>背景与动机</h3>
+                <p>Transformer模型虽然质量强劲，但二次计算复杂度和线性内存使其推理成本高昂。现有线性模型在算法效率和能力之间做出了权衡，在状态跟踪等任务上表现不佳。</p>
+            </div>
+            <div class="section">
+                <h3>核心技术</h3>
+                <ul>
+                    <li><strong>复数状态更新规则</strong> - 基于SSM离散化导出，实现更丰富的状态跟踪能力</li>
+                    <li><strong>MIMO公式</strong> - 在不增加解码延迟的情况下提升模型性能</li>
+                    <li><strong>硬件感知优化</strong> - 针对现代加速器优化的计算图</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>实验结果</h3>
+                <p>在1.5B规模上，Mamba-3平均下游准确率提升0.6个百分点，MIMO变体额外提升1.2个百分点。使用一半状态大小达到Mamba-2相当的困惑度。</p>
+            </div>
+            <div class="highlights">
+                <strong>核心收益：</strong>复数状态表示增强状态跟踪 | 性能-效率帕累托前沿提升 | 状态大小减半但性能不打折
+            </div>
+            <div class="limitations">
+                <strong>局限：</strong>仅验证到1.5B规模 | 复数运算需特定硬件优化
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-title">超复数广义线性处理 - 四元数机器学习基础</div>
+                <div class="paper-meta">
+                    <span><span class="badge badge-arxiv">Handbook 2026</span></span>
+                    <span>📅 2026-03-12</span>
+                    <span>👥 Talebi & Took</span>
+                    <span>🔗 <a href="https://arxiv.org/abs/2603.11835" target="_blank">arXiv:2603.11835</a></span>
+                </div>
+            </div>
+            <div class="section">
+                <h3>核心内容</h3>
+                <p>将复数代数的成功复制到四元数等超复数域。四元数在三维旋转建模方面具有独特优势，在航空和计算机图形学中有广泛应用。</p>
+            </div>
+            <div class="section">
+                <h3>涵盖主题</h3>
+                <ul>
+                    <li><strong>增强统计</strong> - 四元数值随机过程的建模</li>
+                    <li><strong>广义线性模型</strong> - 利用增强统计的高效算法</li>
+                    <li><strong>四元数微积分与代数</strong> - 算法推导的基础</li>
+                    <li><strong>均方估计</strong> - 实用的四元数MSE优化</li>
+                </ul>
+            </div>
+            <div class="highlights">
+                <strong>核心收益：</strong>系统性的四元数机器学习入门材料 | 连接复数和四元数方法的理论桥梁 | 包含丰富的学习示例
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-title">复数酉表示 - 用于改进不确定性量化的分类头</div>
+                <div class="paper-meta">
+                    <span><span class="badge badge-arxiv">arXiv</span></span>
+                    <span>📅 2026-02-17</span>
+                    <span>👥 Anbar Jafari et al.</span>
+                    <span>🔗 <a href="https://arxiv.org/abs/2602.15283" target="_blank">arXiv:2602.15283</a></span>
+                </div>
+            </div>
+            <div class="section">
+                <h3>背景与动机</h3>
+                <p>现代深度神经网络虽预测准确率高，但校准性差：其置信度分数不能可靠反映真实的正确概率。量子力学启发的酉变换可能提供保范特征演化。</p>
+            </div>
+            <div class="section">
+                <h3>核心技术</h3>
+                <ul>
+                    <li><strong>量子启发的分类头</strong> - 将特征投影到复值希尔伯特空间，通过Cayley映射参数化的酉变换演化</li>
+                    <li><strong>受控混合实验</strong> - 单一共享backbone，可互换轻量级分类头对比</li>
+                    <li><strong>多种读出机制</strong> - 酉幅值头和Born规则层</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>实验结果</h3>
+                <p>CIFAR-10上ECE降至0.0146，相比标准softmax(0.0355)提升2.4x，相比温度缩放(0.0510)提升3.5x。在人类不确定性基准CIFAR-10H上KL散度最低(0.336)。</p>
+            </div>
+            <div class="highlights">
+                <strong>核心收益：</strong>ECE降低2.4x | 更好捕捉人类感知歧义 | 范数保持提供稳定特征演化
+            </div>
+            <div class="limitations">
+                <strong>局限：</strong>OOD检测效果不佳 | 情感分析任务上有限 | 复数运算增加开销
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-title">量子动力学深度序列建模 - 语言作为波函数</div>
+                <div class="paper-meta">
+                    <span><span class="badge badge-arxiv">arXiv</span></span>
+                    <span>📅 2026-02-24</span>
+                    <span>👥 Nebli et al.</span>
+                    <span>🔗 <a href="https://arxiv.org/abs/2602.22255" target="_blank">arXiv:2602.22255</a></span>
+                </div>
+            </div>
+            <div class="section">
+                <h3>背景与动机</h3>
+                <p>标准循环架构依赖门控机制来抑制竞争假设，而量子力学使用波函数和酉演化来管理概率幅和相位，提供自然的相长/相消机制。</p>
+            </div>
+            <div class="section">
+                <h3>核心技术</h3>
+                <ul>
+                    <li><strong>复值波函数潜状态</strong> - 有限维希尔伯特空间上的复值波函数</li>
+                    <li><strong>Cayley离散化</strong> - 保持酉性的无条件稳定数值方法</li>
+                    <li><strong>Born规则读出</strong> - 二次测量算子耦合幅值和相对相位</li>
+                    <li><strong>表达能力分离定理</strong> - 证明复数模型在读出维度上具有N²优势</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>理论贡献</h3>
+                <p>严格证明了复值序列模型在表达能力上的优势，建立了量子动力学与深度序列建模之间的形式化联系。</p>
+            </div>
+            <div class="highlights">
+                <strong>核心收益：</strong>理论证明复数模型表达能力优势 | 酉演化提供可解释信息流 | 范数保持消除梯度问题
+            </div>
+            <div class="limitations">
+                <strong>局限：</strong>实验规模较小 | 未与大模型对比 | 复数运算开销
+            </div>
+        </div>
+
+        <div class="trend-section">
+            <h2>🔍 研究趋势分析</h2>
+            <div class="section">
+                <h3>1. 复数神经网络在语音/音频领域爆发</h3>
+                <p>ComVo的ICLR接受标志着CVNN在语音合成领域的成熟，复数运算天然适合频谱图表示。</p>
+            </div>
+            <div class="section">
+                <h3>2. 状态空间模型与CVNN的结合</h3>
+                <p>Mamba-3和量子动力学论文都探索了复数状态表示，为状态跟踪提供了更丰富的表达能力。</p>
+            </div>
+            <div class="section">
+                <h3>3. 不确定性量化的量子启发方法</h3>
+                <p>复数酉表示在模型校准方面显示出巨大潜力，量子力学概念为CVNN设计提供新思路。</p>
+            </div>
+            <div class="section">
+                <h3>4. 超复数扩展</h3>
+                <p>四元数作为CVNN的自然扩展获得关注，三维信号处理是潜在应用场景。</p>
+            </div>
+        </div>
+
+        <h2>📈 关键指标汇总</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>论文</th>
+                    <th>会议/期刊</th>
+                    <th>核心创新</th>
+                    <th>性能提升</th>
+                    <th>日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ComVo</td>
+                    <td><span class="badge badge-iclr">ICLR 2026</span></td>
+                    <td>复数声码器</td>
+                    <td>训练速度+25%</td>
+                    <td>03-12</td>
+                </tr>
+                <tr>
+                    <td>Mamba-3</td>
+                    <td><span class="badge badge-iclr">ICLR 2026</span></td>
+                    <td>复数状态更新</td>
+                    <td>准确率+1.8%</td>
+                    <td>03-16</td>
+                </tr>
+                <tr>
+                    <td>Quaternion Tutorial</td>
+                    <td><span class="badge badge-arxiv">Handbook</span></td>
+                    <td>四元数基础</td>
+                    <td>教程性质</td>
+                    <td>03-12</td>
+                </tr>
+                <tr>
+                    <td>Unitary Classification</td>
+                    <td><span class="badge badge-arxiv">arXiv</span></td>
+                    <td>酉表示分类头</td>
+                    <td>ECE降低2.4x</td>
+                    <td>02-17</td>
+                </tr>
+                <tr>
+                    <td>Quantum Dynamics</td>
+                    <td><span class="badge badge-arxiv">arXiv</span></td>
+                    <td>量子序列模型</td>
+                    <td>理论N²优势</td>
+                    <td>02-24</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="trend-section">
+            <h2>💡 研究启示</h2>
+            <div class="section">
+                <h3>对CVNN研究者的建议</h3>
+                <ul>
+                    <li>关注音频/语音领域：这是CVNN当前最成熟的应用场景</li>
+                    <li>探索状态空间模型：复数状态表示在序列建模中潜力巨大</li>
+                    <li>借鉴量子力学：酉变换、Born规则等概念为CVNN设计提供新思路</li>
+                    <li>考虑超复数扩展：四元数在3D信号处理中有独特优势</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>值得关注的研究方向</h3>
+                <ul>
+                    <li>复数Transformer架构的完整实现</li>
+                    <li>CVNN与扩散模型的结合</li>
+                    <li>硬件友好的复数运算优化</li>
+                    <li>CVNN在科学计算中的应用</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>CVNN Research Daily - 2026-03-18</p>
+            <p>数据来源: <a href="https://arxiv.org" target="_blank">arXiv.org</a></p>
+            <p style="margin-top: 10px; font-size: 0.9em;"><a href="../../index.html">← 返回首页</a> | <a href="../index.html">← 返回月报</a></p>
+        </footer>
+    </div>
+</body>
+</html>
