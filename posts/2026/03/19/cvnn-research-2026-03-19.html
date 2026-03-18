@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-03-19 | Complex-Valued Neural Networks 前沿研究</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: rgba(255,255,255,0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        header .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        header .meta {
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .paper {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .paper:hover {
+            transform: translateY(-5px);
+        }
+        
+        .paper h2 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .paper-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .meta-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            color: #764ba2;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        
+        .meta-value {
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        .meta-value a {
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        
+        .meta-value a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .paper-section h3 {
+            color: #764ba2;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .paper-section p {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .highlight-box h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .summary-box {
+            background: #fff;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-box h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .paper {
+                padding: 20px;
+            }
+            
+            .paper-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 CVNN Research Daily</h1>
+            <p class="subtitle">Complex-Valued Neural Networks 前沿研究速递</p>
+            <p class="meta">📅 报告日期: 2026年3月19日 | 🔍 搜索范围: arXiv 2025-2026 | 📊 收录论文: 4篇</p>
+        </header>
+
+        <!-- Paper 1 -->
+        <article class="paper">
+            <h2>📄 1. Toward Complex-Valued Neural Networks for Waveform Generation</h2>
+            
+            <div class="paper-meta">
+                <div class="meta-item">
+                    <div class="meta-label">arXiv 链接</div>
+                    <div class="meta-value"><a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589v1</a></div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">作者</div>
+                    <div class="meta-value">Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">机构</div>
+                    <div class="meta-value">Korea University, Seoul, South Korea</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">发表状态</div>
+                    <div class="meta-value">ICLR 2026 (Accepted)</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <span class="tag">音频合成</span>
+                <span class="tag">复值神经网络</span>
+                <span class="tag">语音合成</span>
+                <span class="tag">iSTFT</span>
+            </div>
+
+            <div class="paper-section">
+                <h3>🎯 研究背景</h3>
+                <p>神经声码器（Neural Vocoders）在波形生成方面取得了显著进展，能够产生自然且富有表现力的音频。在这些方法中，基于iSTFT（逆短时傅里叶变换）的声码器因其能够避免学习计算成本高昂的上采样阶段而备受关注。然而，现有方法通常使用实值网络分别处理复值频谱图的实部和虚部，这种分离处理方式限制了模型捕捉复值频谱图内在结构的能力。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>💡 研究动机</h3>
+                <p>当前iSTFT-based声码器虽然避免了学习上采样阶段，但实值网络无法有效处理复数域中的相位-幅度关系。作者提出一个关键问题：<strong>如果直接使用原生复数运算，是否能更好地建模复值频谱图的结构，从而提升合成质量？</strong></p>
+            </div>
+
+            <div class="paper-section">
+                <h3>🔧 核心技术</h3>
+                <p>论文提出了<strong>ComVo (Complex-valued neural Vocoder)</strong>，包含以下技术创新：</p>
+                <div class="highlight-box">
+                    <h4>核心贡献：</h4>
+                    <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                        <li><strong>原生复数运算：</strong>生成器和判别器均使用原生复数运算，而非分别处理实部虚部</li>
+                        <li><strong>对抗训练框架：</strong>提供复值表示的结构化反馈</li>
+                        <li><strong>相位量化 (Phase Quantization)：</strong>离散化相位值，以结构化方式引导相位变换，正则化训练过程</li>
+                        <li><strong>块矩阵计算方案 (Block-Matrix Computation)：</strong>通过减少冗余操作提高训练效率，训练时间减少25%</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paper-section">
+                <h3>📈 收益点</h3>
+                <p><strong>实验结果：</strong></p>
+                <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                    <li>相比实值基线模型，ComVo实现了<strong>更高的合成质量</strong></li>
+                    <li>块矩阵计算方案使<strong>训练时间减少25%</strong></li>
+                    <li>复值表示更好地捕捉了频谱图的内在结构</li>
+                    <li>代码和音频样本已公开：<a href="https://hs-oh-prml.github.io/ComVo/" target="_blank">项目主页</a></li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h4>📝 总结</h4>
+                <p>这项工作首次将原生复值神经网络应用于波形生成任务，突破了传统实值网络在处理复值频谱图时的局限性。通过ComVo架构和相位量化技术，不仅提升了合成质量，还实现了训练效率的显著提升。该研究为复值神经网络在音频处理领域的应用开辟了新方向，对语音合成、音乐生成等任务具有重要参考价值。</p>
+            </div>
+        </article>
+
+        <!-- Paper 2 -->
+        <article class="paper">
+            <h2>📄 2. M²RNN: Non-Linear RNNs with Matrix-Valued States for Scalable Language Modeling</h2>
+            
+            <div class="paper-meta">
+                <div class="meta-item">
+                    <div class="meta-label">arXiv 链接</div>
+                    <div class="meta-value"><a href="https://arxiv.org/abs/2603.14360" target="_blank">arXiv:2603.14360v1</a></div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">作者</div>
+                    <div class="meta-value">Mayank Mishra, Shawn Tan, Ion Stoica, Joseph Gonzalez, Tri Dao</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">机构</div>
+                    <div class="meta-value">UC Berkeley, Stanford University</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">发表时间</div>
+                    <div class="meta-value">March 2026</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <span class="tag">语言模型</span>
+                <span class="tag">RNN</span>
+                <span class="tag">矩阵值状态</span>
+                <span class="tag">可扩展性</span>
+            </div>
+
+            <div class="paper-section">
+                <h3>🎯 研究背景</h3>
+                <p>Transformer架构虽然具有高度并行性，但受限于TC⁰复杂度类，无法处理实体追踪和代码执行等需要更强表达能力的任务。非线性循环神经网络（RNN）具有更强的表达能力，但其语言建模性能受限于状态大小。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>💡 研究动机</h3>
+                <p>作者观察到非线性RNN的性能瓶颈在于状态大小，因此提出使用<strong>矩阵值隐藏状态</strong>来扩展状态容量，同时保持计算效率。通过高效利用张量核心，实现可扩展的语言建模。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>🔧 核心技术</h3>
+                <div class="highlight-box">
+                    <h4>核心贡献：</h4>
+                    <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                        <li><strong>Matrix-to-Matrix RNN (M²RNN)：</strong>采用矩阵值隐藏状态和表达性强的非线性状态转换</li>
+                        <li><strong>状态大小扩展机制：</strong>通过状态扩展实现高效的张量核心利用</li>
+                        <li><strong>完美状态追踪泛化：</strong>在训练时未见过的序列长度上实现完美泛化</li>
+                        <li><strong>混合架构：</strong>将循环层与注意力机制结合，7B MoE模型 perplexity 提升0.4-0.5</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paper-section">
+                <h3>📈 收益点</h3>
+                <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                    <li>M²RNN状态大小仅为Gated DeltaNet的<strong>1/3</strong>，性能却提升0.4-0.5 perplexity</li>
+                    <li>在LongBench上比SOTA混合线性注意力架构<strong>高出8个点</strong></li>
+                    <li>单个M²RNN层替换即可带来显著精度提升</li>
+                    <li>为大规模语言模型提供了新的构建模块</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h4>📝 总结</h4>
+                <p>M²RNN通过矩阵值状态扩展了非线性RNN的表达能力，突破了传统RNN状态大小的限制。该方法在保持计算效率的同时显著提升了语言建模性能，为构建高效可扩展的大型语言模型提供了新的思路。特别值得注意的是，该方法在长尾序列上的泛化能力表现出色。</p>
+            </div>
+        </article>
+
+        <!-- Paper 3 -->
+        <article class="paper">
+            <h2>📄 3. GIST: Gauge-Invariant Spectral Transformers for Scalable Graph Neural Operators</h2>
+            
+            <div class="paper-meta">
+                <div class="meta-item">
+                    <div class="meta-label">arXiv 链接</div>
+                    <div class="meta-value"><a href="https://arxiv.org/abs/2603.16849" target="_blank">arXiv:2603.16849v1</a></div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">作者</div>
+                    <div class="meta-value">Mattia Rigotti, Nicholas Thumiger, Thomas Frick</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">机构</div>
+                    <div class="meta-value">IBM Research</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">发表时间</div>
+                    <div class="meta-value">March 2026</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <span class="tag">图神经网络</span>
+                <span class="tag">Transformer</span>
+                <span class="tag">神经算子</span>
+                <span class="tag">规范不变性</span>
+            </div>
+
+            <div class="paper-section">
+                <h3>🎯 研究背景</h3>
+                <p>将Transformer位置编码适配到网格和图结构数据面临重大计算挑战：精确的谱方法需要立方复杂度的特征分解，且可能因数值求解器伪影破坏规范不变性；而高效的近似方法则牺牲了规范对称性。这两种失效模式都会导致归纳学习中的灾难性泛化问题。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>💡 研究动机</h3>
+                <p>现有方法在跨不同网格分辨率或图离散化时泛化能力差。作者提出需要一种能够保持规范不变性同时实现线性复杂度的图Transformer架构。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>🔧 核心技术</h3>
+                <div class="highlight-box">
+                    <h4>核心贡献：</h4>
+                    <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                        <li><strong>规范不变谱Transformer (GIST)：</strong>通过随机投影实现端到端O(N)复杂度</li>
+                        <li><strong>内积注意力机制：</strong>在投影嵌入上保持规范不变性</li>
+                        <li><strong>离散化不变学习：</strong>证明GIST在有界失配误差下实现离散化不变学习</li>
+                        <li><strong>跨分辨率参数迁移：</strong>支持神经算子应用中的任意网格分辨率参数迁移</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paper-section">
+                <h3>📈 收益点</h3>
+                <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                    <li>在标准图基准测试上达到SOTA（PPI上99.50% micro-F1）</li>
+                    <li><strong>唯一可扩展到750K节点</strong>的网格神经算子方法</li>
+                    <li>在DrivAerNet和DrivAerNet++数据集上实现SOTA空气动力学预测</li>
+                    <li>保持规范不变性的同时实现线性复杂度</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h4>📝 总结</h4>
+                <p>GIST通过创新的随机投影和内积注意力机制，同时解决了谱Transformer的计算复杂度和规范不变性问题。该方法不仅在标准图任务上表现出色，更重要的是能够扩展到大规模网格神经算子任务，为科学计算和工程仿真中的神经算子应用提供了新的可能性。</p>
+            </div>
+        </article>
+
+        <!-- Paper 4 -->
+        <article class="paper">
+            <h2>📄 4. Neural Precoding in Complex Projective Spaces</h2>
+            
+            <div class="paper-meta">
+                <div class="meta-item">
+                    <div class="meta-label">arXiv 链接</div>
+                    <div class="meta-value"><a href="https://arxiv.org/abs/2603.07811" target="_blank">arXiv:2603.07811v1</a></div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">作者</div>
+                    <div class="meta-value">Zaid Abdullah, Merouane Debbah, Symeon Chatzinotas, Bjorn Ottersten</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">机构</div>
+                    <div class="meta-value">University of Luxembourg, KAUST</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">发表时间</div>
+                    <div class="meta-value">March 2026</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <span class="tag">无线通信</span>
+                <span class="tag">预编码</span>
+                <span class="tag">复射影空间</span>
+                <span class="tag">MU-MISO</span>
+            </div>
+
+            <div class="paper-section">
+                <h3>🎯 研究背景</h3>
+                <p>基于深度学习的多用户多输入单输出（MU-MISO）系统预编码涉及训练深度学习模型将信道系数的特征映射到预编码权重的标签。传统上，复值信道和预编码器系数使用实部虚部或幅度相位进行参数化。然而，预编码性能依赖于信道和预编码向量之间内积的幅度，这对全局相位旋转是不变的。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>💡 研究动机</h3>
+                <p>传统表示方法未能利用全局相位冗余的对称性，导致学习效率低下和泛化性能下降。作者提出使用复射影空间（CPS）参数化来去除全局相位冗余。</p>
+            </div>
+
+            <div class="paper-section">
+                <h3>🔧 核心技术</h3>
+                <div class="highlight-box">
+                    <h4>核心贡献：</h4>
+                    <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                        <li><strong>复射影空间参数化：</strong>基于CPS的无线信道和WMMSE预编码器向量参数化</li>
+                        <li><strong>去除全局相位冗余：</strong>消除传统表示中的全局相位冗余</li>
+                        <li><strong>两种参数化方案：</strong>实值嵌入和复超球坐标</li>
+                        <li><strong>几何对齐学习：</strong>使DL模型学习几何对齐的物理不同信道-预编码映射</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paper-section">
+                <h3>📈 收益点</h3>
+                <ul style="margin-left: 20px; color: #555; line-height: 2;">
+                    <li>和速率性能<strong>显著提升</strong></li>
+                    <li>泛化性能大幅改善</li>
+                    <li>模型复杂度增加可忽略不计</li>
+                    <li>为无线通信中的深度学习预编码提供了新的理论框架</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h4>📝 总结</h4>
+                <p>这项工作将复射影空间的数学框架引入无线通信预编码问题，通过去除全局相位冗余显著提升了深度学习预编码的性能。该方法不仅在性能上优于传统方法，而且保持了模型简洁性，为通信系统中复值信号处理提供了新的思路。</p>
+            </div>
+        </article>
+
+        <footer>
+            <p><strong>CVNN Research Daily - 2026-03-19</strong></p>
+            <p>本报告汇总了arXiv上最新发布的Complex-Valued Neural Networks相关研究</p>
+            <p>搜索时间范围: 2025年1月 - 2026年3月 | 报告生成时间: 2026-03-19 04:00 GMT+8</p>
+            <div class="footer-links">
+                <a href="/blog/index.html">🏠 博客首页</a>
+                <a href="/blog/cvnn.html">🧠 CVNN专页</a>
+                <a href="/blog/posts/2026/03/19/cvnn-research-2026-03-19.html">📄 本页链接</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

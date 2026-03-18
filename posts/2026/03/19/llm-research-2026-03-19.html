@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Jarvis Research Bot" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-03-19" />
+  <title>LLM 量化/部署/蒸馏 文献调研日报</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">LLM 量化/部署/蒸馏 文献调研日报</h1>
+<p class="date">2026-03-19</p>
+</header>
+<h1 id="llm-research-daily---2026年3月19日">LLM Research Daily - 2026年3月19日</h1>
+<blockquote>
+<p><strong>调研范围</strong>：arXiv 过去24小时 (2026-03-18 至 2026-03-19)<br />
+<strong>收录论文</strong>：5篇<br />
+<strong>研究方向</strong>：量化压缩、边缘部署、知识蒸馏、跨模态学习</p>
+</blockquote>
+<hr />
+<h2 id="论文1-batquant-mxfp4量化">论文1: BATQuant - MXFP4量化新突破</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16590">2603.16590</a></li>
+<li><strong>标题</strong>: BATQuant: Outlier-resilient MXFP4 Quantization via Learnable Block-wise Optimization</li>
+<li><strong>作者</strong>: Xiaobo Xia, et al.</li>
+<li><strong>发表时间</strong>: 2026年3月17日</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>微缩浮点格式(MXFP)已成为在多模态大语言模型(MLLM)和大型语言模型(LLLMs)部署到现代加速器架构上的有前景标准。然而，现有的训练后量化(PTQ)方法，特别是针对整数格式设计的旋转技术，在应用于MXFP4时会遭受严重的性能崩溃。</p>
+<p><strong>动机</strong></p>
+<p>近期研究将这种失败归因于格式不匹配：全局正交旋转会无意中跨量化块传递异常值能量，引发新的异常值破坏局部块级缩放，同时往往创建双峰激活分布，未充分利用有限的量化范围。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>块级仿射变换(BAT)</strong>: 限制变换与MXFP粒度对齐，防止跨块异常值传播</li>
+<li><strong>GPK分解</strong>: 全局和私有Kronecker分解，有效降低存储和运行时开销</li>
+<li><strong>块级可学习裁剪</strong>: 抑制残余异常值</li>
+<li><strong>放松正交约束</strong>: 优化分布形状而非强制正交性</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>配置: W4A4KV16（4bit权重、4bit激活、16bit KV缓存）</li>
+<li>多模态基准: 恢复96.43%的全精度性能</li>
+<li>LLM任务: 在各种任务上均优于现有方法</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 在激进量化配置下实现SOTA性能</li>
+<li>✅ 对异常值具有弹性</li>
+<li>✅ 硬件友好的块级操作</li>
+<li>✅ 适用于MLLM和LLM</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>主要针对MXFP4格式优化</li>
+<li>实现复杂度高于简单量化方法</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>BATQuant通过在块级别优化量化过程，解决了MXFP4中的异常值传播问题，为超低比特量化开辟了新路径。</p>
+<hr />
+<h2 id="论文2-efficient-reasoning-on-the-edge">论文2: 边缘设备高效推理</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16867">2603.16867</a></li>
+<li><strong>标题</strong>: Efficient Reasoning on the Edge</li>
+<li><strong>作者</strong>: Yelysei Bondarenko, Thomas Hehn, Rob Hesselink, et al. (Qualcomm AI Research)</li>
+<li><strong>发表时间</strong>: 2026年3月17日</li>
+<li><strong>项目页</strong>: <a href="https://qualcomm-ai-research.github.io/llm-reasoning-on-edge/">https://qualcomm-ai-research.github.io/llm-reasoning-on-edge/</a></li>
+</ul>
+<p><strong>背景</strong></p>
+<p>具有思维链推理的大语言模型在复杂问题解决任务上实现了SOTA性能，但其冗长的推理轨迹和大型上下文需求使其在边缘部署不切实际。挑战包括高token生成成本、大型KV缓存占用，以及将推理能力蒸馏到小型模型时的低效性。</p>
+<p><strong>动机</strong></p>
+<p>现有方法通常依赖从大型模型蒸馏推理轨迹到小型模型，这些轨迹冗长且风格上冗余，不利于设备端推理。作者希望开发轻量级方法使小型LLM具备推理能力。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>LoRA适配器+监督微调</strong>: 轻量级方法启用小型LLM推理</li>
+<li><strong>预算强制(Budget Forcing)</strong>: 通过强化学习减少响应长度，最小化精度损失</li>
+<li><strong>并行测试时扩展</strong>: 解决内存受限解码，以较小延迟增加提升精度</li>
+<li><strong>动态适配器切换</strong>: 仅在需要时激活推理</li>
+<li><strong>KV缓存共享策略</strong>: 在prompt编码期间共享KV缓存，减少首token时间</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>模型: Qwen2.5-7B</li>
+<li>平台: 移动设备</li>
+<li>结果: 在严格资源约束下实现高效、准确推理</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 使LLM推理在移动设备上实用化</li>
+<li>✅ 显著降低响应长度</li>
+<li>✅ 动态推理激活节省资源</li>
+<li>✅ 已验证可在真实移动设备运行</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>主要针对7B规模模型验证</li>
+<li>需预训练LoRA适配器</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>该工作为边缘部署的LLM推理提供了实用解决方案，通过多种优化技术组合实现了移动场景下的高效推理。</p>
+<hr />
+<h2 id="论文3-online-experiential-learning">论文3: 在线经验学习框架</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16856">2603.16856</a></li>
+<li><strong>标题</strong>: Online Experiential Learning for Language Models</li>
+<li><strong>作者</strong>: Li Dong, et al.</li>
+<li><strong>发表时间</strong>: 2026年3月17日</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>提升大语言模型的主流范式依赖离线训练和人工标注或模拟环境，完全未利用真实世界部署过程中积累的丰富经验。</p>
+<p><strong>动机</strong></p>
+<p>作者希望让语言模型能够从自身的部署经验中持续改进，而不需要访问用户端环境或人工标注数据。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>两阶段框架</strong>:
+<ul>
+<li>阶段1: 从用户端收集的交互轨迹中提取可迁移经验知识</li>
+<li>阶段2: 通过on-policy上下文蒸馏将知识整合到模型参数</li>
+</ul></li>
+<li><strong>在线学习循环</strong>: 迭代改进，改进后的模型收集更高质量轨迹</li>
+<li><strong>无需用户环境访问</strong>: 仅利用已有交互数据</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>环境: 文本游戏环境</li>
+<li>模型: 多规模、思考和非思考变体</li>
+<li>结果: 迭代持续提升任务准确率和token效率</li>
+<li>关键发现: 提取的经验知识显著优于原始轨迹</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 无需人工标注，自动进化</li>
+<li>✅ 保持分布外性能</li>
+<li>✅ 提取知识比原始数据更有效</li>
+<li>✅ 适用于多种模型规模</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>主要在文本游戏环境验证</li>
+<li>需要足够多的用户交互数据</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>OEL为LLM的持续学习提供了新范式，通过经验知识的提取和蒸馏实现了无需人工干预的模型自我提升。</p>
+<hr />
+<h2 id="论文4-domain-mixture-design">论文4: 通过领域混合设计对齐语言模型</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16622">2603.16622</a></li>
+<li><strong>标题</strong>: Domain Mixture Design via Log-Likelihood Differences for Aligning Language Models with a Target Model</li>
+<li><strong>作者</strong>: Ryo Kishino, et al.</li>
+<li><strong>发表时间</strong>: 2026年3月17日</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>传统上，将语言模型与目标模型对齐需要直接蒸馏。但能否通过设计训练数据的领域混合比例来实现类似效果？</p>
+<p><strong>动机</strong></p>
+<p>作者希望建立一种固定训练配方，通过预训练或持续预训练的数据领域混合来对齐基础模型与目标模型，无需直接蒸馏。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>对数似然空间视角</strong>: 将模型视为对数似然空间中的点</li>
+<li><strong>对齐训练更新方向</strong>: 使训练更新方向与指向目标模型的方向对齐</li>
+<li><strong>领域权重确定方法</strong>: 基于对数似然差异计算最优领域混合比例</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>模型: NanoGPT</li>
+<li>数据集: The Pile</li>
+<li>结果: 相比均匀加权，一致降低KL散度</li>
+<li>下游任务性能也更接近目标模型</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 无需直接蒸馏即可对齐模型</li>
+<li>✅ 固定配方，可重复使用</li>
+<li>✅ 计算成本低于蒸馏</li>
+<li>✅ 适用于预训练和持续预训练</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>效果仍不如直接蒸馏</li>
+<li>仅在NanoGPT规模验证</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>该工作为模型对齐提供了数据驱动的替代方案，通过精心设计的领域混合实现对目标模型的近似。</p>
+<hr />
+<h2 id="论文5-omnilingual-sonar">论文5: 全语言SONAR跨模态嵌入</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16606">2603.16606</a></li>
+<li><strong>标题</strong>: Omnilingual SONAR: Cross-Lingual and Cross-Modal Sentence Embeddings Bridging Massively Multilingual Text and Speech</li>
+<li><strong>作者</strong>: Omnilingual SONAR Team, Meta AI</li>
+<li><strong>发表时间</strong>: 2026年3月17日</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>跨语言句子编码器通常仅覆盖几百种语言，且在下游质量和表示对齐之间做权衡。如何扩展到数千种语言同时保持SOTA性能是重大挑战。</p>
+<p><strong>动机</strong></p>
+<p>构建能够原生嵌入文本、语音、代码和数学表达式的全语言、跨语言、跨模态句子嵌入模型，覆盖从高资源到极低资源的各种语言变体。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>渐进式训练</strong>:
+<ul>
+<li>阶段1: 使用LLM初始化的编码器-解码器学习200种语言的基础空间</li>
+<li>阶段2: 通过教师-学生编码器蒸馏扩展到数千种语言</li>
+<li>阶段3: 将177种口语语言映射到该空间</li>
+</ul></li>
+<li><strong>Split-Softmax对比损失</strong>: 结合token级解码和合成困难负样本</li>
+<li><strong>避免表示坍塌</strong>: 渐进式扩展策略</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>FLORES (200语言): 相似性搜索错误减半</li>
+<li>BIBLE (1,560语言): 错误降低15倍</li>
+<li>翻译: 超越NLLB-3B，BIBLE翻译高出15 chrF++</li>
+<li>MTEB和XLCoST: 强劲性能</li>
+<li>语音: 相似性搜索错误降低43%</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 覆盖数千种语言的SOTA性能</li>
+<li>✅ 统一的多模态语义空间</li>
+<li>✅ 跨语言和跨模态无缝桥接</li>
+<li>✅ 开源可用</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>训练复杂度随语言数量增加</li>
+<li>极低资源语言仍有改进空间</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>OmniSONAR通过渐进式蒸馏策略，成功构建了覆盖数千种语言的多模态嵌入空间，为多语言和跨模态应用树立了新标杆。</p>
+<hr />
+<h2 id="每日总结">每日总结</h2>
+<p>今日调研的5篇论文涵盖了量化、边缘部署和知识蒸馏三个核心方向：</p>
+<table>
+<thead>
+<tr class="header">
+<th>论文</th>
+<th>核心贡献</th>
+<th>实用价值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BATQuant</td>
+<td>MXFP4异常值弹性量化</td>
+<td>⭐⭐⭐⭐⭐ 超低比特量化SOTA</td>
+</tr>
+<tr class="even">
+<td>Edge Reasoning</td>
+<td>移动端高效推理</td>
+<td>⭐⭐⭐⭐⭐ 边缘部署实用方案</td>
+</tr>
+<tr class="odd">
+<td>OEL</td>
+<td>在线经验学习框架</td>
+<td>⭐⭐⭐⭐ 无标注持续学习</td>
+</tr>
+<tr class="even">
+<td>Domain Mixture</td>
+<td>数据混合对齐目标模型</td>
+<td>⭐⭐⭐ 蒸馏的低成本替代</td>
+</tr>
+<tr class="odd">
+<td>OmniSONAR</td>
+<td>全语言跨模态嵌入</td>
+<td>⭐⭐⭐⭐⭐ 多语言SOTA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键趋势</strong>:</p>
+<ol type="1">
+<li><strong>极端量化</strong>: BATQuant推动W4A4配置成为实用选项</li>
+<li><strong>边缘优先</strong>: 从云到边的推理优化成为研究热点</li>
+<li><strong>经验驱动学习</strong>: 在线学习和数据混合设计减少人工依赖</li>
+<li><strong>跨模态统一</strong>: 文本、语音、代码的统一表示空间</li>
+</ol>
+<hr />
+<p><em>报告生成时间: 2026-03-19 03:45</em><br />
+<em>分析师: Jarvis 🤖</em></p>
+</body>
+</html>
