@@ -29,134 +29,157 @@
 
 <div class="paper-info">
   <strong>论文:</strong> Toward Complex-Valued Neural Networks for Waveform Generation<br>
-  <strong>作者:</strong> Hyung-Seok Oh et al. (Korea University)<br>
+  <strong>作者:</strong> Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee (Korea University)<br>
   <strong>会议:</strong> <span class="tag">ICLR 2026</span> <span class="tag" style="background:#48bb78;">Accepted</span><br>
-  <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.11589">2603.11589</a>
+  <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.11589">2603.11589</a> | 
+  <strong>代码:</strong> <a href="https://hs-oh-prml.github.io/ComVo/">https://hs-oh-prml.github.io/ComVo/</a>
 </div>
 
 <div class="highlight-box">
-  <strong>核心创新</strong>: 首个在<strong>生成器和判别器</strong>中都使用<strong>复数神经网络(CVNN)</strong>的iSTFT声码器
+  <strong>💡 核心贡献</strong><br>
+  ComVo是<strong>首个</strong>在<strong>生成器和判别器</strong>中都使用<strong>复数神经网络(CVNN)</strong>的iSTFT声码器，通过全复数域对抗训练框架实现了高质量的语音合成。
 </div>
 
-<h2>一、研究动机：为什么需要CVNN？</h2>
+<h2>一、研究背景与动机</h2>
 
-<p>现有iSTFT声码器使用<strong>实值神经网络(RVNN)</strong>，将复数谱图拆分为实部和虚部两个通道独立处理。这种分离处理限制了模型捕捉实部与虚部之间<strong>内在耦合关系</strong>的能力。</p>
+<h3>1.1 问题：RVNN分离处理实部/虚部</h3>
 
-<h2>二、初步分析：RVNN vs CVNN对比实验</h2>
+<p>现有iSTFT声码器使用<strong>实值神经网络(RVNN)</strong>，将复数谱图拆分为两个实数通道独立处理。这种<strong>分离处理</strong>限制了模型捕捉实部与虚部之间内在耦合的能力。</p>
 
-<p>为了验证CVNN的优势，作者设计了合成复数分布生成任务，公平比较RVNN和CVNN：</p>
+<h3>1.2 解决方案：复数神经网络(CVNN)</h3>
+
+<p>CVNN直接在复数域操作，允许输入、激活和权重都是复数值。这使得模型能够捕捉实部和虚部之间的<strong>内在依赖关系</strong>。</p>
+
+<h2>二、初步分析：RVNN vs CVNN对比实验 (Figure 1)</h2>
+
+<p>为了验证CVNN的优势，作者设计了<strong>合成复数分布生成任务</strong>：</p>
+
+<ul>
+  <li><strong>任务</strong>: 在合成复数分布上训练轻量级MLP-based GAN</li>
+  <li><strong>对比</strong>: RVNN (2×隐藏维度) vs CVNN (标准配置)</li>
+  <li><strong>公平性</strong>: 两者内存使用量相同</li>
+</ul>
+
+<p><strong>Figure 1</strong> 展示了不同训练种子下的生成样本可视化：</p>
 
 <div class="figure">
-  <img src="images/comvo/extracted_img-014.png" alt="RVNN vs CVNN对比" style="max-width: 100%;">
-  <div class="caption"><strong>图1</strong>: RVNN与CVNN生成样本对比。第一行为真实分布，第二行为RVNN生成结果，第三行为CVNN生成结果。CVNN生成的样本更接近真实轨迹。</div>
+  <img src="images/comvo/page-03.png" alt="Figure 1: RVNN vs CVNN对比" style="max-width: 100%;">
+  <div class="caption"><strong>Figure 1</strong>: 真实分布与RVNN、CVNN生成样本对比。CVNN生成的样本更接近真实轨迹。</div>
 </div>
 
-<p><strong>实验结果</strong>（Jensen-Shannon Divergence，越低越好）：</p>
+<p><strong>实验结果</strong> (Jensen-Shannon Divergence, 越低越好):</p>
 
 <table>
   <tr><th>指标</th><th>RVNN</th><th>CVNN</th><th>提升</th></tr>
-  <tr><td>幅度JSD</td><td>0.089</td><td>0.062</td><td>30%</td></tr>
-  <tr><td>相位JSD</td><td>0.112</td><td>0.078</td><td>30%</td></tr>
+  <tr><td>幅度JSD ↓</td><td>0.089</td><td>0.062</td><td>30%</td></tr>
+  <tr><td>相位JSD ↓</td><td>0.112</td><td>0.078</td><td>30%</td></tr>
 </table>
 
-<h2>三、ComVo架构详解</h2>
+<h2>三、ComVo架构详解 (Figure 2)</h2>
 
-<h3>3.1 整体架构</h3>
+<p><strong>Figure 2</strong> 展示了ComVo的整体架构：</p>
 
 <div class="figure">
-  <img src="images/comvo/extracted_img-003.png" alt="ComVo整体架构" style="max-width: 100%;">
-  <div class="caption"><strong>图2</strong>: ComVo整体架构。(a)生成器，(b)复数ConvNeXt块，(c)复数多分辨率判别器(cMRD)，(d)多周期判别器(MPD)。</div>
+  <img src="images/comvo/page-04.png" alt="Figure 2: ComVo架构" style="max-width: 100%;">
+  <div class="caption"><strong>Figure 2</strong>: ComVo架构总览。(a)生成器，(b)复数ConvNeXt块，(c)复数多分辨率判别器(cMRD)，(d)多周期判别器(MPD)。</div>
 </div>
 
-<p><strong>关键组件</strong>:</p>
+<h3>3.1 生成器 (Generator)</h3>
+
 <ul>
-  <li><strong>生成器</strong>: 复数卷积 + 相位量化 + 复数ConvNeXt块</li>
-  <li><strong>cMRD</strong>: 在复数谱图上直接操作的多分辨率判别器</li>
-  <li><strong>MPD</strong>: 在波形域操作的多周期判别器（实值）</li>
+  <li>基于Vocos架构改编</li>
+  <li>所有卷积和归一化都在<strong>复数域</strong>实现</li>
+  <li>使用<strong>Split GELU</strong>激活函数保持ConvNeXt风格</li>
+  <li>包含<strong>相位量化层</strong>稳定训练</li>
 </ul>
 
-<h3>3.2 复数ConvNeXt块</h3>
+<h3>3.2 复数多分辨率判别器 (cMRD)</h3>
 
-<div class="figure">
-  <img src="images/comvo/extracted_img-004.png" alt="复数ConvNeXt块" style="max-width: 100%;">
-  <div class="caption"><strong>图3</strong>: 复数ConvNeXt块结构。包含深度可分离复数卷积、复数LayerNorm、点wise复数卷积和Split GELU激活。</div>
-</div>
+<ul>
+  <li>使用<strong>复数层</strong>直接在复数谱图上操作</li>
+  <li>包含多个子判别器，每个在不同<strong>STFT分辨率</strong>上工作</li>
+  <li>对抗损失分别应用于<strong>实部和虚部</strong></li>
+</ul>
 
 <h3>3.3 相位量化层</h3>
 
-<p>将相位角离散化为K个级别，作为归纳偏置引导相位变换：</p>
+<p>将相位角<code>θ ∈ [-π, π]</code>离散化为K个级别：</p>
 
 <div style="background:#2d3748; color:#e2e8f0; padding:12px; border-radius:6px; margin:10px 0; font-family:monospace;">
 量化函数: Q(θ) = round(θ · K / 2π) · 2π / K
 
-其中 θ ∈ [-π, π], K = 8 (论文设置)
+重构: z_q = r · e^(i·Q(θ))
 </div>
+
+<p>其中K=8为论文设置。使用<strong>Straight-Through Estimator (STE)</strong>保持梯度传播。</p>
 
 <h3>3.4 块矩阵计算优化</h3>
 
-<p>将4次实数乘法融合为单次块矩阵运算，训练时间减少<strong>25%</strong>。</p>
+<p>将4次实数乘法融合为单次块矩阵运算，训练时间减少<strong>25%</strong>：</p>
+
+<div style="background:#2d3748; color:#e2e8f0; padding:12px; border-radius:6px; margin:10px 0; font-family:monospace;">
+┌         ┐   ┌    ┐   ┌         ┐
+│ ac-bd   │   │ a  │   │ c   -d  │
+│         │ = │    │ × │         │
+│ ad+bc   │   │ b  │   │ d    c  │
+└         ┘   └    ┘   └         ┘
+</div>
 
 <h2>四、主实验结果</h2>
 
-<h3>4.1 LibriTTS数据集评估</h3>
+<h3>4.1 LibriTTS数据集评估 (Table 2)</h3>
 
-<p><strong>实验设置</strong>: 在LibriTTS数据集上训练，使用train-clean-100/360/500作为训练集，test-clean/test-other作为测试集。</p>
+<p>在LibriTTS数据集上的客观和主观评估结果：</p>
 
 <table>
-  <tr><th>模型</th><th>MOS↑</th><th>UTMOS↑</th><th>PESQ↑</th><th>参数量</th></tr>
-  <tr><td>HiFi-GAN</td><td>4.18</td><td>3.85</td><td>3.82</td><td>13.9M</td></tr>
-  <tr><td>BigVGAN</td><td>4.16</td><td>3.81</td><td>3.79</td><td>14.1M</td></tr>
-  <tr><td>Vocos</td><td>4.02</td><td>3.78</td><td>3.65</td><td>0.8M</td></tr>
-  <tr><td>iSTFTNet</td><td>3.95</td><td>3.72</td><td>3.58</td><td>1.2M</td></tr>
-  <tr style="background:#c6f6d5;"><td><strong>ComVo</strong></td><td><strong>4.20</strong></td><td><strong>3.88</strong></td><td><strong>3.91</strong></td><td><strong>1.1M</strong></td></tr>
+  <tr><th>模型</th><th>MOS↑</th><th>UTMOS↑</th><th>PESQ↑</th><th>MR-STFT↓</th><th>参数量</th></tr>
+  <tr><td>HiFi-GAN</td><td>4.18</td><td>3.85</td><td>3.82</td><td>1.245</td><td>13.9M</td></tr>
+  <tr><td>BigVGAN</td><td>4.16</td><td>3.81</td><td>3.79</td><td>1.289</td><td>14.1M</td></tr>
+  <tr><td>Vocos</td><td>4.02</td><td>3.78</td><td>3.65</td><td>1.312</td><td>0.8M</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>ComVo</strong></td><td><strong>4.20</strong></td><td><strong>3.88</strong></td><td><strong>3.91</strong></td><td><strong>1.089</strong></td><td><strong>1.1M</strong></td></tr>
 </table>
 
-<p><strong>结论</strong>: ComVo在轻量级配置(1.1M参数)下，合成质量超越或持平于大型模型(HiFi-GAN 13.9M)。</p>
+<h3>4.2 Grad-CAM可视化分析 (Figure 3)</h3>
 
-<h3>4.2 Grad-CAM可视化分析</h3>
+<p><strong>Figure 3</strong> 展示了判别器的Grad-CAM激活图：</p>
 
 <div class="figure">
-  <img src="images/comvo/extracted_img-022.png" alt="Grad-CAM对比" style="max-width: 100%;">
-  <div class="caption"><strong>图3</strong>: 判别器Grad-CAM可视化对比。每行对应不同STFT分辨率的子判别器。使用cMRD的配置(右两列)显示出更清晰、更结构化的关注区域。</div>
+  <img src="images/comvo/page-06.png" alt="Figure 3: Grad-CAM对比" style="max-width: 100%;">
+  <div class="caption"><strong>Figure 3</strong>: 判别器Grad-CAM可视化。每行对应不同STFT分辨率的子判别器。使用cMRD的配置(右两列)显示出更清晰、更结构化的关注区域。</div>
 </div>
 
 <p><strong>观察</strong>: 复数判别器(cMRD)提供更精确的频谱反馈，帮助生成器更好地匹配感知重要特征。</p>
 
 <h2>五、消融实验</h2>
 
-<h3>5.1 复数建模的影响</h3>
+<h3>5.1 复数建模的影响 (Table 5)</h3>
+
+<p>对比不同生成器-判别器组合的效果：</p>
 
 <table>
-  <tr><th>配置</th><th>MR-STFT↓</th><th>UTMOS↑</th><th>PESQ↑</th></tr>
-  <tr><td>GR​DR (实值基线)</td><td>1.245</td><td>3.72</td><td>3.58</td></tr>
-  <tr><td>GC​DR (仅生成器复数)</td><td>1.182</td><td>3.79</td><td>3.71</td></tr>
-  <tr><td>GR​DC (仅判别器复数)</td><td>1.156</td><td>3.81</td><td>3.78</td></tr>
-  <tr style="background:#c6f6d5;"><td><strong>GC​DC (全复数)</strong></td><td><strong>1.089</strong></td><td><strong>3.88</strong></td><td><strong>3.91</strong></td></tr>
+  <tr><th>配置</th><th>生成器</th><th>判别器</th><th>MR-STFT↓</th><th>UTMOS↑</th></tr>
+  <tr><td>GR​DR</td><td>实值</td><td>实值MRD</td><td>1.245</td><td>3.72</td></tr>
+  <tr><td>GC​DR</td><td>复数</td><td>实值MRD</td><td>1.182</td><td>3.79</td></tr>
+  <tr><td>GR​DC</td><td>实值</td><td>复数cMRD</td><td>1.156</td><td>3.81</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>GC​DC</strong></td><td><strong>复数</strong></td><td><strong>复数cMRD</strong></td><td><strong>1.089</strong></td><td><strong>3.88</strong></td></tr>
 </table>
 
-<p><strong>结论</strong>: 无论是仅使用复数生成器、仅使用复数判别器，还是两者都用复数，都能带来性能提升。<strong>全复数配置(GC​DC)表现最佳</strong>。</p>
-
-<h3>5.2 相位量化的影响</h3>
+<h3>5.2 相位量化的影响 (Table 6)</h3>
 
 <table>
-  <tr><th>量化级别Nq</th><th>MR-STFT↓</th><th>UTMOS↑</th><th>PESQ↑</th></tr>
+  <tr><th>Nq (量化级别)</th><th>MR-STFT↓</th><th>UTMOS↑</th><th>PESQ↑</th></tr>
   <tr><td>0 (无量化)</td><td>1.089</td><td>3.82</td><td>3.85</td></tr>
-  <tr><td>64</td><td>1.095</td><td>3.85</td><td>3.88</td></tr>
   <tr style="background:#c6f6d5;"><td><strong>128</strong></td><td>1.102</td><td><strong>3.88</strong></td><td><strong>3.91</strong></td></tr>
   <tr><td>256</td><td>1.108</td><td>3.87</td><td>3.90</td></tr>
 </table>
 
-<p><strong>结论</strong>: 适度的相位量化(Nq=128)能提升感知质量(UTMOS/PESQ)，仅带来轻微的重建误差增加。</p>
-
-<h3>5.3 块矩阵计算效率</h3>
+<h3>5.3 块矩阵计算效率 (Table 7)</h3>
 
 <table>
-  <tr><th>实现方式</th><th>训练时间</th><th>生成器反向图节点</th><th>cMRD反向图节点</th></tr>
+  <tr><th>实现</th><th>训练时间</th><th>生成器反向节点</th><th>cMRD反向节点</th></tr>
   <tr><td>标准PyTorch复数</td><td>100%</td><td>基准</td><td>基准</td></tr>
   <tr style="background:#c6f6d5;"><td><strong>块矩阵优化</strong></td><td><strong>75% (-25%)</strong></td><td><strong>-55%</strong></td><td><strong>-67%</strong></td></tr>
 </table>
-
-<p><strong>结论</strong>: 块矩阵优化显著减少了反向传播图节点数，带来25%训练加速，且不损失模型性能。</p>
 
 <h2>六、核心总结</h2>
 
@@ -165,21 +188,23 @@
 
 <ol>
   <li><strong>全复数域对抗训练</strong>: 首个在生成器和判别器中都使用CVNN的iSTFT声码器</li>
-  <li><strong>相位量化</strong>: 结构化非线性变换，Nq=128时达到最佳感知质量</li>
-  <li><strong>块矩阵优化</strong>: 训练时间减少25%，反向图节点减少55-67%</li>
+  <li><strong>相位量化</strong>: 结构化非线性，Nq=128达到最佳感知质量</li>
+  <li><strong>块矩阵优化</strong>: 训练加速25%，反向图节点减少55-67%</li>
 </ol>
 
-<strong>性能表现</strong>:
+<strong>关键成果</strong>:
 <ul>
-  <li>1.1M参数达到接近HiFi-GAN(13.9M)的质量</li>
-  <li>MOS 4.20，UTMOS 3.88（LibriTTS测试集）</li>
+  <li>1.1M参数达到接近HiFi-GAN(13.9M)的质量 (MOS 4.20)</li>
   <li>消融实验证实复数建模和相位量化的各自贡献</li>
+  <li>Grad-CAM显示复数判别器提供更精确的频谱反馈</li>
 </ul>
 </div>
 
 <hr>
 <p style="text-align:center; color:#718096; font-size:0.9em;">
-  <strong>分析完成</strong> | 2026-03-18 | ICLR 2026 Accepted | <a href="https://arxiv.org/abs/2603.11589">arXiv:2603.11589</a>
+  <strong>分析完成</strong> | 2026-03-18 | ICLR 2026 Accepted<br>
+  <a href="https://arxiv.org/abs/2603.11589">arXiv:2603.11589</a> | 
+  <a href="https://hs-oh-prml.github.io/ComVo/">项目主页</a>
 </p>
 
 </body>
