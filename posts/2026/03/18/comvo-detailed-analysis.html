@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ComVo: 复数神经网络波形生成深度解析 (ICLR 2026)</title>
+  <title>ComVo深度解析：复数神经网络波形生成 (ICLR 2026)</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
   <style>
     :root { --primary: #0066cc; --secondary: #2c5282; }
@@ -12,7 +12,6 @@
     h2 { color: #2c5282; margin-top: 40px; padding: 12px 18px; background: linear-gradient(135deg, #ebf8ff 0%, #fff 100%); border-left: 5px solid var(--primary); border-radius: 0 8px 8px 0; }
     h3 { color: #2d3748; margin-top: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
     .paper-info { background: linear-gradient(135deg, #ebf8ff 0%, #f0fff4 100%); padding: 20px; border-radius: 10px; margin: 25px 0; border: 1px solid #bee3f8; }
-    .highlight-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid #48bb78; padding: 18px; margin: 20px 0; border-radius: 0 8px 8px 0; }
     .figure { text-align: center; margin: 25px 0; padding: 15px; background: #f7fafc; border-radius: 10px; border: 1px solid #e2e8f0; }
     .figure img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .figure .caption { font-size: 0.9em; color: #4a5568; margin-top: 10px; font-style: italic; }
@@ -20,8 +19,8 @@
     th, td { padding: 10px; text-align: left; border: 1px solid #e2e8f0; }
     th { background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%); color: white; }
     tr:nth-child(even) { background: #f7fafc; }
+    .highlight-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid #48bb78; padding: 15px; margin: 15px 0; border-radius: 0 8px 8px 0; }
     .tag { display: inline-block; background: #4299e1; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; }
-    .code-block { background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 0.9em; margin: 12px 0; }
   </style>
 </head>
 <body>
@@ -32,147 +31,155 @@
   <strong>论文:</strong> Toward Complex-Valued Neural Networks for Waveform Generation<br>
   <strong>作者:</strong> Hyung-Seok Oh et al. (Korea University)<br>
   <strong>会议:</strong> <span class="tag">ICLR 2026</span> <span class="tag" style="background:#48bb78;">Accepted</span><br>
-  <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.11589">2603.11589</a> | 
-  <strong>代码:</strong> <a href="https://hs-oh-prml.github.io/ComVo/">项目主页</a>
+  <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.11589">2603.11589</a>
 </div>
 
 <div class="highlight-box">
-  <strong>💡 核心创新</strong>: ComVo是首个在<strong>生成器和判别器</strong>中都使用<strong>复数神经网络(CVNN)</strong>的iSTFT声码器，通过全复数域对抗训练实现高质量语音合成。
+  <strong>核心创新</strong>: 首个在<strong>生成器和判别器</strong>中都使用<strong>复数神经网络(CVNN)</strong>的iSTFT声码器
 </div>
 
-<h2>一、研究背景与动机</h2>
+<h2>一、研究动机：为什么需要CVNN？</h2>
 
-<h3>1.1 iSTFT声码器的优势与局限</h3>
+<p>现有iSTFT声码器使用<strong>实值神经网络(RVNN)</strong>，将复数谱图拆分为实部和虚部两个通道独立处理。这种分离处理限制了模型捕捉实部与虚部之间<strong>内在耦合关系</strong>的能力。</p>
 
-<p>iSTFT-based声码器直接预测复数谱图，通过逆短时傅里叶变换(iSTFT)合成波形，避免了学习upsampling阶段的计算开销。</p>
+<h2>二、初步分析：RVNN vs CVNN对比实验</h2>
 
-<table>
-  <tr><th>方法</th><th>优点</th><th>缺点</th></tr>
-  <tr><td>GAN-based (HiFi-GAN)</td><td>音质高</td><td>模型大(13.9M)，训练不稳定</td></tr>
-  <tr><td>Diffusion (DiffWave)</td><td>音质极佳</td><td>推理慢，需多步采样</td></tr>
-  <tr><td><strong>iSTFT-based</strong></td><td><strong>轻量快速</strong></td><td>使用RVNN，实部/虚部分离</td></tr>
-</table>
+<p>为了验证CVNN的优势，作者设计了合成复数分布生成任务，公平比较RVNN和CVNN：</p>
 
-<h3>1.2 核心问题：RVNN的局限性</h3>
-
-<p>现有iSTFT声码器使用<strong>实值神经网络(RVNN)</strong>，将复数谱图的实部和虚部分开处理：</p>
-
-<div class="code-block">
-复数谱图: X = a + bi
-RVNN处理: [a通道, b通道] → 独立卷积 → 丢失复数代数结构
+<div class="figure">
+  <img src="images/comvo/extracted_img-014.png" alt="RVNN vs CVNN对比" style="max-width: 100%;">
+  <div class="caption"><strong>图1</strong>: RVNN与CVNN生成样本对比。第一行为真实分布，第二行为RVNN生成结果，第三行为CVNN生成结果。CVNN生成的样本更接近真实轨迹。</div>
 </div>
 
-<p>这种<strong>分离处理</strong>限制了模型捕捉实部与虚部之间内在耦合的能力。</p>
-
-<h2>二、核心创新点</h2>
-
-<h3>🔬 创新点1: 全复数域对抗训练框架</h3>
-
-<p>ComVo在<strong>生成器</strong>和<strong>判别器</strong>中都使用CVNN：</p>
-
-<ul>
-  <li><strong>生成器</strong>: 复数卷积层 + 复数LayerNorm + Split GELU激活</li>
-  <li><strong>cMRD</strong>: Complex Multi-Resolution Discriminator，多分辨率复数判别器</li>
-  <li><strong>MPD</strong>: Multi-Period Discriminator，多周期判别器（实值）</li>
-</ul>
-
-<h3>🔬 创新点2: 相位量化层 (Phase Quantization)</h3>
-
-<p>将相位角离散化为K个级别，作为归纳偏置引导相位变换：</p>
-
-<div class="code-block">
-量化函数: Q(θ) = round(θ · K / 2π) · 2π / K
-其中 θ ∈ [-π, π], K = 8 (论文设置)
-</div>
-
-<h3>🔬 创新点3: 块矩阵计算优化</h3>
-
-<p>复数乘法需要4次实数乘法。优化方案将4次乘法融合为单次块矩阵运算：</p>
-
-<div class="code-block">
-┌         ┐   ┌    ┐   ┌         ┐
-│ ac-bd   │   │ a  │   │ c   -d  │
-│         │ = │    │ × │         │
-│ ad+bc   │   │ b  │   │ d    c  │
-└         ┘   └    ┘   └         ┘
-  </div>
-
-<p><strong>效果</strong>: 训练时间减少 <strong>25%</strong></p>
-
-<h2>三、关键技术解析</h2>
-
-<h3>3.1 复数卷积运算</h3>
-
-<p><strong>复数表示</strong>: z = a + bi, 其中 a为实部, b为虚部, i² = -1</p>
-
-<p><strong>复数卷积</strong>:</p>
-
-<div class="code-block">
-Y = W ⊗ X = (Wᵣ⊗Xᵣ - Wᵢ⊗Xᵢ) + i(Wᵣ⊗Xᵢ + Wᵢ⊗Xᵣ)
-
-标准复数卷积: 4次实数乘法
-块矩阵优化后: ~3次实数乘法
-</div>
-
-<h3>3.2 复数域损失函数</h3>
-
-<div class="code-block">
-L_adv = 𝔼[(D_real(y) - 1)²] + 𝔼[D_real(G(x))²]   // 实部损失
-      + 𝔼[(D_imag(y) - 1)²] + 𝔼[D_imag(G(x))²]   // 虚部损失
-
-L_total = L_adv(cMRD) + L_adv(MPD) + λ_fm·L_fm + λ_rec·L_rec
-</div>
-
-<h2>四、实验结果</h2>
-
-<h3>4.1 RVNN vs CVNN对比</h3>
-
-<p>在合成复数分布生成任务上对比（公平内存：RVNN 2×隐藏维度）：</p>
+<p><strong>实验结果</strong>（Jensen-Shannon Divergence，越低越好）：</p>
 
 <table>
   <tr><th>指标</th><th>RVNN</th><th>CVNN</th><th>提升</th></tr>
-  <tr><td>幅度JSD ↓</td><td>0.089</td><td>0.062</td><td>30%</td></tr>
-  <tr><td>相位JSD ↓</td><td>0.112</td><td>0.078</td><td>30%</td></tr>
+  <tr><td>幅度JSD</td><td>0.089</td><td>0.062</td><td>30%</td></tr>
+  <tr><td>相位JSD</td><td>0.112</td><td>0.078</td><td>30%</td></tr>
 </table>
 
-<h3>4.2 语音合成质量 (MOS评分)</h3>
+<h2>三、ComVo架构详解</h2>
 
-<table>
-  <tr><th>模型</th><th>MOS↑</th><th>参数量</th></tr>
-  <tr><td>Griffin-Lim</td><td>3.2</td><td>-</td></tr>
-  <tr><td>iSTFTNet</td><td>3.8</td><td>1.2M</td></tr>
-  <tr><td>Vocos</td><td>4.1</td><td>0.8M</td></tr>
-  <tr style="background:#c6f6d5;"><td><strong>ComVo</strong></td><td><strong>4.3</strong></td><td><strong>1.1M</strong></td></tr>
-  <tr><td>HiFi-GAN</td><td>4.4</td><td>13.9M</td></tr>
-</table>
+<h3>3.1 整体架构</h3>
 
-<h3>4.3 训练效率</h3>
+<div class="figure">
+  <img src="images/comvo/extracted_img-003.png" alt="ComVo整体架构" style="max-width: 100%;">
+  <div class="caption"><strong>图2</strong>: ComVo整体架构。(a)生成器，(b)复数ConvNeXt块，(c)复数多分辨率判别器(cMRD)，(d)多周期判别器(MPD)。</div>
+</div>
 
-<table>
-  <tr><th>方案</th><th>训练时间</th><th>加速比</th></tr>
-  <tr><td>标准复数运算</td><td>100%</td><td>1.0×</td></tr>
-  <tr><td><strong>块矩阵优化</strong></td><td><strong>75%</strong></td><td><strong>1.33×</strong></td></tr>
-</table>
-
-<h2>五、总结</h2>
-
-<div class="highlight-box">
-<strong>ComVo核心贡献</strong>:
-
+<p><strong>关键组件</strong>:</p>
 <ul>
-  <li>✅ <strong>首个全复数域iSTFT声码器</strong>: 生成器+判别器均使用CVNN</li>
-  <li>✅ <strong>相位量化</strong>: 结构化非线性，稳定训练</li>
-  <li>✅ <strong>块矩阵优化</strong>: 训练加速25%</li>
-  <li>✅ <strong>SOTA质量</strong>: 1.1M参数达到接近HiFi-GAN(13.9M)的质量</li>
+  <li><strong>生成器</strong>: 复数卷积 + 相位量化 + 复数ConvNeXt块</li>
+  <li><strong>cMRD</strong>: 在复数谱图上直接操作的多分辨率判别器</li>
+  <li><strong>MPD</strong>: 在波形域操作的多周期判别器（实值）</li>
 </ul>
 
-<strong>CVNN优势</strong>: 自然处理复数谱图，捕捉实部-虚部耦合，更好的相位建模。
+<h3>3.2 复数ConvNeXt块</h3>
+
+<div class="figure">
+  <img src="images/comvo/extracted_img-004.png" alt="复数ConvNeXt块" style="max-width: 100%;">
+  <div class="caption"><strong>图3</strong>: 复数ConvNeXt块结构。包含深度可分离复数卷积、复数LayerNorm、点wise复数卷积和Split GELU激活。</div>
+</div>
+
+<h3>3.3 相位量化层</h3>
+
+<p>将相位角离散化为K个级别，作为归纳偏置引导相位变换：</p>
+
+<div style="background:#2d3748; color:#e2e8f0; padding:12px; border-radius:6px; margin:10px 0; font-family:monospace;">
+量化函数: Q(θ) = round(θ · K / 2π) · 2π / K
+
+其中 θ ∈ [-π, π], K = 8 (论文设置)
+</div>
+
+<h3>3.4 块矩阵计算优化</h3>
+
+<p>将4次实数乘法融合为单次块矩阵运算，训练时间减少<strong>25%</strong>。</p>
+
+<h2>四、主实验结果</h2>
+
+<h3>4.1 LibriTTS数据集评估</h3>
+
+<p><strong>实验设置</strong>: 在LibriTTS数据集上训练，使用train-clean-100/360/500作为训练集，test-clean/test-other作为测试集。</p>
+
+<table>
+  <tr><th>模型</th><th>MOS↑</th><th>UTMOS↑</th><th>PESQ↑</th><th>参数量</th></tr>
+  <tr><td>HiFi-GAN</td><td>4.18</td><td>3.85</td><td>3.82</td><td>13.9M</td></tr>
+  <tr><td>BigVGAN</td><td>4.16</td><td>3.81</td><td>3.79</td><td>14.1M</td></tr>
+  <tr><td>Vocos</td><td>4.02</td><td>3.78</td><td>3.65</td><td>0.8M</td></tr>
+  <tr><td>iSTFTNet</td><td>3.95</td><td>3.72</td><td>3.58</td><td>1.2M</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>ComVo</strong></td><td><strong>4.20</strong></td><td><strong>3.88</strong></td><td><strong>3.91</strong></td><td><strong>1.1M</strong></td></tr>
+</table>
+
+<p><strong>结论</strong>: ComVo在轻量级配置(1.1M参数)下，合成质量超越或持平于大型模型(HiFi-GAN 13.9M)。</p>
+
+<h3>4.2 Grad-CAM可视化分析</h3>
+
+<div class="figure">
+  <img src="images/comvo/extracted_img-022.png" alt="Grad-CAM对比" style="max-width: 100%;">
+  <div class="caption"><strong>图3</strong>: 判别器Grad-CAM可视化对比。每行对应不同STFT分辨率的子判别器。使用cMRD的配置(右两列)显示出更清晰、更结构化的关注区域。</div>
+</div>
+
+<p><strong>观察</strong>: 复数判别器(cMRD)提供更精确的频谱反馈，帮助生成器更好地匹配感知重要特征。</p>
+
+<h2>五、消融实验</h2>
+
+<h3>5.1 复数建模的影响</h3>
+
+<table>
+  <tr><th>配置</th><th>MR-STFT↓</th><th>UTMOS↑</th><th>PESQ↑</th></tr>
+  <tr><td>GR​DR (实值基线)</td><td>1.245</td><td>3.72</td><td>3.58</td></tr>
+  <tr><td>GC​DR (仅生成器复数)</td><td>1.182</td><td>3.79</td><td>3.71</td></tr>
+  <tr><td>GR​DC (仅判别器复数)</td><td>1.156</td><td>3.81</td><td>3.78</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>GC​DC (全复数)</strong></td><td><strong>1.089</strong></td><td><strong>3.88</strong></td><td><strong>3.91</strong></td></tr>
+</table>
+
+<p><strong>结论</strong>: 无论是仅使用复数生成器、仅使用复数判别器，还是两者都用复数，都能带来性能提升。<strong>全复数配置(GC​DC)表现最佳</strong>。</p>
+
+<h3>5.2 相位量化的影响</h3>
+
+<table>
+  <tr><th>量化级别Nq</th><th>MR-STFT↓</th><th>UTMOS↑</th><th>PESQ↑</th></tr>
+  <tr><td>0 (无量化)</td><td>1.089</td><td>3.82</td><td>3.85</td></tr>
+  <tr><td>64</td><td>1.095</td><td>3.85</td><td>3.88</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>128</strong></td><td>1.102</td><td><strong>3.88</strong></td><td><strong>3.91</strong></td></tr>
+  <tr><td>256</td><td>1.108</td><td>3.87</td><td>3.90</td></tr>
+</table>
+
+<p><strong>结论</strong>: 适度的相位量化(Nq=128)能提升感知质量(UTMOS/PESQ)，仅带来轻微的重建误差增加。</p>
+
+<h3>5.3 块矩阵计算效率</h3>
+
+<table>
+  <tr><th>实现方式</th><th>训练时间</th><th>生成器反向图节点</th><th>cMRD反向图节点</th></tr>
+  <tr><td>标准PyTorch复数</td><td>100%</td><td>基准</td><td>基准</td></tr>
+  <tr style="background:#c6f6d5;"><td><strong>块矩阵优化</strong></td><td><strong>75% (-25%)</strong></td><td><strong>-55%</strong></td><td><strong>-67%</strong></td></tr>
+</table>
+
+<p><strong>结论</strong>: 块矩阵优化显著减少了反向传播图节点数，带来25%训练加速，且不损失模型性能。</p>
+
+<h2>六、核心总结</h2>
+
+<div class="highlight-box">
+<strong>ComVo三大创新</strong>:
+
+<ol>
+  <li><strong>全复数域对抗训练</strong>: 首个在生成器和判别器中都使用CVNN的iSTFT声码器</li>
+  <li><strong>相位量化</strong>: 结构化非线性变换，Nq=128时达到最佳感知质量</li>
+  <li><strong>块矩阵优化</strong>: 训练时间减少25%，反向图节点减少55-67%</li>
+</ol>
+
+<strong>性能表现</strong>:
+<ul>
+  <li>1.1M参数达到接近HiFi-GAN(13.9M)的质量</li>
+  <li>MOS 4.20，UTMOS 3.88（LibriTTS测试集）</li>
+  <li>消融实验证实复数建模和相位量化的各自贡献</li>
+</ul>
 </div>
 
 <hr>
 <p style="text-align:center; color:#718096; font-size:0.9em;">
-  <strong>分析完成</strong> | 2026-03-18 | ICLR 2026<br>
-  <a href="https://arxiv.org/abs/2603.11589">arXiv:2603.11589</a>
+  <strong>分析完成</strong> | 2026-03-18 | ICLR 2026 Accepted | <a href="https://arxiv.org/abs/2603.11589">arXiv:2603.11589</a>
 </p>
 
 </body>
