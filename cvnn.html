@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN 复数神经网络 | 文献调研专栏</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      background: rgba(255,255,255,0.95);
+      padding: 40px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 1.1em;
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .nav a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .paper {
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .paper:hover {
+      transform: translateY(-5px);
+    }
+    .paper-date {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .paper-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .paper-title a {
+      color: #764ba2;
+      text-decoration: none;
+    }
+    .paper-title a:hover {
+      text-decoration: underline;
+    }
+    .paper-desc {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-top: 10px;
+    }
+    footer {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    footer p {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 CVNN 复数神经网络</h1>
+      <p class="subtitle">Complex-Valued Neural Networks 前沿研究文献调研专栏</p>
+      <nav class="nav">
+        <a href="index.html">🏠 首页</a>
+        <a href="https://github.com/KK623" target="_blank">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-19 · 4篇新论文 · ICLR 2026</div>
+        <div class="paper-title"><a href="posts/2026/03/19/cvnn-research-2026-03-19.html">CVNN Research Daily - 2026-03-19</a></div>
+        <div class="paper-desc">复值波形生成(ComVo)、矩阵RNN语言模型(M²RNN)、规范不变谱Transformer(GIST)、复射影空间预编码</div>
+        <span class="tag">音频合成</span>
+        <span class="tag">语言模型</span>
+        <span class="tag">图神经网络</span>
+        <span class="tag">无线通信</span>
+      </div>
+
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-18 · CVNN深度解析 · ICLR 2026</div>
+        <div class="paper-title"><a href="posts/2026/03/18/comvo-detailed-analysis.html">ComVo深度解析：复数神经网络波形生成</a></div>
+        <div class="paper-desc">ICLR 2026 Accepted，原生复值运算、相位量化、块矩阵计算方案</div>
+        <span class="tag">复值神经网络</span>
+        <span class="tag">语音合成</span>
+        <span class="tag">iSTFT</span>
+      </div>
+
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-18 · LLM Research Daily · 3篇新论文</div>
+        <div class="paper-title"><a href="posts/2026/03/18/llm-research-2026-03-18.html">LLM Research Daily：深度注意力优化/MoDA/对抗进化</a></div>
+        <div class="paper-desc">深度注意力蒸馏、MoDA架构、对抗进化训练策略</div>
+        <span class="tag">LLM</span>
+        <span class="tag">注意力机制</span>
+        <span class="tag">模型架构</span>
+      </div>
+
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-17 · CVNN Research Daily · 5篇新论文</div>
+        <div class="paper-title"><a href="posts/2026/03/17/cvnn-research-2026-03-17.html">CVNN Research Daily：波形生成/酉表示分类头/XL-MIMO波束训练/鲁棒性分析</a></div>
+        <div class="paper-desc">复值神经网络前沿研究进展</div>
+        <span class="tag">CVNN</span>
+        <span class="tag">波束训练</span>
+        <span class="tag">鲁棒性</span>
+      </div>
+
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-17 · LLM Research Daily · 4篇新论文</div>
+        <div class="paper-title"><a href="posts/2026/03/17/llm-research-2026-03-17.html">LLM Research Daily：知识蒸馏/结构化记忆压缩/稀疏推理/存内计算部署</a></div>
+        <div class="paper-desc">LLM量化、部署、蒸馏最新进展</div>
+        <span class="tag">知识蒸馏</span>
+        <span class="tag">稀疏推理</span>
+        <span class="tag">存内计算</span>
+      </div>
+
+      <div class="paper">
+        <div class="paper-date">📅 2026-03-16 · CVNN Research Daily · 6篇新论文</div>
+        <div class="paper-title"><a href="posts/2026/03/16/cvnn-research-2026-03-16.html">CVNN Research Daily：波形生成/不确定性量化/量子序列建模/雷达信号处理</a></div>
+        <div class="paper-desc">复值神经网络前沿研究进展</div>
+        <span class="tag">CVNN</span>
+        <span class="tag">不确定性量化</span>
+        <span class="tag">量子计算</span>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2026 CVNN Research Daily | Complex-Valued Neural Networks Literature Survey</p>
+      <p>文献调研 · 技术洞察 · 学术分享</p>
+    </footer>
+  </div>
+</body>
+</html>
