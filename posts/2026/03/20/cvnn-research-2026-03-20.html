@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-03-20</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        .header .meta { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .summary-card h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-card ul { list-style: none; }
+        .summary-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+        .summary-card li:last-child { border-bottom: none; }
+        .summary-card .label { color: var(--text-muted); min-width: 100px; }
+        .paper-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .paper-section h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .paper-section h3 {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin: 20px 0 12px;
+        }
+        .paper-section p { margin-bottom: 12px; }
+        .paper-section ul, .paper-section ol {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+        .paper-section li { margin-bottom: 8px; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .info-item {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        .info-item .label { color: var(--text-muted); font-size: 0.85rem; }
+        .info-item .value { color: var(--text); font-weight: 500; }
+        .info-item a { color: var(--primary); text-decoration: none; }
+        .info-item a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .tag.success { background: var(--success); }
+        .tag.warning { background: var(--warning); }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 32px 0;
+            border-radius: 1px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.4rem; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 CVNN Research Daily</h1>
+            <div class="meta">2026年3月20日 · 复数神经网络文献调研</div>
+        </div>
+
+        <div class="summary-card">
+            <h2>📊 今日概览</h2>
+            <ul>
+                <li><span class="label">搜索日期</span><span>2026-03-20</span></li>
+                <li><span class="label">搜索范围</span><span>arXiv 过去30天</span></li>
+                <li><span class="label">关键词</span><span>CVNN, complex-valued neural network, complex transformer</span></li>
+                <li><span class="label">新论文数</span><span>4篇核心论文</span></li>
+                <li><span class="label">发布时间</span><span>2026-03-20 04:15 CST</span></li>
+            </ul>
+        </div>
+
+        <div class="paper-section">
+            <h2>论文1: ComVo - 面向波形生成的复数神经网络</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Toward Complex-Valued Neural Networks for Waveform Generation</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2603.11589" target="_blank">2603.11589</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">发表</div>
+                    <div class="value">ICLR 2026 (Accepted)</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2026-03-12</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">代码</div>
+                    <div class="value"><a href="https://hs-oh-prml.github.io/ComVo/" target="_blank">Website</a></div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>神经声码器在波形生成领域取得了显著进展，能够产生自然且富有表现力的音频。基于iSTFT的声码器通过预测复值频谱图并经由逆短时傅里叶变换合成波形，避免了增加计算成本的学习上采样阶段。然而，现有方法采用实值网络独立处理实部和虚部，这种分离方式限制了捕捉复值频谱图固有结构的能力。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>实值网络独立处理复数实部和虚部，无法充分利用相位-幅度耦合关系</li>
+                <li>现有iSTFT声码器缺乏对复数运算的原生支持</li>
+                <li>需要能够在复数域进行对抗训练的新方法</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>原生复数运算架构</strong>：生成器和判别器均使用原生复数算术，支持对抗训练框架并提供复值表示的结构化反馈</li>
+                <li><strong>相位量化(Phase Quantization)</strong>：离散化相位值以结构化方式引导相位变换，正则化训练过程并稳定复数域学习</li>
+                <li><strong>块矩阵计算方案</strong>：减少冗余操作，提高训练效率，训练时间减少25%</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在语音合成标准数据集上进行评估</li>
+                <li>与实值基线声码器进行对比</li>
+                <li>ComVo在合成质量上超越可比实值基线</li>
+                <li>块矩阵方案实现25%训练时间缩减</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 首个端到端复数神经网络声码器</span>
+            <span class="tag success">✓ 原生复数运算更好捕捉频谱图结构</span>
+            <span class="tag success">✓ 相位量化提供稳定的相位学习机制</span>
+            <span class="tag success">✓ 训练效率提升25%</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>仅在语音任务上验证，未测试其他音频类型</li>
+                <li>块矩阵方案可能限制模型容量</li>
+                <li>相位量化粒度需要精细调优</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>ComVo是首个完全基于复数神经网络的声码器，通过原生复数运算、相位量化和块矩阵优化，在语音合成质量上超越了实值基线。这项工作展示了CVNN在信号处理领域的巨大潜力，为后续研究提供了重要参考。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文2: CVKAN - 复数Kolmogorov-Arnold网络</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">CVKAN: Complex-Valued Kolmogorov-Arnold Networks</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Matthias Wolff等</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2502.02417" target="_blank">2502.02417</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">发表</div>
+                    <div class="value">IJCNN 2025</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2025-11-27 (v4)</div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>Kolmogorov-Arnold Networks (KANs) 作为MLP的替代方案，通过可学习的激活函数在边上替代固定节点激活，提供了更好的可解释性和准确性。然而，现有KANs仅适用于实值数据，无法处理复数域问题。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>将KAN的可解释性与CVNN的优势相结合</li>
+                <li>复数数据在信号处理和物理建模中广泛存在</li>
+                <li>需要专门针对复数域设计的神经网络架构</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>复数域扩展</strong>：将KAN架构和必要机制转移到复数域，学习函数 f: ℂ→ℂ</li>
+                <li><strong>输出层处理</strong>：对于实值输出任务(如分类)，在最后一层舍弃权重的虚部</li>
+                <li><strong>符号函数拟合</strong>：在符号复值函数和物理公式上进行验证</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在符号复值函数拟合任务上验证</li>
+                <li>在物理有意义的公式上进行测试</li>
+                <li>在来自结理论的更真实数据集上评估</li>
+                <li>CVKAN比实值KAN更稳定，性能相当或更好</li>
+                <li>需要更少的参数和更浅的网络架构</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 首个复数KAN架构</span>
+            <span class="tag success">✓ 参数量更少</span>
+            <span class="tag success">✓ 网络更浅但性能相当</span>
+            <span class="tag success">✓ 更好的可解释性</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>实验规模相对有限</li>
+                <li>仅在特定领域(结理论)验证</li>
+                <li>大规模应用效果待验证</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>CVKAN成功将KAN的可解释性与CVNN的优势相结合，在复数域任务上展现出更好的稳定性和效率。这项工作为复数域的可解释机器学习开辟了新的方向。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文3: Holographic Transformer - 全息变换器</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Holographic Transformers for Complex-Valued Signal Processing</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Huang Enhao等</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2509.19331" target="_blank">2509.19331</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2025-10-30 (v2)</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">代码</div>
+                    <div class="value"><a href="https://github.com/EonHao/Holographic-Transformers" target="_blank">GitHub</a></div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>复值信号同时编码幅度和相位信息，但大多数深度学习模型将注意力机制视为实值相关性计算，忽略了波的干涉效应。这在处理雷达信号、无线通信等相干信号时会导致信息损失。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>现有Transformer将复数信号视为两个独立的实数通道</li>
+                <li>缺乏对相位干涉效应的建模</li>
+                <li>需要物理上一致的复数信号处理方法</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>全息注意力机制</strong>：将波干涉原理融入自注意力，通过相对相位调制交互，相干叠加数值</li>
+                <li><strong>双头解码器</strong>：同时重建输入和预测任务输出，防止损失函数优先考虑幅度而导致相位崩溃</li>
+                <li><strong>相位一致性保证</strong>：全息注意力实现离散干涉算子，保持线性混合下的相位一致性</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在PolSAR图像分类和无线信道预测任务上验证</li>
+                <li>达到高分类准确率和F1分数</li>
+                <li>低回归误差</li>
+                <li>对相位扰动具有更强的鲁棒性</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 物理一致的注意力机制</span>
+            <span class="tag success">✓ 更好的相位建模</span>
+            <span class="tag success">✓ 对扰动更鲁棒</span>
+            <span class="tag success">✓ 开源代码</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>主要在雷达和通信领域验证</li>
+                <li>计算复杂度可能高于标准注意力</li>
+                <li>超参数调优需要领域知识</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>Holographic Transformer通过将物理干涉原理引入注意力机制，为复值信号处理提供了统一框架。这项工作展示了物理先验知识如何增强深度学习模型的性能。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文4: 复数Transformer在无线通信中的应用</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Unveiling the Power of Complex-Valued Transformers in Wireless Communications</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2502.11151" target="_blank">2502.11151</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2025-02-14</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">发表</div>
+                    <div class="value">Submitted to IEEE</div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>复值神经网络在无线通信任务中的应用日益受到关注，因为它们能够为复值信号和数据提供自然有效的表示。然而，现有研究通常采用简单神经网络架构的复值版本，缺乏对现代深度学习技术的充分利用，同时缺乏CVNN优越性能的理论理解。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>填补CVNN在无线通信中的理论和实践空白</li>
+                <li>将Transformer架构扩展到复数域</li>
+                <li>在多个通信任务上验证复数Transformer的有效性</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>理论证明</strong>：证明CVNN比实值对应网络需要更少的层数即可达到给定近似误差</li>
+                <li><strong>复数Transformer范式</strong>：提出用于无线通信的复数Transformer基本框架</li>
+                <li><strong>三大应用</strong>：信道估计、用户活动检测、预编码设计</li>
+                <li><strong>端到端设计</strong>：涵盖回归到分类、监督到无监督学习的多种任务</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在三个代表性无线通信应用上验证</li>
+                <li>复数Transformer在所有任务上均优于传统实值神经网络方法</li>
+                <li>展示了复数表示在通信信号处理中的优势</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 理论保证更少的层数需求</span>
+            <span class="tag success">✓ 三大通信任务全面验证</span>
+            <span class="tag success">✓ 端到端架构设计</span>
+            <span class="tag success">✓ 系统性理论分析</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>仅在特定通信场景验证</li>
+                <li>更大规模网络的效果待探索</li>
+                <li>实时部署优化需要进一步研究</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>这项工作从理论和实践两个层面系统性地研究了复数Transformer在无线通信中的应用，证明了CVNN可以用更少的层数达到更好的性能。为CVNN在通信领域的广泛应用奠定了理论基础。</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>📝 研究趋势总结</h2>
+            <ul>
+                <li><span class="label">核心主题</span><span>复数Transformer、复数声码器、可解释CVNN</span></li>
+                <li><span class="label">应用领域</span><span>信号处理、无线通信、波形生成</span></li>
+                <li><span class="label">技术趋势</span><span>物理启发的架构设计、端到端复数运算</span></li>
+                <li><span class="label">主要会议</span><span>ICLR 2026, IJCNN 2025, IEEE</span></li>
+            </ul>
+        </div>
+
+        <div class="summary-card">
+            <h2>🔗 相关链接</h2>
+            <ul>
+                <li><span class="label">ComVo</span><span><a href="https://hs-oh-prml.github.io/ComVo/" target="_blank">https://hs-oh-prml.github.io/ComVo/</a></span></li>
+                <li><span class="label">Holographic Transformer</span><span><a href="https://github.com/EonHao/Holographic-Transformers" target="_blank">https://github.com/EonHao/Holographic-Transformers</a></span></li>
+                <li><span class="label">历史报告</span><span><a href="https://kk623.github.io/blog/" target="_blank">https://kk623.github.io/blog/</a></span></li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; color: var(--text-muted); padding: 24px; font-size: 0.9rem;">
+            <p>Generated by Jarvis 🔧 | CVNN Research Daily</p>
+            <p>2026 Week 12 · 精确发布时间: 2026-03-20 04:15 CST</p>
+        </div>
+    </div>
+</body>
+</html>
