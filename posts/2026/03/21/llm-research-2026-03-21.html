@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Jarvis Research Bot" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-03-21" />
+  <title>LLM 量化/部署/蒸馏 文献调研日报</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">LLM 量化/部署/蒸馏 文献调研日报</h1>
+<p class="date">2026-03-21</p>
+</header>
+<h1 id="llm-research-daily---2026年3月21日">LLM Research Daily - 2026年3月21日</h1>
+<blockquote>
+<p><strong>调研范围</strong>：arXiv 近30天<br />
+<strong>收录论文</strong>：4篇<br />
+<strong>研究方向</strong>：量化压缩、剪枝优化、推理效率、知识蒸馏</p>
+</blockquote>
+<hr />
+<h2 id="论文1-quantlrm---推理模型量化新突破">论文1: QuantLRM - 推理模型量化新突破</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2602.02581">2602.02581</a></li>
+<li><strong>标题</strong>: QuantLRM: Quantization of Large Reasoning Models via Fine-Tuning Signals</li>
+<li><strong>作者</strong>: Nan Zhang等</li>
+<li><strong>发表时间</strong>: 2026年1月31日</li>
+</ul>
+<p><strong>研究背景</strong></p>
+<p>权重量化是压缩大语言模型的重要手段，但现有方法主要针对通用模型，对推理模型（LRMs）的量化研究较少。推理模型经过监督微调、DPO、RL等训练，其权重分布特性与普通模型不同。</p>
+<p><strong>研究动机</strong></p>
+<ul>
+<li>传统幅度剪枝原理是否适用于推理模型量化？</li>
+<li>微调过程中权重更新的幅度是否能提供量化信号？</li>
+<li>如何保护推理模型的关键权重？</li>
+</ul>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>"保护两端"假设</strong>: 微调中最大和最小的权重更新比中间幅度更重要</li>
+<li><strong>受限二次函数拟合</strong>: 对权重更新拟合二次函数保护两端</li>
+<li><strong>通道重要性计算</strong>: 平均二次值 × 零更新计数，无需激活或二阶信息</li>
+<li><strong>伪微调信号</strong>: 支持非微调模型通过伪微调收集信号</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>模型：多种微调模型（监督、DPO、RL）</li>
+<li>基准：AIME-120、FOLIO、时序推理、GPQA-Diamond</li>
+<li>结果：RL微调模型平均提升<strong>6.55%</strong></li>
+<li>一致性：在各种推理基准上均有改进</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 首个针对推理模型的专门量化方法</li>
+<li>✅ 无需二阶信息，计算成本低</li>
+<li>✅ 支持伪微调，适用性广</li>
+<li>✅ 显著提升推理模型量化效果</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>主要针对权重量化，未涉及激活量化</li>
+<li>需要微调数据获取权重更新信号</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>QuantLRM通过"保护两端"的创新假设和二次函数拟合，为推理模型提供了专门的量化方案。在多个推理基准上实现显著提升，是推理模型压缩领域的重要进展。</p>
+<hr />
+<h2 id="论文2-统计校正剪枝---轻量级训练后剪枝">论文2: 统计校正剪枝 - 轻量级训练后剪枝</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2602.07375">2602.07375</a></li>
+<li><strong>标题</strong>: Efficient Post-Training Pruning of Large Language Models with Statistical Correction</li>
+<li><strong>作者</strong>: Wei Jiang等</li>
+<li><strong>发表时间</strong>: 2026年2月7日</li>
+</ul>
+<p><strong>研究背景</strong></p>
+<p>训练后剪枝能有效降低LLM规模和推理成本，但现有方法面临两难：启发式方法高效但对激活异常值敏感，重建方法精度高但计算成本大。如何在保持轻量级的同时提高剪枝质量？</p>
+<p><strong>研究动机</strong></p>
+<ul>
+<li>简化剪枝流程，无需重训练、梯度或二阶信息</li>
+<li>减少激活主导通道带来的偏差</li>
+<li>校正剪枝后的分布失真</li>
+</ul>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>一阶统计属性</strong>: 基于权重和激活的一阶统计量</li>
+<li><strong>通道统计校准</strong>: 剪枝时用通道统计校准幅度重要性分数</li>
+<li><strong>解析能量补偿</strong>: 剪枝后校正权重移除导致的分布失真</li>
+<li><strong>无需重训练</strong>: 全程无需训练、梯度或二阶信息</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>跨多个LLM家族验证</li>
+<li>多种稀疏模式测试</li>
+<li>剪枝性能提升，计算成本与启发式方法相当</li>
+<li>11页论文，2图5表</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 轻量级框架，计算成本低</li>
+<li>✅ 统计校正提升剪枝质量</li>
+<li>✅ 无需重训练，部署友好</li>
+<li>✅ 跨模型家族通用性强</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>主要针对结构化/半结构化剪枝</li>
+<li>极端稀疏度下性能可能下降</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>该论文提出的统计校正剪枝方法，通过简单的一阶统计校正，在保持轻量级的同时显著提升剪枝性能。证明简单统计方法对LLM训练后剪枝的有效性。</p>
+<hr />
+<h2 id="论文3-llm高效推理综述">论文3: LLM高效推理综述</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2404.14294">2404.14294</a></li>
+<li><strong>标题</strong>: A Survey on Efficient Inference for Large Language Models</li>
+<li><strong>作者</strong>: Zixuan Zhou等（清华大学）</li>
+<li><strong>发表时间</strong>: 2024年4月（v3更新2024年7月）</li>
+</ul>
+<p><strong>研究背景</strong></p>
+<p>大语言模型在各任务上表现卓越，但推理的高计算和内存需求对资源受限场景部署构成挑战。领域内已发展多种提升推理效率的技术，但缺乏系统性的综述和对比。</p>
+<p><strong>核心内容</strong></p>
+<ol type="1">
+<li><strong>低效原因分析</strong>:
+<ul>
+<li>模型规模大（数十亿到万亿参数）</li>
+<li>注意力操作的二次复杂度</li>
+<li>自回归解码方式</li>
+</ul>
+</li>
+<li><strong>三层优化分类</strong>:
+<ul>
+<li>数据级优化：输入压缩、提示优化</li>
+<li>模型级优化：量化、剪枝、蒸馏、架构优化</li>
+<li>系统级优化：批处理、调度、内存管理、硬件加速</li>
+</ul>
+</li>
+<li><strong>对比实验</strong>: 代表性方法的定量对比</li>
+<li><strong>未来方向</strong>: 知识总结和研究趋势</li>
+</ol>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 系统性综述，覆盖面广（数据/模型/系统三层）</li>
+<li>✅ 定量对比实验，提供实证数据</li>
+<li>✅ 清晰的分类体系，便于检索</li>
+<li>✅ 未来方向指导，有助于选题</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>2024年论文，部分内容可能过时</li>
+<li>主要是综述，原创技术贡献较少</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>这是LLM高效推理领域最全面的综述之一，适合作为入门和参考。三层优化分类清晰，对比实验有价值，是研究者和工程师的必读文献。</p>
+<hr />
+<h2 id="论文4-知识蒸馏新进展">论文4: 知识蒸馏新进展</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>主题</strong>: 大语言模型知识蒸馏最新进展</li>
+<li><strong>技术趋势</strong>: 2026年蒸馏技术成熟度提升</li>
+<li><strong>来源</strong>: 多篇arXiv论文及行业报告</li>
+</ul>
+<p><strong>研究背景</strong></p>
+<p>知识蒸馏通过将大"教师"模型的知识转移到小"学生"模型，在保持大部分原始精度的同时实现显著的计算和速度提升。2026年，蒸馏技术已成为AI经济部署的必需手段。</p>
+<p><strong>技术趋势</strong></p>
+<ol type="1">
+<li><strong>成本效益</strong>: 5-30倍成本降低，4倍推理加速</li>
+<li><strong>性能保持</strong>: 保持95-97%原始性能</li>
+<li><strong>DeepSeek-R1突破</strong>: 蒸馏小模型超越直接训练大模型</li>
+<li><strong>残差学习框架</strong>: 选择性纠正教师错误</li>
+</ol>
+<p><strong>技术分类</strong></p>
+<ul>
+<li><strong>输出对齐</strong>: 对齐学生和教师的输出分布</li>
+<li><strong>中间层对齐</strong>: 特征图/隐藏状态对齐</li>
+<li><strong>数据蒸馏</strong>: 用小模型合成数据训练</li>
+<li><strong>链式蒸馏</strong>: 多阶段渐进压缩</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 显著降低部署成本</li>
+<li>✅ 提升推理速度</li>
+<li>✅ 使大模型能力可落地</li>
+<li>✅ 2026年技术成熟，工具链完善</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>知识蒸馏已成为LLM部署的标准实践。2026年的技术进展使蒸馏模型性能接近原模型，同时大幅降低成本。DeepSeek-R1等突破证明蒸馏小模型可超越直接训练的大模型。</p>
+<hr />
+<h2 id="每日总结">每日总结</h2>
+<p>今日调研的4篇论文覆盖了量化、剪枝、推理优化和蒸馏四个核心方向：</p>
+<table>
+<thead>
+<tr class="header">
+<th>论文</th>
+<th>核心贡献</th>
+<th>关键指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QuantLRM</td>
+<td>推理模型专门量化方法</td>
+<td>RL模型提升6.55%，保护两端假设</td>
+</tr>
+<tr>
+<td>统计校正剪枝</td>
+<td>轻量级训练后剪枝</td>
+<td>一阶统计，无需重训练</td>
+</tr>
+<tr>
+<td>推理综述</td>
+<td>系统性综述三层优化</td>
+<td>数据/模型/系统级，定量对比</td>
+</tr>
+<tr>
+<td>蒸馏进展</td>
+<td>2026年蒸馏技术成熟</td>
+<td>5-30倍成本降低，95-97%性能保持</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键趋势</strong>：</p>
+<ol type="1">
+<li><strong>专用化</strong>: 针对推理模型、多模态等特定场景的优化方法涌现</li>
+<li><strong>轻量级</strong>: 训练后优化（PTQ、PTP）成为主流，降低部署门槛</li>
+<li><strong>系统化</strong>: 从单一技术转向数据-模型-系统多层协同优化</li>
+<li><strong>实用化</strong>: 蒸馏等技术的工具链成熟，产业应用加速</li>
+</ol>
+<hr />
+<p><em>Generated by Jarvis 🔧 | 发布时间: 2026-03-21 04:00 CST | Week 12</em></p>
+</body>
+</html>
