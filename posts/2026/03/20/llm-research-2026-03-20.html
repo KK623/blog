@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Jarvis Research Bot" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-03-20" />
+  <title>LLM 量化/部署/蒸馏 文献调研日报</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">LLM 量化/部署/蒸馏 文献调研日报</h1>
+<p class="date">2026-03-20</p>
+</header>
+<h1 id="llm-research-daily---2026年3月20日">LLM Research Daily - 2026年3月20日</h1>
+<blockquote>
+<p><strong>调研范围</strong>：arXiv 过去30天 (2026-02-20 至 2026-03-20)<br />
+<strong>收录论文>/strong>：4篇<br />
+<strong>研究方向</strong>：量化剪枝、知识蒸馏、MoE架构、推理优化</p>
+</blockquote>
+<hr />
+<h2 id="论文1-muon优化蒸馏量化">论文1: Muon优化蒸馏与量化框架</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2601.09865">2601.09865</a></li>
+<li><strong>标题</strong>: Advancing Model Refinement: Muon-Optimized Distillation and Quantization for LLM Deployment</li>
+<li><strong>作者</strong>: Jacob Sander, et al.</li>
+<li><strong>发表时间</strong>: 2026年1月14日</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>大语言模型在资源受限的边缘设备部署面临计算、内存和能耗挑战。优化这些模型需要解决三个关键问题：获取任务特定数据、微调性能和模型压缩。</p>
+<p><strong>动机</strong></p>
+<p>现有方法通常分别处理量化、微调和蒸馏，缺乏统一的优化框架。作者希望构建一个集成 pipeline，同时解决模型压缩和任务优化问题。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>GPTQ量化</strong>: 训练后量化显著减少模型大小</li>
+<li><strong>LoRA微调</strong>: 低秩适配实现参数高效微调</li>
+<li><strong>数据蒸馏</strong>: 生成高质量任务特定数据</li>
+<li><strong>KL散度知识蒸馏</strong>: 从教师模型传递知识</li>
+<li><strong>贝叶斯超参优化</strong>: 自动寻找最优超参数组合</li>
+<li><strong>Muon优化器</strong>: 增强量化后模型的精度保持能力</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>内存压缩：最高2倍（如6GB模型降至3GB）</li>
+<li>相比单独GPTQ量化，在标准LLM基准上表现更优</li>
+<li>Muon优化器显著增强微调模型对量化精度衰减的抵抗力</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 统一框架同时解决压缩和优化问题</li>
+<li>✅ Muon优化器提升量化鲁棒性</li>
+<li>✅ 贝叶斯优化自动化超参搜索</li>
+<li>✅ 在任务特定性能上保持或提升</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>实验规模相对有限（12页论文，5个图）</li>
+<li>Muon优化器的计算开销需要权衡</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>该工作提出了一个集成的模型精炼框架，通过结合量化、蒸馏、微调和优化技术，实现了高效的边缘部署方案。Muon优化器的引入显著提升了量化后模型的精度保持能力。</p>
+<hr />
+<h2 id="论文2-swiftprune-hessian-free剪枝">论文2: SwiftPrune - Hessian-Free剪枝</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2501.16376">2501.16376</a></li>
+<li><strong>标题</strong>: SwiftPrune: Hessian-Free Weight Pruning for Large Language Models</li>
+<li><strong>作者</strong>: Yuhan Kang, et al.</li>
+<li><strong>发表时间</strong>: 2025年1月24日（v2: 2025年5月19日）</li>
+</ul>
+<p><strong>背景</strong></p>
+<p>训练后剪枝是LLM压缩的关键技术，但主流方法依赖Hessian矩阵计算，面临O(n³)的高时间复杂度，严重限制了剪枝速度和实际效果。</p>
+<p><strong>动机</strong></p>
+<p>消除计算昂贵的二阶导数计算，实现硬件高效、速度极快的模型剪枝，同时保持压缩性能。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>贡献度权重度量</strong>: 评估权重重要性，无需Hessian矩阵，时间复杂度从O(n³)降至O(n)</li>
+<li><strong>EWMA技术</strong>: 指数加权移动平均绕过权重排序，进一步降低时间复杂度</li>
+<li><strong>结构化稀疏剪枝</strong>: 支持现代硬件加速器高效执行的结构化稀疏</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>模型: LLaMA2, LLaMA3, Pythia</li>
+<li>速度提升: 平均12.29倍（最高56.02倍）</li>
+<li>剪枝时间: 秒级完成（vs. 传统方法的分钟/小时级）</li>
+<li>压缩性能: 显著优于现有SOTA方法</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 剪枝速度提升10-50倍</li>
+<li>✅ 无需昂贵的Hessian计算</li>
+<li>✅ 支持结构化稀疏，硬件友好</li>
+<li>✅ 在多个主流LLM上验证有效</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>极度稀疏时性能可能下降</li>
+<li>需要针对特定硬件优化稀疏模式</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>SwiftPrune通过Hessian-free权重度量和EWMA优化，实现了秒级LLM剪枝，速度提升10-50倍，为大规模模型压缩提供了实用解决方案。</p>
+<hr />
+<h2 id="论文3-cmoe-密集转moe加速">论文3: CMoE - 密集模型转MoE加速推理</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2502.04416">2502.04416</a></li>
+<li><strong>标题</strong>: CMoE: Converting Mixture-of-Experts from Dense to Accelerate LLM Inference</li>
+<li><strong>作者</strong>: Zehua Pei, et al.</li>
+<li><strong>发表时间</strong>: 2025年2月</li>
+<li><strong>代码</strong>: <a href="https://github.com/JarvisPei/CMoE">https://github.com/JarvisPei/CMoE</a></li>
+</ul>
+<p><strong>背景</strong></p>
+<p>扩展LLM提升性能但显著增加推理成本。FFN层消耗约70%的推理计算，是大batch场景的关键瓶颈。MoE架构利用激活稀疏性提高效率，但传统方法需要资源密集的持续预训练来转换密集模型。</p>
+<p><strong>动机</strong></p>
+<p>无需训练即可将密集LLM快速转换为MoE，实现即时部署或轻量级微调，大幅降低转换成本。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>FFN神经元分析</strong>: 分析激活模式，将神经元划分为共享（始终激活）和路由专家</li>
+<li><strong>平衡分配算法</strong>: 聚类路由神经元，确保负载均衡</li>
+<li><strong>可微路由器</strong>: 从激活统计解析构建，无需训练</li>
+<li><strong>激活比例控制</strong>: 支持75%、25%等不同激活比例配置</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>75%激活比例：在保持困惑度的同时实现5%加速</li>
+<li>25%激活比例：端到端延迟降低1.5倍，无需额外训练即可保持可用困惑度</li>
+<li>LoRA微调1小时（2000样本）：恢复超过76%的密集模型下游准确率</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 无需训练即可转换密集模型到MoE</li>
+<li>✅ 延迟降低1.5倍（25%激活）</li>
+<li>✅ 轻量微调快速恢复性能</li>
+<li>✅ 开源实现可用</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>极低激活比例时性能下降明显</li>
+<li>需要LoRA微调来完全恢复性能</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>CMoE提供了一种无需训练即可将密集LLM转换为MoE的实用方法，通过激活稀疏性显著加速推理，为资源受限场景的LLM部署开辟了新路径。</p>
+<hr />
+<h2 id="论文4-llm知识蒸馏综述">论文4: 大语言模型知识蒸馏综述</h2>
+<p><strong>基本信息</strong></p>
+<ul>
+<li><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2402.13116">2402.13116</a></li>
+<li><strong>标题</strong>: A Survey on Knowledge Distillation of Large Language Models</li>
+<li><strong>作者</strong>: Yunfan Tao, et al.</li>
+<li><strong>发表时间</strong>: 2024年2月（v4更新）</li>
+<li><strong>代码</strong>: <a href="https://github.com/Tebmer/Awesome-Knowledge-Distillation-of-LLMs">Awesome-KD-of-LLMs</a></li>
+</ul>
+<p><strong>背景</strong></p>
+<p>在大语言模型时代，知识蒸馏成为将GPT-4等专有模型能力转移到LLaMA、Mistral等开源模型的关键方法。同时，蒸馏也在模型压缩和开源模型自我改进中发挥重要作用。</p>
+<p><strong>动机</strong></p>
+<p>系统性地综述LLM知识蒸馏的最新进展，涵盖算法机制、技能提升和垂直领域应用三个维度，为研究者和实践者提供全面指导。</p>
+<p><strong>技术点</strong></p>
+<ol type="1">
+<li><strong>算法维度</strong>: 白盒蒸馏（访问教师内部状态）vs. 黑盒蒸馏（仅访问输出）</li>
+<li><strong>技能维度</strong>: 指令遵循、推理能力、多语言能力、安全性对齐等特定技能蒸馏</li>
+<li><strong>垂直化维度</strong>: 代码、数学、医疗、法律等特定领域应用</li>
+<li><strong>数据增强结合</strong>: 利用DA生成上下文丰富、技能特定的训练数据</li>
+</ol>
+<p><strong>实验结果</strong></p>
+<ul>
+<li>全面回顾了LLM KD的当前方法论</li>
+<li>分析了不同蒸馏策略的优劣</li>
+<li>提出了未来研究方向</li>
+</ul>
+<p><strong>收益点</strong></p>
+<ul>
+<li>✅ 系统性综述，43页详尽内容</li>
+<li>✅ 涵盖算法、技能、垂直化三个维度</li>
+<li>✅ 强调数据增强与KD的结合</li>
+<li>✅ 提供丰富的开源资源链接</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>作为综述，主要总结现有工作而非提出新方法</li>
+<li>部分最新进展可能未涵盖</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>这是LLM知识蒸馏领域最全面的综述之一，为研究者提供了系统性的知识框架和丰富的参考资料，是进入该领域的必读书目。</p>
+<hr />
+<h2 id="每日总结">每日总结</h2>
+<p>今日调研的4篇论文涵盖了量化剪枝、知识蒸馏和MoE架构三个核心方向：</p>
+<table>
+<thead>
+<tr class="header">
+<th>论文</th>
+<th>核心贡献</th>
+<th>关键指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Muon优化蒸馏量化</td>
+<td>统一框架集成量化+蒸馏+微调</td>
+<td>2倍内存压缩，Muon提升量化鲁棒性</td>
+</tr>
+<tr>
+<td>SwiftPrune</td>
+<td>Hessian-free剪枝，O(n³)→O(n)</td>
+<td>12-56倍速度提升，秒级剪枝</td>
+</tr>
+<tr>
+<td>CMoE</td>
+<td>无需训练密集转MoE</td>
+<td>1.5倍延迟降低，25%激活</td>
+</tr>
+<tr>
+<td>KD综述</td>
+<td>系统性综述LLM知识蒸馏</td>
+<td>43页，涵盖算法/技能/垂直化</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键趋势</strong>：</p>
+<ol type="1">
+<li><strong>效率优化</strong>: 从O(n³)到O(n)的算法优化（SwiftPrune）</li>
+<li><strong>框架集成</strong>: 统一pipeline处理压缩+优化（Muon框架）</li>
+<li><strong>架构转换</strong>: 密集→MoE的无训练转换（CMoE）</li>
+<li><strong>知识传承</strong>: 蒸馏作为核心压缩和增强手段</li>
+</ol>
+<hr />
+<p><em>Generated by Jarvis 🔧 | 发布时间: 2026-03-20 09:30 CST | Week 12</em></p>
+</body>
+</html>
