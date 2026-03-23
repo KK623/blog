@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-03-24</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        .header .meta { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .summary-card h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-card ul { list-style: none; }
+        .summary-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+        .summary-card li:last-child { border-bottom: none; }
+        .summary-card .label { color: var(--text-muted); min-width: 100px; }
+        .paper-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .paper-section h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .paper-section h3 {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin: 20px 0 12px;
+        }
+        .paper-section p { margin-bottom: 12px; }
+        .paper-section ul, .paper-section ol {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+        .paper-section li { margin-bottom: 8px; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .info-item {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        .info-item .label { color: var(--text-muted); font-size: 0.85rem; }
+        .info-item .value { color: var(--text); font-weight: 500; }
+        .info-item a { color: var(--primary); text-decoration: none; }
+        .info-item a:hover { text-decoration: underline; }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .tag.success { background: var(--success); }
+        .tag.warning { background: var(--warning); }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 32px 0;
+            border-radius: 1px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.4rem; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 CVNN Research Daily</h1>
+            <div class="meta">2026年3月24日 · 复数神经网络文献调研</div>
+        </div>
+
+        <div class="summary-card">
+            <h2>📊 今日概览</h2>
+            <ul>
+                <li><span class="label">搜索日期</span><span>2026-03-24</span></li>
+                <li><span class="label">搜索范围</span><span>arXiv 过去30天</span></li>
+                <li><span class="label">关键词</span><span>CVNN, complex-valued neural network, complex spectrogram, unitary representation</span></li>
+                <li><span class="label">新论文数</span><span>4篇核心论文</span></li>
+                <li><span class="label">发布时间</span><span>2026-03-24 04:05 CST</span></li>
+            </ul>
+        </div>
+
+        <div class="paper-section">
+            <h2>论文1: ComVo - 复数神经网络声码器</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Toward Complex-Valued Neural Networks for Waveform Generation</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2603.11589" target="_blank">2603.11589</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">发表</div>
+                    <div class="value">ICLR 2026 (Accepted)</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2026-03-12</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">代码</div>
+                    <div class="value"><a href="https://hs-oh-prml.github.io/ComVo/" target="_blank">Website</a></div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>神经声码器在波形生成领域取得了显著进展，能够产生自然且富有表现力的音频。基于iSTFT的声码器通过预测复值频谱图并经由逆短时傅里叶变换合成波形，避免了增加计算成本的学习上采样阶段。然而，现有方法采用实值网络独立处理实部和虚部，这种分离方式限制了捕捉复值频谱图固有结构的能力。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>实值网络独立处理复数实部和虚部，无法充分利用相位-幅度耦合关系</li>
+                <li>现有iSTFT声码器缺乏对复数运算的原生支持</li>
+                <li>需要能够在复数域进行对抗训练的新方法</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>原生复数运算架构</strong>：生成器和判别器均使用原生复数算术，支持对抗训练框架并提供复值表示的结构化反馈</li>
+                <li><strong>相位量化(Phase Quantization)</strong>：离散化相位值以结构化方式引导相位变换，正则化训练过程并稳定复数域学习</li>
+                <li><strong>块矩阵计算方案</strong>：减少冗余操作，提高训练效率，训练时间减少25%</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在语音合成标准数据集上进行评估</li>
+                <li>与实值基线声码器进行对比</li>
+                <li>ComVo在合成质量上超越可比实值基线</li>
+                <li>块矩阵方案实现25%训练时间缩减</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 首个端到端复数神经网络声码器</span>
+            <span class="tag success">✓ 原生复数运算更好捕捉频谱图结构</span>
+            <span class="tag success">✓ 相位量化提供稳定的相位学习机制</span>
+            <span class="tag success">✓ 训练效率提升25%</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>仅在语音任务上验证，未测试其他音频类型</li>
+                <li>块矩阵方案可能限制模型容量</li>
+                <li>相位量化粒度需要精细调优</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>ComVo是首个完全基于复数神经网络的声码器，通过原生复数运算、相位量化和块矩阵优化，在语音合成质量上超越了实值基线。这项工作展示了CVNN在信号处理领域的巨大潜力，为后续研究提供了重要参考。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文2: 复数酉表示分类头</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification in Deep Neural Networks</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2602.15283" target="_blank">2602.15283</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2026-02-17</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">页数</div>
+                    <div class="value">21 pages, 12 figures</div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>现代深度神经网络虽然预测准确率高，但校准性差：其置信度分数不能可靠反映真实正确概率。这是一个在安全关键应用中特别重要的问题，因为模型可能对其错误预测过于自信。现有方法如温度缩放等后处理技术虽然能改善校准，但无法从根本上解决特征空间的几何问题。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>现有深度神经网络置信度校准不佳，存在过度自信问题</li>
+                <li>量子力学中的波函数和酉变换为不确定性建模提供了自然框架</li>
+                <li>复数希尔伯特空间的内积结构更适合表达概率分布</li>
+                <li>需要轻量级的分类头架构，可与现有骨干网络无缝集成</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>量子启发的分类头架构</strong>：将骨干网络特征投影到复值希尔伯特空间，在Cayley映射参数化的学习酉变换下进行演化</li>
+                <li><strong>酉变换参数化</strong>：通过Cayley映射实现保持范数的特征变换，确保特征空间的结构完整性</li>
+                <li><strong>幅度读出机制</strong>：通过计算复数特征的幅度并应用softmax进行分类，相比Born规则测量层有更好的校准效果</li>
+                <li><strong>混合实验设计</strong>：训练单一共享骨干网络并比较可互换的分类头，以分离复数酉表示对校准的独立效应</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li><strong>CIFAR-10校准</strong>：酉幅度头达到0.0146的ECE，比标准softmax头(0.0355)提升2.4倍，比温度缩放(0.0510)提升3.5倍</li>
+                <li><strong>CIFAR-10H人类不确定性</strong>：波函数头在人类软标签上达到最低的KL散度(0.336)，表明复值表示更好捕捉人类感知歧义结构</li>
+                <li><strong>消融研究</strong>：Born规则测量层的ECE为0.0819，校准效果反而更差，说明读出机制的选择至关重要</li>
+                <li><strong>负结果</strong>：在分布外检测和情感分析任务上效果有限，界定了方法的适用范围</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ ECE降低2.4-3.5倍，显著改善校准</span>
+            <span class="tag success">✓ 更好匹配人类感知不确定性</span>
+            <span class="tag success">✓ 轻量级架构，易于集成</span>
+            <span class="tag success">✓ 理论联系特征空间几何与校准</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>Born规则测量层效果不佳，读出机制需要精心设计</li>
+                <li>在分布外检测和情感分析上效果有限</li>
+                <li>仅在图像分类任务上验证，其他领域适用性待研究</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>这项工作提出了一种量子启发的复数酉表示分类头，通过将特征投影到复值希尔伯特空间并进行酉变换，显著改善了深度神经网络的校准性能。其幅度读出机制在CIFAR-10上实现了2.4-3.5倍的ECE降低，并更好匹配人类感知不确定性。这项研究为可信赖AI提供了新的技术路径。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文3: PolSAR图像复数卷积自编码器</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Exploring Polarimetric Properties Preservation during Reconstruction of PolSAR images using Complex-valued Convolutional Neural Networks</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Quentin Gabot, Joana Frontera-Pons, Jérémy Fix, Chengfang Ren, Jean-Philippe Ovarlez</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2602.07094" target="_blank">2602.07094</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">发表</div>
+                    <div class="value">IET Radar, Sonar & Navigation (Accepted with minor revisions)</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2026-02-06</div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>极化合成孔径雷达(PolSAR)数据的固有复值特性需要使用能够直接处理复值表示的专业算法。然而，这一特性在深度学习社区中尚未得到充分探索，许多研究选择在应用传统实值模型之前将复数信号转换到实数域。这种做法丢失了复数数据的相位信息，可能损害PolSAR数据的关键物理特性。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>PolSAR数据的复值特性在深度学习中被忽视，常被转换为实数处理</li>
+                <li>需要验证复值神经网络能否有效压缩和重建PolSAR数据</li>
+                <li>必须确保重建数据保持关键的物理特性</li>
+                <li>需要定量比较复值网络与实值网络的性能差异</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>复数卷积自编码器架构</strong>：利用复值神经网络直接处理PolSAR数据，避免实值转换带来的信息损失</li>
+                <li><strong>物理特性保持评估</strong>：通过Pauli、Krogager、Cameron相干分解以及非相干H-α分解验证重建数据的物理特性保持</li>
+                <li><strong>全极化数据压缩</strong>：展示复值网络能够有效压缩和重建全极化SAR数据</li>
+                <li><strong>对比分析</strong>：系统比较复值神经网络与其实值对应物的性能差异</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>复值卷积自编码器能够有效压缩和重建全极化SAR数据</li>
+                <li>重建数据保持了关键的物理特性，包括各种极化分解特征</li>
+                <li>复值网络相比实值网络在保持物理特性方面具有明显优势</li>
+                <li>为开发鲁棒的、物理感知的复值生成模型奠定了基础</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 直接处理复值PolSAR数据，无信息损失</span>
+            <span class="tag success">✓ 保持关键物理特性</span>
+            <span class="tag success">✓ 有效压缩全极化数据</span>
+            <span class="tag success">✓ 优于实值网络的性能</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>仅在PolSAR数据上验证，其他复值信号类型待测试</li>
+                <li>网络架构相对简单，未探索更复杂的生成模型</li>
+                <li>计算效率与实值网络的对比未详细分析</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>这项工作展示了复值卷积自编码器在处理PolSAR数据方面的优势，证明其能够有效压缩和重建全极化数据同时保持关键物理特性。这些见解为开发鲁棒的、物理感知的复值生成模型铺平了道路，对SAR数据处理领域具有重要意义。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="paper-section">
+            <h2>论文4: 知识引导的复值SAR图像识别网络</h2>
+            
+            <h3>基本信息</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">标题</div>
+                    <div class="value">Knowledge-Informed Neural Network for Complex-Valued SAR Image Recognition</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">作者</div>
+                    <div class="value">Haodong Yang, Zhongling Huang, Shaojie Guo, Zhe Zhang, Gong Cheng, Junwei Han</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">arXiv</div>
+                    <div class="value"><a href="https://arxiv.org/abs/2510.20284" target="_blank">2510.20284</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">日期</div>
+                    <div class="value">2025-10-23</div>
+                </div>
+            </div>
+
+            <h3>研究背景</h3>
+            <p>复值合成孔径雷达(CV-SAR)图像识别的深度学习模型面临一个表示三元困境：在数据有限和域迁移场景下，泛化性、可解释性和效率的同时优化存在冲突。传统数据驱动模型未能充分利用CV-SAR数据中丰富的电磁散射特征，这些特征正是解决这一困境的关键。</p>
+
+            <h3>研究动机</h3>
+            <ul>
+                <li>CV-SAR图像识别面临泛化性、可解释性和效率的三元困境</li>
+                <li>CV-SAR数据中丰富的电磁散射特征未被充分利用</li>
+                <li>需要轻量级框架，在参数量受限条件下实现高性能</li>
+                <li>物理先验知识的引入可能改善模型的泛化和可解释性</li>
+            </ul>
+
+            <h3>核心技术点</h3>
+            <ol>
+                <li><strong>压缩-聚合-压缩架构</strong>：创新的三阶段处理流程，第一阶段进行物理引导压缩，第二阶段聚合特征，第三阶段进行语义压缩</li>
+                <li><strong>字典处理器</strong>：新颖的字典处理器自适应嵌入物理先验，使紧凑的展开网络能够有效提取稀疏的物理基础特征</li>
+                <li><strong>自蒸馏分类头</strong>：紧凑的分类头结合自蒸馏技术，学习任务相关且判别性强的嵌入</li>
+                <li><strong>双变体实现</strong>：CNN版本(0.7M参数)和Vision Transformer版本(0.95M参数)两种实现</li>
+            </ol>
+
+            <h3>实验结果</h3>
+            <ul>
+                <li>在五个SAR基准数据集上进行广泛评估</li>
+                <li>KINN在参数高效识别方面达到最先进水平</li>
+                <li>在数据稀缺和分布外场景下展现出色的泛化能力</li>
+                <li>提供可解释的特征表示，增强模型可信度</li>
+                <li>CNN变体仅0.7M参数，ViT变体仅0.95M参数</li>
+            </ul>
+
+            <h3>收益点</h3>
+            <span class="tag success">✓ 解决表示三元困境</span>
+            <span class="tag success">✓ 极致轻量化(0.7M-0.95M参数)</span>
+            <span class="tag success">✓ 卓越的泛化能力</span>
+            <span class="tag success">✓ 物理可解释性</span>
+
+            <h3>局限性</h3>
+            <ul>
+                <li>仅在SAR图像上验证，其他复值图像类型待测试</li>
+                <li>物理先验的设计需要领域专家知识</li>
+                <li>在大规模数据集上的扩展性待验证</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>KINN通过创新的"压缩-聚合-压缩"架构和物理引导的特征提取，成功解决了CV-SAR图像识别中的表示三元困境。其极致的轻量化和卓越的泛化能力为可信赖AI在SAR图像分析领域开辟了新路径，展示了知识引导方法在复值神经网络中的巨大潜力。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="summary-card">
+            <h2>🔍 趋势分析</h2>
+            <ul>
+                <li><span class="label">信号处理</span><span>CVNN在语音、雷达信号处理中展现优势</span></li>
+                <li><span class="label">不确定性量化</span><span>复数表示为校准和不确定性建模提供新思路</span></li>
+                <li><span class="label">物理感知</span><span>结合物理先验的CVNN架构成为研究热点</span></li>
+                <li><span class="label">轻量化</span><span>高效参数量与高性能的平衡受到关注</span></li>
+            </ul>
+        </div>
+
+        <div class="summary-card">
+            <h2>📌 关键要点</h2>
+            <ul>
+                <li><span class="label">原生复数运算</span><span>端到端复数处理优于分离实部虚部</span></li>
+                <li><span class="label">相位处理</span><span>相位量化等技术改善复数域训练稳定性</span></li>
+                <li><span class="label">酉变换</span><span>保持范数的变换对不确定性量化至关重要</span></li>
+                <li><span class="label">物理先验</span><span>电磁散射知识可提升SAR图像识别性能</span></li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 24px; color: var(--text-muted);">
+            <p>Generated by OpenClaw Agent · 2026-03-24 04:05 CST</p>
+        </div>
+    </div>
+</body>
+</html>

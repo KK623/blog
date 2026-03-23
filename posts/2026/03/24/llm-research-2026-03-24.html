@@ -3,341 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM 量化/部署/蒸馏研究日报 - 2026年3月24日</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.95);
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        .header .meta {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        .content {
-            padding: 30px;
-        }
-        .paper {
-            margin-bottom: 40px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-        }
-        .paper h2 {
-            color: #2d3748;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        .paper .paper-meta {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .paper .paper-meta a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        .paper .paper-meta a:hover {
-            text-decoration: underline;
-        }
-        .section {
-            margin-bottom: 18px;
-        }
-        .section h3 {
-            color: #4a5568;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        .section p {
-            color: #4a5568;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        .summary {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 30px;
-            border-radius: 12px;
-            margin-top: 40px;
-        }
-        .summary h2 {
-            color: #2d3748;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-        }
-        .summary ul {
-            list-style: none;
-            padding: 0;
-        }
-        .summary li {
-            padding: 10px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #4a5568;
-        }
-        .summary li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-        }
-        .footer {
-            background: #2d3748;
-            color: #a0aec0;
-            padding: 20px 30px;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 1.4rem;
-            }
-            .content {
-                padding: 20px;
-            }
-            .paper {
-                padding: 18px;
-            }
-        }
-    </style>
+    <title>LLM Research Daily - 2026-03-24</title>
+    <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <header>
+        <div class="container">
             <h1>🔬 LLM 量化/部署/蒸馏研究日报</h1>
-            <div class="meta">
-                <p>📅 2026年3月24日 03:00 (GMT+8)</p>
-                <p>🔍 搜索范围：2026年3月17日 - 3月23日</p>
-                <p>👤 分析师：Jarvis</p>
-            </div>
+            <nav>
+                <a href="../../../index.html">← 返回首页</a>
+                <a href="../../../posts/index.html">📚 所有文章</a>
+            </nav>
         </div>
-        
-        <div class="content">
-            <!-- Paper 1 -->
-            <div class="paper">
-                <h2>📄 TTQ: Activation-Aware Test-Time Quantization to Accelerate LLM Inference On The Fly</h2>
-                <div class="paper-meta">
-                    🔗 <a href="https://arxiv.org/abs/2603.19296" target="_blank">arXiv:2603.19296</a> | 
-                    👥 Toshiaki Koike-Akino, Jing Liu, Ye Wang | 
-                    📅 2026年3月11日
-                </div>
-                
-                <div class="section">
-                    <h3>🎯 背景</h3>
-                    <p>大模型的计算需求巨大，激活感知压缩技术可以在不重新训练的情况下减少计算量。然而，现有方法高度依赖校准数据，对于未见过的下游任务存在域偏移问题。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>💡 动机</h3>
-                    <p>传统量化方法在推理前需要大量校准数据，这限制了模型在新任务上的泛化能力。研究者希望开发一种能够在推理时动态适应的量化方法，无需预先校准。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>🔧 技术点</h3>
-                    <p><strong>测试时量化(TTQ)</strong>：在推理时进行在线校准，实时压缩模型。<strong>激活感知量化</strong>：根据输入激活动态调整量化参数。<strong>即时适应</strong>：能够针对每个提示词(prompt)进行自适应调整，无论下游任务如何。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📈 收益点</h3>
-                    <p>解决了域偏移问题，适应各种下游任务；实现了推理加速，同时保持量化性能；无需预训练或离线校准，部署更加灵活。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📝 总结</h3>
-                    <p>TTQ提出了一种创新的测试时量化框架，通过在推理时进行在线校准，解决了传统量化方法依赖校准数据导致的域偏移问题。该方法能够在各种下游任务上实现即时激活感知量化，在加速推理的同时保持性能。这对于需要在多样化任务上部署大模型的场景具有重要意义。</p>
-                </div>
+    </header>
+
+    <main class="container">
+        <article class="post-content">
+            <div class="post-meta">
+                <span class="post-date">📅 2026年3月24日 03:00 (GMT+8)</span>
+                <span class="post-author">👤 Jarvis</span>
+                <span class="post-category">🏷️ LLM量化/部署/蒸馏</span>
             </div>
 
-            <!-- Paper 2 -->
-            <div class="paper">
-                <h2>📄 RAMP: Reinforcement Adaptive Mixed Precision Quantization for Efficient On Device LLM Inference</h2>
-                <div class="paper-meta">
-                    🔗 <a href="https://arxiv.org/abs/2603.17891" target="_blank">arXiv:2603.17891</a> | 
-                    👥 Arpit Singh Gautam, Saurabh Jha | 
-                    📅 2026年3月18日
-                </div>
-                
-                <div class="section">
-                    <h3>🎯 背景</h3>
-                    <p>训练后量化(PTQ)是在资源受限硬件上部署LLM的关键技术，但现有方法通常对所有层使用统一的位宽，导致精度-效率权衡次优。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>💡 动机</h3>
-                    <p>不同层对量化的敏感度不同，统一位宽会浪费位宽预算。研究者希望使用强化学习自动学习每层的最优位宽分配，在全局位宽预算下最小化困惑度。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>🔧 技术点</h3>
-                    <p><strong>离策略Soft Actor-Critic框架</strong>：学习每层位宽分配策略。<strong>11维嵌入特征</strong>：包括激活统计、权重属性和结构描述符。<strong>Scale Folding技术</strong>：通过通道缩放将激活异常值迁移到权重。<strong>零样本迁移</strong>：策略可跨模型家族和规模泛化。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📈 收益点</h3>
-                    <p>Llama 2 7B上达到5.54困惑度(3.68GB, 3.65有效位)，优于AWQ；相比GPTQ在大小上减少6%，质量提升1-3%；策略可零样本迁移到Llama 2 13B和Mistral 7B；HALO流水线导出到GGUF格式，支持CPU/GPU/边缘设备。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📝 总结</h3>
-                    <p>RAMP通过强化学习实现了自适应混合精度量化，突破了统一位宽的限制。其核心创新在于使用SAC框架学习位宽分配策略，并结合Scale Folding技术处理异常值。实验表明该方法在精度和效率上都有显著提升，且具有良好的泛化能力，为LLM在边缘设备上的高效部署提供了新思路。</p>
-                </div>
+            <p class="search-scope"><strong>搜索范围</strong>：2026年3月17日 - 3月23日（过去7天）</p>
+
+            <hr>
+
+            <h2>📄 论文 1: TTQ: Activation-Aware Test-Time Quantization</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.19296" target="_blank">2603.19296</a></p>
+                <p><strong>作者</strong>: Toshiaki Koike-Akino, Jing Liu, Ye Wang</p>
+                <p><strong>发表时间</strong>: 2026年3月11日</p>
             </div>
 
-            <!-- Paper 3 -->
-            <div class="paper">
-                <h2>📄 VQKV: High-Fidelity and High-Ratio Cache Compression via Vector-Quantization</h2>
-                <div class="paper-meta">
-                    🔗 <a href="https://arxiv.org/abs/2603.16435" target="_blank">arXiv:2603.16435</a> | 
-                    👥 Yixuan Wang, Qingyu Shi, Jiayu Zhou, Dianbo Liu, Ziwei He, Zhouhan Lin | 
-                    📅 2026年3月17日
-                </div>
-                
-                <div class="section">
-                    <h3>🎯 背景</h3>
-                    <p>LLM的上下文长度增长导致Key-Value(KV)缓存急剧增大，限制了在资源受限环境中的部署。现有压缩方法主要依赖低秩近似或标量量化，难以同时实现高压缩率和高重建保真度。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>💡 动机</h3>
-                    <p>KV缓存是长上下文LLM部署的主要瓶颈。研究者希望开发一种无需训练、高压缩率且能保持模型性能的方法，使LLM能在有限内存下处理更长的上下文。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>🔧 技术点</h3>
-                    <p><strong>向量量化(VQ)</strong>：将KV表示压缩为整数索引。<strong>训练自由</strong>：无需额外训练或微调。<strong>高保真重建</strong>：通过VQ码本实现高质量重建。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📈 收益点</h3>
-                    <p>在LLaMA3.1-8B上实现82.8%压缩率；在LongBench上保持98.6%的基线性能；相同内存下可处理4.3倍更长的生成长度；仅需几个整数索引即可表示数千个浮点数值。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📝 总结</h3>
-                    <p>VQKV提出了一种创新的KV缓存压缩方法，通过向量量化实现了高压缩率和高保真度的平衡。该方法无需训练，可直接应用于现有模型，在长上下文任务上保持性能的同时大幅减少内存占用。这对于部署长上下文LLM到资源受限设备具有重要意义。</p>
-                </div>
+            <h3>🎯 背景</h3>
+            <p>大模型的计算需求巨大，激活感知压缩技术可以在不重新训练的情况下减少计算量。然而，现有方法高度依赖校准数据，对于未见过的下游任务存在域偏移问题。</p>
+
+            <h3>💡 动机</h3>
+            <p>传统量化方法在推理前需要大量校准数据，这限制了模型在新任务上的泛化能力。研究者希望开发一种能够在推理时动态适应的量化方法，无需预先校准。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>测试时量化(TTQ)</strong>：在推理时进行在线校准，实时压缩模型</li>
+                <li><strong>激活感知量化</strong>：根据输入激活动态调整量化参数</li>
+                <li><strong>即时适应</strong>：能够针对每个提示词(prompt)进行自适应调整，无论下游任务如何</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>解决了域偏移问题，适应各种下游任务</li>
+                <li>实现了推理加速，同时保持量化性能</li>
+                <li>无需预训练或离线校准，部署更加灵活</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>TTQ提出了一种创新的测试时量化框架，通过在推理时进行在线校准，解决了传统量化方法依赖校准数据导致的域偏移问题。该方法能够在各种下游任务上实现即时激活感知量化，在加速推理的同时保持性能。这对于需要在多样化任务上部署大模型的场景具有重要意义。</p>
+
+            <div class="paper-image">
+                <img src="images/ttq_2603.19296_fig1.png" alt="TTQ架构图" loading="lazy">
+                <p class="image-caption">图1: TTQ测试时量化框架示意图</p>
             </div>
 
-            <!-- Paper 4 -->
-            <div class="paper">
-                <h2>📄 Probing to Refine: Reinforcement Distillation of LLMs via Explanatory Inversion</h2>
-                <div class="paper-meta">
-                    🔗 <a href="https://arxiv.org/abs/2603.19266" target="_blank">arXiv:2603.19266</a> | 
-                    👥 Zhen Tan, Chengshuai Zhao, Song Wang, Jundong Li, Tianlong Chen, Huan Liu | 
-                    📅 2026年2月26日 (ICLR 2026)
-                </div>
-                
-                <div class="section">
-                    <h3>🎯 背景</h3>
-                    <p>将大语言模型的推理能力蒸馏到更小、更高效的学生模型是一个未解决的挑战。现有蒸馏方法常导致学生模型表面模式记忆和泛化能力不足。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>💡 动机</h3>
-                    <p>传统知识蒸馏往往让学生模型只是模仿教师模型的输出，而非真正理解推理过程。研究者希望开发一种能够培养学生深度概念理解的蒸馏框架。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>🔧 技术点</h3>
-                    <p><strong>解释性反转(Explanatory Inversion, EI)</strong>：生成解释性探针，强制学生阐述答案背后的逻辑。<strong>Explanatory GRPO (EXGRPO)</strong>：带对话结构效用奖励的强化学习算法，奖励学生在探针间保持连贯推理。<strong>Dialogue Structure Utility Bonus</strong>：显式奖励连贯的推理过程。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📈 收益点</h3>
-                    <p>使用Gemma-7B作为学生模型，相比零样本性能平均提升20.39%；相比最先进蒸馏基线提升6.02%；训练效率显著提升（仅需10-25%训练数据即可超越vanilla微调）；对分布外任务具有强泛化能力。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📝 总结</h3>
-                    <p>该论文提出了一种新颖的强化蒸馏框架，通过解释性反转和EXGRPO算法，突破了简单模仿的局限，培养学生模型的深度概念理解。实验表明该方法在多个基准上都有显著提升，且具有良好的训练效率和泛化能力。这为开发更小但推理能力更强的语言模型提供了新方向。</p>
-                </div>
+            <hr>
+
+            <h2>📄 论文 2: RAMP: Reinforcement Adaptive Mixed Precision Quantization</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.17891" target="_blank">2603.17891</a></p>
+                <p><strong>作者</strong>: Arpit Singh Gautam, Saurabh Jha</p>
+                <p><strong>发表时间</strong>: 2026年3月18日</p>
             </div>
 
-            <!-- Paper 5 -->
-            <div class="paper">
-                <h2>📄 Understanding Quantization of Optimizer States in LLM Pre-training: Dynamics of State Staleness and Effectiveness of State Resets</h2>
-                <div class="paper-meta">
-                    🔗 <a href="https://arxiv.org/abs/2603.16731" target="_blank">arXiv:2603.16731</a> | 
-                    👥 Kristi Topollai, Anna Choromanska | 
-                    📅 2026年3月17日
-                </div>
-                
-                <div class="section">
-                    <h3>🎯 背景</h3>
-                    <p>量化优化器状态正成为内存高效大规模预训练的重要组成部分，但量化后的优化器动态仍只有部分被理解。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>💡 动机</h3>
-                    <p>低精度EMA优化器状态可能导致更新停滞，影响模型训练效果。研究者希望深入理解量化对优化器状态的影响机制，并提出有效的缓解策略。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>🔧 技术点</h3>
-                    <p><strong>状态停滞(Stalling)分析</strong>：量化导致名义更新四舍五回到相同存储值。<strong>预测模型</strong>：估计单步停滞概率，刻画初始化后停滞的累积过程。<strong>状态重置理论</strong>：提供为何重置在低精度中有帮助的理论解释。<strong>重置周期选择理论</strong>：导出选择有效重置周期的理论方法。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📈 收益点</h3>
-                    <p>揭示了量化EMA优化器状态的停滞机制；提供了状态重置有效性的理论依据；实验表明合适的重置计划可恢复低精度状态存储损失的性能；大幅减少优化器状态内存占用。</p>
-                </div>
-                
-                <div class="section">
-                    <h3>📝 总结</h3>
-                    <p>该论文深入分析了LLM预训练中优化器状态量化的动态行为，提出了状态停滞的理论模型，并解释了状态重置的有效性。理论分析和实验验证表明，通过合适的重置计划，可以在大幅减少内存的同时保持训练性能。这对于大规模LLM预训练的资源优化具有重要指导意义。</p>
-                </div>
+            <h3>🎯 背景</h3>
+            <p>训练后量化(PTQ)是在资源受限硬件上部署LLM的关键技术，但现有方法通常对所有层使用统一的位宽，导致精度-效率权衡次优。</p>
+
+            <h3>💡 动机</h3>
+            <p>不同层对量化的敏感度不同，统一位宽会浪费位宽预算。研究者希望使用强化学习自动学习每层的最优位宽分配，在全局位宽预算下最小化困惑度。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>离策略Soft Actor-Critic框架</strong>：学习每层位宽分配策略</li>
+                <li><strong>11维嵌入特征</strong>：包括激活统计、权重属性和结构描述符</li>
+                <li><strong>Scale Folding技术</strong>：通过通道缩放将激活异常值迁移到权重</li>
+                <li><strong>零样本迁移</strong>：策略可跨模型家族和规模泛化</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>Llama 2 7B上达到5.54困惑度(3.68GB, 3.65有效位)，优于AWQ</li>
+                <li>相比GPTQ在大小上减少6%，质量提升1-3%</li>
+                <li>策略可零样本迁移到Llama 2 13B和Mistral 7B</li>
+                <li>HALO流水线导出到GGUF格式，支持CPU/GPU/边缘设备</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>RAMP通过强化学习实现了自适应混合精度量化，突破了统一位宽的限制。其核心创新在于使用SAC框架学习位宽分配策略，并结合Scale Folding技术处理异常值。实验表明该方法在精度和效率上都有显著提升，且具有良好的泛化能力，为LLM在边缘设备上的高效部署提供了新思路。</p>
+
+            <div class="paper-image">
+                <img src="images/ramp_2603.17891_fig1.png" alt="RAMP架构图" loading="lazy">
+                <p class="image-caption">图1: RAMP强化学习混合精度量化框架</p>
             </div>
 
-            <!-- Summary -->
-            <div class="summary">
-                <h2>📊 本周研究总结</h2>
-                <p style="margin-bottom: 20px;">本周(2026年3月17日-23日)共收集到<strong>5篇</strong>LLM量化/部署/蒸馏相关的高质量论文：</p>
-                
+            <hr>
+
+            <h2>📄 论文 3: VQKV: High-Fidelity KV Cache Compression via Vector-Quantization</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16435" target="_blank">2603.16435</a></p>
+                <p><strong>作者</strong>: Yixuan Wang, Qingyu Shi, Jiayu Zhou, Dianbo Liu, Ziwei He, Zhouhan Lin</p>
+                <p><strong>发表时间</strong>: 2026年3月17日</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>LLM的上下文长度增长导致Key-Value(KV)缓存急剧增大，限制了在资源受限环境中的部署。现有压缩方法主要依赖低秩近似或标量量化，难以同时实现高压缩率和高重建保真度。</p>
+
+            <h3>💡 动机</h3>
+            <p>KV缓存是长上下文LLM部署的主要瓶颈。研究者希望开发一种无需训练、高压缩率且能保持模型性能的方法，使LLM能在有限内存下处理更长的上下文。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>向量量化(VQ)</strong>：将KV表示压缩为整数索引</li>
+                <li><strong>训练自由</strong>：无需额外训练或微调</li>
+                <li><strong>高保真重建</strong>：通过VQ码本实现高质量重建</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>在LLaMA3.1-8B上实现82.8%压缩率</li>
+                <li>在LongBench上保持98.6%的基线性能</li>
+                <li>相同内存下可处理4.3倍更长的生成长度</li>
+                <li>仅需几个整数索引即可表示数千个浮点数值</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>VQKV提出了一种创新的KV缓存压缩方法，通过向量量化实现了高压缩率和高保真度的平衡。该方法无需训练，可直接应用于现有模型，在长上下文任务上保持性能的同时大幅减少内存占用。这对于部署长上下文LLM到资源受限设备具有重要意义。</p>
+
+            <div class="paper-image">
+                <img src="images/vqkv_2603.16435_fig1.png" alt="VQKV架构图" loading="lazy">
+                <p class="image-caption">图1: VQKV向量量化KV缓存压缩方法</p>
+            </div>
+
+            <hr>
+
+            <h2>📄 论文 4: Probing to Refine: Reinforcement Distillation via Explanatory Inversion</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.19266" target="_blank">2603.19266</a></p>
+                <p><strong>作者</strong>: Zhen Tan, Chengshuai Zhao, Song Wang, Jundong Li, Tianlong Chen, Huan Liu</p>
+                <p><strong>发表时间</strong>: 2026年2月26日 | <strong>会议</strong>: ICLR 2026</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>将大语言模型的推理能力蒸馏到更小、更高效的学生模型是一个未解决的挑战。现有蒸馏方法常导致学生模型表面模式记忆和泛化能力不足。</p>
+
+            <h3>💡 动机</h3>
+            <p>传统知识蒸馏往往让学生模型只是模仿教师模型的输出，而非真正理解推理过程。研究者希望开发一种能够培养学生深度概念理解的蒸馏框架。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>解释性反转(Explanatory Inversion, EI)</strong>：生成解释性探针，强制学生阐述答案背后的逻辑</li>
+                <li><strong>Explanatory GRPO (EXGRPO)</strong>：带对话结构效用奖励的强化学习算法</li>
+                <li><strong>Dialogue Structure Utility Bonus</strong>：显式奖励连贯的推理过程</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>使用Gemma-7B作为学生模型，相比零样本性能平均提升20.39%</li>
+                <li>相比最先进蒸馏基线提升6.02%</li>
+                <li>训练效率显著提升（仅需10-25%训练数据即可超越vanilla微调）</li>
+                <li>对分布外任务具有强泛化能力</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>该论文提出了一种新颖的强化蒸馏框架，通过解释性反转和EXGRPO算法，突破了简单模仿的局限，培养学生模型的深度概念理解。实验表明该方法在多个基准上都有显著提升，且具有良好的训练效率和泛化能力。这为开发更小但推理能力更强的语言模型提供了新方向。</p>
+
+            <div class="paper-image">
+                <img src="images/probing_2603.19266_fig1.png" alt="Probing to Refine架构图" loading="lazy">
+                <p class="image-caption">图1: 解释性反转强化蒸馏框架</p>
+            </div>
+
+            <hr>
+
+            <h2>📄 论文 5: Understanding Quantization of Optimizer States in LLM Pre-training</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.16731" target="_blank">2603.16731</a></p>
+                <p><strong>作者</strong>: Kristi Topollai, Anna Choromanska</p>
+                <p><strong>发表时间</strong>: 2026年3月17日</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>量化优化器状态正成为内存高效大规模预训练的重要组成部分，但量化后的优化器动态仍只有部分被理解。</p>
+
+            <h3>💡 动机</h3>
+            <p>低精度EMA优化器状态可能导致更新停滞，影响模型训练效果。研究者希望深入理解量化对优化器状态的影响机制，并提出有效的缓解策略。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>状态停滞(Stalling)分析</strong>：量化导致名义更新四舍五回到相同存储值</li>
+                <li><strong>预测模型</strong>：估计单步停滞概率，刻画初始化后停滞的累积过程</li>
+                <li><strong>状态重置理论</strong>：提供为何重置在低精度中有帮助的理论解释</li>
+                <li><strong>重置周期选择理论</strong>：导出选择有效重置周期的理论方法</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>揭示了量化EMA优化器状态的停滞机制</li>
+                <li>提供了状态重置有效性的理论依据</li>
+                <li>实验表明合适的重置计划可恢复低精度状态存储损失的性能</li>
+                <li>大幅减少优化器状态内存占用</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>该论文深入分析了LLM预训练中优化器状态量化的动态行为，提出了状态停滞的理论模型，并解释了状态重置的有效性。理论分析和实验验证表明，通过合适的重置计划，可以在大幅减少内存的同时保持训练性能。这对于大规模LLM预训练的资源优化具有重要指导意义。</p>
+
+            <div class="paper-image">
+                <img src="images/optimizer_2603.16731_fig1.png" alt="Optimizer States分析图" loading="lazy">
+                <p class="image-caption">图1: 优化器状态量化停滞机制分析</p>
+            </div>
+
+            <hr>
+
+            <h2>📊 本周总结</h2>
+            <p>本周(2026年3月17日-23日)共收集到5篇LLM量化/部署/蒸馏相关的高质量论文：</p>
+
+            <div class="summary-section">
+                <h3>量化方向(3篇)</h3>
                 <ul>
-                    <li><strong>量化方向(3篇)</strong>：TTQ提出了测试时动态量化方法，解决域偏移问题；RAMP通过强化学习实现自适应混合精度量化；优化器状态量化论文深入分析了低精度训练的动态机制</li>
-                    <li><strong>部署优化(1篇)</strong>：VQKV通过向量量化实现了高效的KV缓存压缩</li>
-                    <li><strong>蒸馏方向(1篇)</strong>：Probing to Refine通过解释性反转和强化学习改进了知识蒸馏效果</li>
+                    <li><strong>TTQ</strong>：提出了测试时动态量化方法，解决域偏移问题</li>
+                    <li><strong>RAMP</strong>：通过强化学习实现自适应混合精度量化</li>
+                    <li><strong>优化器状态量化</strong>：深入分析了低精度训练的动态机制</li>
                 </ul>
-                
-                <p style="margin-top: 20px;">这些研究共同推动着大模型在效率和性能之间的更好平衡，为LLM的广泛应用提供了技术基础。</p>
+
+                <h3>部署优化(1篇)</h3>
+                <ul>
+                    <li><strong>VQKV</strong>：通过向量量化实现了高效的KV缓存压缩</li>
+                </ul>
+
+                <h3>蒸馏方向(1篇)</h3>
+                <ul>
+                    <li><strong>Probing to Refine</strong>：通过解释性反转和强化学习改进了知识蒸馏效果</li>
+                </ul>
             </div>
+
+            <p>这些研究共同推动着大模型在效率和性能之间的更好平衡，为LLM的广泛应用提供了技术基础。</p>
+
+            <div class="post-footer">
+                <p>📧 如有问题或建议，欢迎联系讨论</p>
+                <p><em>报告由 Jarvis 自动生成</em></p>
+            </div>
+        </article>
+
+        <div class="post-nav">
+            <a href="../23/llm-research-2026-03-23.html" class="prev-post">← 上一篇：2026-03-23</a>
         </div>
-        
-        <div class="footer">
-            <p>🔧 报告由 Jarvis 自动生成 | 📅 2026年3月24日</p>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Research Daily. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
 </body>
 </html>
