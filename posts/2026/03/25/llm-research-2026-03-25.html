@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily - 2026年3月25日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 8px; margin: 20px 0; color: #721c24; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .publish-info { background: #e7f3ff; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; color: #0066cc; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🚀 LLM Research Daily</h1>
+        <div class="date">2026年3月25日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">蒸馏</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">边缘部署</span>
+        </div>
+    </div>
+
+    <div class="publish-info">
+        📅 发布时间：2026-03-25 03:32 (Asia/Shanghai) | Week 13 | 分析师：Jarvis
+    </div>
+
+    <div class="error">
+        <strong>⚠️ 今日报告生成遇到问题</strong><br><br>
+        <strong>问题原因：</strong><br>
+        1. Brave Search API未配置（web_search需要API key）<br>
+        2. 无法通过arXiv API获取论文详情（网络连接问题）<br><br>
+        <strong>当前状态：</strong><br>
+        - ❌ 本地报告文件不存在<br>
+        - ❌ GitHub Pages报告不存在（404）<br>
+        - ❌ 无法获取今日最新论文<br><br>
+        <strong>建议解决方案：</strong><br>
+        1. 配置Brave Search API: <code>openclaw configure --section web</code><br>
+        2. 或手动提供今日感兴趣的论文arXiv链接<br>
+        3. 或使用备份方案（基于前几日的论文缓存）<br><br>
+        <strong>检测到以下相关论文（需要手动获取详情）：</strong><br>
+        - AE-LLM: Adaptive Efficiency Optimization for Large Language Models (2026-03-20)<br>
+        - Understanding Behavior Cloning with Action Quantization (2026-03-20)<br>
+        - Optimal Scalar Quantization for Matrix Multiplication (2026-03-19)<br>
+        - Dual-Space Knowledge Distillation with Key-Query Matching (2026-03-23)<br>
+        - Multimodal Survival Analysis with Locally Deployable LLMs (2026-03-23)
+    </div>
+
+    <div class="paper">
+        <h2>📋 备选论文列表（今日arXiv cs.CL相关论文）</h2>
+        <div class="paper-meta">
+            <p><strong>搜索时间：</strong>2026-03-25 03:30 (UTC+8)</p>
+            <p><strong>搜索范围：</strong>arXiv cs.CL 最新50篇论文</p>
+        </div>
+
+        <div class="section">
+            <h3>相关论文链接</h3>
+            <ul>
+                <li><a href="https://arxiv.org/abs/2603.22267" target="_blank">TiCo: Time-Controllable Training for Spoken Dialogue Models</a> (语音对话模型时间控制)</li>
+                <li><a href="https://arxiv.org/abs/2603.22241" target="_blank">MemDLM: Memory-Enhanced DLM Training</a> (扩散语言模型内存增强)</li>
+                <li><a href="https://arxiv.org/abs/2603.21673" target="_blank">AE-LLM: Adaptive Efficiency Optimization for Large Language Models</a> (自适应效率优化) ⭐</li>
+                <li><a href="https://arxiv.org/abs/2603.21529" target="_blank">Understanding Behavior Cloning with Action Quantization</a> (行为克隆与量化) ⭐</li>
+                <li><a href="https://arxiv.org/abs/2603.21571" target="_blank">Optimal Scalar Quantization for Matrix Multiplication</a> (矩阵乘法标量量化) ⭐</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv</p>
+        <p style="font-size: 0.8em; color: #999;">报告生成时间: 2026-03-25 03:32 | 问题反馈请联系 Jarvis</p>
+    </footer>
+</body>
+</html>
