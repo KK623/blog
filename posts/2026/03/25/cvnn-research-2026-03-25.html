@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月25日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月25日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">相量变换器</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">语音合成</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">不确定性量化</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：原定时任务因路径错误失败（读取了2025年的文件路径），本报告为手动补做。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.11589" target="_blank">1. Toward Complex-Valued Neural Networks for Waveform Generation (ComVo)</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589 [cs.SD]</a> · 2026年3月12日</p>
+            <p><strong>作者</strong>: Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</p>
+            <p><strong>主题</strong>: <span class="badge">语音合成</span> <span class="badge">复数神经网络</span> <span class="badge">ICLR 2026</span></p>
+            <a href="https://arxiv.org/pdf/2603.11589.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>神经声码器近年来在波形生成方面取得了显著进展，能够产生自然且富有表现力的音频。其中，基于iSTFT（逆短时傅里叶变换）的声码器因其能够预测复数值频谱图并通过iSTFT合成波形而受到关注，这种方法避免了计算成本高昂的学习上采样阶段。然而，现有方法通常使用实值网络独立处理实部和虚部，这种分离限制了它们捕捉复数频谱图内在结构的能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何设计一个原生的复数神经网络声码器，能够直接处理复数表示并提供结构化的反馈？如何有效地引导相位转换以提高合成质量？如何通过优化计算效率来加速训练过程？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>原生复数运算</strong>: 生成器和判别器均采用原生复数算术，而非分离处理实部和虚部</li>
+                <li><strong>相位量化</strong>: 将相位值离散化以结构化方式引导相位转换，规范训练过程</li>
+                <li><strong>块矩阵计算方案</strong>: 通过减少冗余操作提高训练效率</li>
+                <li><strong>对抗训练框架</strong>: 在复数表示空间中提供结构化反馈</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明，ComVo在合成质量上优于可比较的实值基线方法。更重要的是，其块矩阵计算方案将训练时间减少了<strong>25%</strong>，在保持高质量音频合成的同时显著提升了计算效率。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>音质提升</strong>: 相比实值基线实现更高的合成质量；<strong>训练效率</strong>: 块矩阵方案减少25%训练时间；<strong>结构化相位处理</strong>: 相位量化有效规范训练过程；<strong>端到端复数处理</strong>: 避免了实部虚部分离带来的信息损失。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>ComVo是首个将原生复数神经网络应用于语音波形生成的声码器，通过复数生成器和判别器的协同设计，以及创新的相位量化技术，实现了优于实值基线的合成质量。该研究为CVNN在音频处理领域的应用开辟了新方向，已被ICLR 2026接收。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.11589</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：ComVo架构图、复数运算示意图、相位量化流程、与基线方法的对比结果图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.17433" target="_blank">2. The Phasor Transformer: Resolving Attention Bottlenecks on the Unit Circle</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.17433" target="_blank">arXiv:2603.17433 [cs.LG]</a> · 2026年3月18日</p>
+            <p><strong>作者</strong>: Dibakar Sigdel</p>
+            <p><strong>主题</strong>: <span class="badge">相量变换器</span> <span class="badge">时间序列</span> <span class="badge">O(N log N)复杂度</span></p>
+            <a href="https://arxiv.org/pdf/2603.17433.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>Transformer模型已经重新定义了序列学习，但点积自注意力机制在处理长上下文时间序列时引入了二次复杂度的token混合瓶颈。对于需要建模长程依赖的振荡域（如信号处理、时间序列预测），这种计算复杂度成为关键限制。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否设计一种相量原生（phase-native）的替代方案，将序列状态表示在单位圆流形$S^1$上，实现全局token耦合而不依赖显式的注意力图？如何在保持竞争力的预测性能的同时将复杂度从$O(N^2)$降低到$O(N\log N)$？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Phasor Transformer块</strong>: 在单位圆流形$S^1$上表示序列状态</li>
+                <li><strong>轻量级可训练相位偏移</strong>: 结合无参数的离散傅里叶变换(DFT)进行token耦合</li>
+                <li><strong>全局$O(N\log N)$混合</strong>: 通过DFT实现无需显式注意力图的全局信息混合</li>
+                <li><strong>Large Phasor Model (LPM)</strong>: 通过堆叠Phasor Transformer块构建的大型模型</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在合成多频率基准测试上的自回归时间序列预测验证表明，LPM在高度紧凑的参数预算下学习稳定的全局动态，并与传统自注意力基线相比实现了具有竞争力的预测行为。研究建立了明确的效率-性能前沿，证明时间序列的大型模型扩展可以从几何约束的相量计算中涌现。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>计算效率</strong>: $O(N\log N)$复杂度显著优于自注意力的$O(N^2)$；<strong>参数效率</strong>: 紧凑的参数预算实现竞争性性能；<strong>全局耦合</strong>: DFT实现确定性全局信息混合；<strong>振荡域适用</strong>: 特别适合具有周期性特征的时间序列数据。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Phasor Transformer通过将序列状态映射到单位圆流形并利用DFT实现高效全局耦合，为长上下文时间序列建模提供了一条实用的可扩展路径。这种方法不仅解决了注意力瓶颈问题，还展示了几何约束相量计算在构建大型时间序列模型中的潜力。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.17433</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：Phasor Transformer架构图、单位圆流形表示示意图、与Transformer的复杂度对比图、时间序列预测结果图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.18078" target="_blank">3. Variational Phasor Circuits for Phase-Native Brain-Computer Interface Classification</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.18078" target="_blank">arXiv:2603.18078 [cs.LG]</a> · 2026年3月18日</p>
+            <p><strong>作者</strong>: Dibakar Sigdel</p>
+            <p><strong>主题</strong>: <span class="badge">相量电路</span> <span class="badge">脑机接口</span> <span class="badge">变分量子电路</span></p>
+            <a href="https://arxiv.org/pdf/2603.18078.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>脑机接口（BCI）中的神经信号解码是一个具有挑战性的分类任务，需要处理空间分布的高维信号。传统的实值神经网络通常需要大量可训练参数，而脑机接口应用通常对计算资源和延迟有严格要求。受变分量子电路启发，如何在经典计算中利用相量（phasor）表示来设计更高效的分类器？</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否设计一种确定性的经典学习架构，在连续$S^1$单位圆流形上操作，用可训练相位偏移替代密集的实值权重矩阵？这种相量原生设计能否在保持竞争力的准确率的同时大幅减少可训练参数？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Variational Phasor Circuit (VPC)</strong>: 在连续$S^1$单位圆流形上操作的经典学习架构</li>
+                <li><strong>可训练相位偏移</strong>: 替代密集实值权重矩阵，实现局部酉混合和结构化干涉</li>
+                <li><strong>块间拉回归一化</strong>: 通过pull-back normalization将单块扩展到深层电路</li>
+                <li><strong>统一分类框架</strong>: 支持二分类和多分类的统一方法</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>使用合成脑机接口基准测试的实验表明，VPC能够解码困难的心理状态分类任务，达到与标准欧几里得基线相当的准确率，同时使用<strong>显著更少的可训练参数</strong>。这种参数效率使其特别适合资源受限的脑机接口应用。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>参数效率</strong>: 比标准基线显著减少可训练参数；<strong>数学原理</strong>: 单位圆相位干涉提供了数学上严谨的计算方式；<strong>灵活扩展</strong>: 可从独立分类器扩展到前端编码层；<strong>量子-经典混合</strong>: 为未来混合相量-量子系统奠定基础。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>VPC将相量计算引入经典神经网络，通过单位圆流形上的可训练相位偏移实现高效分类。该方法不仅在脑机接口任务上展示了竞争力，还为构建混合相量-量子系统提供了潜在的桥梁，是CVNN领域向受量子启发的高效架构发展的重要一步。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.18078</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：VPC架构图、单位圆决策边界可视化、块间归一化示意图、脑机接口分类结果对比图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.15283" target="_blank">4. Complex-Valued Unitary Representations for Improved Uncertainty Quantification</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.15283" target="_blank">arXiv:2602.15283 [cs.LG]</a> · 2026年2月17日</p>
+            <p><strong>作者</strong>: Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</p>
+            <p><strong>主题</strong>: <span class="badge">不确定性量化</span> <span class="badge">模型校准</span> <span class="badge">酉表示</span></p>
+            <a href="https://arxiv.org/pdf/2602.15283.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>现代深度神经网络虽然达到了高预测准确率，但在校准方面表现不佳：它们的置信度分数不能可靠地反映真实正确的概率。模型校准对于安全关键应用（如医疗诊断、自动驾驶）至关重要，因为过度自信的模型可能导致灾难性后果。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否通过将骨干网络特征投影到复数值希尔伯特空间，并在学习的酉变换下演化，来改善深度神经网络的校准性能？量子力学启发的复数表示是否比传统方法更好地捕捉预测不确定性？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数希尔伯特空间投影</strong>: 将特征映射到复数值希尔伯特空间</li>
+                <li><strong>Cayley参数化酉变换</strong>: 通过Cayley映射参数化学习的酉变换</li>
+                <li><strong>酉幅度头</strong>: 通过幅度和softmax读取复数特征</li>
+                <li><strong>波函数头</strong>: 探索Born规则测量层（量子力学动机方法）</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在CIFAR-10上的消融研究表明，酉幅度头实现了<strong>ECE = 0.0146</strong>的期望校准误差，相比标准softmax头(0.0355)改善了<strong>2.4倍</strong>，相比温度缩放(0.0510)改善了<strong>3.5倍</strong>。在CIFAR-10H人类不确定性基准上，波函数头达到了最低的KL散度(0.336)，表明复数表示更好地捕捉了人类感知模糊性的结构。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>校准改进</strong>: ECE降低2.4-3.5倍；<strong>人类感知对齐</strong>: 更好地匹配人类不确定性判断；<strong>范数保持动态</strong>: 酉变换保持特征空间几何；<strong>即插即用</strong>: 可作为轻量级可互换分类头集成到现有网络。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>研究报道了在分布外检测和情感分析任务上的负面结果，表明该方法的应用范围存在边界。理论分析将范数保持酉动态与特征空间几何连接到校准，但需要更多研究来理解其适用条件的完整范围。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究提出了首个将复数值酉表示用于深度神经网络不确定性量化的系统方法。通过在希尔伯特空间中演化特征并采用幅度读取，实现了显著的校准改进。有趣的是，量子力学启发的Born规则测量层反而降低了校准性能，这提醒我们在借鉴量子概念时需要谨慎验证。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2602.15283</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：复数酉表示架构图、Cayley映射示意图、校准误差对比图、可靠性图表(Reliability Diagrams)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：4篇</p>
+        <ul>
+            <li><strong>语音合成</strong>: ComVo - 首个原生复数神经网络声码器，训练时间减少25%</li>
+            <li><strong>时间序列</strong>: Phasor Transformer - 单位圆上的$O(N\log N)$高效注意力替代方案</li>
+            <li><strong>脑机接口</strong>: VPC - 相量电路实现参数高效的空间信号分类</li>
+            <li><strong>不确定性量化</strong>: 复数酉表示将模型校准误差降低2.4-3.5倍</li>
+        </ul>
+
+        <p><strong>主题聚焦</strong>：</p>
+        <ul>
+            <li><strong>相量计算崛起</strong>: 多篇论文探索单位圆流形($S^1$)上的相量表示</li>
+            <li><strong>效率优先</strong>: CVNN在计算效率和参数效率方面展现优势</li>
+            <li><strong>跨域应用</strong>: 从语音合成到脑机接口，CVNN应用领域持续扩展</li>
+            <li><strong>量子启发</strong>: 变分量子电路概念启发新的经典CVNN架构设计</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-25 04:03 (GMT+8) · 手动补做</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | CVNN Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
