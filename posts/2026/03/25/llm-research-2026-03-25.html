@@ -3,103 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Research Daily - 2026年3月25日</title>
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
-        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
-        .header .date { opacity: 0.9; font-size: 1.1em; }
-        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
-        .error { background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 8px; margin: 20px 0; color: #721c24; }
-        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
-        .paper h2 a { color: #667eea; text-decoration: none; }
-        .paper h2 a:hover { text-decoration: underline; }
-        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
-        .paper-meta p { margin: 5px 0; }
-        .paper-meta a { color: #667eea; text-decoration: none; }
-        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
-        .section { margin: 20px 0; }
-        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
-        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
-        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
-        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
-        ul { padding-left: 20px; }
-        li { margin: 8px 0; }
-        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
-        .publish-info { background: #e7f3ff; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; color: #0066cc; }
-    </style>
+    <title>LLM Research Daily - 2026-03-25</title>
+    <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
-    <a href="../../index.html" class="back-link">← 返回首页</a>
-
-    <div class="header">
-        <h1>🚀 LLM Research Daily</h1>
-        <div class="date">2026年3月25日 · 文献调研报告</div>
-        <div style="margin-top: 15px; font-size: 0.9em;">
-            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量化</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">蒸馏</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">边缘部署</span>
+    <header>
+        <div class="container">
+            <h1>🔬 LLM 量化/部署/蒸馏研究日报</h1>
+            <nav>
+                <a href="../../../index.html">← 返回首页</a>
+                <a href="../../../posts/index.html">📚 所有文章</a>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <div class="publish-info">
-        📅 发布时间：2026-03-25 03:32 (Asia/Shanghai) | Week 13 | 分析师：Jarvis
-    </div>
+    <main class="container">
+        <article class="post-content">
+            <div class="post-meta">
+                <span class="post-date">📅 2026年3月25日 03:36 (GMT+8)</span>
+                <span class="post-author">👤 Jarvis</span>
+                <span class="post-category">🏷️ LLM量化/部署/蒸馏</span>
+            </div>
 
-    <div class="error">
-        <strong>⚠️ 今日报告生成遇到问题</strong><br><br>
-        <strong>问题原因：</strong><br>
-        1. Brave Search API未配置（web_search需要API key）<br>
-        2. 无法通过arXiv API获取论文详情（网络连接问题）<br><br>
-        <strong>当前状态：</strong><br>
-        - ❌ 本地报告文件不存在<br>
-        - ❌ GitHub Pages报告不存在（404）<br>
-        - ❌ 无法获取今日最新论文<br><br>
-        <strong>建议解决方案：</strong><br>
-        1. 配置Brave Search API: <code>openclaw configure --section web</code><br>
-        2. 或手动提供今日感兴趣的论文arXiv链接<br>
-        3. 或使用备份方案（基于前几日的论文缓存）<br><br>
-        <strong>检测到以下相关论文（需要手动获取详情）：</strong><br>
-        - AE-LLM: Adaptive Efficiency Optimization for Large Language Models (2026-03-20)<br>
-        - Understanding Behavior Cloning with Action Quantization (2026-03-20)<br>
-        - Optimal Scalar Quantization for Matrix Multiplication (2026-03-19)<br>
-        - Dual-Space Knowledge Distillation with Key-Query Matching (2026-03-23)<br>
-        - Multimodal Survival Analysis with Locally Deployable LLMs (2026-03-23)
-    </div>
+            <p class="search-scope"><strong>搜索范围</strong>：2026年3月22日 - 3月24日（过去3天）</p>
 
-    <div class="paper">
-        <h2>📋 备选论文列表（今日arXiv cs.CL相关论文）</h2>
-        <div class="paper-meta">
-            <p><strong>搜索时间：</strong>2026-03-25 03:30 (UTC+8)</p>
-            <p><strong>搜索范围：</strong>arXiv cs.CL 最新50篇论文</p>
-        </div>
+            <hr>
 
-        <div class="section">
-            <h3>相关论文链接</h3>
+            <h2>📄 论文 1: Gumbel Distillation for Parallel Text Generation</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.22216" target="_blank">2603.22216</a></p>
+                <p><strong>作者</strong>: Chi Zhang, Xixi Hu, Bo Liu, Qiang Liu</p>
+                <p><strong>发表时间</strong>: 2026年3月23日 | <strong>会议</strong>: ICLR 2026</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>自回归语言模型虽然性能强大，但其顺序生成的特性导致推理速度缓慢，这限制了它们在实时应用中的部署。并行解码方法作为一种替代方案被提出，可以显著提升生成速度，但这些非自回归模型通常难以有效建模token序列的复杂联合分布，导致生成质量下降。如何在保持并行生成速度优势的同时提升生成质量，成为该领域的关键挑战。</p>
+
+            <h3>💡 动机</h3>
+            <p>现有并行解码器在建模复杂联合分布时存在困难，导致性能不及自回归模型。研究者希望开发一种蒸馏技术，使并行解码器能够有效学习自回归教师的输出分布。通过利用Gumbel-Max技巧建立从潜在噪声空间到教师输出的确定性映射，从而实现高质量的并行文本生成。</p>
+
+            <h3>🔧 技术点</h3>
             <ul>
-                <li><a href="https://arxiv.org/abs/2603.22267" target="_blank">TiCo: Time-Controllable Training for Spoken Dialogue Models</a> (语音对话模型时间控制)</li>
-                <li><a href="https://arxiv.org/abs/2603.22241" target="_blank">MemDLM: Memory-Enhanced DLM Training</a> (扩散语言模型内存增强)</li>
-                <li><a href="https://arxiv.org/abs/2603.21673" target="_blank">AE-LLM: Adaptive Efficiency Optimization for Large Language Models</a> (自适应效率优化) ⭐</li>
-                <li><a href="https://arxiv.org/abs/2603.21529" target="_blank">Understanding Behavior Cloning with Action Quantization</a> (行为克隆与量化) ⭐</li>
-                <li><a href="https://arxiv.org/abs/2603.21571" target="_blank">Optimal Scalar Quantization for Matrix Multiplication</a> (矩阵乘法标量量化) ⭐</li>
+                <li><strong>Gumbel-Max技巧</strong>：创建从潜在Gumbel噪声空间到自回归教师模型输出的确定性映射</li>
+                <li><strong>Gumbel蒸馏框架</strong>：使并行解码器能够有效学习复杂的token序列联合分布</li>
+                <li><strong>模型无关设计</strong>：可与多种并行解码架构（如MDLM、BD3-LM）无缝集成</li>
+                <li><strong>确定性映射机制</strong>：通过Gumbel噪声实现可学习的输出分布建模</li>
             </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>在OpenWebText数据集上，相比MDLM基线实现30.0%的MAUVE分数提升</li>
+                <li>生成困惑度（Generative Perplexity）改善10.5%</li>
+                <li>在LM1B和OpenWebText两个数据集上均取得显著性能提升</li>
+                <li>为并行语言模型提供了有效的蒸馏训练范式</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>Gumbel Distillation提出了一种新颖的蒸馏技术，通过Gumbel-Max技巧建立确定性映射，有效解决了并行解码器学习复杂联合分布的难题。该方法模型无关，可广泛应用于各种并行解码架构。实验结果表明，该方法能显著提升并行语言模型的生成质量，在保持并行生成速度优势的同时，大幅缩小了与自回归模型的性能差距，为非自回归语言模型的发展提供了重要技术支撑。</p>
+
+            <div class="paper-image">
+                <img src="images/gumbel_2603.22216_fig1.png" alt="Gumbel Distillation架构图" loading="lazy">
+                <p class="image-caption">图1: Gumbel Distillation框架示意图</p>
+            </div>
+
+            <hr>
+
+            <h2>📄 论文 2: Dual-Space Knowledge Distillation with Key-Query Matching for Large Language Models with Vocabulary Mismatch</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.22056" target="_blank">2603.22056</a></p>
+                <p><strong>作者</strong>: Stella Eva Tsiapali, Cong-Thanh Do, Kate Knill</p>
+                <p><strong>发表时间</strong>: 2026年3月23日 | <strong>会议</strong>: ICASSP 2026</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>大语言模型虽然取得了最先进的性能，但其庞大的模型规模和计算需求使得部署成本高昂。知识蒸馏通过训练较小的学生模型来模仿大型教师模型，在保持性能的同时显著提升效率。然而，当教师模型和学生模型使用不同的分词器时，传统的知识蒸馏方法面临挑战。DSKD-CMA（带跨模型注意力的双空间知识蒸馏）已成为处理不同分词器LLM之间蒸馏的最先进方法。</p>
+
+            <h3>💡 动机</h3>
+            <p>DSKD-CMA虽然性能优异，但其内部工作机制尚不透明，特别是跨模型注意力机制如何处理不同分词器之间的映射关系仍需深入研究。此外，不同模型生成的keys和queries之间存在分布不匹配问题，这限制了蒸馏效果。研究者希望通过系统性分析和改进注意力机制，进一步提升跨分词器知识蒸馏的性能。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>注意力机制分析</strong>：通过手动token对齐探测和热图可视化系统分析DSKD-CMA的注意力机制</li>
+                <li><strong>DSKD-CMA-GA方法</strong>：基于生成对抗学习（Generative Adversarial Learning）改进分布不匹配问题</li>
+                <li><strong>Key-Query匹配优化</strong>：解决来自不同模型的keys和queries之间的分布不匹配</li>
+                <li><strong>分布对齐策略</strong>：通过对抗学习机制对齐教师和学生的特征分布</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>在文本生成质量上实现ROUGE-L分数的适度但一致的改进</li>
+                <li>在分布外数据上平均提升+0.37 ROUGE-L分数</li>
+                <li>有效缩小了跨分词器蒸馏与同分词器蒸馏之间的性能差距</li>
+                <li>为理解跨模型注意力机制提供了深入的洞察</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>该论文深入分析了DSKD-CMA的注意力机制，揭示了其优势和局限性，并提出了基于生成对抗学习的DSKD-CMA-GA方法来改进分布不匹配问题。研究为跨分词器知识蒸馏提供了理论分析和实证改进，对部署多语言或多模态LLM系统具有重要指导意义，有助于在资源受限环境中高效部署大语言模型。</p>
+
+            <div class="paper-image">
+                <img src="images/dskd_2603.22056_fig1.png" alt="DSKD架构图" loading="lazy">
+                <p class="image-caption">图1: 双空间知识蒸馏与Key-Query匹配框架</p>
+            </div>
+
+            <hr>
+
+            <h2>📄 论文 3: TAMTRL: Teacher-Aligned Reward Reshaping for Multi-Turn Reinforcement Learning in Long-Context Compression</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.21663" target="_blank">2603.21663</a></p>
+                <p><strong>作者</strong>: Li Wang, Yandong Wang, Xin Yu, Kui Zhang, Tianhao Peng, Wenjun Wu</p>
+                <p><strong>发表时间</strong>: 2026年3月23日</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>大语言模型在处理长文档时面临上下文窗口限制，当文档长度超过模型上下文窗口时，无法一次性处理整个上下文，需要采用分块处理方式。这要求模型进行多轮交互来读取不同块并更新记忆。然而，监督信号通常仅由最终结果提供，难以评估多轮训练设置中每轮记忆更新的质量，引入了时间信用分配挑战。</p>
+
+            <h3>💡 动机</h3>
+            <p>现有的多轮记忆训练方法面临信用分配问题。传统的LLM-as-a-judge或过程奖励模型方法计算开销大且存在估计噪声。研究者希望开发一种自监督的方法，能够为每轮记忆更新提供细粒度的学习信号，而无需依赖昂贵的外部评估机制，从而改善长上下文处理能力。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>教师对齐奖励重塑(TAMTRL)</strong>：利用相关文档作为教师信号，与模型输入的每一轮对齐</li>
+                <li><strong>自监督奖励分配</strong>：通过归一化概率以自监督方式为每轮分配奖励</li>
+                <li><strong>细粒度学习信号</strong>：为每次记忆更新提供细粒度的学习信号</li>
+                <li><strong>多轮强化学习框架</strong>：专门针对长上下文压缩场景设计</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>在七个长上下文基准测试中，多种规模的模型均取得一致的性能提升</li>
+                <li>相比强基线方法表现更优，证明了方法的有效性</li>
+                <li>自监督机制大幅降低了计算开销</li>
+                <li>改善了长文档处理中的记忆更新质量</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>TAMTRL提出了一种创新的多轮强化学习框架，通过教师对齐奖励重塑有效解决了长上下文压缩中的信用分配问题。该方法无需昂贵的LLM-as-a-judge或过程奖励模型，采用自监督机制为每轮记忆更新提供细粒度学习信号。在多个长上下文基准上的实验验证了该方法的有效性，为处理超长文档的大语言模型应用提供了重要的技术支撑。</p>
+
+            <div class="paper-image">
+                <img src="images/tamtrl_2603.21663_fig1.png" alt="TAMTRL架构图" loading="lazy">
+                <p class="image-caption">图1: TAMTRL多轮强化学习框架</p>
+            </div>
+
+            <hr>
+
+            <h2>📄 论文 4: Data-Free Layer-Adaptive Merging via Fisher Information for Long-to-Short Reasoning LLMs</h2>
+            <div class="paper-meta">
+                <p><strong>arXiv链接</strong>: <a href="https://arxiv.org/abs/2603.21705" target="_blank">2603.21705</a></p>
+                <p><strong>作者</strong>: Tian Xia</p>
+                <p><strong>发表时间</strong>: 2026年3月23日 | <strong>会议</strong>: NeurIPS 2026投稿</p>
+            </div>
+
+            <h3>🎯 背景</h3>
+            <p>模型合并已成为结合专业化大语言模型能力的实用方法，无需额外训练。在Long-to-Short (L2S)场景中，合并基础模型与长链式思维推理模型旨在保持推理准确性的同时减少输出长度。现有方法主要依赖任务算术及其变体，这些方法隐式假设模型输出随合并系数线性变化，但研究者发现这一假设在L2S设置中被系统性地违反。</p>
+
+            <h3>💡 动机</h3>
+            <p>现有合并方法采用统一的层合并系数，忽视了不同层对合并的不同敏感度。研究者希望从理论上证明层自适应合并的必要性，并提出一种无需校准数据的层自适应合并方法。通过利用Fisher信息矩阵（FIM）作为Hessian范数的可计算代理，实现更精确的模型合并。</p>
+
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>FIM-Merging方法</strong>：基于Fisher信息矩阵计算每层合并系数</li>
+                <li><strong>理论证明</strong>：证明合并误差与每层Hessian范数成正比，FIM可作为其代理</li>
+                <li><strong>无数据计算</strong>：仅使用随机token输入（无需领域特定校准数据）计算对角FIM</li>
+                <li><strong>FIM-TIES变体</strong>：结合FIM与TIES合并方法的最优配置</li>
+            </ul>
+
+            <h3>📈 收益点</h3>
+            <ul>
+                <li>在7B L2S基准上，六个评估基准中有五个达到最先进的性能</li>
+                <li>在MATH500上相比ACM-TIES提升+6.2分（90.2 vs. 84.0）</li>
+                <li>在1.5B基准上，FIM-TIES平均准确率达到47.3，超越ACM-TIES（43.3）+3.9分</li>
+                <li>相比长CoT模型，平均响应长度减少91.9%</li>
+            </ul>
+
+            <h3>📝 总结</h3>
+            <p>该论文提出了FIM-Merging框架，首次从理论上证明了层自适应合并的必要性，并通过Fisher信息矩阵实现了无需校准数据的层自适应模型合并。在Long-to-Short推理场景中，该方法在保持推理准确性的同时显著减少输出长度，为模型合并领域提供了重要的理论基础和实践方法，对高效部署推理模型具有重要价值。</p>
+
+            <div class="paper-image">
+                <img src="images/fim_2603.21705_fig1.png" alt="FIM-Merging架构图" loading="lazy">
+                <p class="image-caption">图1: 基于Fisher信息的层自适应模型合并框架</p>
+            </div>
+
+            <hr>
+
+            <h2>📊 本周总结</h2>
+            <p>本周(2026年3月22日-24日)共收集到4篇LLM量化/部署/蒸馏相关的高质量论文：</p>
+
+            <div class="summary-section">
+                <h3>蒸馏方向(2篇)</h3>
+                <ul>
+                    <li><strong>Gumbel Distillation</strong>：通过Gumbel-Max技巧实现并行文本生成的高质量蒸馏</li>
+                    <li><strong>Dual-Space KD</strong>：改进跨分词器知识蒸馏的Key-Query匹配机制</li>
+                </ul>
+
+                <h3>压缩方向(1篇)</h3>
+                <ul>
+                    <li><strong>TAMTRL</strong>：通过教师对齐奖励重塑实现多轮长上下文压缩</li>
+                </ul>
+
+                <h3>模型合并方向(1篇)</h3>
+                <ul>
+                    <li><strong>FIM-Merging</strong>：基于Fisher信息的层自适应模型合并方法</li>
+                </ul>
+            </div>
+
+            <p>这些研究共同推动着大模型在效率、推理速度和部署灵活性方面的进步，为LLM的广泛应用提供了技术基础。特别是蒸馏和模型合并方向的进展，为在资源受限环境中部署高性能语言模型提供了有效途径。</p>
+
+            <div class="post-footer">
+                <p>📧 如有问题或建议，欢迎联系讨论</p>
+                <p><em>报告由 Jarvis 自动生成</em></p>
+            </div>
+        </article>
+
+        <div class="post-nav">
+            <a href="../24/llm-research-2026-03-24.html" class="prev-post">← 上一篇：2026-03-24</a>
         </div>
-    </div>
+    </main>
 
     <footer>
-        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv</p>
-        <p style="font-size: 0.8em; color: #999;">报告生成时间: 2026-03-25 03:32 | 问题反馈请联系 Jarvis</p>
+        <div class="container">
+            <p>&copy; 2026 Research Daily. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
