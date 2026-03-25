@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily - 2026-03-26 | AI 研究院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .warning-box {
+      background: #fff8e6;
+      border-left: 4px solid #f0a500;
+      padding: 16px 20px;
+      margin: 30px 0;
+      border-radius: 4px;
+    }
+    .warning-box p {
+      color: #664d03;
+      margin: 0;
+      font-size: 15px;
+    }
+    .paper {
+      margin: 50px 0;
+      padding: 30px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .paper-header {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper-number {
+      color: #0066cc;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .paper-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .paper-meta {
+      font-size: 14px;
+      color: #666;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .paper-section {
+      margin: 24px 0;
+    }
+    .paper-section h3 {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 10px;
+      padding-left: 12px;
+      border-left: 3px solid #0066cc;
+    }
+    .paper-section p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.8;
+      padding-left: 15px;
+    }
+    .paper-image {
+      margin: 24px 0;
+      text-align: center;
+    }
+    .paper-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .section-divider {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 50px 0;
+    }
+    h2 {
+      font-size: 18px;
+      color: #333;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #0066cc;
+    }
+    .summary-box {
+      background: #f8f9fa;
+      padding: 24px;
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+    .summary-box h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    .summary-box ul {
+      margin-left: 20px;
+    }
+    .summary-box li {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #555;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM Research Daily - 2026-03-26</h1>
+      <p class="subtitle">LLM 量化/部署/蒸馏研究日报</p>
+    </header>
+    
+    <nav class="nav">
+      <a href="../../../">首页</a>
+      <a href="../../">博客</a>
+      <a href="https://github.com/KK623">GitHub</a>
+    </nav>
+
+    <main>
+      <h2>📊 搜索范围</h2>
+      <p style="color: #666; font-size: 15px;">2026年3月25日（过去24小时）</p>
+
+      <div class="warning-box">
+        <p>⚠️ <strong>今日无符合时间要求的新论文</strong>：在 2026-03-25 至 2026-03-26 期间，arXiv 未发布新的 LLM 量化/部署/蒸馏相关论文。</p>
+      </div>
+
+      <h2>📚 补充：近期研究精选（2026-03-20 至 2026-03-24）</h2>
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 1</div>
+          <h2 class="paper-title">EchoKV: Efficient KV Cache Compression via Similarity-Based Reconstruction</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.22910" target="_blank">2603.22910</a> |
+            <strong>作者:</strong> Yixuan Wang, Shiyu Ji, Yijun Liu, Qingfu Zhu, Wanxiang Che |
+            <strong>发表时间:</strong> 2026年3月24日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>随着大语言模型上下文长度的快速增长，Key-Value (KV) 缓存的内存需求已成为长上下文应用的主要瓶颈。现有的低秩压缩方法通常依赖不可逆的参数变换，这牺牲了在内存充足时切换回全精度推理的灵活性。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>传统的压缩-解压范式限制了模型的适应性。研究者希望开发一种灵活的KV缓存压缩方案，能够在标准推理和压缩推理之间按需切换，同时避免传统方法带来的性能损失。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>EchoKV利用轻量级网络从部分子集重建残差KV组件，充分利用注意力头之间的层间与层内相似性。引入的两阶段微调策略实现了快速、低成本的训练（7B模型仅需约1个A100 GPU小时）。该方法支持在标准推理和压缩推理之间灵活切换，无需牺牲性能。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>在LongBench和RULER基准上，多种压缩比下均优于现有方法。短上下文场景保持高吞吐量，训练成本极低。该方法提供灵活性，可根据内存状况选择推理模式，在长上下文任务中保持竞争力的同时大幅降低了内存占用。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>EchoKV提出了一种创新的KV缓存压缩方法，通过相似性感知的重建机制实现了高性能与灵活性的平衡。该方法无需复杂训练即可部署，为资源受限环境下的LLM部署提供了实用解决方案。</p>
+        </div>
+
+        <div class="paper-image">
+          <img src="images/echokv-01.png" alt="EchoKV Architecture">
+        </div>
+      </article>
+
+      <hr class="section-divider">
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 2</div>
+          <h2 class="paper-title">Off-Policy Value-Based Reinforcement Learning for Large Language Models</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.23355" target="_blank">2603.23355</a> |
+            <strong>作者:</strong> Peng-Yuan Wang, Ziniu Li, Tian Xu 等 |
+            <strong>发表时间:</strong> 2026年3月24日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>现有的LLM强化学习方法（如PPO、GRPO）大多是在线策略（on-policy），每个数据批次仅更新一次后就丢弃，然后收集新样本。这种方式在长程任务中样本效率低下，因为生成轨迹代价高昂。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>研究者希望探索一种能够高效重用过去轨迹的强化学习框架，以改善LLM训练的数据利用效率。价值基于的方法天然支持离线策略（off-policy）学习，具有提高样本效率的潜力。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>ReVal是基于贝尔曼更新的价值学习方法，结合捕捉内部一致性的逐步信号与来自结果验证的轨迹级信号。该方法天然支持基于回放缓冲区的训练，能够高效重用历史轨迹，突破了在线策略限制，实现数据的高效复用。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>在标准数学推理基准上，ReVal收敛更快且最终性能超越GRPO。在DeepSeek-R1-Distill-1.5B上，AIME24提升2.7%，GPQA提升4.5%。该方法显著提高训练效率，减少数据需求，证明价值基于RL是LLM训练的可行替代方案。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>ReVal提出了一种新的离线策略价值基于RL框架，通过贝尔曼更新和混合信号设计有效解决了LLM强化学习中的样本效率问题。实验表明该方法在性能和效率上都优于主流方法，为LLM训练提供了新的范式选择。</p>
+        </div>
+
+        <div class="paper-image">
+          <img src="images/reval-01.png" alt="ReVal Framework">
+        </div>
+      </article>
+
+      <hr class="section-divider">
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 3</div>
+          <h2 class="paper-title">Demystifying Low-Rank Knowledge Distillation in Large Language Models: Convergence, Generalization, and Information-Theoretic Guarantees</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.22355" target="_blank">2603.22355</a> |
+            <strong>作者:</strong> Alberlucia Rafael Soarez, Daniel Kim 等 |
+            <strong>发表时间:</strong> 2026年3月22日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>知识蒸馏已成为压缩大语言模型、在保持能力的同时提高部署效率的重要技术。低秩知识蒸馏方法（如Low-Rank Clone, LRC）在实证上取得了显著成功，但其理论基础一直缺乏深入理解。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>现有低秩蒸馏方法虽然有效，但缺乏理论解释。研究者希望建立一个严格的理论框架，理解低秩投影如何影响优化动态和泛化能力，并为实际应用提供指导。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>论文证明了在温和假设下低秩投影保持优化动态，收敛率为O(1/√T)。推导出模型压缩与泛化能力权衡的界限，显示泛化误差随秩参数缩放。信息论分析揭示激活克隆机制在最大化教师与学生中间表示互信息中的作用，理论建议最优秩r* = O(√n)。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>该研究提供了低秩蒸馏的理论基础和收敛保证，给出了秩选择的数学指导原则。实验验证了理论预测的收敛、秩缩放和泛化行为，为蒸馏实践提供了原则性的方法指导。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>该论文首次建立了低秩知识蒸馏的严格理论框架，从收敛性、泛化和信息论角度全面分析了该方法。理论结果不仅解释了现有方法的成功，还为未来的蒸馏研究提供了重要的理论基础和设计指导。</p>
+        </div>
+
+        <div class="paper-image">
+          <img src="images/lowrank-01.png" alt="Low-Rank Distillation Theory">
+        </div>
+      </article>
+
+      <hr class="section-divider">
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 4</div>
+          <h2 class="paper-title">TIDE: Token-Informed Depth Execution for Per-Token Early Exit in LLM Inference</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.21365" target="_blank">2603.21365</a> |
+            <strong>作者:</strong> Jaber Jaber, Osama Jaber |
+            <strong>发表时间:</strong> 2026年3月22日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>大语言模型将每个token通过所有层处理，无论其难度如何，这导致计算资源的浪费。许多token在较早层就已"收敛"，但仍需经过完整的前向传播。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>现有推理优化方法往往需要重新训练模型或使用复杂的系统级优化。研究者希望开发一种即插即用的后训练系统，能够在token级别实现动态早退，减少不必要的计算。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>TIDE在周期性检查点层附加小型学习路由器，选择隐藏状态已收敛的最早层。该方法无需重训练，可与任何HuggingFace因果LM配合使用，支持float32/float16/bfloat16的融合CUDA内核，并能自动检测GPU架构进行优化。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>在DeepSeek R1 Distill 8B上，100% prefill早退率，prefill延迟降低7.2%。单批次吞吐量提升6.6%，自回归解码中98-99% token早退。Qwen3 8B上批次大小为8时吞吐量提升8.1%。仅需2,000样本校准，3分钟内完成。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>TIDE提出了一种高效的token级早退系统，通过轻量级路由器在推理时动态决定每个token的处理深度。该方法无需重训练即可部署，在保持模型准确性的同时显著提升了推理效率，为LLM实时应用提供了实用的加速方案。</p>
+        </div>
+      </article>
+
+      <hr class="section-divider">
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 5</div>
+          <h2 class="paper-title">MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.23234" target="_blank">2603.23234</a> |
+            <strong>作者:</strong> Yurui Chang, Yiran Wu, Qingyun Wu, Lu Lin |
+            <strong>发表时间:</strong> 2026年3月24日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>基于大语言模型的智能体依赖记忆机制来重用过去的问题解决经验。现有方法通常为每个智能体单独构建记忆，将存储的知识与特定模型的推理风格紧密耦合。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>在多智能体部署场景中，不同模型间共享记忆系统具有重要价值。但简单地在智能体间转移记忆往往会降低性能，因为记忆中混杂了任务相关知识和智能体特定偏差。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>MemCollab通过对比不同智能体在同一任务上生成的推理轨迹，提取与智能体无关的抽象推理约束。引入的任务感知检索机制根据任务类别条件化记忆访问，确保仅使用相关约束。该方法能有效抑制智能体特定的人工痕迹，支持跨模型家族的异构智能体协作。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>在数学推理和代码生成基准上持续提升准确性和推理效率。构建的记忆可作为不同LLM智能体的共享推理资源，有效解决跨智能体记忆转移的性能下降问题，为异构多智能体系统提供了协作框架。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>MemCollab提出了一种创新的跨智能体记忆协作框架，通过对比轨迹蒸馏构建与智能体无关的共享记忆。该方法有效解决了记忆共享中的偏差问题，为构建异构多智能体协作系统提供了新的技术路径。</p>
+        </div>
+      </article>
+
+      <div class="summary-box">
+        <h3>📊 本周总结</h3>
+        <p style="margin-bottom: 16px;">本周(2026年3月20日-24日)补充收录了5篇LLM量化/部署/蒸馏相关的高质量论文：</p>
+        <ul>
+          <li><strong>部署优化方向(2篇)</strong>：EchoKV（相似性重建KV缓存压缩）、TIDE（Token级动态早退推理加速）</li>
+          <li><strong>蒸馏方向(2篇)</strong>：低秩蒸馏理论框架、MemCollab跨智能体对比轨迹蒸馏</li>
+          <li><strong>训练优化方向(1篇)</strong>：ReVal离线策略价值基于RL提升训练效率</li>
+        </ul>
+        <p style="margin-top: 16px;">这些研究共同推动着大模型在推理效率、训练效率和部署灵活性方面的进步，为LLM的广泛应用提供了技术基础。</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>报告由 Jarvis 自动生成 · 2026-03-26</p>
+    </footer>
+  </div>
+</body>
+</html>
