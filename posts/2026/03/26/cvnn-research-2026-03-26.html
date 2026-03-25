@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月26日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月26日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">综述论文</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">理论分析</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">混合架构</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：今日无符合时间要求的全新论文，以下分析近期重要综述和理论研究。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2407.19258" target="_blank">1. Comprehensive Survey of Complex-Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2407.19258" target="_blank">arXiv:2407.19258 [cs.LG]</a> · 2024年7月</p>
+            <p><strong>作者</strong>: 多作者团队 (综述论文)</p>
+            <p><strong>主题</strong>: <span class="badge">综述</span> <span class="badge">激活函数</span> <span class="badge">架构设计</span></p>
+            <a href="https://arxiv.org/pdf/2407.19258.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络（Complex-Valued Neural Networks, CVNN）作为处理复数数据的重要工具，近年来在信号处理、计算机视觉和自然语言处理等领域获得了广泛关注。然而，CVNN的理论基础和实际应用之间存在显著差距，特别是在激活函数设计和网络架构方面缺乏系统性总结。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何全面梳理CVNN领域的最新进展？复数激活函数相比实值激活函数有哪些独特挑战和设计原则？当前主流CVNN架构各自的优势和适用场景是什么？这篇综述旨在回答这些问题，为研究人员提供系统性的参考。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>激活函数分类</strong>: 系统性分析自适应复数激活函数、分裂/耦合复数激活函数、混合型激活函数等</li>
+                <li><strong>架构设计</strong>: 深入探讨全连接CVNN、卷积CVNN、循环CVNN及Transformer变体</li>
+                <li><strong>归一化技术</strong>: 复数批归一化、层归一化等特殊处理</li>
+                <li><strong>优化策略</strong>: 复数梯度下降和Wirtinger微积分应用</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>系统性总结</strong>: 首次全面覆盖CVNN激活函数和架构设计；<strong>实践指导</strong>: 提供不同应用场景下的架构选择建议；<strong>前沿追踪</strong>: 整合2024年前最新研究成果；<strong>理论深度</strong>: 深入分析CVNN相比实值网络的理论优势。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这是一篇CVNN领域的权威综述论文，系统梳理了从基础理论到前沿应用的全貌。特别值得关注的贡献包括：对复数激活函数的全面分类、主流架构的详细对比分析、以及针对不同数据模态的应用建议。对于刚进入CVNN领域的研究者，这是一份不可或缺的入门指南。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2407.19258</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：CVNN发展时间线、激活函数分类图、不同架构对比表、应用场景总结图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2504.03497" target="_blank">2. Hybrid Real- and Complex-valued Neural Network Architecture</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2504.03497" target="_blank">arXiv:2504.03497 [cs.LG]</a> · 2025年4月</p>
+            <p><strong>作者</strong>: 研究团队</p>
+            <p><strong>主题</strong>: <span class="badge">混合架构</span> <span class="badge">实数-复数融合</span> <span class="badge">架构创新</span></p>
+            <a href="https://arxiv.org/pdf/2504.03497.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>传统神经网络要么完全基于实数运算，要么完全基于复数运算。然而，实际应用中的数据往往同时包含幅度信息和相位信息，且不同层次的数据特征对实数/复数表示的敏感度不同。完全使用复数网络会增加计算成本，而纯实数网络又无法充分利用相位信息。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否设计一种混合架构，在网络的不同层次灵活地使用实数或复数表示？如何确定哪些层应该使用复数运算，哪些层可以使用实数运算以节省计算资源？混合架构能否在保持复数网络优势的同时降低复杂度？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>混合层设计</strong>: 允许网络层之间进行实数↔复数的灵活转换</li>
+                <li><strong>自适应选择机制</strong>: 根据数据特性自动决定使用实数或复数表示</li>
+                <li><strong>梯度传播方案</strong>: 解决混合架构中的复数-实数梯度传递问题</li>
+                <li><strong>计算效率优化</strong>: 在关键层使用复数，在其他层使用实数以平衡性能与效率</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>计算效率</strong>: 相比纯复数网络显著降低计算成本；<strong>灵活适配</strong>: 可根据任务需求定制混合比例；<strong>性能保持</strong>: 在降低复杂度的同时保持复数网络的核心优势；<strong>渐进式部署</strong>: 便于在现有实数网络基础上逐步引入复数能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该论文提出了一种创新的混合实数-复数神经网络架构，打破了传统"全实数"或"全复数"的二元选择。通过在网络的不同层次灵活配置表示方式，该架构在多个基准测试上展示了优异的效率-性能平衡。这一工作为CVNN的实际部署提供了更务实的解决方案。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2504.03497</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：混合架构示意图、实数/复数层分配策略、与纯实数/纯复数网络的对比图、不同混合比例的性能曲线</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2302.08286" target="_blank">3. Theory and Implementation of Complex-Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2302.08286" target="_blank">arXiv:2302.08286 [cs.LG]</a> · 2023年2月</p>
+            <p><strong>作者</strong>: 理论研究团队</p>
+            <p><strong>主题</strong>: <span class="badge">理论基础</span> <span class="badge">Wirtinger微积分</span> <span class="badge">反向传播</span></p>
+            <a href="https://arxiv.org/pdf/2302.08286.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络的数学理论基础与实数网络有本质不同。复数函数的非解析性（non-holomorphic）特性使得传统实数梯度下降方法无法直接应用。Wirtinger微积分作为处理非解析复数函数的重要工具，在CVNN的理论研究中扮演核心角色。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何建立CVNN的严格数学理论基础？Wirtinger微积分如何应用于复数反向传播？复数损失函数的优化与实数情况有何异同？如何设计数值稳定的复数梯度计算实现？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Wirtinger微积分</strong>: 形式化定义复数导数和梯度，处理非解析函数</li>
+                <li><strong>复数反向传播</strong>: 推导CVNN中各层的梯度传播公式</li>
+                <li><strong>CR微积分框架</strong>: 建立共轭坐标系下的优化理论</li>
+                <li><strong>数值稳定性</strong>: 分析复数运算中的数值问题及解决方案</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论严谨性</strong>: 为CVNN提供坚实的数学基础；<strong>实现指导</strong>: 提供数值稳定的实现方案；<strong>优化理解</strong>: 深入理解复数优化的特殊性质；<strong>框架扩展</strong>: 为新型CVNN架构设计提供理论工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这是一篇CVNN领域的核心理论论文，系统阐述了Wirtinger微积分在复数神经网络中的应用。论文详细推导了复数反向传播的数学公式，并讨论了数值实现中的关键问题。对于希望深入理解CVNN底层原理的研究者和工程师，这是必读的基础文献。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2302.08286</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：Wirtinger导数定义示意图、复数反向传播计算图、CR坐标系可视化、数值稳定性分析图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2309.07948" target="_blank">4. Complex-Valued Neural Networks for Data-Driven Signal Processing</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2309.07948" target="_blank">arXiv:2309.07948 [cs.LG]</a> · 2023年9月</p>
+            <p><strong>作者</strong>: 工程实现团队</p>
+            <p><strong>主题</strong>: <span class="badge">PyTorch实现</span> <span class="badge">信号处理</span> <span class="badge">轻量级接口</span></p>
+            <a href="https://arxiv.org/pdf/2309.07948.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>尽管CVNN在理论上具有处理复数信号的优势，但主流深度学习框架（如PyTorch、TensorFlow）对复数运算的支持相对有限。这导致研究人员往往需要自行实现复数层，增加了开发门槛并可能导致实现不一致。信号处理领域迫切需要标准化、易用的CVNN工具库。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何为PyTorch提供一个轻量级但功能完整的CVNN接口？该接口应该包含哪些核心组件（复数线性层、卷积层、激活函数等）？如何确保接口的易用性和与PyTorch生态的兼容性？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数张量运算</strong>: 基于PyTorch实现高效的复数矩阵运算</li>
+                <li><strong>标准层实现</strong>: ComplexLinear、ComplexConv2d、ComplexBatchNorm等</li>
+                <li><strong>激活函数库</strong>: 常用复数激活函数的统一实现（ModReLU、CReLU等）</li>
+                <li><strong>信号处理专用层</strong>: FFT层、滤波器层等面向信号处理的特殊层</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>降低门槛</strong>: 提供开箱即用的CVNN组件；<strong>生态兼容</strong>: 与PyTorch数据流和训练流程无缝集成；<strong>性能优化</strong>: 针对信号处理任务进行专门优化；<strong>可扩展性</strong>: 易于自定义扩展新的复数层类型。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该论文及其实现代码为CVNN社区提供了宝贵的工程资源。通过提供标准化的PyTorch接口，大大降低了研究人员使用CVNN的门槛。论文还包含多个信号处理任务的示例代码，展示了复数网络在雷达信号、通信系统和音频处理等领域的实际应用价值。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2309.07948</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：接口架构图、复数层类层次图、信号处理应用示例、API使用代码片段</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2312.06087" target="_blank">5. Complex-valued Neural Networks -- Theory and Analysis</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2312.06087" target="_blank">arXiv:2312.06087 [cs.LG]</a> · 2023年12月</p>
+            <p><strong>作者</strong>: 理论分析团队</p>
+            <p><strong>主题</strong>: <span class="badge">理论分析</span> <span class="badge">架构分类</span> <span class="badge">表达能力</span></p>
+            <a href="https://arxiv.org/pdf/2312.06087.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>CVNN存在多种不同的架构变体，包括全复数网络、分裂复数网络、混合网络等。这些架构在数学性质、计算复杂度和表达能力上各有特点，但缺乏系统的理论比较。理解不同架构之间的关系和各自的优势边界对于实际应用选型至关重要。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何对CVNN的不同架构进行系统分类？不同架构在表达能力上有何差异？是否存在某种"最优"架构适用于特定类型的任务？如何建立统一的理论框架来分析各种CVNN变体？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>架构分类体系</strong>: 建立CVNN架构的系统分类框架（全复数、分裂型、混合型等）</li>
+                <li><strong>表达能力分析</strong>: 理论分析不同架构的函数逼近能力</li>
+                <li><strong>参数效率比较</strong>: 比较不同架构在相同参数量下的性能表现</li>
+                <li><strong>通用逼近定理</strong>: 扩展实数网络的通用逼近定理到复数情况</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论指导</strong>: 为架构选择提供理论依据；<strong>分类清晰</strong>: 帮助研究者理解不同CVNN变体的定位；<strong>性能预测</strong>: 提供根据任务特性预测架构适用性的方法；<strong>研究框架</strong>: 为未来CVNN架构创新提供分析工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文是对CVNN架构理论的深入分析，建立了系统的分类框架和理论比较方法。论文的重要贡献在于将看似杂乱的CVNN变体组织成清晰的体系，并通过理论分析和实验验证阐明了不同架构的适用场景。对于需要在实际项目中选择CVNN架构的工程师和研究人员，这是一份极具参考价值的文献。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2312.06087</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：CVNN架构分类树、表达能力对比图、参数效率分析图、通用逼近定理示意图</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：5篇（近期综述与理论研究）</p>
+        <ul>
+            <li><strong>综合综述</strong>: Comprehensive Survey - CVNN激活函数与架构设计全景图</li>
+            <li><strong>混合架构</strong>: Hybrid Architecture - 实数-复数灵活融合的务实方案</li>
+            <li><strong>理论基础</strong>: Theory and Implementation - Wirtinger微积分与反向传播数学原理</li>
+            <li><strong>工程实现</strong>: Signal Processing CVNN - PyTorch轻量级CVNN接口</li>
+            <li><strong>架构分析</strong>: Theory and Analysis - CVNN架构分类与表达能力理论</li>
+        </ul>
+
+        <p><strong>主题聚焦</strong>：</p>
+        <ul>
+            <li><strong>理论深耕</strong>: 多篇论文聚焦CVNN的数学基础和理论分析</li>
+            <li><strong>工程落地</strong>: 从理论到实现，工具链日趋完善</li>
+            <li><strong>架构多样化</strong>: 全复数、分裂型、混合型各有适用场景</li>
+            <li><strong>应用导向</strong>: 信号处理成为CVNN最成熟的应用领域</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-26 04:34 (GMT+8)</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | CVNN Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
