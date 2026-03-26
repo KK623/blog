@@ -386,15 +386,54 @@
         </div>
       </article>
 
+      <hr class="section-divider">
+
+      <article class="paper">
+        <div class="paper-header">
+          <div class="paper-number">论文 6 🔥 Google Research</div>
+          <h2 class="paper-title">TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate</h2>
+          <div class="paper-meta">
+            <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2504.19874" target="_blank">2504.19874</a> |
+            <strong>作者:</strong> Majid Daliri, Anshumali Shrivastava, et al. (Google Research) |
+            <strong>发表时间:</strong> 2025年4月28日
+          </div>
+        </div>
+
+        <div class="paper-section">
+          <h3>背景</h3>
+          <p>向量量化是香农信源编码理论中的核心问题，旨在量化高维欧几里得向量同时最小化其几何结构的失真。现有的量化方法在高维场景下往往无法达到最优的失真率，特别是在在线应用场景中，数据分布未知且计算效率要求严格。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>动机</h3>
+          <p>大语言模型的KV缓存占据了推理过程中的大部分内存。现有压缩方法要么需要大量训练数据，要么在压缩率和精度之间存在难以接受的权衡。如何在保持3位量化精度的同时实现接近理论极限的压缩效率，成为业界迫切需求。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>技术点</h3>
+          <p>TurboQuant通过随机旋转向量诱导坐标上的集中Beta分布，利用高维空间中不同坐标的近独立性特性，对每个坐标应用最优标量量化器。针对内积估计中的偏差问题，采用两阶段方法：先应用MSE量化器，再对残差应用1-bit量化JL变换，得到无偏的内积量化器。该方法数据无关，适合在线应用。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>收益点</h3>
+          <p>KV缓存量化达到3.5 bits每通道时实现<strong>绝对质量中性</strong>，2.5 bits时仅有轻微质量下降。相比现有乘积量化技术，在最近邻搜索任务中取得更高召回率的同时将索引时间降至接近零。理论分析证明TurboQuant的失真率仅比信息论下界高约2.7倍常数因子。</p>
+        </div>
+
+        <div class="paper-section">
+          <h3>总结</h3>
+          <p>TurboQuant是Google Research提出的突破性向量量化方法，通过随机旋转和两阶段量化策略实现了接近最优的失真率。该方法在KV缓存压缩场景下达到3.5 bits质量中性，为大模型推理的内存优化提供了高效且无需训练的解决方案，具有重要的工业应用价值。</p>
+        </div>
+      </article>
+
       <div class="summary-box">
         <h3>📊 本周总结</h3>
-        <p style="margin-bottom: 16px;">本周(2026年3月20日-24日)补充收录了5篇LLM量化/部署/蒸馏相关的高质量论文：</p>
+        <p style="margin-bottom: 16px;">本周(2026年3月20日-26日)补充收录了6篇LLM量化/部署/蒸馏相关的高质量论文：</p>
         <ul>
-          <li><strong>部署优化方向(2篇)</strong>：EchoKV（相似性重建KV缓存压缩）、TIDE（Token级动态早退推理加速）</li>
+          <li><strong>部署优化方向(3篇)</strong>：EchoKV（相似性重建KV缓存压缩）、TIDE（Token级动态早退推理加速）、<strong style="color: #0066cc;">TurboQuant（Google 3.5 bits KV缓存量化）</strong></li>
           <li><strong>蒸馏方向(2篇)</strong>：低秩蒸馏理论框架、MemCollab跨智能体对比轨迹蒸馏</li>
           <li><strong>训练优化方向(1篇)</strong>：ReVal离线策略价值基于RL提升训练效率</li>
         </ul>
-        <p style="margin-top: 16px;">这些研究共同推动着大模型在推理效率、训练效率和部署灵活性方面的进步，为LLM的广泛应用提供了技术基础。</p>
+        <p style="margin-top: 16px;"><strong style="color: #0066cc;">特别推荐：Google Research 的 TurboQuant 在3.5 bits量化下实现质量中性，是KV缓存压缩的重要突破。</strong>这些研究共同推动着大模型在推理效率、训练效率和部署灵活性方面的进步。</p>
       </div>
     </main>
 
