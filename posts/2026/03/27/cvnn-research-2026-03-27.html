@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月27日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月27日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">对抗鲁棒性</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量子机器学习</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">频谱感知</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">可解释性</span>
+        </div>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.06577" target="_blank">1. Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.06577" target="_blank">arXiv:2602.06577 [cs.LG]</a> · 2026年2月6日</p>
+            <p><strong>作者</strong>: Florian Eilers, Christof Duhme, Xiaoyi Jiang (University of Münster, Germany)</p>
+            <p><strong>主题</strong>: <span class="badge">对抗鲁棒性</span> <span class="badge">相位攻击</span> <span class="badge">安全性</span></p>
+            <a href="https://arxiv.org/pdf/2602.06577.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络（CVNNs）在各类应用场景中的 popularity 正在快速上升，包括信号处理、计算机视觉和无线通信等领域。然而，要将CVNNs安全地部署到实际应用中，分析它们对异常输入和对抗样本的鲁棒性至关重要。对抗攻击是理解深度神经网络行为的重要技术，通过研究模型在最坏情况下的最小扰动来评估其安全性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>现有的对抗攻击研究主要针对实值神经网络（RVNNs），缺乏专门针对CVNNs的对抗鲁棒性分析。复数数据的独特结构（包含幅度和相位信息）使得传统的实数对抗攻击方法无法完全捕捉CVNNs的脆弱性。如何设计专门针对复数数据相位信息的攻击方法？CVNNs相比RVNNs在对抗鲁棒性方面有何异同？这些问题亟需深入研究。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Phase Attacks（相位攻击）</strong>: 专门设计针对复数输入相位信息的攻击方法，通过扰动相位而非幅度来欺骗模型</li>
+                <li><strong>复数对抗攻击扩展</strong>: 将常用的对抗攻击方法（如FGSM、PGD等）扩展到复数域，保持复数运算的完整性</li>
+                <li><strong>幅度-相位解耦分析</strong>: 分别分析模型对幅度扰动和相位扰动的敏感性，揭示CVNNs的独特脆弱性</li>
+                <li><strong>鲁棒性对比框架</strong>: 建立CVNNs与RVNNs在相同对抗威胁模型下的公平比较框架</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>安全性洞察</strong>: 发现CVNNs在某些场景下比RVNNs更具鲁棒性，但在相位攻击面前更加脆弱；<strong>攻击效率</strong>: Phase Attacks能以相同强度的扰动造成比常规攻击更严重的性能下降；<strong>防御指导</strong>: 为设计针对相位扰动的防御机制提供了理论基础；<strong>实践意义</strong>: 提醒CVNNs部署时需要特别关注相位信息的保护。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文首次系统性地研究了CVNNs的对抗鲁棒性，提出了创新的Phase Attacks方法。研究表明，虽然CVNNs在某些情况下比实值网络更鲁棒，但相位信息的敏感性是一个关键弱点。这一发现对CVNNs在安全关键应用中的部署具有重要指导意义，建议在实际应用中增加针对相位扰动的防御措施。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2602.06577</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：Phase Attack示意图、幅度vs相位扰动对比、CVNN与RVNN鲁棒性对比图、攻击成功率曲线</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.03964" target="_blank">2. Toward Quantum-Aware Machine Learning: Improved Prediction of Quantum Dissipative Dynamics via Complex Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.03964" target="_blank">arXiv:2601.03964 [physics.chem-ph]</a> · 2026年1月7日 · 发表于 J. Chem. Phys.</p>
+            <p><strong>作者</strong>: Muhammad Atif, Arif Ullah, Ming Yang (University of Science and Technology of China)</p>
+            <p><strong>主题</strong>: <span class="badge">量子机器学习</span> <span class="badge">量子耗散动力学</span> <span class="badge">物理一致性</span></p>
+            <a href="https://arxiv.org/pdf/2601.03964.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>准确建模量子耗散动力学是量子物理和化学领域的核心挑战，主要困难来自环境复杂性和非马尔可夫记忆效应。虽然机器学习为传统模拟技术提供了有前景的替代方案，但大多数现有模型使用实值神经网络（RVNNs），这与量子力学的复数本质存在根本性的不匹配。将密度矩阵的实部和虚部分离处理会掩盖关键的幅度-相位相关性，损害物理一致性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何构建与量子力学本质相一致的机器学习框架？CVNNs能否直接处理复数值输入并保留量子态的代数结构？相比RVNNs，CVNNs在预测量子动力学方面能否实现更好的收敛速度、训练稳定性和物理保真度？这些问题的答案将为量子-经典混合计算时代提供重要的方法论指导。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>物理一致框架</strong>: CVNNs直接操作复数值输入，自然编码量子相干性，避免实部虚部分离带来的信息损失</li>
+                <li><strong>密度矩阵保持</strong>: 通过复数运算保持量子态的迹守恒（trace conservation）和厄米特性（Hermiticity）</li>
+                <li><strong>振幅-相位联合建模</strong>: 利用复数表示同时捕捉量子态的幅度和相位信息，保持二者的内在关联</li>
+                <li><strong>基准测试</strong>: 在spin-boson模型和Fenna-Matthews-Olson复合物变体上进行严格数值验证</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>收敛速度</strong>: CVNNs相比RVNNs显著加快训练收敛；<strong>物理保真度</strong>: 在迹守恒和厄米特性方面表现显著改善；<strong>规模可扩展性</strong>: 优势随系统规模和相干性复杂度增加而增强；<strong>稳定性提升</strong>: 训练过程更加稳定，减少数值不稳定性问题；<strong>量子感知</strong>: 为容错量子计算时代前的开放量子系统模拟提供了稳健的量子感知经典方法。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文确立了CVNNs作为量子机器学习物理一致框架的重要地位。通过直接处理复数值量子数据，CVNNs克服了RVNNs的根本局限，在量子耗散动力学预测任务上展现了全面的性能优势。该研究为量子-经典混合计算时代提供了重要的方法论基础，特别是在开放量子系统模拟领域具有广阔的应用前景。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2601.03964</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：CVNN架构图、量子耗散动力学演化对比、迹守恒误差曲线、不同网络结构的收敛速度对比</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2506.11048" target="_blank">3. I Can't Believe It's Not Real: CV-MuSeNet: Complex-Valued Multi-Signal Segmentation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2506.11048" target="_blank">arXiv:2506.11048 [cs.LG]</a> · 2025年5月21日 · 发表于 IEEE DySPAN 2025</p>
+            <p><strong>作者</strong>: Sangwon Shin, Mehmet C. Vuran (University of Nebraska-Lincoln, USA)</p>
+            <p><strong>主题</strong>: <span class="badge">频谱感知</span> <span class="badge">信号分割</span> <span class="badge">无线通信</span></p>
+            <a href="https://arxiv.org/pdf/2506.11048.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>射频频谱的日益拥塞给高效频谱利用带来了巨大挑战。认知无线电系统借助神经网络的新进展实现了动态频谱接入。然而，传统的实值神经网络在低信噪比（SNR）环境下面临困难，因为它们并非专门为捕获无线信号的关键特性（如相位和幅度）而设计。频谱感知任务需要在复杂的噪声环境中准确检测和分割多个信号，这对网络的信号表示能力提出了高要求。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>简单的将RVNN转换为复数版本是否有效？如何设计专门针对复数信号特性（幅度和相位）的损失函数和评估指标？CVNN能否在低SNR环境下实现更好的弱信号检测和更快的训练收敛？通过深入研究这些问题，研究团队旨在开发一个高效、准确的宽带频谱感知解决方案。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>残差复数架构</strong>: 基于残差连接的CVNN架构，有效训练深层复数网络</li>
+                <li><strong>复数傅里叶谱焦点损失（CFL）</strong>: 在复数频域中设计的损失函数，增强对弱信号的关注</li>
+                <li><strong>复平面IoU（CIoU）</strong>: 专门针对复数数据设计的相似度度量指标，考虑幅度和相位的联合分布</li>
+                <li><strong>超参数优化</strong>: 广泛的超参数分析表明简单地将RVNN转换为复数版本并不有效，需要专门设计</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>准确率提升</strong>: 在合成、室内空中和真实数据集上达到98.98%-99.90%的平均准确率，比实值对应物提升最多9.2个百分点；<strong>训练效率</strong>: 仅需2个epoch即可达到RVNN 27个epoch的准确率水平；<strong>时间节省</strong>: 相比最先进方法训练时间减少高达92.2%；<strong>低SNR性能</strong>: 在挑战性低SNR环境下显著改善弱信号检测能力；<strong>SOTA表现</strong>: 持续超越现有最先进方法。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>CV-MuSeNet通过精心设计的复数架构、损失函数和评估指标，在宽带频谱感知任务上取得了突破性进展。研究表明，CVNN的优势不仅体现在准确率上，更显著体现在训练效率上。这一工作为认知无线电和动态频谱接入系统提供了实用的技术方案，展示了CVNN在实际工程应用中的巨大潜力。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2506.11048</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：CMuSeNet网络架构图、复数傅里叶谱焦点损失示意图、频谱分割结果可视化、训练收敛对比曲线、不同SNR下的性能对比</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2504.19176" target="_blank">4. Newton-Puiseux Analysis for Interpretability and Calibration of Complex-Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2504.19176" target="_blank">arXiv:2504.19176 [cs.LG]</a> · 2025年4月27日 · 发表于 Neural Networks 2026</p>
+            <p><strong>作者</strong>: Piotr Migus (IDEAS NCBR, Poland / Warsaw University of Technology)</p>
+            <p><strong>主题</strong>: <span class="badge">可解释性</span> <span class="badge">模型校准</span> <span class="badge">Newton-Puiseux分析</span></p>
+            <a href="https://arxiv.org/pdf/2504.19176.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复数神经网络特别适合处理相位敏感信号，包括心电图（ECG）、雷达/声纳信号和无线同相/正交（I/Q）流。然而，CVNNs的可解释性和概率校准仍然研究不足。在医疗诊断和无线通信等关键应用中，模型不仅需要准确预测，还需要提供可靠的置信度估计和可解释的决策依据。现有方法主要针对实值网络，无法充分利用复数数据的特殊结构。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何分析训练好的CVNN的局部决策几何结构？能否利用数学工具（如Newton-Puiseux展开）来理解复数网络的行为？如何在不修改架构的情况下改善CVNN的校准性能？对于心电图和无线调制识别等实际应用，这些方法能否提供有价值的洞察？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Newton-Puiseux框架</strong>: 利用代数几何中的Newton-Puiseux展开分析CVNN在不确定输入附近的局部行为</li>
+                <li><strong>多项式代理模型</strong>: 在不确定输入附近拟合kink-aware多项式代理，近似logit差异</li>
+                <li><strong>分支描述符</strong>: 通过分解获得解析分支描述符（指数、重数、方向），识别引发类别翻转的相位对齐方向</li>
+                <li><strong>多重性引导温度调整</strong>: 基于分支重数进行温度缩放，改善模型校准</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>可解释性增强</strong>: 识别敏感方向，理解模型决策机制；<strong>校准改善</strong>: 在ECG（MIT-BIH心律失常数据集）和无线调制（RadioML 2016.10a）任务上显著提升期望校准误差（ECE）；<strong>无需架构修改</strong>: 方法适用于任何具有复数logits转换为实数模值的CVNN；<strong>理论严谨性</strong>: 提供置信区间、非参数检验和敏感性量化；<strong>失败模式分析</strong>: 刻画分段全纯激活函数（如modReLU）的潜在失败模式。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文将代数几何中的Newton-Puiseux理论创新性地应用于CVNN的可解释性分析，填补了该领域的重要空白。提出的方法不仅能识别模型的敏感方向，还能有效改善概率校准。这项工作为CVNN在医疗诊断和无线通信等安全关键领域的可信部署提供了重要工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2504.19176</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：Newton-Puiseux展开示意图、局部决策几何可视化、分支描述符示例、校准曲线对比、ECG和无线调制识别案例研究</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2502.11151" target="_blank">5. Unveiling the Power of Complex-Valued Transformers in Wireless Communications</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2502.11151" target="_blank">arXiv:2502.11151 [eess.SP]</a> · 2025年2月16日</p>
+            <p><strong>作者</strong>: Yang Leng, Qingfeng Lin, Long-Yin Yung, Jingreng Lei, Yang Li, Yik-Chung Wu (The University of Hong Kong)</p>
+            <p><strong>主题</strong>: <span class="badge">复数Transformer</span> <span class="badge">无线通信</span> <span class="badge">信道估计</span></p>
+            <a href="https://arxiv.org/pdf/2502.11151.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>CVNNs在无线通信任务中的应用因其能够为复数值信号和数据提供自然有效的表示而受到越来越多的关注。然而，现有研究通常采用简单神经网络架构的复数版本，如复数MLP或CNN，仅触及现代深度学习技术广泛范围的表面。更重要的是，CVNNs优越性能的理论理解仍然缺失。Transformer作为当前最先进的深度学习架构，在无线通信中已展现出优秀性能，但仅限于其实值形式。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何将Transformer架构扩展到复数域？CVNNs相比RVNNs在理论上需要更少的层数即可达到相同的近似误差吗？复数Transformer能否在信道估计、用户活动检测和预编码设计等关键无线通信任务上超越传统实值方法？这些问题的答案将推动CVNNs在现代无线通信系统中的实际应用。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数Transformer基础范式</strong>: 提出适用于无线通信的复数Transformer基本架构，包括复数自注意力机制和前馈网络</li>
+                <li><strong>理论证明</strong>: 严格证明CVNN相比实值对应物需要更少层数即可达到给定连续函数的近似误差</li>
+                <li><strong>复数注意力机制</strong>: 设计保持复数代数结构的自注意力计算，充分利用相位信息</li>
+                <li><strong>多任务适配</strong>: 针对信道估计（回归）、用户活动检测（分类）、预编码设计（无监督）等三类代表性应用定制化架构</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论贡献</strong>: 首次从理论上证明CVNNs的近似效率优势；<strong>架构创新</strong>: 将Transformer这一先进架构成功扩展到复数域；<strong>广泛适用性</strong>: 覆盖从回归到分类、从监督到无监督学习的多种任务类型；<strong>性能提升</strong>: 在所有三个代表性应用上均超越传统实值神经网络方法；<strong>端到端设计</strong>: 支持特定模块设计和端到端设计两种范式。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文填补了CVNNs理论与实践的重要空白，首次系统性地将Transformer架构引入复数域并应用于无线通信。理论证明和实验验证共同确立了复数Transformer的优越性。该研究为6G及未来无线通信系统中深度学习技术的应用开辟了新的方向，特别是在需要处理复数信道状态信息的场景中具有重要价值。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2502.11151</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：复数Transformer架构图、自注意力机制示意图、三层任务应用架构（信道估计/用户检测/预编码）、近似误差理论分析图、性能对比图表</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：5篇（2025-2026年最新研究）</p>
+        <ul>
+            <li><strong>对抗鲁棒性</strong>: Perturbing the Phase - 首次系统分析CVNNs的对抗鲁棒性，提出Phase Attacks</li>
+            <li><strong>量子机器学习</strong>: Quantum-Aware ML - CVNNs用于量子耗散动力学预测，物理一致性框架</li>
+            <li><strong>频谱感知</strong>: CV-MuSeNet - 宽带频谱感知的高效复数网络，训练速度提升92.2%</li>
+            <li><strong>可解释性</strong>: Newton-Puiseux Analysis - 代数几何工具用于CVNN可解释性和校准</li>
+            <li><strong>复数Transformer</strong>: Wireless Communications - 理论证明+实践验证的复数Transformer范式</li>
+        </ul>
+
+        <p><strong>研究趋势</strong>：</p>
+        <ul>
+            <li><strong>安全性关注</strong>: 对抗鲁棒性分析成为CVNNs实际部署前的必要步骤</li>
+            <li><strong>物理一致性</strong>: CVNNs在量子模拟等物理领域展现天然优势</li>
+            <li><strong>效率突破</strong>: CVNNs在训练速度和收敛效率上显著超越RVNNs</li>
+            <li><strong>架构演进</strong>: 从简单MLP/CNN向Transformer等先进架构扩展</li>
+            <li><strong>可解释性</strong>: 数学工具（代数几何、Wirtinger微积分）助力理解CVNN行为</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-27 04:03 (GMT+8)</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | CVNN Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
