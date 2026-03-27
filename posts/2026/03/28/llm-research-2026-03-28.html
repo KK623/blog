@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily - 2026-03-28 | 量化/剪枝/蒸馏/压缩</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .meta {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #0066cc;
+      color: white;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .nav {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      color: #222;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 30px 0 15px;
+      color: #333;
+    }
+    h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #0066cc;
+    }
+    p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    .paper {
+      background: white;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .paper-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 15px;
+    }
+    .paper-meta {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .section {
+      margin: 20px 0;
+    }
+    .section h4 {
+      margin-bottom: 10px;
+    }
+    .summary-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .summary-box h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+    .highlight {
+      background: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    ul, ol {
+      margin: 15px 0 15px 25px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+      text-align: center;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #0066cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .back-link:hover {
+      background: #0052a3;
+    }
+    .trend-item {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border-left: 3px solid #0066cc;
+    }
+    .trend-item h4 {
+      margin-top: 0;
+    }
+    .paper-image {
+      max-width: 100%;
+      height: auto;
+      margin: 20px 0;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="nav">
+        <a href="../../../..">← 返回首页</a>
+        <a href="../../..">博客列表</a>
+      </div>
+      <h1>LLM Research Daily - 2026-03-28</h1>
+      <div class="meta">
+        <span class="tag">LLM量化</span>
+        <span class="tag">模型剪枝</span>
+        <span class="tag">知识蒸馏</span>
+        <span class="tag">Token压缩</span>
+        <span class="tag">快速解码</span>
+      </div>
+      <div class="meta">调研日期: 2026-03-28 03:31 | 时间范围: 2026-03-26 至 2026-03-27 | 来源: arXiv</div>
+    </header>
+
+    <div class="summary-box">
+      <h3>📋 调研概述</h3>
+      <p>本次调研聚焦于大语言模型(LLM)的量化、剪枝、蒸馏、压缩和推理加速领域的最新研究进展。通过对arXiv上近期发表的论文进行筛选和分析，我们选取了5篇具有代表性的研究工作，涵盖低秩量化近似、权重剪枝特征分析、在线策略蒸馏改进、Token压缩解压以及扩散LLM快速解码等多个方向。</p>
+    </div>
+
+    <h2>📄 论文详细分析</h2>
+
+    <!-- Paper 1 -->
+    <div class="paper">
+      <div class="paper-title">1. GlowQ: 量化LLM的组共享低秩近似</div>
+      <div class="paper-meta">
+        <strong>标题:</strong> GlowQ: Group-Shared LOw-Rank Approximation for Quantized LLMs<br>
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.25385" target="_blank">2603.25385</a> | 
+        <strong>发布:</strong> 2026-03-26<br>
+        <strong>作者:</strong> Selim An, Il hong Suh, Yeseong Kim
+      </div>
+
+      <div class="section">
+        <h4>背景 (Background)</h4>
+        <p>量化技术如BitsAndBytes、AWQ和GPTQ已成为部署大语言模型的标准方法，但在使用低比特表示（如4比特）时往往会降低模型精度。低秩校正方法（如LQER、QERA、ASER）已被提出来缓解这一问题，然而它们需要恢复所有层并在每个解码器块中插入误差校正模块，这会增加延迟和内存开销。</p>
+      </div>
+
+      <div class="section">
+        <h4>动机 (Motivation)</h4>
+        <p>研究团队观察到现有低秩校正方法的主要局限在于层级别的冗余恢复和模块插入带来的额外开销。他们希望通过组共享机制来减少参数和内存开销，同时保持层特定校正的表达能力，实现更高效的量化LLM部署。</p>
+      </div>
+
+      <div class="section">
+        <h4>技术点 (Technical Points)</h4>
+        <p>GlowQ提出了一种组共享低秩近似方法，为每个输入共享组缓存一个单一的共享右因子，并且只恢复那些提供最高精度收益的组或层。该方法每个输入共享组只计算一次高精度投影并在其模块中重用，从而减少参数和内存开销。此外还提出了选择性变体GlowQ-S，仅在收益最大的位置应用缓存的共享模块。</p>
+      </div>
+
+      <div class="section">
+        <h4>收益点 (Benefits)</h4>
+        <p>实验结果表明，与强基线相比，该方法平均减少了5.6%的首Token时间(TTFB)并提高了9.6%的吞吐量，同时在WikiText-2上降低了0.17%的困惑度并提高了0.42个百分点的下游准确率。选择性模型GlowQ-S进一步降低延迟，TTFB减少23.4%，吞吐量提高37.4%，同时平均保持在0.2个百分点以内的准确率。</p>
+      </div>
+
+      <div class="section">
+        <h4>总结 (Summary)</h4>
+        <p>GlowQ是一项面向实际部署的高效量化校正方法，通过组共享机制显著降低了低秩校正的开销，同时保持了模型性能。该方法对需要在资源受限环境中部署LLM的应用具有重要价值，特别是在延迟和吞吐量敏感的场景中。</p>
+      </div>
+
+      <div class="section">
+        <h4>配图 (Figures)</h4>
+        <p>论文配图请参考arXiv原文: <a href="https://arxiv.org/abs/2603.25385" target="_blank">https://arxiv.org/abs/2603.25385</a></p>
+      </div>
+    </div>
+
+    <!-- Paper 2 -->
+    <div class="paper">
+      <div class="paper-title">2. 剪枝如何重塑特征：权重剪枝语言模型的稀疏自编码器分析</div>
+      <div class="paper-meta">
+        <strong>标题:</strong> How Pruning Reshapes Features: Sparse Autoencoder Analysis of Weight-Pruned Language Models<br>
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.25325" target="_blank">2603.25325</a> | 
+        <strong>发布:</strong> 2026-03-26<br>
+        <strong>作者:</strong> Hector Borobia, Elies Seguí-Mas, Guillermina Tormo-Carbó
+      </div>
+
+      <div class="section">
+        <h4>背景 (Background)</h4>
+        <p>权重剪枝是压缩大语言模型的标准技术，但其对学习的内部表示的影响仍 poorly understood。稀疏自编码器(SAE)作为可解释性探针，可以帮助理解模型内部的特征几何结构。当前研究缺乏对剪枝如何系统性地改变模型特征表示的深入分析。</p>
+      </div>
+
+      <div class="section">
+        <h4>动机 (Motivation)</h4>
+        <p>研究团队希望系统性地理解非结构化剪枝如何重塑语言模型的特征几何结构。他们特别关注剪枝后哪些特征能够存活、特征脆弱性如何变化，以及几何特征存活是否能预测因果重要性等问题，这些对于理解压缩下的模型可解释性至关重要。</p>
+      </div>
+
+      <div class="section">
+        <h4>技术点 (Technical Points)</h4>
+        <p>研究使用稀疏自编码器(SAE)作为可解释性探针，在三个模型家族（Gemma 3 1B、Gemma 2 2B、Llama 3.2 1B）、两种剪枝方法（幅度剪枝和Wanda）以及六个稀疏度水平（0-60%）上进行系统分析。最引人注目的发现是稀有SAE特征（触发率低的特征）比频繁特征更好地存活剪枝，在17个实验条件中有11个条件的斯皮尔曼相关性为rho = -1.0。</p>
+      </div>
+
+      <div class="section">
+        <h4>收益点 (Benefits)</h4>
+        <p>研究发现Wanda剪枝比幅度剪枝更好地保持特征结构（高达3.7倍），预训练的SAE在Wanda剪枝模型上保持可用性高达50%稀疏度。更重要的是，几何特征存活不能预测因果重要性，这对压缩下的可解释性具有重要启示。这些发现为理解剪枝机制提供了新的视角。</p>
+      </div>
+
+      <div class="section">
+        <h4>总结 (Summary)</h4>
+        <p>这是一项具有重要理论价值的研究工作，它挑战了剪枝均匀影响所有特征的假设，揭示了剪枝实际上起到隐式特征选择的作用。该研究为压缩模型的可解释性研究提供了新的方法论和分析框架。</p>
+      </div>
+
+      <div class="section">
+        <h4>配图 (Figures)</h4>
+        <p>论文配图请参考arXiv原文: <a href="https://arxiv.org/abs/2603.25325" target="_blank">https://arxiv.org/abs/2603.25325</a></p>
+      </div>
+    </div>
+
+    <!-- Paper 3 -->
+    <div class="paper">
+      <div class="paper-title">3. 重新审视在线策略蒸馏：实证失效模式与简单修复</div>
+      <div class="paper-meta">
+        <strong>标题:</strong> Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes<br>
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.25562" target="_blank">2603.25562</a> | 
+        <strong>发布:</strong> 2026-03-26<br>
+        <strong>作者:</strong> Yuqian Fu, Haohuan Huang, Kaiwen Jiang, Yuanheng Zhu, Dongbin Zhao
+      </div>
+
+      <div class="section">
+        <h4>背景 (Background)</h4>
+        <p>在线策略蒸馏(OPD)对于大语言模型的后训练很有吸引力，因为它在学生生成的rollouts上评估教师反馈，而不是在固定的教师轨迹上。然而在长程设置中，常见的采样Token变体很脆弱：它将分布匹配简化为单Token信号，并且当rollouts偏离教师常访问的前缀时变得越来越不可靠。</p>
+      </div>
+
+      <div class="section">
+        <h4>动机 (Motivation)</h4>
+        <p>研究团队发现现有的采样Token OPD存在三个主要失效模式：不平衡的单Token信号、在学生生成前缀上的不可靠教师指导，以及由分词器或特殊Token不匹配引起的失真。这些问题促使他们重新审视OPD，从估计器和实现两方面提出改进方案。</p>
+      </div>
+
+      <div class="section">
+        <h4>技术点 (Technical Points)</h4>
+        <p>研究首先从理论上证明Token级OPD相对于序列级reverse-KL是有偏的，但有更紧的最坏情况方差界。然后识别了采样Token OPD的三个失效模式，并通过教师top-K局部支持匹配来解决这些问题，实现为带top-p rollout采样和特殊Token掩码的截断reverse-KL。这种方法在长程推理和多任务训练中展现出更稳定的优化和更好的下游性能。</p>
+      </div>
+
+      <div class="section">
+        <h4>收益点 (Benefits)</h4>
+        <p>在单任务数学推理和多任务agentic-plus-math训练上的实验表明，该方法比采样的Token OPD产生更稳定的优化和更好的下游性能。该修复方案简单有效，不需要额外的训练成本，可以直接应用于现有的OPD实现中，显著提升蒸馏效果。</p>
+      </div>
+
+      <div class="section">
+        <h4>总结 (Summary)</h4>
+        <p>这是一项实用价值很高的研究工作，它系统地诊断了OPD的失效模式并提出了简单有效的修复方案。对于使用知识蒸馏进行LLM后训练的研究者和工程师来说，这项工作提供了宝贵的实践指导和理论洞察。</p>
+      </div>
+
+      <div class="section">
+        <h4>配图 (Figures)</h4>
+        <p>论文配图请参考arXiv原文: <a href="https://arxiv.org/abs/2603.25562" target="_blank">https://arxiv.org/abs/2603.25562</a></p>
+      </div>
+    </div>
+
+    <!-- Paper 4 -->
+    <div class="paper">
+      <div class="paper-title">4. 大语言模型作为Token压缩器和解压器</div>
+      <div class="paper-meta">
+        <strong>标题:</strong> Large Language Model as Token Compressor and Decompressor<br>
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.25340" target="_blank">2603.25340</a> | 
+        <strong>发布:</strong> 2026-03-26<br>
+        <strong>作者:</strong> Wenbing Li, Zikai Song, Jielei Zhang, Tianhao Zhao, Junkai Lin, Yiran Wang, Wei Yang
+      </div>
+
+      <div class="section">
+        <h4>背景 (Background)</h4>
+        <p>大语言模型在处理长文本时面临上下文窗口限制和计算成本问题。现有的文本压缩方法通常需要专门设计的压缩算法，而LLM本身具有强大的语言理解和生成能力，有潜力作为通用的文本压缩和解压缩工具。</p>
+      </div>
+
+      <div class="section">
+        <h4>动机 (Motivation)</h4>
+        <p>研究团队提出一个新颖的见解：现成的LLM可以作为优秀的Token压缩器和解压器。他们希望利用LLM的语言理解能力，将长文本压缩为紧凑的内部语言表示，并在需要时精确重构原始文本，从而实现高效的长上下文处理。</p>
+      </div>
+
+      <div class="section">
+        <h4>技术点 (Technical Points)</h4>
+        <p>研究设计了一个自表达自编码学习框架，通过轻量级LoRA适配器头对预训练LLM进行微调，将长文本翻译为称为Z-token的离散、可变长度潜在代码的紧凑内部语言，并从中精确重构原始文本。该表示是内容自适应的：语义密集的片段接收更多Z-token，而冗余或可预测区域被积极压缩。</p>
+      </div>
+
+      <div class="section">
+        <h4>收益点 (Benefits)</h4>
+        <p>在Wikipedia、CNN/DailyMail、HotpotQA和Qulac风格长查询数据集上，该方法实现了高达18倍的Token减少，同时保持重构保真度和下游性能。这一简单有效的设计支持提示压缩和在Z-token空间中进行自回归生成等应用，为Token高效的长上下文推理提供了潜在途径。</p>
+      </div>
+
+      <div class="section">
+        <h4>总结 (Summary)</h4>
+        <p>这是一项创新性和实用性兼具的研究工作，它重新定义了LLM作为通用压缩工具的角色。该方法为长上下文处理提供了新的解决方案，对于需要在有限上下文窗口中处理长文档的应用场景具有重要价值。</p>
+      </div>
+
+      <div class="section">
+        <h4>配图 (Figures)</h4>
+        <p>论文配图请参考arXiv原文: <a href="https://arxiv.org/abs/2603.25340" target="_blank">https://arxiv.org/abs/2603.25340</a></p>
+      </div>
+    </div>
+
+    <!-- Paper 5 -->
+    <div class="paper">
+      <div class="paper-title">5. S2D2: 通过免训练自推测实现扩散LLM的快速解码</div>
+      <div class="paper-meta">
+        <strong>标题:</strong> S2D2: Fast Decoding for Diffusion LLMs via Training-Free Self-Speculation<br>
+        <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2603.25702" target="_blank">2603.25702</a> | 
+        <strong>发布:</strong> 2026-03-26<br>
+        <strong>作者:</strong> Ligong Han, Hao Wang, Han Gao, Kai Xu, Akash Srivastava
+      </div>
+
+      <div class="section">
+        <h4>背景 (Background)</h4>
+        <p>块扩散语言模型通过结合块级自回归解码和块内并行去噪，提供了超越自回归生成的更快生成路径。然而，在需要的少步骤区域中，标准置信度阈值解码往往很脆弱：激进的阈值损害质量，而保守的阈值需要不必要的去噪步骤。</p>
+      </div>
+
+      <div class="section">
+        <h4>动机 (Motivation)</h4>
+        <p>现有的改进方法要么需要额外的训练，要么产生额外的测试时计算成本。研究团队希望开发一种免训练的自推测解码框架，能够在不增加训练成本的前提下，改善扩散LLM的解码效率和质量权衡。</p>
+      </div>
+
+      <div class="section">
+        <h4>技术点 (Technical Points)</h4>
+        <p>S2D2的核心观察是当块大小减少到1时，块扩散模型变为自回归的，允许同一个预训练模型同时作为草稿模型和验证器。S2D2将推测验证步骤插入标准块扩散解码中，并使用轻量级路由策略来决定何时验证值得其成本。这产生了一种混合解码轨迹，其中扩散并行提出Token，而自回归模式作为局部序列级批评器。</p>
+      </div>
+
+      <div class="section">
+        <h4>收益点 (Benefits)</h4>
+        <p>在三个主流块扩散模型家族上的实验表明，S2D2一致地改善了与强置信度阈值基线相比的准确率-速度权衡。在SDAR上观察到比自回归解码高达4.7倍的速度提升，比调优的动态解码基线高达1.57倍的速度提升，同时准确率提高高达4.5个百分点。在LLaDA2.1-Mini上，S2D2与内置自校正互补，在保守设置下比静态基线快4.4倍且准确率略高。</p>
+      </div>
+
+      <div class="section">
+        <h4>总结 (Summary)</h4>
+        <p>这是一项兼具创新性和实用性的研究工作，它巧妙地利用了块扩散模型的特性实现了免训练的自推测解码。该方法为扩散LLM的实际部署提供了重要的效率提升，对于推动非自回归生成模型的发展具有重要意义。</p>
+      </div>
+
+      <div class="section">
+        <h4>配图 (Figures)</h4>
+        <p>论文配图请参考arXiv原文: <a href="https://arxiv.org/abs/2603.25702" target="_blank">https://arxiv.org/abs/2603.25702</a></p>
+      </div>
+    </div>
+
+    <h2>📈 趋势总结</h2>
+    <div class="trend-item">
+      <h4>1. 高效量化校正技术</h4>
+      <p>低比特量化结合低秩校正成为压缩LLM的主流方向，研究重点从单纯的量化精度恢复转向效率与精度的联合优化。GlowQ等工作的组共享机制代表了这一趋势的前沿进展。</p>
+    </div>
+    <div class="trend-item">
+      <h4>2. 剪枝与可解释性的交叉</h4>
+      <p>研究者开始关注剪枝对模型内部特征表示的影响，通过稀疏自编码器等工具揭示剪枝的隐式特征选择机制。这种交叉研究为理解压缩模型的行为提供了新的视角。</p>
+    </div>
+    <div class="trend-item">
+      <h4>3. 蒸馏方法的精细化改进</h4>
+      <p>知识蒸馏研究从宏观方法比较转向微观失效模式分析和针对性修复。对OPD等成熟方法的重新审视和精细化改进，体现了该领域向成熟化发展的趋势。</p>
+    </div>
+    <div class="trend-item">
+      <h4>4. Token级别的压缩创新</h4>
+      <p>利用LLM自身能力进行Token压缩成为新的研究热点，内容自适应的压缩策略能够在保持语义完整性的同时大幅减少Token数量，为长上下文处理开辟了新途径。</p>
+    </div>
+    <div class="trend-item">
+      <h4>5. 非自回归生成加速</h4>
+      <p>扩散LLM等替代架构的快速解码技术快速发展，免训练的自推测方法能够在不增加训练成本的前提下显著提升推理效率，为超越自回归架构提供了实用路径。</p>
+    </div>
+
+    <footer>
+      <p>报告生成时间: 2026-03-28 03:31 | 调研范围: arXiv 2026-03-26 至 2026-03-27</p>
+      <a href="../../../.." class="back-link">← 返回首页</a>
+    </footer>
+  </div>
+</body>
+</html>
