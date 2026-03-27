@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年3月28日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年3月28日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">波形生成</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">不确定性量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">雷达信号处理</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">信号检测</span>
+        </div>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.11589" target="_blank">1. Toward Complex-Valued Neural Networks for Waveform Generation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589 [cs.SD]</a> · 2026年3月12日 · ICLR 2026 (accepted)</p>
+            <p><strong>作者</strong>: Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee (Korea University, South Korea)</p>
+            <p><strong>主题</strong>: <span class="badge">波形生成</span> <span class="badge">语音合成</span> <span class="badge">iSTFT声码器</span></p>
+            <a href="https://arxiv.org/pdf/2603.11589.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>神经声码器在波形生成领域取得了显著进展，能够生成自然且富有表现力的音频。其中，基于逆短时傅里叶变换（iSTFT）的声码器通过预测复数值频谱图，然后经由iSTFT合成波形，避免了传统方法中计算成本高昂的学习上采样阶段。然而，现有方法均采用实值神经网络独立处理复数频谱的实部和虚部，这种分离处理方式限制了网络捕捉复数频谱固有几何结构的能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>传统的iSTFT声码器使用实值网络分别预测频谱的实部和虚部，忽略了复数数据的内在联系。如何设计原生支持复数运算的神经网络架构，直接在复数域上进行对抗训练？相位信息在波形生成中至关重要，但如何对其进行结构化处理以避免训练不稳定？这些问题的答案将推动更高效、更高质量的神经声码器设计。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>原生复数生成器和判别器</strong>: 提出ComVo架构，生成器和判别器均使用原生复数运算，而非分别处理实部和虚部</li>
+                <li><strong>复数对抗训练框架</strong>: 在复数表示空间内提供结构化反馈，允许判别器直接在复数域中指导生成器学习</li>
+                <li><strong>相位量化（Phase Quantization）</strong>: 对相位值进行离散化处理，以结构化方式引导相位变换，正则化训练过程</li>
+                <li><strong>块矩阵计算方案</strong>: 通过减少冗余运算提升训练效率，在不牺牲质量的前提下加速训练</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>合成质量提升</strong>: ComVo在合成质量上超越可比实值基线方法，生成更自然的音频波形；<strong>训练效率</strong>: 块矩阵计算方案使训练时间减少25%，显著降低计算成本；<strong>相位处理</strong>: 相位量化机制有效稳定了复数域中的对抗训练；<strong>端到端优化</strong>: 整个系统在复数域内进行端到端优化，避免了实部虚部分离带来的信息损失；<strong>代码开源</strong>: 研究代码和音频样本已公开，便于社区复现和进一步研究。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>ComVo是首个将原生复数神经网络应用于波形生成任务的工作，通过复数生成器、复数判别器和相位量化的协同设计，实现了高质量语音合成。研究表明，在复数域内直接进行对抗训练能够更好地捕捉频谱的结构化特征，为神经声码器设计开辟了新的方向。这项工作也为CVNN在音频生成领域的应用提供了重要参考。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.11589</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：ComVo架构图、复数生成器和判别器设计、相位量化示意图、与实值基线的质量对比、训练效率对比曲线</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.15283" target="_blank">2. Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification in Deep Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.15283" target="_blank">arXiv:2602.15283 [cs.LG]</a> · 2026年2月17日</p>
+            <p><strong>作者</strong>: Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari (University of Tartu, Estonia / University of Surrey, UK)</p>
+            <p><strong>主题</strong>: <span class="badge">不确定性量化</span> <span class="badge">模型校准</span> <span class="badge">酉表示</span></p>
+            <a href="https://arxiv.org/pdf/2602.15283.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>现代深度神经网络在预测准确性方面取得了巨大成功，但在校准性方面表现不佳：它们的置信度分数往往不能可靠地反映真实正确概率。模型校准对于安全关键应用至关重要，因为在这些场景中，过度自信的预测可能导致灾难性后果。现有的校准方法如温度缩放等后处理技术虽然简单有效，但并未从根本上改善模型的表示学习。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>量子力学中的酉变换保持范数不变，这一特性是否可以用于改善神经网络的校准性？如何将量子启发的复数酉表示整合到深度神经网络中？相比于传统的实值分类头和后处理方法，复数酉表示能否提供更好的不确定性感知能力？研究团队希望通过控制实验设计来分离复数酉表示对校准的独立影响。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>量子启发的分类头架构</strong>: 将主干网络特征投影到复数值希尔伯特空间，在学习的酉变换下进行演化</li>
+                <li><strong>Cayley参数化酉变换</strong>: 使用Cayley映射参数化酉变换，保持变换的酉特性同时支持梯度优化</li>
+                <li><strong>控制实验设计</strong>: 训练单一共享主干网络，比较不同轻量级可替换分类头的效果，隔离复数酉表示的影响</li>
+                <li><strong>幅度读取与Born规则</strong>: 探索复数特征的不同读取方式，包括幅度读取和量子启发的Born规则测量层</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>校准性能显著提升</strong>: 在CIFAR-10上，酉幅度头达到0.0146的期望校准误差（ECE），比标准softmax头（0.0355）提升2.4倍，比温度缩放（0.0510）提升3.5倍；<strong>人类不确定性对齐</strong>: 在CIFAR-10H基准上，波函数头在人类软标签的KL散度（0.336）上优于所有对比方法，表明复数表示更好地捕捉了人类感知歧义；<strong>理论洞察</strong>: 从理论上连接了范数保持酉动态与特征空间几何到校准性能的关系；<strong>实用指导</strong>: 发现Born规则测量层反而损害校准（ECE 0.0819），为量子启发方法的实际应用提供了重要警示。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文创新性地将量子力学中的酉变换概念引入深度神经网络的分类头设计，显著改善了模型的校准性能。研究表明，复数酉表示能够更好地捕捉预测不确定性，与人类感知的不确定性分布更加一致。尽管量子启发的Born规则测量层表现不佳，但简单的幅度读取方式取得了最佳效果。这项工作为安全关键应用中的可信深度学习提供了有价值的技术路径。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2602.15283</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：复数酉表示分类头架构图、Cayley映射示意图、可靠性曲线对比、ECE对比柱状图、CIFAR-10H人类不确定性对齐分析</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.09597" target="_blank">3. Detecting radar targets swarms in range profiles with a partially complex-valued neural network</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.09597" target="_blank">arXiv:2602.09597 [cs.AI]</a> · 2026年2月10日</p>
+            <p><strong>作者</strong>: Martin Bauw (Royal Military Academy, Belgium)</p>
+            <p><strong>主题</strong>: <span class="badge">雷达信号处理</span> <span class="badge">目标检测</span> <span class="badge">部分复数网络</span></p>
+            <a href="https://arxiv.org/pdf/2602.09597.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>雷达目标检测面临诸多挑战，包括杂波干扰、波形失真以及多个目标相对接近时的相互影响。当多个目标距离较近时，它们可能被视为单一目标，或者相互影响彼此的检测阈值。目标接近带来的负面影响在很大程度上取决于雷达参数定义的距离分辨率和所采用的自适应阈值。传统的脉冲压缩方法逐脉冲处理，难以充分利用接收信号的整体信息。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>复数神经网络在雷达和信号处理领域展现出巨大潜力，但全复数网络可能过于复杂。能否设计部分复数网络，仅在必要的地方使用复数运算，而其余部分保持实数运算？这种混合架构能否在检测性能和计算复杂度之间取得良好平衡？如何通过生成式架构一次性处理整个接收信号，而非逐脉冲处理？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>部分复数网络架构</strong>: 采用混合设计，仅在关键层使用复数参数，其余层保持实数运算，平衡表达能力和计算效率</li>
+                <li><strong>生成式检测架构</strong>: 不同于脉冲压缩逐脉冲处理，提出的网络一次性遍历整个接收信号，生成完整的检测轮廓</li>
+                <li><strong>距离轮廓处理</strong>: 针对雷达距离轮廓的特点设计网络输入输出格式，直接处理复数雷达回波数据</li>
+                <li><strong>自适应阈值学习</strong>: 网络隐式学习适应不同目标密度和噪声环境的检测阈值</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>检测性能提升</strong>: 在包含多目标和扭曲回波的复杂场景中，部分复数网络相比传统脉冲压缩方法展现出更好的检测能力；<strong>计算效率</strong>: 部分复数设计在保持性能的同时降低了全复数网络的计算开销；<strong>端到端处理</strong>: 生成式架构避免了传统方法中多阶段处理的误差累积问题；<strong>适应性</strong>: 网络能够自适应处理不同距离和强度的多目标场景；<strong>实用价值</strong>: 为雷达目标检测提供了一种新的深度学习解决方案。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项研究探索了部分复数神经网络在雷达目标群检测中的应用，提出了一种混合架构，在关键部分利用复数运算处理相位信息，同时保持整体计算效率。生成式架构的设计使得网络能够从全局视角处理雷达信号，而非局部逐脉冲处理。这一工作为雷达信号处理中CVNN的实际应用提供了有价值的实践参考。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2602.09597</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：部分复数网络架构图、雷达距离轮廓示例、目标群检测场景示意图、与传统脉冲压缩方法对比、检测性能曲线</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.00633" target="_blank">4. FDR Control for Complex-Valued Data with Application in Single Snapshot Multi-Source Detection and DOA Estimation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.00633" target="_blank">arXiv:2603.00633 [eess.SP]</a> · 2026年2月28日 · ICASSP 2025</p>
+            <p><strong>作者</strong>: Fabian Scheidt, Jasin Machkour, Michael Muma (Technische Universität Darmstadt, Germany)</p>
+            <p><strong>主题</strong>: <span class="badge">FDR控制</span> <span class="badge">信号检测</span> <span class="badge">DOA估计</span></p>
+            <a href="https://arxiv.org/pdf/2603.00633.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>错误发现率（False Discovery Rate, FDR）控制是维护统计分析完整性的重要方法，特别是在高维数据设置中，多重比较增加了假阳性风险。FDR控制在实值数据上已被广泛研究，但复数数据情况在许多信号处理应用中仍然未被充分探索。复值数据在DOA估计、通信、机械工程和磁共振成像等领域具有重要应用价值。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>现有FDR控制方法主要针对实值数据，如何将其扩展到复数域？在单快照多源检测和DOA估计等实际应用中，如何在保证FDR控制的同时最大化变量选择数量？如何设计适用于高维复数数据的快速FDR控制变量选择器？这些问题的解决将为复数信号处理提供重要的统计工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数值终止随机实验（CT-Rex）选择器</strong>: 专为复数值高维数据设计的快速FDR控制变量选择方法</li>
+                <li><strong>最优融合策略</strong>: 通过最优融合多个提前终止的复数随机实验解，在控制目标FDR的同时最大化选择变量数量</li>
+                <li><strong>压缩感知框架</strong>: 应用于基于压缩感知的单快照多源检测和DOA估计</li>
+                <li><strong>统计保证</strong>: 提供FDR控制的理论保证，适用于稀疏复数回归问题</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>填补理论空白</strong>: 首次系统性地研究复数数据的FDR控制问题，填补信号处理领域的关键空白；<strong>广泛适用性</strong>: 方法适用于DOA估计、通信、机械工程和磁共振成像等多个研究领域；<strong>统计可靠性</strong>: 在保持用户定义目标FDR的同时，最大化变量选择数量；<strong>计算效率</strong>: 通过随机实验的提前终止实现快速变量选择；<strong>仿真验证</strong>: 在稀疏复数回归仿真研究中验证了方法的有效性。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文将FDR控制理论扩展到复数数据领域，提出了CT-Rex选择器，为高维复数信号处理提供了重要的统计工具。该方法在保持统计可靠性的同时具有计算效率，在单快照多源检测和DOA估计等应用中具有重要价值。这项工作为复数信号处理中的统计推断奠定了理论基础。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.00633</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：CT-Rex算法流程图、FDR控制性能曲线、单快照DOA估计结果、不同信噪比下的检测性能、与现有方法对比</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.12297" target="_blank">5. Complex-Valued Probability Measures and Their Applications in Information Theory</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.12297" target="_blank">arXiv:2603.12297 [cs.IT]</a> · 2026年3月12日</p>
+            <p><strong>作者</strong>: Siang Cheng, Hejun Xu, Tianxiao Pang (Zhejiang University, China)</p>
+            <p><strong>主题</strong>: <span class="badge">信息论</span> <span class="badge">复数概率</span> <span class="badge">统计推断</span></p>
+            <a href="https://arxiv.org/pdf/2603.12297.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>经典概率测度和信息论量（如香农熵和KL散度）在实数域上建立了坚实的理论基础，广泛应用于机器学习、统计推断和信号处理等领域。然而，复数域上的概率测度和信息论研究相对较少。量子力学中复数振幅和相位的重要性提示我们，复数框架可能为信息处理提供独特的视角和工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何将经典概率测度扩展到复数域？复数熵、复数散度和复数度量等概念能否被严格定义？这些复数信息论量与经典量（香农熵、KL散度）相比有何独特优势？复数框架与费曼路径积分等量子力学概念是否存在深刻联系？如何将这些理论应用于实际的非参数假设检验？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数概率测度框架</strong>: 将复数概率测度定义为经典概率测度的相位调制扩展，建立严格的数学基础</li>
+                <li><strong>复数熵</strong>: 通过相位相干性量化分布均匀性，提供与香农熵不同的信息度量</li>
+                <li><strong>复数散度</strong>: 定义分布间非对称差异度量，捕捉经典散度无法反映的几何特性</li>
+                <li><strong>复数度量</strong>: 构建满足三角不等式的对称距离函数，支持可调的相位参数</li>
+                <li><strong>非参数检验应用</strong>: 将复数度量应用于双样本非参数假设检验，展示实际价值</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论创新</strong>: 建立了复数概率测度和信息论的完整理论框架；<strong>几何优势</strong>: 复数度量通过可调相位参数对分布形状具有独特的敏感性；<strong>量子连接</strong>: 揭示了复数熵积分与费曼路径积分形式之间的深刻类比；<strong>实用价值</strong>: 在双样本假设检验中展示了复数框架的实际应用潜力；<strong>严格证明</strong>: 证明了有界性、全变差收敛下的连续性以及清晰的极值行为等关键性质。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这篇论文开创性地建立了复数概率测度和信息论的数学框架，定义了复数熵、复数散度和复数度量等基本概念。与经典信息论相比，复数框架提供了独特的几何解释和对分布形状的敏感性。研究中发现的与费曼路径积分的形式类比暗示了更深层的概念联系。这项工作为通过复分析和干涉现象分析概率分布开辟了新途径，对信息论、统计推断和机器学习具有潜在影响。</p>
+        </div>
+
+        <div class="section">
+            <h3>🖼️ 配图</h3>
+            <div class="figure">
+                <p style="color: #999; font-style: italic;">论文配图可通过脚本抓取：<code>./scripts/fetch_arxiv_images.py 2603.12297</code></p>
+                <p style="font-size: 0.85em; color: #666;">主要包含：复数概率测度示意图、复数熵vs香农熵对比、复数散度几何解释、与费曼路径积分类比图、非参数检验应用示例</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h2>📊 今日概览</h2>
+        
+        <p><strong>收录论文</strong>：5篇（2026年最新研究）</p>
+        <ul>
+            <li><strong>波形生成</strong>: ComVo - 首个原生复数神经声码器，训练时间减少25%，ICLR 2026接收</li>
+            <li><strong>不确定性量化</strong>: 复数酉表示分类头，ECE降低2.4-3.5倍，更好对齐人类感知</li>
+            <li><strong>雷达信号处理</strong>: 部分复数网络用于目标群检测，平衡性能与效率</li>
+            <li><strong>统计推断</strong>: 复数数据FDR控制，填补信号处理统计理论空白</li>
+            <li><strong>信息理论基础</strong>: 复数概率测度框架，揭示与费曼路径积分的深刻联系</li>
+        </ul>
+
+        <p><strong>研究趋势</strong>：</p>
+        <ul>
+            <li><strong>架构创新</strong>: 从简单复数层向原生复数生成器、判别器、Transformer等复杂架构演进</li>
+            <li><strong>跨领域融合</strong>: 量子力学、信息论、信号处理与CVNN的深度融合</li>
+            <li><strong>实用导向</strong>: 关注训练效率、模型校准、不确定性量化等实际部署需求</li>
+            <li><strong>理论深化</strong>: 从经验性应用向严格的数学理论框架发展</li>
+            <li><strong>混合架构</strong>: 探索部分复数网络，在性能和效率间取得平衡</li>
+        </ul>
+
+        <p><strong>发布时间</strong>：2026-03-28 04:33 (GMT+8)</p>
+    </div>
+
+    <div class="footer">
+        <p>Generated by Jarvis | CVNN Research Daily</p>
+        <p>数据来源: arXiv.org</p>
+    </div>
+</body>
+</html>
