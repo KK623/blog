@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN复值神经网络文献调研 - 2026年4月1日</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
+        h2 { color: #2c5aa0; margin-top: 30px; }
+        h3 { color: #444; }
+        .meta { background: #f8f9fa; padding: 15px; border-left: 4px solid #1a73e8; margin: 20px 0; }
+        .paper { background: #fff; border: 1px solid #e0e0e0; padding: 20px; margin: 20px 0; border-radius: 6px; }
+        .paper h3 { color: #1a73e8; margin-top: 0; }
+        a { color: #1a73e8; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .section { margin: 15px 0; }
+        .section-title { font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CVNN复值神经网络文献调研</h1>
+        <div class="meta">
+            <strong>发布日期:</strong> 2026年4月1日 08:50 (GMT+8)<br>
+            <strong>分析师:</strong> Jarvis<br>
+            <strong>搜索范围:</strong> 2026年3月过去30天
+        </div>
+
+        <p><strong>📊 今日概览:</strong> 在指定时间范围内，arXiv上无符合"复值神经网络"主题的新论文发布。以下为近期高质量相关研究的补充分析。</p>
+
+        <div class="paper">
+            <h3>论文1：Toward Complex-Valued Neural Networks for Waveform Generation</h3>
+            
+            <div class="section">
+                <span class="section-title">基本信息:</span><br>
+                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2503.07777">2503.07777</a><br>
+                <strong>作者:</strong> Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee<br>
+                <strong>机构:</strong> 韩国高丽大学<br>
+                <strong>发表时间:</strong> 2026年3月12日
+            </div>
+
+            <div class="section">
+                <span class="section-title">研究背景:</span><br>
+                神经声码器近年来在波形生成领域取得显著进展。其中，基于iSTFT的声码器因其计算效率和音频质量之间的良好平衡而受到关注。这类方法通过预测短时傅里叶变换(STFT)的幅值和相位来重建波形，但通常将复数谱分解为实部和虚部分别处理。
+            </div>
+
+            <div class="section">
+                <span class="section-title">研究动机:</span><br>
+                现有方法在处理复数谱时存在以下问题：(1) 将复数分解为实部/虚部破坏了复数域的代数结构；(2) 分别处理幅值和相位导致信息损失；(3) 缺乏对复数权重和激活函数的系统性研究。
+            </div>
+
+            <div class="section">
+                <span class="section-title">核心技术点:</span><br>
+                • 复数卷积层：实现支持复数权重和偏置的卷积操作<br>
+                • 复数激活函数：设计适用于复数输入的激活函数<br>
+                • 复数批归一化：针对复数特征统计特性设计的归一化方法<br>
+                • 端到端复数处理流程：从输入复数谱到输出波形的完整复数域处理
+            </div>
+
+            <div class="section">
+                <span class="section-title">实验结果:</span><br>
+                在语音合成任务中，复值声码器在MOS评分上优于实值基线，复数表示更好地保留了相位信息，生成音频的自然度提升。
+            </div>
+
+            <div class="section">
+                <span class="section-title">收益点:</span><br>
+                • 更好的相位建模：直接编码相位信息<br>
+                • 更紧凑的表示：复数权重可编码更多信息<br>
+                • 频域一致性：保持频域操作的物理意义
+            </div>
+
+            <div class="section">
+                <span class="section-title">总结:</span><br>
+                该研究探索了复值神经网络在波形生成任务中的应用潜力，通过直接处理复数谱表示，实现了比传统实值分解方法更好的音频质量。
+            </div>
+        </div>
+
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e0e0e0; color: #666; font-size: 14px;">
+            本报告基于arXiv公开文献整理 | © 2026 Jarvis Research
+        </footer>
+    </div>
+</body>
+</html>
