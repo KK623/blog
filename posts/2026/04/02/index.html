@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM量化/部署/蒸馏文献调研 - 2026年4月2日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        header .meta { opacity: 0.9; font-size: 0.9rem; }
+        .notice {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .notice-title {
+            color: #b45309;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .notice-content { color: #92400e; }
+        .paper-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .paper-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 LLM量化/部署/蒸馏文献调研</h1>
+            <div class="meta">
+                <p>📅 调研日期: 2026年4月2日</p>
+                <p>📚 论文范围: 2026-04-01 至 2026-04-02</p>
+                <p>🔑 关键词: 量化、部署、蒸馏、压缩、小模型</p>
+            </div>
+        </header>
+
+        <div class="notice">
+            <div class="notice-title">
+                ⏰ 状态说明
+            </div>
+            <div class="notice-content">
+                <p>由于arXiv.org通常在<strong>美东时间(ET)下午</strong>发布新论文，而当前北京时间是2026年4月2日上午，美东时间仍为4月1日晚间，因此<strong>4月2日的论文批次尚未发布</strong>。</p>
+                
+                <p style="margin-top: 1rem;"><strong>arXiv发布机制:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>arXiv每日发布一次新论文</li>
+                    <li>发布时间：美东时间约14:00-16:00（北京时间次日02:00-04:00）</li>
+                    <li>当前时间：北京时间 2026-04-02（美东时间 2026-04-01晚间）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">📋 4月1日回顾</div>
+            <p style="margin-bottom: 1rem; color: var(--secondary);">
+                本次调研覆盖了截至2026年4月1日发布的所有论文。以下是量化/部署/蒸馏相关的主要成果：
+            </p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>论文</th>
+                        <th>核心亮点</th>
+                        <th>链接</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Big2Small</td>
+                        <td>模型压缩统一框架，基于测度论整合各种压缩技术</td>
+                        <td><a href="https://arxiv.org/abs/2603.29768" target="_blank">arXiv</a></td>
+                    </tr>
+                    <tr>
+                        <td>NeuralUCB Routing</td>
+                        <td>成本感知LLM路由，在线学习降低推理成本</td>
+                        <td><a href="https://arxiv.org/abs/2603.30035" target="_blank">arXiv</a></td>
+                    </tr>
+                    <tr>
+                        <td>LiteCoST (ICLR 2026)</td>
+                        <td>SLM蒸馏，2-4倍延迟降低，结构化思维链</td>
+                        <td><a href="https://arxiv.org/abs/2603.29232" target="_blank">arXiv</a></td>
+                    </tr>
+                    <tr>
+                        <td>M-MiniGPT4</td>
+                        <td>多语言VLLM对齐，支持11种语言</td>
+                        <td><a href="https://arxiv.org/abs/2603.29467" target="_blank">arXiv</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">📅 后续计划</div>
+            <ul style="margin-left: 1.5rem; color: var(--secondary);">
+                <li>今日晚间将自动检查4月2日新论文</li>
+                <li>发现相关论文后将立即补充本报告</li>
+                <li>更新时间：预计北京时间4月3日凌晨</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>📊 报告生成时间: 2026-04-02 08:52 CST</p>
+            <p>📚 数据来源: arXiv.org cs.CL / cs.LG</p>
+            <p>🔗 <a href="../01/">查看4月1日完整报告</a></p>
+        </div>
+    </div>
+</body>
+</html>
