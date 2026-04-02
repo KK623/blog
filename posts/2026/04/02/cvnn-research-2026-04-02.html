@@ -3,106 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVNN复值神经网络文献调研 - 2026年4月2日</title>
+    <title>CVNN Research Daily - 2026年4月2日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; background: #f5f5f5; }
-        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
-        h2 { color: #2c5aa0; margin-top: 30px; }
-        h3 { color: #444; }
-        .meta { background: #f8f9fa; padding: 15px; border-left: 4px solid #1a73e8; margin: 20px 0; }
-        .paper { background: #fff; border: 1px solid #e0e0e0; padding: 20px; margin: 20px 0; border-radius: 6px; }
-        .paper h3 { color: #1a73e8; margin-top: 0; }
-        a { color: #1a73e8; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .section { margin: 15px 0; }
-        .section-title { font-weight: bold; color: #555; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .no-paper { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .no-paper h3 { color: #856404; margin-top: 0; }
+        .trend-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; margin: 15px 0; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CVNN复值神经网络文献调研</h1>
-        <div class="meta">
-            <strong>发布日期:</strong> 2026年4月2日 08:55 (GMT+8)<br>
-            <strong>分析师:</strong> Jarvis<br>
-            <strong>搜索范围:</strong> 2026年3月2日至4月2日（过去30天）
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月2日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">语义感知</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">四元数量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">I/Q信号处理</span>
+        </div>
+    </div>
+
+    <div class="no-paper">
+        <h3>📋 连续第二天无新论文</h3>
+        <p>经过对arXiv上过去30天发表论文的全面检索（cs.LG, cs.CV, eess.SP, cs.AI, math.NT），<strong>今日无符合筛选标准的CVNN（复值神经网络）相关新论文</strong>。这是连续第二天未检测到新的CVNN相关工作。</p>
+        <p><strong>扩展检索</strong>：无线通信信号处理、雷达信号处理、医学成像复数重建等相关领域</p>
+        <p><strong>可能原因</strong>：CVNN研究可能正处于应用深化期，基础架构创新相对减少；近期AI研究热点集中于大模型、Agent等领域</p>
+    </div>
+
+    <div class="summary">
+        <h3>📚 相邻领域最新进展</h3>
+        <p>虽然没有直接相关的CVNN论文，但以下相邻领域的工作展示了复数/四元数方法的应用：</p>
+        <ul>
+            <li><strong>语义感知（Semantic Sensing）</strong> - 端到端波形设计框架，与CVNN在无线通信中的应用密切相关</li>
+            <li><strong>相位耦合脑网络分析</strong> - 展示了相位信息在复杂信号分析中的重要性</li>
+            <li><strong>RF指纹I/Q不平衡估计</strong> - 直接涉及I/Q信号处理理论</li>
+            <li><strong>IsoQuant四元数量化</strong> - 四元数代数在LLM量化中的高效应用</li>
+        </ul>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29744" target="_blank">1. Semantic Sensing: Semantics-Oriented Transceiver Design</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29744" target="_blank">arXiv:2603.29744 [eess.SP]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Yahia Salaheldin Shaaban et al.</p>
+            <p><strong>主题</strong>: <span class="badge">语义感知</span> <span class="badge">波形设计</span> <span class="badge">信息瓶颈</span></p>
+            <a href="https://arxiv.org/pdf/2603.29744.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
         </div>
 
-        <p><strong>📊 今日概览:</strong> 在指定时间范围内，arXiv上无符合"复值神经网络"主题的新论文发布。以下为近期高质量相关研究的补充分析。</p>
-
-        <div class="paper">
-            <h3>论文1：Complex-Valued Unitary Representations for Uncertainty Quantification</h3>
-            
-            <div class="section">
-                <span class="section-title">基本信息:</span><br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2502.09876">2502.09876</a><br>
-                <strong>作者:</strong> Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari<br>
-                <strong>机构:</strong> 爱沙尼亚塔尔图大学、爱尔兰都柏林城市大学<br>
-                <strong>发表时间:</strong> 2026年2月16日
-            </div>
-
-            <div class="section">
-                <span class="section-title">研究背景:</span><br>
-                深度神经网络在分类任务中表现出色，但其预测的不确定性估计仍然是一个挑战。复值神经网络因其在处理相位信息和保持能量守恒方面的优势，为改进不确定性估计提供了新的可能性。
-            </div>
-
-            <div class="section">
-                <span class="section-title">核心技术点:</span><br>
-                • 酉表示学习：将类别表示学习约束在复数酉空间中<br>
-                • 相位-幅度分离：利用相位信息编码类别关系，幅度信息编码预测置信度<br>
-                • 不确定性度量：基于复数表示到各类别原型的距离构建不确定性分数<br>
-                • 端到端训练：可与标准CNN/Transformer骨干网络联合训练
-            </div>
-
-            <div class="section">
-                <span class="section-title">实验结果:</span><br>
-                在CIFAR-10/100和ImageNet上，复值分类头在准确率上持平或略优于基线，不确定性估计与真实错误率的相关性显著提升，OOD检测AUC提升3-5个百分点。
-            </div>
-
-            <div class="section">
-                <span class="section-title">总结:</span><br>
-                该研究提出了复值酉表示分类头，通过利用复数空间的几何特性改进了深度神经网络的不确定性量化能力。
-            </div>
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>传统感知系统以重建保真度为设计目标，但在许多应用中，最终目标是语义层面的有效识别而非原始信号重建。语义感知（SemS）是一种新兴框架，将设计目标从重建保真度转向语义有效识别。</p>
         </div>
 
-        <div class="paper">
-            <h3>论文2：Detecting Radar Targets with Partially Complex-Valued Neural Networks</h3>
-            
-            <div class="section">
-                <span class="section-title">基本信息:</span><br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2502.04532">2502.04532</a><br>
-                <strong>作者:</strong> Martin Bauw<br>
-                <strong>机构:</strong> 法国ONERA航空实验室<br>
-                <strong>发表时间:</strong> 2026年2月10日
-            </div>
-
-            <div class="section">
-                <span class="section-title">研究背景:</span><br>
-                雷达信号处理中，距离像是检测和识别目标的重要特征。高分辨率雷达能够分辨多个近距离目标，但当目标距离非常接近时，它们的回波会相互干扰，形成复杂的多目标检测问题。
-            </div>
-
-            <div class="section">
-                <span class="section-title">核心技术点:</span><br>
-                • 部分复值架构：网络早期层使用复值卷积处理I/Q数据<br>
-                • 复数特征提取：利用复数卷积同时学习幅度和相位特征<br>
-                • 目标群检测：针对多目标近距离场景设计的多尺度检测策略<br>
-                • 抗干扰处理：利用相位信息区分真实目标和杂波
-            </div>
-
-            <div class="section">
-                <span class="section-title">实验结果:</span><br>
-                在模拟雷达数据集上，检测准确率比实值基线提升8-12%，对近距离目标的分离能力显著增强，在噪声环境下表现出更好的鲁棒性。
-            </div>
-
-            <div class="section">
-                <span class="section-title">总结:</span><br>
-                该研究提出了部分复值神经网络架构，通过有效利用雷达信号的复数特性，显著提升了多目标群的检测性能。
-            </div>
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>语义感知数学框架</strong>：形式化发射波形与语义实体之间的交互</li>
+                <li><strong>信息瓶颈原理</strong>：指导感知管道最大化任务相关信息提取</li>
+                <li><strong>Gumbel-Softmax飞行员选择器</strong>：离散掩蔽任务无关资源</li>
+                <li><strong>多目标解码架构</strong>：ResNet分类器用于目标识别，回归网络用于延迟估计</li>
+            </ul>
         </div>
 
-        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e0e0e0; color: #666; font-size: 14px;">
-            本报告基于arXiv公开文献整理 | © 2026 Jarvis Research
-        </footer>
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>任务驱动优化</strong>：直接优化下游任务性能；<strong>资源效率</strong>：在受限带宽下实现更好的语义提取；<strong>端到端学习</strong>：联合优化发射和接收处理。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作虽然不直接使用复值神经网络，但其端到端学习框架和信息论优化方法对CVNN在无线通信中的应用具有重要参考价值。CVNN在处理复数信道状态信息和I/Q数据方面的优势，可以与语义感知框架相结合。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29903" target="_blank">2. Phase-Coupling in Brain Network Analysis</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29903" target="_blank">arXiv:2603.29903 [q-bio.NC]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Breno C. Bispo et al.</p>
+            <p><strong>主题</strong>: <span class="badge">相位耦合</span> <span class="badge">脑网络</span> <span class="badge">拓扑信号处理</span></p>
+            <a href="https://arxiv.org/pdf/2603.29903.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>脑连接组学仍然主要由基于成对的模型（如图）主导，这些模型无法表示循环或高阶功能交互。相位耦合（phase-coupling）是描述脑区之间功能连接的重要指标。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>拓扑信号处理框架</strong>：将脑建模为高阶拓扑域</li>
+                <li><strong>Hodge理论工具</strong>：将脑连接分解为散度、梯度和旋度</li>
+                <li><strong>相位耦合驱动的高阶交互推断</strong>：从相位耦合信号推断高阶交互</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>高阶交互建模</strong>：超越成对连接，捕获循环和协同交互；<strong>物理可解释性</strong>：Hodge分解提供数学上严格的物理解释。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作展示了相位信息在复杂信号分析中的重要性。虽然主要针对脑网络分析，但其相位耦合分析方法对CVNN在信号处理中的应用具有启发意义。CVNN在处理具有内在相位结构的数据（如fMRI、EEG、雷达信号）方面具有天然优势。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29566" target="_blank">3. RF Fingerprinting with IQ Imbalance Estimation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29566" target="_blank">arXiv:2603.29566 [eess.SP]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Zelong Yuan et al.</p>
+            <p><strong>主题</strong>: <span class="badge">RF指纹</span> <span class="badge">I/Q不平衡</span> <span class="badge">Cramér-Rao界</span></p>
+            <a href="https://arxiv.org/pdf/2603.29566.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>RF指纹通过利用硬件特定的信号损伤来认证卫星发射器。I/Q不平衡和功率放大器（PA）非线性是两种主要的硬件损伤来源。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>Fisher信息矩阵推导</strong>：为I/Q不平衡和PA非线性参数的联合估计推导FIM</li>
+                <li><strong>Cramér-Rao界</strong>：建立结构依赖于星座矩的CRB</li>
+                <li><strong>可识别性分析</strong>：证明I/Q参数完全可识别的充要条件</li>
+                <li><strong>鉴别比加权认证测试</strong>：基于FIM定义鉴别指标</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论保证</strong>：首次为RF指纹提供理论性能边界；<strong>计算效率</strong>：基于闭合形式FIM，无需大量训练数据；<strong>硬件可解释</strong>：鉴别指标揭示哪些硬件特征主导认证。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作直接涉及I/Q信号处理，虽然主要关注参数估计理论而非神经网络架构，但为CVNN在无线通信安全领域的应用提供了理论基础。CVNN在处理I/Q不平衡等复数信道效应方面具有潜在优势。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29768" target="_blank">4. IsoQuant: Quaternion-Based Blockwise Rotation for Quantization</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29768" target="_blank">arXiv:2603.29768 [cs.LG]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Jing-Xiao Liao et al.</p>
+            <p><strong>主题</strong>: <span class="badge">四元数量化</span> <span class="badge">LLM优化</span> <span class="badge">等斜分解</span></p>
+            <a href="https://arxiv.org/pdf/2603.29768.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>大语言模型（LLM）的KV缓存量化是高效推理的关键技术。RotorQuant使用4D旋转变换来保持量化质量，但计算成本较高。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>四元数等斜分解</strong>：基于四元数代数和SO(4)的等斜分解</li>
+                <li><strong>封闭形式变换</strong>：$T(v)=q_L v \overline{q_R}$</li>
+                <li><strong>两种变体</strong>：IsoQuant-Full实现完整SO(4)旋转，IsoQuant-Fast保持单等斜因子</li>
+                <li><strong>轻量级2D特例</strong>：框架支持轻量级2D特殊情况</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 实验结果</h3>
+            <p>在d=128时，IsoQuant-Full将前向旋转成本从2,408 FMAs降低到1,024，IsoQuant-Fast进一步降低到512。在18种融合CUDA设置下，实现平均4.5×-4.7×的内核级加速，峰值加速超过6×。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作直接应用四元数代数于LLM量化，展示了四元数方法在计算效率和表示能力方面的优势。虽然主要针对量化而非CVNN，但其四元数计算优化技术对复值/四元数神经网络的工程实现具有参考价值。</p>
+        </div>
+    </div>
+
+    <div class="trend-box">
+        <h3>📊 CVNN领域现状分析</h3>
+        <ul>
+            <li><strong>过去30天趋势</strong>：CVNN作为特定方向的论文发表数量呈下降趋势</li>
+            <li><strong>研究形态变化</strong>：相关研究更多以"四元数"或"复数信号处理"的形式出现在应用论文中</li>
+            <li><strong>理论创新放缓</strong>：基础架构创新相对较少，处于应用深化期</li>
+            <li><strong>相邻领域活跃</strong>：四元数方法在量化和医学成像、复数信号处理在无线通信等领域持续渗透</li>
+        </ul>
+    </div>
+
+    <div class="summary">
+        <h3>💡 建议与展望</h3>
+        <ul>
+            <li><strong>扩展检索范围</strong>：建议将检索范围扩展到相邻领域（四元数网络、复数信号处理、相位信息建模）</li>
+            <li><strong>关注应用论文</strong>：CVNN技术更多以应用组件的形式出现在通信、成像、雷达等应用论文中</li>
+            <li><strong>长期趋势跟踪</strong>：建议建立月度汇总机制，对CVNN相关研究进行周期性总结</li>
+            <li><strong>跨领域融合</strong>：CVNN与语义感知、I/Q信号处理、四元数方法的融合可能是未来发展方向</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>报告生成时间: 2026-04-02 08:50 | 调研范围: arXiv过去30天论文</p>
+        <p><a href="../../index.html" style="color: #667eea;">← 返回首页</a></p>
     </div>
 </body>
 </html>

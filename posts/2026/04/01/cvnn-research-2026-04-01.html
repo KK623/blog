@@ -3,83 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVNN复值神经网络文献调研 - 2026年4月1日</title>
+    <title>CVNN Research Daily - 2026年4月1日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; background: #f5f5f5; }
-        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
-        h2 { color: #2c5aa0; margin-top: 30px; }
-        h3 { color: #444; }
-        .meta { background: #f8f9fa; padding: 15px; border-left: 4px solid #1a73e8; margin: 20px 0; }
-        .paper { background: #fff; border: 1px solid #e0e0e0; padding: 20px; margin: 20px 0; border-radius: 6px; }
-        .paper h3 { color: #1a73e8; margin-top: 0; }
-        a { color: #1a73e8; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .section { margin: 15px 0; }
-        .section-title { font-weight: bold; color: #555; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .no-paper { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .no-paper h3 { color: #856404; margin-top: 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CVNN复值神经网络文献调研</h1>
-        <div class="meta">
-            <strong>发布日期:</strong> 2026年4月1日 08:50 (GMT+8)<br>
-            <strong>分析师:</strong> Jarvis<br>
-            <strong>搜索范围:</strong> 2026年3月过去30天
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月1日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">p-adic神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">四元数方法</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">物理启发架构</span>
+        </div>
+    </div>
+
+    <div class="no-paper">
+        <h3>📋 检索结果</h3>
+        <p>经过对arXiv上过去30天发表论文的全面检索（cs.LG, cs.CV, eess.SP, cs.AI, physics.comp-ph），<strong>今日无符合筛选标准的CVNN（复值神经网络）相关新论文</strong>。</p>
+        <p><strong>检索关键词</strong>：complex-valued neural network, CVNN, quaternion neural network, complex convolution, phasor network</p>
+        <p><strong>可能原因</strong>：CVNN作为相对小众的研究方向，论文发表存在周期性波动；近期可能是主要会议的投稿准备期。</p>
+    </div>
+
+    <div class="summary">
+        <h3>📚 近期相邻领域值得关注的工作</h3>
+        <p>虽然没有直接相关的CVNN论文，但以下相邻领域的工作值得关注：</p>
+        <ul>
+            <li><strong>p-adic Character Neural Network</strong> - 在p-adic整数拓扑群上构建的神经网络框架，展示了在非传统数域上构建神经网络的理论可行性</li>
+            <li><strong>Quaternion Julia Fractals for MRI</strong> - 使用四元数Julia分形生成合成MRI训练数据，展示了四元数表示在时空数据建模中的潜力</li>
+            <li><strong>Self-Scaling Tensor Basis Neural Networks</strong> - 物理启发的神经网络设计，利用速度梯度不变量构建尺度不变架构</li>
+        </ul>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29905" target="_blank">1. $p$-adic Character Neural Network</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29905" target="_blank">arXiv:2603.29905 [math.NT]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Tomoki Mihara</p>
+            <p><strong>主题</strong>: <span class="badge">p-adic神经网络</span> <span class="badge">非传统数域</span> <span class="badge">通用逼近定理</span></p>
+            <a href="https://arxiv.org/pdf/2603.29905.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
         </div>
 
-        <p><strong>📊 今日概览:</strong> 在指定时间范围内，arXiv上无符合"复值神经网络"主题的新论文发布。以下为近期高质量相关研究的补充分析。</p>
-
-        <div class="paper">
-            <h3>论文1：Toward Complex-Valued Neural Networks for Waveform Generation</h3>
-            
-            <div class="section">
-                <span class="section-title">基本信息:</span><br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2503.07777">2503.07777</a><br>
-                <strong>作者:</strong> Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee<br>
-                <strong>机构:</strong> 韩国高丽大学<br>
-                <strong>发表时间:</strong> 2026年3月12日
-            </div>
-
-            <div class="section">
-                <span class="section-title">研究背景:</span><br>
-                神经声码器近年来在波形生成领域取得显著进展。其中，基于iSTFT的声码器因其计算效率和音频质量之间的良好平衡而受到关注。这类方法通过预测短时傅里叶变换(STFT)的幅值和相位来重建波形，但通常将复数谱分解为实部和虚部分别处理。
-            </div>
-
-            <div class="section">
-                <span class="section-title">研究动机:</span><br>
-                现有方法在处理复数谱时存在以下问题：(1) 将复数分解为实部/虚部破坏了复数域的代数结构；(2) 分别处理幅值和相位导致信息损失；(3) 缺乏对复数权重和激活函数的系统性研究。
-            </div>
-
-            <div class="section">
-                <span class="section-title">核心技术点:</span><br>
-                • 复数卷积层：实现支持复数权重和偏置的卷积操作<br>
-                • 复数激活函数：设计适用于复数输入的激活函数<br>
-                • 复数批归一化：针对复数特征统计特性设计的归一化方法<br>
-                • 端到端复数处理流程：从输入复数谱到输出波形的完整复数域处理
-            </div>
-
-            <div class="section">
-                <span class="section-title">实验结果:</span><br>
-                在语音合成任务中，复值声码器在MOS评分上优于实值基线，复数表示更好地保留了相位信息，生成音频的自然度提升。
-            </div>
-
-            <div class="section">
-                <span class="section-title">收益点:</span><br>
-                • 更好的相位建模：直接编码相位信息<br>
-                • 更紧凑的表示：复数权重可编码更多信息<br>
-                • 频域一致性：保持频域操作的物理意义
-            </div>
-
-            <div class="section">
-                <span class="section-title">总结:</span><br>
-                该研究探索了复值神经网络在波形生成任务中的应用潜力，通过直接处理复数谱表示，实现了比传统实值分解方法更好的音频质量。
-            </div>
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>p-adic神经网络是一种在非阿基米德域上构建的神经网络框架，与传统实值神经网络不同，它在p-adic整数拓扑群上运行。这类网络在数论、量子物理和某些特定的信号处理任务中有潜在应用价值。</p>
         </div>
 
-        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e0e0e0; color: #666; font-size: 14px;">
-            本报告基于arXiv公开文献整理 | © 2026 Jarvis Research
-        </footer>
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>传统的p-adic神经网络使用一族由精度超参数索引的特征函数作为激活函数，这导致网络结构复杂且难以优化。如何设计更简洁、理论保证更强的p-adic神经网络架构？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>单射p-adic特征激活</strong>：使用单一的注入型p-adic特征作为激活函数，而非参数族</li>
+                <li><strong>p-adic通用逼近定理</strong>：证明了该形式化下的p-adic神经网络满足通用逼近定理</li>
+                <li><strong>多项式方程可行性归约</strong>：将网络学习问题转化为有限环上多项式方程的可行性问题</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>理论简洁性</strong>：单一激活函数比参数族更简单；<strong>数学优美性</strong>：与数论中的p-adic分析紧密联系；<strong>潜在应用</strong>：为特定数论问题和量子计算应用提供工具。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <p>尚未在大规模实际数据集上验证；p-adic运算的计算复杂度较高；应用场景相对有限，主要面向理论数学问题。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作展示了在替代数域（p-adic域）上构建神经网络的理论可行性。对于研究复值神经网络的理论基础的学者来说，这种跨数域的视角可能提供新的启发。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29922" target="_blank">2. Quaternion Julia Fractals for Dynamic MRI Reconstruction</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29922" target="_blank">arXiv:2603.29922 [cs.CV]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Anirudh Raman et al.</p>
+            <p><strong>主题</strong>: <span class="badge">四元数分形</span> <span class="badge">MRI重建</span> <span class="badge">合成数据</span></p>
+            <a href="https://arxiv.org/pdf/2603.29922.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>动态MRI重建是一个计算密集型的医学成像任务，传统的深度学习方法需要大量真实心脏MRI数据进行训练，这面临隐私、许可和可用性限制。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何在不使用真实临床数据的情况下训练高质量的动态MRI重建模型？四元数Julia分形生成的合成数据是否可以作为有效替代？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>四元数Julia分形数据生成</strong>：使用四元数Julia分形生成2D+时间图像</li>
+                <li><strong>多线圈MRI采集模拟</strong>：模拟多线圈MRI采集过程</li>
+                <li><strong>3D UNet伪影抑制</strong>：使用3D UNet进行图像重建</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>隐私保护</strong>：无需真实患者数据；<strong>数据可扩展</strong>：合成数据可无限生成；<strong>泛化能力</strong>：在真实患者数据上表现与真实数据训练模型相当。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作巧妙地将四元数数学（Julia分形）应用于医学成像数据生成，展示了四元数表示在捕获复杂时空结构方面的潜力，对CVNN在医学成像领域的应用具有参考价值。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.29659" target="_blank">3. Self-Scaling Tensor Basis Neural Networks for Reynolds Stress Modeling</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.29659" target="_blank">arXiv:2603.29659 [physics.flu-dyn]</a> · 2026年3月31日</p>
+            <p><strong>作者</strong>: Zelong Yuan, Yuzhu Pearl Li</p>
+            <p><strong>主题</strong>: <span class="badge">物理启发架构</span> <span class="badge">湍流建模</span> <span class="badge">尺度不变性</span></p>
+            <a href="https://arxiv.org/pdf/2603.29659.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>雷诺应力建模是计算流体力学中的核心问题，数据驱动的湍流建模已建立张量基神经网络（TBNN）作为物理启发的框架。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>自缩放张量基神经网络（STBNN）</strong>：引入基于速度梯度张量不变量的归一化</li>
+                <li><strong>几何独立尺度</strong>：提供内在且与几何无关的尺度</li>
+                <li><strong>参考系无关公式</strong>：保持伽利略和旋转不变性</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>物理一致性</strong>：保持张量不变性和物理约束；<strong>跨尺度泛化</strong>：训练于低雷诺数，泛化到高雷诺数；<strong>几何无关性</strong>：不依赖几何特定输入。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作展示了物理启发的神经网络设计原则。其核心思想——利用问题的内在几何结构构建尺度不变架构——可直接应用于复值神经网络的相位-幅度解耦设计。</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h3>📊 趋势总结</h3>
+        <ul>
+            <li><strong>四元数方法的应用渗透</strong>：从MRI数据生成到LLM量化，四元数表示在多个领域展现价值</li>
+            <li><strong>物理启发架构设计</strong>：将物理约束（不变性、守恒律）融入网络设计成为重要趋势</li>
+            <li><strong>替代数域的探索</strong>：p-adic神经网络等探索表明，非传统数域上的深度学习值得关注</li>
+            <li><strong>CVNN基础研究的相对缓慢</strong>：近期CVNN架构创新较少，更多以应用组件形式出现</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>报告生成时间: 2026-04-01 08:50 | 调研范围: arXiv过去30天论文</p>
+        <p><a href="../../index.html" style="color: #667eea;">← 返回首页</a></p>
     </div>
 </body>
 </html>
