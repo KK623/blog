@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent 系统架构图</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .diagram-wrapper {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        .diagram-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 30px;
+            align-items: center;
+            min-height: 500px;
+        }
+        .box {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .box-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .box-content {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .user-box {
+            background: linear-gradient(135deg, #a5d8ff 0%, #74c0fc 100%);
+            border: 2px solid #1971c2;
+        }
+        .core-box {
+            background: linear-gradient(135deg, #ffd43b 0%, #fcc419 100%);
+            border: 3px solid #e8590c;
+            grid-column: 2;
+            grid-row: 2;
+            padding: 30px;
+        }
+        .tools-box {
+            background: linear-gradient(135deg, #b2f2bb 0%, #69db7c 100%);
+            border: 2px solid #2f9e44;
+            grid-column: 3;
+            grid-row: 1;
+        }
+        .memory-box {
+            background: linear-gradient(135deg, #e5dbff 0%, #b197fc 100%);
+            border: 2px solid #7950f2;
+            grid-column: 3;
+            grid-row: 3;
+        }
+        .external-box {
+            background: linear-gradient(135deg, #99e9f2 0%, #3bc9db 100%);
+            border: 2px solid #0c8599;
+            grid-column: 2;
+            grid-row: 4;
+        }
+        .arrow {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .arrow-h {
+            width: 100%;
+            height: 2px;
+            background: #333;
+            position: relative;
+        }
+        .arrow-h::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            border: 5px solid transparent;
+            border-left: 8px solid #333;
+        }
+        .arrow-v {
+            width: 2px;
+            height: 100%;
+            background: #333;
+            position: relative;
+        }
+        .arrow-v::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            border: 5px solid transparent;
+            border-top: 8px solid #333;
+        }
+        .center-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        .download-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            justify-content: center;
+        }
+        .connector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 12px;
+        }
+        .connector-line {
+            width: 60px;
+            height: 2px;
+            background: #333;
+            position: relative;
+        }
+        .connector-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            border: 5px solid transparent;
+            border-left: 8px solid #333;
+        }
+        .vertical-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .v-line {
+            width: 2px;
+            height: 40px;
+            background: #333;
+            position: relative;
+        }
+        .v-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            border: 5px solid transparent;
+            border-top: 8px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Agent 系统架构图</h1>
+        
+        <div class="diagram-wrapper">
+            <div class="flow-diagram">
+                <!-- 第一层：用户 -->
+                <div class="flow-row">
+                    <div class="box user-box">
+                        <div class="box-title">👤 用户层</div>
+                        <div class="box-content">User<br>输入指令 / 接收结果</div>
+                    </div>
+                    <div class="connector">
+                        <span>请求</span>
+                        <div class="connector-line"></div>
+                    </div>
+                    <div class="box core-box" style="grid-column: auto; grid-row: auto; min-width: 250px;">
+                        <div class="box-title">🧠 核心 Agent</div>
+                        <div class="box-content">Core Engine<br><br>• LLM 推理<br>• 任务规划<br>• 决策执行</div>
+                    </div>
+                    <div class="connector">
+                        <div class="connector-line" style="transform: rotate(180deg);"></div>
+                        <span>响应</span>
+                    </div>
+                </div>
+
+                <!-- 垂直连接 -->
+                <div class="vertical-connector">
+                    <div class="v-line"></div>
+                    <span style="color: #666; font-size: 12px;">调用</span>
+                </div>
+
+                <!-- 第二层：工具和记忆 -->
+                <div class="flow-row">
+                    <div class="box tools-box">
+                        <div class="box-title">🛠️ 工具层</div>
+                        <div class="box-content">Tools & Skills<br><br>• 文件操作<br>• 网络搜索<br>• API 调用<br>• 代码执行</div>
+                    </div>
+                    <div style="width: 100px;"></div>
+                    <div class="box memory-box">
+                        <div class="box-title">📝 记忆层</div>
+                        <div class="box-content">Memory<br><br>• 对话历史<br>• 长期记忆<br>• 知识库<br>• 上下文</div>
+                    </div>
+                </div>
+
+                <!-- 垂直连接 -->
+                <div class="vertical-connector">
+                    <div class="v-line" style="border-left: 2px dashed #333; background: transparent;"></div>
+                    <span style="color: #666; font-size: 12px;">API 调用</span>
+                </div>
+
+                <!-- 第三层：外部服务 -->
+                <div class="flow-row">
+                    <div class="box external-box">
+                        <div class="box-title">🌐 外部服务</div>
+                        <div class="box-content">External Services<br><br>• LLM API<br>• 数据库<br>• 第三方 API</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 style="margin-bottom: 20px; color: #333;">下载源文件</h2>
+            <a href="diagrams/agent-system-architecture.excalidraw" download class="download-btn">
+                📥 下载 .excalidraw 文件
+            </a>
+            <p class="info">
+                可在 <a href="https://excalidraw.com" target="_blank">Excalidraw</a> 中打开编辑<br>
+                或使用 VS Code 的 Excalidraw 插件查看
+            </p>
+        </div>
+    </div>
+</body>
+</html>
