@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily 2026-04-08 | AI 研究院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    .date {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #222;
+      line-height: 1.4;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .overview {
+      background: #f0f7ff;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 4px solid #0066cc;
+    }
+    .overview h2 {
+      font-size: 18px;
+      color: #0066cc;
+      margin-bottom: 15px;
+    }
+    .overview p {
+      color: #555;
+      font-size: 15px;
+    }
+    .paper {
+      margin: 50px 0;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .paper-header {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper-number {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .paper-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .paper-meta {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .section {
+      margin: 25px 0;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-content {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.9;
+      padding-left: 0;
+    }
+    .section-content p {
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+    }
+    tr:hover {
+      background: #f8f9fa;
+    }
+    .trend-analysis {
+      background: #fff9f0;
+      padding: 30px;
+      border-radius: 12px;
+      margin: 50px 0;
+      border-left: 4px solid #ff9500;
+    }
+    .trend-analysis h2 {
+      font-size: 20px;
+      color: #ff9500;
+      margin-bottom: 20px;
+    }
+    .trend-analysis h3 {
+      font-size: 16px;
+      color: #333;
+      margin: 20px 0 12px;
+    }
+    .trend-analysis ul {
+      padding-left: 20px;
+      color: #555;
+    }
+    .trend-analysis li {
+      margin: 8px 0;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 13px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .paper {
+        padding: 20px;
+      }
+      .paper-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="../../">首页</a>
+      <a href="../../../">博客</a>
+      <a href="https://github.com/KK623">GitHub</a>
+    </nav>
+
+    <header>
+      <p class="date">2026-04-08 · LLM Research Daily · 5篇新论文</p>
+      <h1>TriAttention/SLaB/DP-OPD/LOCALUT/3D-Stacked NMP</h1>
+      <p class="subtitle">KV缓存压缩 / 模型压缩 / 差分隐私蒸馏 / 低比特量化 / 硬件加速</p>
+    </header>
+
+    <div class="overview">
+      <h2>📊 今日概览</h2>
+      <p>今日从arXiv筛选出5篇与<strong>LLM量化、部署、低精度、蒸馏</strong>相关的最新研究论文，涵盖KV缓存压缩、模型压缩、差分隐私蒸馏、低比特量化推理和硬件加速等方向。</p>
+    </div>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 1</span>
+        <h2 class="paper-title">TriAttention: Efficient Long Reasoning with Trigonometric KV Compression</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04921<br>
+          <strong>Authors:</strong> Weian Mao, Jiahe Liu, Yuhan Zhang, et al. (Nanjing University, Peking University)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04921" target="_blank">arXiv:2604.04921</a><br>
+          <strong>Code:</strong> <a href="https://github.com/WeianMao/triattention" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Extended reasoning in large language models (LLMs) creates severe KV cache memory bottlenecks. Leading KV cache compression methods estimate KV importance using attention scores from recent post-RoPE queries. However, queries rotate with position during RoPE, making representative queries very few, leading to poor top-key selection and unstable reasoning.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>长序列推理时KV缓存占用巨大内存，现有压缩方法依赖于RoPE后的查询向量估计KV重要性，但由于位置旋转导致代表性查询很少，造成关键选择不准确和推理不稳定。需要一种更稳定的KV重要性估计方法。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：利用pre-RoPE空间的Q/K集中度</strong></p>
+          <p>1. <strong>Q/K Concentration观察</strong>：在pre-RoPE空间中，Q和K向量高度集中在固定非零中心点周围，且跨位置保持稳定</p>
+          <p>2. <strong>三角级数建模</strong>：证明Q/K集中度导致查询优先关注特定距离的key，中心点通过三角级数决定偏好距离</p>
+          <p>3. <strong>TriAttention机制</strong>：利用中心点表征距离偏好，根据位置对key进行评分；结合Q/K范数作为额外的importance估计信号</p>
+          <p>4. <strong>动态压缩策略</strong>：基于位置偏好和范数信号进行自适应KV选择</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>指标</th>
+              <th>Full Attention</th>
+              <th>TriAttention</th>
+              <th>提升</th>
+            </tr>
+            <tr>
+              <td>AIME25准确率</td>
+              <td>基准</td>
+              <td>持平</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>吞吐量</td>
+              <td>1x</td>
+              <td>2.5x</td>
+              <td><strong>2.5倍提升</strong></td>
+            </tr>
+            <tr>
+              <td>KV内存</td>
+              <td>100%</td>
+              <td>9.3%</td>
+              <td><strong>10.7倍减少</strong></td>
+            </tr>
+            <tr>
+              <td>消费级GPU部署</td>
+              <td>OOM</td>
+              <td>可运行</td>
+              <td><strong>支持单卡部署</strong></td>
+            </tr>
+          </table>
+          <p>对比领先基线方法，在相同效率下TriAttention达到接近Full Attention的准确率，而基线方法只能达到约一半准确率。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>TriAttention通过深入分析pre-RoPE空间中Q/K向量的集中度特性，提出基于三角级数的KV重要性估计方法。该方法在32K token生成任务上实现了与Full Attention相当的推理准确率，同时将吞吐量提升2.5倍、KV内存减少10.7倍，使得在单张消费级GPU上部署长上下文推理成为可能。这是一个重要的效率优化突破，对边缘部署和资源受限场景具有显著价值。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 2</span>
+        <h2 class="paper-title">SLaB: Sparse-Lowrank-Binary Decomposition for Efficient Large Language Models</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04493<br>
+          <strong>Authors:</strong> Ziwei Li, et al. (University of Southern California)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04493" target="_blank">arXiv:2604.04493</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>The rapid growth of large language models (LLMs) presents significant deployment challenges due to their massive computational and memory demands. While model compression, such as network pruning, offers potential solutions, most existing methods often fail to maintain good performance at high compression ratios.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>LLM快速增长带来计算和内存需求挑战，现有模型压缩方法（如剪枝）在高压缩率下往往难以保持性能。需要一种能在高压缩率下仍保持高性能的新型压缩框架，同时避免繁琐的重新训练过程。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：三层分解架构</strong></p>
+          <p>1. <strong>SLaB分解框架</strong>：将每个线性层权重分解为三个互补组件：稀疏矩阵（捕获重要连接）、低秩矩阵（捕获主要子空间）、二进制矩阵（捕获符号信息）</p>
+          <p>2. <strong>免重训练设计</strong>：无需重新训练即可实现压缩，利用激活感知剪枝分数指导分解过程</p>
+          <p>3. <strong>分解算法</strong>：基于激活感知重要性评分，联合优化三个组件的分配</p>
+          <p>4. <strong>硬件友好</strong>：二进制矩阵可用位运算加速，低秩矩阵可用高效矩阵乘法</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>方法</th>
+              <th>压缩率</th>
+              <th>困惑度降低</th>
+              <th>零样本任务提升</th>
+            </tr>
+            <tr>
+              <td>基线方法</td>
+              <td>50%</td>
+              <td>基准</td>
+              <td>基准</td>
+            </tr>
+            <tr>
+              <td>SLaB</td>
+              <td>50%</td>
+              <td><strong>36%</strong></td>
+              <td><strong>8.98%</strong></td>
+            </tr>
+          </table>
+          <p>在Llama系列模型上验证，50%压缩率下显著优于现有方法，无需重新训练，即插即用。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>SLaB提出了一种创新的三层分解（稀疏-低秩-二进制）框架，突破了传统模型压缩在高压缩率下的性能瓶颈。该方法无需重新训练，通过激活感知的分解策略，在50%压缩率下实现困惑度降低36%、零样本任务准确率提升8.98%。二进制组件的引入不仅提供额外表达能力，还具备硬件加速潜力，为LLM的高效部署开辟了新路径。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 3</span>
+        <h2 class="paper-title">DP-OPD: Differentially Private On-Policy Distillation for Language Models</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04461<br>
+          <strong>Authors:</strong> Fifi Khadem, et al. (University of Toronto, Vector Institute)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04461" target="_blank">arXiv:2604.04461</a><br>
+          <strong>Code:</strong> <a href="https://github.com/khademfatemeh/dp_opd" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Large language models (LLMs) are increasingly adapted to proprietary and domain-specific corpora that contain sensitive information, creating a tension between formal privacy guarantees and efficient deployment through model compression. Differential privacy (DP), typically enforced via DP-SGD, provides record-level protection but often incurs substantial utility loss in autoregressive generation.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>LLM适应专有领域数据时需要保护隐私，但差分隐私训练往往导致显著的效用损失。现有隐私蒸馏方法要么对师生都应用DP-SGD（计算成本高），要么依赖离线合成数据生成（流程复杂）。需要一个既保护隐私又保持性能且流程简化的蒸馏框架。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：仅对学生应用DP的在线策略蒸馏</strong></p>
+          <p>1. <strong>DP-OPD框架</strong>：仅对学生模型应用DP-SGD，利用冻结的教师模型提供密集token级目标，在学生生成的轨迹上进行训练</p>
+          <p>2. <strong>隐私广义知识蒸馏</strong>：在续写token上进行蒸馏，避免DP训练教师模型的开销，无需离线合成数据生成</p>
+          <p>3. <strong>单循环训练</strong>：将隐私压缩整合为单个DP学生训练循环，消除DP教师训练和离线生成阶段</p>
+          <p>4. <strong>严格隐私保证</strong>：ε=2.0的严格隐私预算，提供记录级隐私保护</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>方法</th>
+              <th>Yelp困惑度</th>
+              <th>BigPatent困惑度</th>
+              <th>隐私预算</th>
+            </tr>
+            <tr>
+              <td>基线DP微调</td>
+              <td>较高</td>
+              <td>较高</td>
+              <td>ε=2.0</td>
+            </tr>
+            <tr>
+              <td>离线DP蒸馏</td>
+              <td>44.15</td>
+              <td>32.43</td>
+              <td>ε=2.0</td>
+            </tr>
+            <tr>
+              <td>DP-OPD</td>
+              <td><strong>41.68</strong></td>
+              <td><strong>30.63</strong></td>
+              <td>ε=2.0</td>
+            </tr>
+          </table>
+          <p>在严格隐私预算(ε=2.0)下显著优于现有方法，大幅简化训练流程，计算效率更高。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>DP-OPD提出了一种差分隐私在线策略蒸馏框架，创新性地仅对学生模型应用DP-SGD，利用冻结教师模型在student-generated轨迹上提供监督信号。该方法在严格隐私保证(ε=2.0)下实现了优于传统DP微调和离线蒸馏的性能，同时大幅简化了训练流程。这为敏感数据场景下的LLM压缩提供了实用解决方案，在医疗、金融等隐私敏感领域具有重要应用价值。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 4</span>
+        <h2 class="paper-title">LOCALUT: Harnessing Capacity-Computation Tradeoffs for LUT-Based Inference in DRAM-PIM</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04523<br>
+          <strong>Authors:</strong> Junguk Hong, et al. (Seoul National University)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04523" target="_blank">arXiv:2604.04523</a><br>
+          <strong>Code:</strong> <a href="https://github.com/AIS-SNU/LoCaLUT" target="_blank">GitHub</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Lookup tables (LUTs) have recently gained attention as an alternative compute mechanism that maps input operands to precomputed results, eliminating the need for arithmetic logic. LUTs not only reduce logic complexity, but also naturally support diverse numerical precisions without requiring separate circuits for each bitwidth—an increasingly important feature in quantized DNNs.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>查找表(LUT)作为替代计算机制可减少逻辑复杂度并支持多种数值精度，非常适合量化DNN。在DRAM-PIM架构中，存在容量-计算权衡：可用内存容量换取计算吞吐量。需要充分利用这种权衡设计高效的低比特量化DNN推理系统。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：PIM场景下的LUT优化三剑客</strong></p>
+          <p>1. <strong>LUT Canonicalization（规范化）</strong>：消除LUT中的重复条目，显著减少LUT存储需求</p>
+          <p>2. <strong>Reorder LUT（重排序LUT）</strong>：轻量级辅助LUT，将权重向量重新映射到canonical形式，仅需简单LUT查找</p>
+          <p>3. <strong>LUT Slice Streaming（切片流式传输）</strong>：利用DRAM-Buffer层次结构，仅流式传输相关LUT列到缓冲区，在多个权重向量间复用</p>
+          <p>4. <strong>Operation-Packed LUTs</strong>：将多个MAC操作打包到单次LUT查找中，实现容量与计算的深度权衡</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <p>基于真实UPMEM设备评估，跨多种数值精度和DNN模型，<strong>几何平均加速1.82x</strong>，为可扩展的低逻辑PIM设计开辟道路。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>LOCALUT通过LUT规范化、重排序和切片流式传输三项技术创新，在DRAM-PIM架构上实现了高效的低比特量化DNN推理。该方法充分利用PIM场景下的容量-计算权衡，通过将多个MAC操作打包到单次LUT查找中提升吞吐量，同时通过消除冗余和智能缓存减少存储需求。在真实UPMEM设备上实现1.82倍几何平均加速，为内存计算架构上的低比特推理提供了重要参考。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 5</span>
+        <h2 class="paper-title">3D-Stacked NMP for LLM Decoding: Systolic Array Microarchitecture</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04253<br>
+          <strong>Authors:</strong> Chenyang Ai, et al. (University of Toronto)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04253" target="_blank">arXiv:2604.04253</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Large language model (LLM) decoding is a major inference bottleneck because its low arithmetic intensity makes performance highly sensitive to memory bandwidth. 3D-stacked near-memory processing (NMP) provides substantially higher local memory bandwidth than conventional off-chip interfaces, making it a promising substrate for decode acceleration.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>LLM解码是推理主要瓶颈，其低算术强度使性能高度敏感于内存带宽。3D堆叠近内存处理(NMP)提供比传统片外接口更高的本地内存带宽，但现有设计在逻辑芯片的紧密面积预算下，计算基板设计成为首要挑战。需要专门为NMP LLM解码设计计算微架构。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：专为3D-Stacked NMP设计的脉动阵列微架构</strong></p>
+          <p>1. <strong>MAC Tree到Systolic Array的演进</strong>：用更面积高效的脉动阵列替代传统MAC树，适应解码算子的形状多样性</p>
+          <p>2. <strong>可重构脉动阵列</strong>：支持脉动阵列形状的重配置和数据流的重配置，维持高利用率</p>
+          <p>3. <strong>与向量核心统一</strong>：利用高本地内存带宽减少对大型片上缓冲区的需求，复用现有向量核心的控制逻辑和多端口缓冲，高度面积效率地统一两种结构</p>
+          <p>4. <strong>多核调度框架</strong>：针对密集和MoE模型优化，实现跨核心负载均衡</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>对比</th>
+              <th>加速比</th>
+              <th>能效提升</th>
+            </tr>
+            <tr>
+              <td>vs Stratum</td>
+              <td><strong>2.91x</strong></td>
+              <td><strong>2.40x</strong></td>
+            </tr>
+          </table>
+          <p>覆盖密集和MoE模型，专门针对LLM解码优化。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>该研究针对3D-Stacked NMP架构提出了首个专门为LLM解码设计的计算微架构。通过将MAC树演进为可重构脉动阵列，并与现有向量核心高度统一，在满足低面积成本、高带宽操作和细粒度可重构性联合需求的同时，相比Stratum实现了2.91倍加速和2.40倍能效提升。这为LLM推理硬件加速提供了重要设计思路，特别是在内存带宽受限的解码阶段。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="trend-analysis">
+      <h2>📊 趋势分析</h2>
+      
+      <h3>🔥 热点方向</h3>
+      <ul>
+        <li><strong>KV缓存压缩</strong>：TriAttention展示了通过数学分析(pre-RoPE集中度)实现的高效压缩，推理效率优化持续受到关注</li>
+        <li><strong>模型压缩创新</strong>：SLaB的三层分解(稀疏+低秩+二进制)为高精度压缩提供了新范式</li>
+        <li><strong>隐私与效率兼得</strong>：DP-OPD证明隐私保护和模型压缩可以共存，对敏感场景意义重大</li>
+        <li><strong>内存计算</strong>：LOCALUT展示了LUT在PIM架构上的潜力，新型计算范式值得关注</li>
+        <li><strong>硬件协同设计</strong>：3D-Stacked NMP等专用硬件研究活跃，软硬件协同优化趋势明显</li>
+      </ul>
+
+      <h3>🚀 技术亮点</h3>
+      <ul>
+        <li><strong>数学驱动优化</strong>：TriAttention基于三角级数的分析展示了数学洞察在效率优化中的威力</li>
+        <li><strong>免训练压缩</strong>：SLaB等免重训练方法降低了部署门槛</li>
+        <li><strong>端到端隐私</strong>：DP-OPD的端到端隐私保护为敏感数据应用铺路</li>
+        <li><strong>软硬协同</strong>：从算法到硬件的全栈优化成为主流</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 K's Blog · Built with ❤️</p>
+      <p>Report Generated: 2026-04-08 03:00 CST · Next Update: 2026-04-09</p>
+    </footer>
+  </div>
+</body>
+</html>
