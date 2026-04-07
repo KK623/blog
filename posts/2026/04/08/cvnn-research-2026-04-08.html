@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年4月8日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #059669; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #059669; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #059669; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #059669; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #059669; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #059669; text-decoration: none; }
+        .new-paper { border-left: 4px solid #059669; }
+        .recent-paper { border-left: 4px solid #3b82f6; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月8日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">不确定性量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">对抗鲁棒性</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：本报告通过arXiv API获取真实论文数据。今日(2026-04-08)暂无符合时间要求的CVNN新论文，以下为最近发布的相关研究成果（按发布时间倒序排列）。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper recent-paper">
+        <h2><a href="https://arxiv.org/abs/2604.02615" target="_blank">1. Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.02615" target="_blank">arXiv:2604.02615 [cs.LG]</a> · 2026年4月3日 01:08 UTC</p>
+            <p><strong>作者</strong>: Samuel Honor, Mohamed Abdelnaby, Kevin Leahy</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">图神经网络</span> <span class="badge">分布式控制</span> <span class="badge">基不变性</span></p>
+            <a href="https://arxiv.org/pdf/2604.02615.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>图神经网络（GNNs）因其能够以分布式方式部署而被广泛用于网络动态系统的学习控制。然而，当前的分布式GNN架构假设网络中的所有节点都在兼容的基（basis）中收集几何观测，这限制了此类控制器在GPS拒止和无指南针环境中的实用性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何设计一种GNN参数化方法，使其对局部基的选择具有全局不变性？复数域能否为2D几何特征和基之间的变换提供自然的表示方式？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数域表示</strong>: 将2D几何特征和基之间的变换表示在复数域中</li>
+                <li><strong>复数值线性层</strong>: 在每个GNN层中使用复数值线性层</li>
+                <li><strong>相位等变激活函数</strong>: 使用相位等变（phase-equivariant）激活函数保持复数结构</li>
+                <li><strong>基不变性</strong>: 从固定全局帧观察时，学习到的策略对局部帧选择严格不变</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在模仿学习群集任务上的实验表明，与实值基线相比，该架构提高了数据效率、跟踪性能和泛化能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>实际应用价值</strong>: 解决了GPS拒止和无指南针环境下的控制问题；<strong>理论贡献</strong>: 展示了复数GNN在几何表示中的优势；<strong>数据效率</strong>: 相比实值方法具有更好的样本效率。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究展示了复数值GNN在分布式控制中的独特优势，通过复数域的自然几何表示实现了基不变性，为无人机群集等实际应用提供了新的技术路径。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2603.11589" target="_blank">2. Toward Complex-Valued Neural Networks for Waveform Generation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589 [cs.SD]</a> · 2026年3月12日 06:24 UTC</p>
+            <p><strong>作者</strong>: Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</p>
+            <p><strong>机构</strong>: Korea University</p>
+            <p><strong>会议</strong>: ICLR 2026 (已接收)</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">语音合成</span> <span class="badge">神经声码器</span> <span class="badge">iSTFT</span></p>
+            <a href="https://arxiv.org/pdf/2603.11589.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>神经声码器在波形生成方面取得了显著进展。iSTFT-based声码器通过预测复值频谱图并通过iSTFT合成波形，避免了增加计算成本的学习上采样阶段。然而，当前方法使用实值网络独立处理实部和虚部，这限制了捕捉复值频谱图固有结构的能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何利用原生复数运算来更好地建模复值频谱图？复数神经声码器能否在保持计算效率的同时提高合成质量？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>ComVo架构</strong>: 生成器和判别器都使用原生复数算术</li>
+                <li><strong>对抗训练框架</strong>: 在复值表示中提供结构化反馈</li>
+                <li><strong>相位量化</strong>: 离散化相位值以结构化方式引导相位变换</li>
+                <li><strong>块矩阵计算方案</strong>: 通过减少冗余操作提高训练效率</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明ComVo达到了比可比较实值基线更高的合成质量，块矩阵方案减少了25%的训练时间。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>合成质量</strong>: 超越实值基线；<strong>训练效率</strong>: 块矩阵方案减少25%训练时间；<strong>端到端复数处理</strong>: 在复值表示中完成整个分析-量化-合成流程。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>ComVo是首批将原生复数运算应用于神经声码器的工作之一，展示了CVNN在语音合成领域的潜力，为复数神经网络在音频处理中的应用开辟了新方向。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.15283" target="_blank">3. Complex-Valued Unitary Representations as Classification Heads for Improved Uncertainty Quantification</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.15283" target="_blank">arXiv:2602.15283 [cs.LG]</a> · 2026年2月17日 00:45 UTC</p>
+            <p><strong>作者</strong>: Akbar Anbar Jafari, Cagri Ozcinar, Gholamreza Anbarjafari</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">不确定性量化</span> <span class="badge">模型校准</span> <span class="badge">量子启发</span></p>
+            <a href="https://arxiv.org/pdf/2602.15283.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>现代深度神经网络虽然预测准确率高，但校准效果差：其置信度分数不能可靠地反映正确性的真实概率。这在安全关键应用中是一个严重问题。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>量子力学中的复值希尔伯特空间和酉变换能否为神经网络的不确定性量化提供新的视角？复值表示能否更好地捕捉人类感知的不确定性结构？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>量子启发架构</strong>: 将骨干特征投影到复值希尔伯特空间</li>
+                <li><strong>Cayley参数化</strong>: 通过Cayley映射参数化学习得到的酉变换</li>
+                <li><strong>酉幅度头</strong>: 复特征在Cayley酉变换下演化，通过幅度和softmax读出</li>
+                <li><strong>控制实验设计</strong>: 训练单一共享骨干，比较可互换的轻量级头</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在CIFAR-10上，酉幅度头达到0.0146的期望校准误差（ECE），比标准softmax头（0.0355）提升2.4倍，比温度缩放（0.0510）提升3.5倍。在CIFAR-10H人类不确定性基准上，波函数头达到与人类软标签最低的KL散度（0.336）。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>校准性能</strong>: ECE显著优于现有方法；<strong>人类感知对齐</strong>: 更好地捕捉人类感知模糊性结构；<strong>理论洞察</strong>: 连接了范数保持酉动态与特征空间几何的校准关系。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性</h3>
+            <p>Born规则测量层（量子力学启发的方法）反而降低了校准性能（ECE 0.0819）。在分布外检测和情感分析上的负面结果表明该方法有其适用范围。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究展示了复值酉表示在不确定性量化中的独特价值，为量子启发神经网络的设计提供了实证指导和理论洞察。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.06577" target="_blank">4. Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.06577" target="_blank">arXiv:2602.06577 [cs.LG]</a> · 2026年2月6日 10:18 UTC</p>
+            <p><strong>作者</strong>: Florian Eilers, Christof Duhme, Xiaoyi Jiang</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">对抗鲁棒性</span> <span class="badge">相位攻击</span></p>
+            <a href="https://arxiv.org/pdf/2602.06577.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复值神经网络（CVNNs）在各种应用中越来越受欢迎。为了在实际中安全使用CVNNs，分析其对异常值的鲁棒性至关重要。对抗攻击是理解深度神经网络行为的最小扰动最坏情况分析技术。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>CVNNs与RVNNs在对抗攻击下的行为有何不同？相位信息是否是CVNNs的薄弱环节？如何设计针对复值输入的专门攻击？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>相位攻击（Phase Attacks）</strong>: 专门针对复值输入相位信息设计的攻击</li>
+                <li><strong>复数对抗攻击</strong>: 推导常用对抗攻击的复值版本</li>
+                <li><strong>鲁棒性比较</strong>: 系统比较CVNNs与RVNNs在不同攻击下的表现</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明在某些场景下CVNNs比RVNNs更鲁棒，但两者都对相位变化非常敏感。相位攻击比同等强度的常规攻击（可同时攻击相位和幅度）更能降低模型性能。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>安全洞察</strong>: 识别了CVNNs的脆弱性（相位信息）；<strong>攻击方法</strong>: 提出了针对性的相位攻击；<strong>实用指导</strong>: 为CVNNs的安全部署提供了评估框架。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究首次系统分析了CVNNs的对抗鲁棒性，发现相位信息是关键薄弱环节，为CVNNs的安全应用提供了重要警示和评估工具。</p>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.18392" target="_blank">5. Efficient Complex-Valued Vision Transformers for MRI Classification Directly from k-Space</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.18392" target="_blank">arXiv:2601.18392 [cs.CV]</a> · 2026年1月26日 11:50 UTC</p>
+            <p><strong>作者</strong>: Moritz Rempe, Lukas T. Rotkopf, Marco Schlimbach, Helmut Becker, Fabian Hörst, Johannes Haubold, Philipp Dammann, Kevin Kröninger, Jens Kleesiek</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">Vision Transformer</span> <span class="badge">医学影像</span> <span class="badge">MRI</span></p>
+            <a href="https://arxiv.org/pdf/2601.18392.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>磁共振成像（MRI）中的深度学习应用主要在重建的幅度图像上进行，这一过程丢弃了相位信息，并需要计算昂贵的变换。标准神经网络架构依赖局部操作（卷积或网格补丁），不适合原始频域（k空间）数据的全局、非局部特性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>能否设计一种直接在k空间数据上进行分类的复值Vision Transformer？如何弥合当前架构与MRI物理之间的几何差异？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>kViT架构</strong>: 专为k空间数据分类设计的复值Vision Transformer</li>
+                <li><strong>径向k空间分块</strong>: 尊重频域谱能量分布的分块策略</li>
+                <li><strong>端到端复数处理</strong>: 直接在原始复值k空间数据上操作</li>
+                <li><strong>计算效率</strong>: 避免了图像重建的计算开销</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在fastMRI和内部数据集上的广泛实验表明，该方法达到了与最先进的图像域基线（ResNet、EfficientNet、ViT）相当的分类性能。关键的是，kViT对高加速因子表现出卓越的鲁棒性，并将训练期间的VRAM消耗减少了高达68倍。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>计算效率</strong>: VRAM消耗减少68倍；<strong>鲁棒性</strong>: 对高加速因子更鲁棒；<strong>信息保留</strong>: 保留了被传统方法丢弃的相位信息；<strong>实时分析</strong>: 为直接从扫描仪进行AI分析提供了路径。</p>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>kViT展示了复值Vision Transformer在医学影像中的巨大潜力，通过直接在k空间上操作实现了显著的计算效率提升，为资源受限环境下的实时MRI分析开辟了新途径。</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv API</p>
+        <p style="margin-top: 10px; font-size: 0.85em; color: #999;">报告生成时间: 2026-04-08 04:32 GMT+8</p>
+    </footer>
+</body>
+</html>
