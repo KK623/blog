@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily 2026-04-09 | AI 研究院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    .date {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #222;
+      line-height: 1.4;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .nav a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .overview {
+      background: #f0f7ff;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 4px solid #0066cc;
+    }
+    .overview h2 {
+      font-size: 18px;
+      color: #0066cc;
+      margin-bottom: 15px;
+    }
+    .overview p {
+      color: #555;
+      font-size: 15px;
+    }
+    .notice {
+      background: #fff3cd;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 4px solid #ffc107;
+    }
+    .notice h2 {
+      font-size: 16px;
+      color: #856404;
+      margin-bottom: 10px;
+    }
+    .notice p {
+      color: #856404;
+      font-size: 14px;
+    }
+    .paper {
+      margin: 50px 0;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .paper-header {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper-number {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .paper-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .paper-meta {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .section {
+      margin: 25px 0;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-content {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.9;
+      padding-left: 0;
+    }
+    .section-content p {
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+    }
+    tr:hover {
+      background: #f8f9fa;
+    }
+    .trend-analysis {
+      background: #fff9f0;
+      padding: 30px;
+      border-radius: 12px;
+      margin: 50px 0;
+      border-left: 4px solid #ff9500;
+    }
+    .trend-analysis h2 {
+      font-size: 20px;
+      color: #ff9500;
+      margin-bottom: 20px;
+    }
+    .trend-analysis h3 {
+      font-size: 16px;
+      color: #333;
+      margin: 20px 0 12px;
+    }
+    .trend-analysis ul {
+      padding-left: 20px;
+      color: #555;
+    }
+    .trend-analysis li {
+      margin: 8px 0;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 13px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .paper {
+        padding: 20px;
+      }
+      .paper-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="../../">首页</a>
+      <a href="../../../">博客</a>
+      <a href="https://github.com/KK623">GitHub</a>
+    </nav>
+
+    <header>
+      <p class="date">2026-04-09 · LLM Research Daily · 2篇新论文</p>
+      <h1>Prune-Quantize-Distill/Cactus</h1>
+      <p class="subtitle">模型压缩流水线 / 投机采样加速 / INT8量化 / 知识蒸馏</p>
+    </header>
+
+    <div class="notice">
+      <h2>⚠️ 发布状态说明</h2>
+      <p>由于当前时间为2026-04-09 03:33 GMT+8（美国东部时间仍为2026-04-08 15:33），arXiv今日新论文尚未发布。本报告分析的是2026-04-08发布的最新相关论文，同时补充前几日的重要研究。</p>
+    </div>
+
+    <div class="overview">
+      <h2>📊 今日概览</h2>
+      <p>今日从arXiv筛选出2篇与<strong>LLM量化、部署、压缩、推理加速</strong>相关的最新研究论文，涵盖剪枝-量化-蒸馏组合流水线、投机采样解码加速等方向。</p>
+    </div>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 1</span>
+        <h2 class="paper-title">Prune-Quantize-Distill: An Ordered Pipeline for Efficient Neural Network Compression</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04988<br>
+          <strong>发布时间:</strong> 2026-04-08 00:00 EDT<br>
+          <strong>Authors:</strong> Longsheng Zhou, Yu Shen<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04988" target="_blank">arXiv:2604.04988</a><br>
+          <strong>会议:</strong> Submitted to IJCNN
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Modern deployment often requires trading accuracy for efficiency under tight CPU and memory constraints, yet common compression proxies such as parameter count or FLOPs do not reliably predict wall-clock inference time. In particular, unstructured sparsity can reduce model storage while failing to accelerate (and sometimes slightly slowing down) standard CPU execution due to irregular memory access and sparse kernel overhead.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>现代部署需要在CPU和内存受限环境下进行精度与效率的权衡，但常见的压缩代理指标（如参数量或FLOPs）并不能可靠预测实际推理时间。特别是非结构化稀疏性虽然能减少模型存储，但由于不规则内存访问和稀疏内核开销，往往无法加速甚至可能略微减慢标准CPU执行速度。需要一个以实测延迟为目标的实用压缩流水线。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：三阶段有序压缩流水线</strong></p>
+          <p>1. <strong>阶段一：非结构化剪枝 (Pruning)</strong> - 作为容量减少预处理器，提高后续低精度优化的鲁棒性</p>
+          <p>2. <strong>阶段二：INT8量化感知训练 (QAT)</strong> - 提供主要的运行时性能收益</p>
+          <p>3. <strong>阶段三：知识蒸馏 (KD)</strong> - 在已约束的稀疏INT8范围内恢复精度，不改变部署形式</p>
+          <p>4. <strong>阶段顺序至关重要</strong> - 实验验证了Prune→Quantize→Distill的顺序优于其他排列组合</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>指标</th>
+              <th>结果</th>
+            </tr>
+            <tr>
+              <td>CPU延迟</td>
+              <td><strong>0.99-1.42 ms</strong></td>
+            </tr>
+            <tr>
+              <td>准确率-大小-延迟权衡</td>
+              <td><strong>优于任何单一技术</strong></td>
+            </tr>
+            <tr>
+              <td>检查点大小</td>
+              <td><strong>紧凑</strong></td>
+            </tr>
+            <tr>
+              <td>骨干网络</td>
+              <td>ResNet-18, WRN-28-10, VGG-16-BN</td>
+            </tr>
+          </table>
+          <p>在CIFAR-10/100上验证，所有设置下有序流水线都实现了比单一技术更强的准确率-大小-延迟前沿。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>Prune-Quantize-Distill提出了一种实用的有序压缩流水线，针对实测延迟优化。研究表明INT8 QAT提供主要的运行时收益，剪枝主要作为容量减少预处理器，而KD在不改变部署形式的前提下恢复精度。关键发现是阶段顺序至关重要——Prune→Quantize→Distill的顺序在测试的排列中表现最佳。这为边缘部署提供了简单指导：在联合准确率-大小-延迟空间中使用实测运行时间评估压缩选择，而非仅依赖代理指标。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <span class="paper-number">Paper 2</span>
+        <h2 class="paper-title">Cactus: Accelerating Auto-Regressive Decoding with Constrained Acceptance Speculative Sampling</h2>
+        <div class="paper-meta">
+          <strong>arXiv ID:</strong> 2604.04987<br>
+          <strong>发布时间:</strong> 2026-04-08 00:00 EDT<br>
+          <strong>Authors:</strong> Yongchang Hao, Lili Mou (University of Alberta)<br>
+          <strong>Link:</strong> <a href="https://arxiv.org/abs/2604.04987" target="_blank">arXiv:2604.04987</a><br>
+          <strong>Code:</strong> <a href="https://github.com/MANGA-UOFA/Cactus" target="_blank">GitHub</a><br>
+          <strong>会议:</strong> ICLR 2026 (Accepted)
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🔍 背景</div>
+        <div class="section-content">
+          <p>Speculative sampling (SpS) has been successful in accelerating the decoding throughput of auto-regressive large language models by leveraging smaller draft models. SpS strictly enforces the generated distribution to match that of the verifier LLM. This is unnecessarily restrictive as slight variations of the verifier's distribution, such as sampling with top-k or temperature, would also be acceptable.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">🎯 动机</div>
+        <div class="section-content">
+          <p>投机采样(SpS)通过利用较小的草稿模型成功加速了自回归LLM的解码吞吐量，但SpS严格要求生成分布与验证器LLM匹配。这种限制过于严格，因为验证器分布的轻微变化（如使用top-k或temperature采样）也是可以接受的。典型接受采样(TAS)通过基于熵的启发式方法接受更多token，但这会扭曲验证器分布，可能降低输出质量。需要在保持分布控制的同时提高接受率。</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">💡 技术点</div>
+        <div class="section-content">
+          <p><strong>核心创新：约束优化视角下的投机采样</strong></p>
+          <p>1. <strong>约束优化形式化</strong> - 通过约束优化的视角形式化投机采样算法</p>
+          <p>2. <strong>受控发散</strong> - 保证与验证器分布的受控发散（controlled divergence）</p>
+          <p>3. <strong>提高接受率</strong> - 在控制分布偏差的同时增加token接受率</p>
+          <p>4. <strong>Cactus算法</strong> - 基于上述形式化提出的约束接受投机采样方法</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📈 收益点</div>
+        <div class="section-content">
+          <table>
+            <tr>
+              <th>特性</th>
+              <th>效果</th>
+            </tr>
+            <tr>
+              <td>分布保真度</td>
+              <td><strong>受控发散</strong>（优于TAS的任意扭曲）</td>
+            </tr>
+            <tr>
+              <td>接受率</td>
+              <td><strong>显著提高</strong></td>
+            </tr>
+            <tr>
+              <td>解码加速</td>
+              <td><strong>广泛基准测试验证有效</strong></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📝 总结</div>
+        <div class="section-content">
+          <p>Cactus通过约束优化的视角重新形式化投机采样问题，提出了一种在保证与验证器分布受控发散的前提下提高接受率的方法。相比典型接受采样(TAS)可能任意扭曲分布的问题，Cactus在加速解码的同时更好地保持了输出质量。该方法在广泛基准测试中得到验证，为LLM推理加速提供了重要的算法改进。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="trend-analysis">
+      <h2>📊 趋势分析</h2>
+      
+      <h3>🔥 热点方向</h3>
+      <ul>
+        <li><strong>组合压缩技术</strong>：Prune-Quantize-Distill展示了将多种压缩技术按特定顺序组合的优势，单一压缩方法难以满足边缘部署的苛刻要求</li>
+        <li><strong>实测延迟导向</strong>：从FLOPs/参数量等代理指标转向实测延迟优化，更贴近实际部署需求</li>
+        <li><strong>推理加速算法</strong>：Cactus等投机采样改进持续推动解码效率提升，大模型推理成本优化仍是核心议题</li>
+        <li><strong>INT8量化仍是主流</strong>：在精度和效率之间，INT8量化仍是工业界首选的低精度方案</li>
+      </ul>
+
+      <h3>🚀 技术亮点</h3>
+      <ul>
+        <li><strong>流水线设计</strong>：压缩技术的阶段顺序对最终效果有决定性影响，Pipeline engineering成为新关注点</li>
+        <li><strong>分布感知的投机采样</strong>：Cactus在保证分布质量的前提下加速，解决了SpS过于严格的问题</li>
+        <li><strong>边缘部署导向</strong>：两篇论文都强调CPU延迟和实际可部署性，反映学术界对边缘AI的关注</li>
+      </ul>
+
+      <h3>📌 补充阅读（近日相关研究）</h3>
+      <ul>
+        <li><strong>TriAttention</strong> (2604.04921): 基于三角级数的KV缓存压缩，实现10.7倍内存减少</li>
+        <li><strong>SLaB</strong> (2604.04493): 稀疏-低秩-二进制三层分解模型压缩</li>
+        <li><strong>DP-OPD</strong> (2604.04461): 差分隐私在线策略蒸馏，隐私保护与模型压缩兼得</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 K's Blog · Built with ❤️</p>
+      <p>Report Generated: 2026-04-09 03:33 CST · Next Update: 2026-04-10</p>
+    </footer>
+  </div>
+</body>
+</html>
