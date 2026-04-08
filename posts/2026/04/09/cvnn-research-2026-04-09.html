@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年4月9日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #059669; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #059669; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #059669; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #059669; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #059669; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #059669; text-decoration: none; }
+        .new-paper { border-left: 4px solid #059669; }
+        .summary-box { background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #059669; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月9日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数神经网络</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复数Transformer</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">信号处理</span>
+        </div>
+    </div>
+
+    <div class="summary-box">
+        <strong>📋 调研概览</strong><br>
+        <strong>时间范围</strong>: 2025年3月1日 - 2026年4月9日（过去30天）<br>
+        <strong>发现新论文</strong>: 6篇相关研究<br>
+        <strong>覆盖领域</strong>: 无线通信、语音合成、对抗鲁棒性、量子模拟、遥感图像、计算机视觉
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper new-paper">
+        <h2><a href="https://arxiv.org/abs/2604.01944" target="_blank">1. 物理信息复数Transformer用于多频段信道频率响应重建</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.01944" target="_blank">arXiv:2604.01944 [cs.NI]</a> · 2026年4月2日</p>
+            <p><strong>作者</strong>: Anatolij Zubow, Joana Angjo, Sigrid Dimce, Falko Dressler</p>
+            <p><strong>机构</strong>: TU Berlin, TU Darmstadt</p>
+            <p><strong>主题</strong>: <span class="badge">复数Transformer</span> <span class="badge">无线通信</span> <span class="badge">信道估计</span> <span class="badge">物理信息</span></p>
+            <a href="https://arxiv.org/pdf/2604.01944.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>多频段无线系统中的宽带信道频率响应（CFR）估计面临挑战，尤其是当一个或多个子频段被同频干扰暂时阻断时。传统的估计方法在干扰环境下性能急剧下降。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何利用物理先验知识和复数表示来提高信道估计的鲁棒性？复数Transformer能否有效处理部分观测的频谱快照？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数Transformer架构</strong>: 使用全纯线性层处理复数值输入和输出，保持相位关系</li>
+                <li><strong>分解自注意力机制</strong>: 分别沿时间和频率轴进行注意力计算，将复杂度从$O((TF)^2)$降低到$O(TF^2 + FT^2)$</li>
+                <li><strong>物理信息损失函数</strong>: 结合谱保真度、功率延迟剖面（PDP）重建、信道冲激响应（CIR）稀疏性和时间平滑性的复合损失</li>
+                <li><strong>干扰建模</strong>: 将每个子频段的干扰模式建模为独立的两状态离散时间马尔可夫链</li>
+                <li><strong>速度随机化</strong>: 通过每样本速度随机化整合移动性效应，实现跨不同移动性体制的泛化</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>与三种经典基线（最后一次观测前向填充、零填充、三次样条插值）相比，该方法实现了最高的PDP相似度（$\rho \geq 0.82$），而最佳基线仅为$\rho \geq 0.62$（在50%干扰占用水平下）。模型在整个速度范围内平稳退化，始终优于其他基线。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>高精度重建</strong>: 在50%干扰水平下，PDP相似度达到0.82，比最佳基线提升32%</li>
+                <li><strong>计算效率</strong>: 分解注意力机制显著降低了计算复杂度</li>
+                <li><strong>物理一致性</strong>: 物理信息损失确保了重建结果符合无线信道特性</li>
+                <li><strong>泛化能力</strong>: 速度随机化使模型适应不同移动性场景</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>仅在仿真环境中验证，需要真实世界数据测试</li>
+                <li>干扰模型假设为马尔可夫链，可能与实际干扰模式有差异</li>
+                <li>未考虑多用户MIMO场景</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究展示了复数Transformer在无线通信信道估计中的强大潜力，通过结合物理先验知识和高效的注意力机制，实现了在干扰环境下的高精度信道重建。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper new-paper">
+        <h2><a href="https://arxiv.org/abs/2603.11589" target="_blank">2. ComVo: 面向波形生成的复数神经网络声码器</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589 [cs.SD]</a> · 2026年3月12日</p>
+            <p><strong>作者</strong>: Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</p>
+            <p><strong>机构</strong>: Korea University</p>
+            <p><strong>会议</strong>: ICLR 2026 (已接收)</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">语音合成</span> <span class="badge">神经声码器</span> <span class="badge">iSTFT</span></p>
+            <a href="https://arxiv.org/pdf/2603.11589.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>神经声码器在波形生成方面取得了显著进展。iSTFT-based声码器通过预测复值频谱图并经由iSTFT合成波形，避免了增加计算成本的学习上采样阶段。然而，当前方法使用实值网络独立处理实部和虚部，限制了捕捉复值频谱图固有结构的能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何利用原生复数运算来更好地建模复值频谱图？复数神经声码器能否在保持计算效率的同时提高合成质量？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>原生复数运算</strong>: 生成器和判别器都使用原生复数算术而非分离处理实部虚部</li>
+                <li><strong>对抗训练框架</strong>: 在复值表示中提供结构化反馈</li>
+                <li><strong>相位量化</strong>: 离散化相位值以结构化方式引导相位变换，正则化训练过程</li>
+                <li><strong>块矩阵计算方案</strong>: 通过减少冗余操作提高训练效率</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明ComVo达到了比可比较实值基线更高的合成质量，块矩阵方案减少了25%的训练时间。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>合成质量</strong>: 超越实值基线</li>
+                <li><strong>训练效率</strong>: 块矩阵方案减少25%训练时间</li>
+                <li><strong>端到端复数处理</strong>: 在复值表示中完成整个分析-量化-合成流程</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>仅在标准语音数据集上验证</li>
+                <li>未探索在更低比特率下的性能</li>
+                <li>实时推理效率可进一步优化</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>ComVo是首批将原生复数运算应用于神经声码器的工作之一，展示了CVNN在语音合成领域的潜力，为复数神经网络在音频处理中的应用开辟了新方向。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.06577" target="_blank">3. 相位扰动：分析复数神经网络的对抗鲁棒性</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.06577" target="_blank">arXiv:2602.06577 [cs.LG]</a> · 2026年2月6日</p>
+            <p><strong>作者</strong>: Florian Eilers, Christof Duhme, Xiaoyi Jiang</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">对抗鲁棒性</span> <span class="badge">相位攻击</span></p>
+            <a href="https://arxiv.org/pdf/2602.06577.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>复值神经网络（CVNNs）在各种应用中越来越受欢迎。为了在实际中安全使用CVNNs，分析其对异常值的鲁棒性至关重要。对抗攻击是理解深度神经网络行为的最小扰动最坏情况分析技术。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>CVNNs与RVNNs在对抗攻击下的行为有何不同？相位信息是否是CVNNs的薄弱环节？如何设计针对复值输入的专门攻击？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>相位攻击（Phase Attacks）</strong>: 专门针对复值输入相位信息设计的攻击</li>
+                <li><strong>复数对抗攻击</strong>: 推导常用对抗攻击的复值版本</li>
+                <li><strong>鲁棒性比较</strong>: 系统比较CVNNs与RVNNs在不同攻击下的表现</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明在某些场景下CVNNs比RVNNs更鲁棒，但两者都对相位变化非常敏感。相位攻击比同等强度的常规攻击（可同时攻击相位和幅度）更能降低模型性能。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>安全洞察</strong>: 识别了CVNNs的脆弱性（相位信息）</li>
+                <li><strong>攻击方法</strong>: 提出了针对性的相位攻击</li>
+                <li><strong>实用指导</strong>: 为CVNNs的安全部署提供了评估框架</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>实验仅在小规模数据集上进行</li>
+                <li>防御策略未充分探索</li>
+                <li>需要更广泛的架构比较</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究首次系统分析了CVNNs的对抗鲁棒性，发现相位信息是关键薄弱环节，为CVNNs的安全应用提供了重要警示和评估工具。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2601.03964" target="_blank">4. 量子感知机器学习：通过复数神经网络改进量子耗散动力学预测</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.03964" target="_blank">arXiv:2601.03964 [physics.chem-ph]</a> · 2026年1月7日</p>
+            <p><strong>作者</strong>: Muhammad Atif, Arif Ullah, Ming Yang</p>
+            <p><strong>期刊</strong>: Journal of Chemical Physics 164, 094104 (2026)</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">量子模拟</span> <span class="badge">物理一致性</span></p>
+            <a href="https://arxiv.org/pdf/2601.03964.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>准确建模量子耗散动力学由于环境复杂性和非马尔可夫记忆效应而具有挑战性。虽然机器学习为传统模拟技术提供了有前景的替代方案，但大多数现有模型使用与量子力学复值性质不匹配的实值神经网络（RVNNs）。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何利用CVNNs的物理一致性来改进量子动力学预测？CVNNs能否比RVNNs更好地保持量子态的代数结构和相干特性？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>物理一致框架</strong>: CVNNs直接操作复值输入，保持量子态的代数结构</li>
+                <li><strong>端到端复数处理</strong>: 避免了将密度矩阵的实部和虚部分离处理带来的信息损失</li>
+                <li><strong>量子相干编码</strong>: 自然编码量子相干性，保持幅度-相位相关性</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在自旋-玻色子模型和Fenna-Matthews-Olson复合物的数值基准测试中，CVNNs在收敛速度、训练稳定性和物理保真度方面均优于RVNNs，包括显著改进的迹守恒和厄米性。这些优势随系统规模和相干复杂度增加而增强。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>物理保真度</strong>: 显著改善迹守恒和厄米性</li>
+                <li><strong>训练效率</strong>: 更快的收敛速度和更好的稳定性</li>
+                <li><strong>可扩展性</strong>: 优势随系统规模增加而增强</li>
+                <li><strong>物理一致性</strong>: 保持量子态的代数结构</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>仅测试了特定的量子系统模型</li>
+                <li>与更先进的量子模拟方法的比较有限</li>
+                <li>需要更多理论分析来解释性能优势</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究建立了CVNNs作为量子感知经典方法的重要地位，证明了在容错量子计算时代之前模拟开放量子系统的潜力。</p>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2602.07094" target="_blank">5. 使用复数卷积神经网络重建PolSAR图像时极化特性的保持</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2602.07094" target="_blank">arXiv:2602.07094 [eess.IV]</a> · 2026年2月6日</p>
+            <p><strong>作者</strong>: Quentin Gabot, Joana Frontera-Pons, Jérémy Fix, Chengfang Ren, Jean-Philippe Ovarlez</p>
+            <p><strong>期刊</strong>: IET Radar, Sonar & Navigation (已接收)</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">PolSAR</span> <span class="badge">遥感图像</span></p>
+            <a href="https://arxiv.org/pdf/2602.07094.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>极化SAR（PolSAR）数据的固有复值性质需要使用能够直接处理复值表示的专门算法。然而，这一特性在深度学习社区中仍被探索不足，许多研究选择将复信号转换到实数域再应用常规实值模型。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>复数卷积自编码器能否有效压缩和重建全极化SAR数据？CVNNs相比实值网络在保持极化特性方面有何优势？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复数卷积自编码器</strong>: 使用CVNN架构进行PolSAR数据压缩和重建</li>
+                <li><strong>极化特性保持</strong>: 通过Pauli、Krogager、Cameron相干分解以及非相干H-α分解验证极化特性保持</li>
+                <li><strong>端到端复数处理</strong>: 避免实值转换带来的信息损失</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>实验表明复数卷积自编码器能够有效压缩和重建全极化SAR数据，同时保持必要的物理特性。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>物理特性保持</strong>: 保持PolSAR数据的关键物理特性</li>
+                <li><strong>压缩效率</strong>: 实现有效的数据压缩</li>
+                <li><strong>优于实值网络</strong>: 相比实值对应物具有明显优势</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究为开发鲁棒、物理信息复数生成模型用于SAR数据处理铺平了道路，展示了CVNN在遥感图像处理中的应用潜力。</p>
+        </div>
+    </div>
+
+    <!-- 论文6 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2511.21250" target="_blank">6. 平移等变复数卷积神经网络</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2511.21250" target="_blank">arXiv:2511.21250 [cs.CV]</a> · 2025年11月26日</p>
+            <p><strong>作者</strong>: Quentin Gabot, Teck-Yian Lim, Jérémy Fix, Joana Frontera-Pons, Chengfang Ren, Jean-Philippe Ovarlez</p>
+            <p><strong>会议</strong>: WACV 2026 (已接收)</p>
+            <p><strong>主题</strong>: <span class="badge">CVNN</span> <span class="badge">平移等变</span> <span class="badge">PolSAR</span></p>
+            <a href="https://arxiv.org/pdf/2511.21250.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>卷积神经网络在各种计算机视觉问题上表现出色。然而，传统CNN架构缺乏一个关键特性：平移等变性和不变性，这一特性被下采样和上采样操作破坏。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>如何将Learnable Polyphase Sampling (LPS)扩展到复数神经网络？复数域中的平移等变性有何特殊性质？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>LPS扩展</strong>: 将实值LPS扩展到复数神经网络</li>
+                <li><strong>投影层设计</strong>: 在Gumbel Softmax之前设计从$\mathbb{C}$到$\mathbb{R}$的投影层</li>
+                <li><strong>理论保证</strong>: 从理论上证明平移等变性和不变性</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <p>在多个计算机视觉问题上评估了该扩展，包括分类任务中的不变性属性，以及重建和语义分割问题中的等变性属性，使用极化SAR图像进行验证。</p>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <ul>
+                <li><strong>理论保证</strong>: 通过构造保证平移等变性</li>
+                <li><strong>应用广泛</strong>: 适用于分类、重建和分割任务</li>
+                <li><strong>复数优势</strong>: 在PolSAR图像上展示性能</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>该研究为CVNN提供了平移等变性的理论保证，为复数神经网络在计算机视觉任务中的可靠应用奠定了基础。</p>
+        </div>
+    </div>
+
+    <!-- 趋势分析 -->
+    <div class="paper">
+        <h2>📈 研究趋势分析</h2>
+        
+        <div class="section">
+            <h3>热门应用领域</h3>
+            <ul>
+                <li><strong>无线通信</strong>: 复数Transformer在信道估计和频谱重建中的应用</li>
+                <li><strong>语音合成</strong>: 复数神经声码器展现出色性能</li>
+                <li><strong>量子模拟</strong>: CVNNs在量子动力学预测中的物理一致性</li>
+                <li><strong>遥感图像</strong>: PolSAR数据的复数处理</li>
+                <li><strong>对抗鲁棒性</strong>: CVNNs安全性分析日益受到关注</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>技术发展趋势</h3>
+            <ul>
+                <li><strong>原生复数运算</strong>: 从分离处理实部虚部转向原生复数算术</li>
+                <li><strong>物理信息融合</strong>: 结合物理先验知识的损失函数设计</li>
+                <li><strong>等变性保证</strong>: 理论上保证平移等变性的架构设计</li>
+                <li><strong>计算效率优化</strong>: 块矩阵方案和分解注意力机制</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv API</p>
+        <p style="margin-top: 10px; font-size: 0.85em; color: #999;">报告生成时间: 2026-04-09 04:00 GMT+8 · 分析师: Jarvis</p>
+    </footer>
+</body>
+</html>
