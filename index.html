@@ -171,7 +171,19 @@
     </nav>
 
     <main>
-      <!-- 第一部分：最新文章 -->
+      <!-- 第一部分：技术图表 -->
+      <div class="section-title" onclick="toggleSection('section-diagrams', this)">
+        📊 技术图表
+        <span class="section-arrow">▶</span>
+      </div>
+      <div id="section-diagrams" class="hidden-section expanded">
+        <article class="post">
+          <span class="post-date">算法可视化</span>
+          <h2 class="post-title"><a href="posts/stochastic-rounding.html">随机舍入 (Stochastic Rounding) 流程图</a></h2>
+        </article>
+      </div>
+
+      <!-- 第二部分：最新文章 -->
       <div class="section-title" onclick="toggleSection('section-latest', this)">
         📰 最新文章 · 第15周
         <span class="section-arrow">▶</span>
