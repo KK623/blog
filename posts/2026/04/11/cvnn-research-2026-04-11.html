@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN Research Daily | 2026-04-11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0066cc;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .meta {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+    .section {
+      margin-bottom: 50px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      color: #0066cc;
+      font-size: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .paper:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .paper h3 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    .paper h4 {
+      color: #0066cc;
+      font-size: 15px;
+      margin: 20px 0 10px;
+    }
+    .paper-meta {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .paper-meta p {
+      margin: 5px 0;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .tag {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #0066cc;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 5px;
+    }
+    .summary-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .summary-box h3 {
+      color: #0066cc;
+      margin-bottom: 15px;
+    }
+    .trend-list {
+      list-style: none;
+      padding: 0;
+    }
+    .trend-list li {
+      padding: 10px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    .trend-list li:before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #0066cc;
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      .section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CVNN Research Daily</h1>
+      <p class="subtitle">复数神经网络前沿文献调研</p>
+      <p class="meta">📅 2026-04-11 | 🔬 5篇新论文 | 📊 信号处理/无线通信/雷达感知</p>
+    </header>
+
+    <div class="summary-box">
+      <h3>📋 调研概况</h3>
+      <p><strong>时间范围：</strong>2026-03-12 至 2026-04-11（过去30天）</p>
+      <p><strong>新论文数量：</strong>5篇</p>
+      <p><strong>主要领域：</strong>物理信息复数Transformer、毫米波雷达感知、语音增强、无线预编码</p>
+    </div>
+
+    <div class="section">
+      <h2>论文 1：物理信息复数Transformer用于多频段信道频率响应重建</h2>
+      
+      <div class="paper">
+        <h3>Physics-Informed Transformer for Multi-Band Channel Frequency Response Reconstruction</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2604.01944" target="_blank">2604.01944</a></p>
+          <p><strong>👥 作者：</strong>Anatolij Zubow, Joana Angjo, Sigrid Dimce, Falko Dressler</p>
+          <p><strong>🏛️ 机构：</strong>TU Berlin, TU Darmstadt</p>
+          <p><strong>📅 发表时间：</strong>2026-04-02</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数Transformer</span><span class="tag">无线通信</span><span class="tag">信道估计</span><span class="tag">物理信息学习</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>宽带信道频率响应（CFR）估计在多频段无线系统中具有挑战性，特别是当一个或多个子频段被同频干扰暂时阻塞时。传统的信道估计方法难以处理这种部分观测的频谱快照。随着5G/6G通信系统向多频段协同方向发展，如何在干扰环境下准确重建完整宽带CFR成为关键问题。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>现有的CFR重建方法主要依赖于传统的插值或外推技术，这些方法缺乏对物理信道特性的建模能力。作者认为，将物理知识嵌入深度学习模型可以提高重建的准确性和泛化能力。此外，现有方法在处理移动性和干扰模式时表现不佳。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>物理信息复数Transformer：</strong>采用因子化自注意力机制，沿时间和频率轴分别进行注意力计算，将复杂度从O((TF)²)降低到O(TF² + FT²)</li>
+          <li><strong>双态马尔可夫干扰模型：</strong>将每个子频段的干扰模式建模为独立的双态离散时间马尔可夫链，捕捉突发的占用行为</li>
+          <li><strong>全纯线性层：</strong>复数值输入输出通过全纯线性层处理，保持相位关系</li>
+          <li><strong>复合物理信息损失函数：</strong>结合谱保真度、功率延迟剖面（PDP）重建、信道冲激响应（CIR）稀疏性和时间平滑性</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>与三种经典基线（最近观测前向、零填充、三次样条插值）相比，该方法在PDP相似性方面表现最佳</li>
+          <li>在干扰占用率最高达50%时，该方法达到ρ≥0.82，而最佳基线仅为ρ≥0.62</li>
+          <li>在全速度范围内平滑退化，始终优于所有其他基线</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次将物理信息学习与复数Transformer结合用于CFR重建</li>
+          <li>显著提高了多频段系统中的信道估计精度</li>
+          <li>具有良好的移动性泛化能力</li>
+          <li>计算效率优于标准Transformer</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>论文未明确讨论模型在极端干扰条件（>50%占用率）下的性能</li>
+          <li>对于非马尔可夫干扰模式的适应性有待验证</li>
+          <li>模型复杂度与性能增益的权衡需要进一步分析</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>该论文提出了一种创新的物理信息复数Transformer架构，通过将物理信道特性嵌入深度学习模型，显著提高了多频段无线系统中的CFR重建性能。因子化注意力机制和复合损失函数设计体现了对无线通信物理特性的深入理解。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 2：基于复数CNN的毫米波雷达表面材料分类</h2>
+      
+      <div class="paper">
+        <h3>SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2604.06847" target="_blank">2604.06847</a></p>
+          <p><strong>👥 作者：</strong>Stefan Hägele, Fabian Seguel, Driton Salihu, Adam Misik, Eckehard Steinbach</p>
+          <p><strong>🏛️ 机构：</strong>Technical University of Munich</p>
+          <p><strong>📅 发表时间：</strong>2026-04-08 (ICASSP 2025)</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数CNN</span><span class="tag">毫米波雷达</span><span class="tag">材料分类</span><span class="tag">IQ信号</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>表面材料属性理解对于增强室内机器人感知和数字孪生至关重要。毫米波雷达通过分析反射的RF信号，可以从特定表面提取有关反射材料及其组成的信息。然而，现有的雷达材料估计方法依赖于固定的感知距离和受限的设置，缺乏跨距离泛化能力。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>传统的基于雷达的材料分类方法通常只使用单一感知距离进行训练和测试，这在实际应用中限制了其实用性。作者希望开发一种能够在多个距离上训练并在未见过的距离上测试的方法，同时利用复数CNN直接处理IQ信号，保留相位信息。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>复数CNN架构：</strong>直接处理复数雷达IQ信号，充分利用相位和幅度信息</li>
+          <li><strong>多距离训练策略：</strong>在三个不同距离上训练模型，测试时包含两个未见过的距离</li>
+          <li><strong>距离FFT预处理：</strong>通过距离FFT预处理提高对未知距离的泛化能力</li>
+          <li><strong>MIMO FMCW雷达：</strong>利用多输入多输出和调频连续波技术增强感知能力</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>在测试集上达到<strong>99.12-99.53%</strong>的整体准确率</li>
+          <li>在未知距离上，无预处理时准确率仅为25.25%，加入距离FFT预处理后提升至58.81%</li>
+          <li>无需重新训练即可适应新的感知距离</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次展示了复数CNN在多距离毫米波雷达材料分类中的有效性</li>
+          <li>距离FFT预处理显著提升了跨距离泛化能力</li>
+          <li>高准确率（>99%）使其适用于实际机器人应用</li>
+          <li>保留了IQ信号的相位信息，充分利用了雷达信号的物理特性</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>实验仅在实验室环境下进行，真实场景的鲁棒性有待验证</li>
+          <li>分类的材料类型有限，扩展到更多材料类型是未来的方向</li>
+          <li>距离FFT预处理虽然提升了泛化能力，但在极端未知距离上的性能仍有提升空间</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>SMCNet通过复数CNN直接处理毫米波雷达IQ信号，实现了高精度的表面材料分类。其多距离训练策略和距离FFT预处理方法为雷达感知的跨场景泛化提供了有效解决方案，对室内机器人感知和数字孪生应用具有重要价值。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 3：人工耳蜗接收者语音增强</h2>
+      
+      <div class="paper">
+        <h3>DAT-CFTNet: Speech Enhancement for Cochlear Implant Recipients using Attention-based Dual-Path Recurrent Neural Network</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2604.06744" target="_blank">2604.06744</a></p>
+          <p><strong>👥 作者：</strong>Nursadul Mamun, John H. L. Hansen</p>
+          <p><strong>🏛️ 机构：</strong>University of Texas at Dallas</p>
+          <p><strong>📅 发表时间：</strong>2026-04-08 (ICASSP 2026)</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">语音增强</span><span class="tag">复数网络</span><span class="tag">注意力机制</span><span class="tag">生物医学</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>人工耳蜗（CI）接收者在嘈杂环境中面临严重的时频（T-F）听力恢复限制（>10%）。人类听觉系统能够选择性关注音频流中的关键语音元素，同时给予次要关注于噪声或失真等不太相关的区域。语音增强对于改善CI接收者的语音可懂度至关重要。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>现有的语音增强模型在处理CI接收者的特殊需求时表现不佳。CI接收者对噪声特别敏感，传统方法常常产生音乐噪声等伪影。作者希望利用注意力机制和复数频率变换网络（CFTNet）来优化局部和全局上下文信息处理，同时避免音乐噪声。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>双路径注意力RNN（DAT-RNN）：</strong>在瓶颈层引入双路径注意力模块，精确区分语音和噪声</li>
+          <li><strong>改进的复数频率变换网络（CFTNet）：</strong>处理复数值频谱，保留相位信息</li>
+          <li><strong>注意力机制：</strong>允许在时间-频率区域中精确区分语音和噪声，优化局部和全局上下文信息处理</li>
+          <li><strong>端到端训练：</strong>针对CI接收者的特殊需求进行优化</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>在语音可懂度和质量方面，DAT-CFTNet持续优于现有模型（包括CFTNet和DCCRN）</li>
+          <li>在CI接收者研究中，能够有效抑制非平稳噪声</li>
+          <li>避免了传统语音增强方法中常见的音乐噪声伪影</li>
+          <li>在嘈杂设置中显著改善了CI接收者的语音可懂度</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>专门针对人工耳蜗接收者设计，具有明确的临床应用价值</li>
+          <li>双路径注意力机制有效提升了噪声抑制能力</li>
+          <li>复数频率变换网络保留了相位信息，提高了语音质量</li>
+          <li>避免了音乐噪声等常见伪影</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>论文未详细讨论在不同类型噪声（如 babble noise、wind noise）下的性能差异</li>
+          <li>计算复杂度与实时处理能力之间的权衡需要进一步分析</li>
+          <li>在真实CI设备上的部署和验证是未来的重要方向</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>DAT-CFTNet通过结合双路径注意力机制和复数频率变换网络，为人工耳蜗接收者提供了有效的语音增强解决方案。其在抑制非平稳噪声和避免音乐噪声方面的优异表现，对改善听力障碍者的生活质量具有重要意义。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 4：注意力增强的复数对比学习用于遮挡物体分类</h2>
+      
+      <div class="paper">
+        <h3>ACCOR: Attention-Enhanced Complex-Valued Contrastive Learning for Occluded Object Classification Using mmWave Radar IQ Signals</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2512.11556" target="_blank">2512.11556</a></p>
+          <p><strong>👥 作者：</strong>Stefan Hägele, Adam Misik, Constantin Patsch, Eckehard Steinbach</p>
+          <p><strong>🏛️ 机构：</strong>Technical University of Munich</p>
+          <p><strong>📅 发表时间：</strong>2026-04-02 (最新版本)</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">对比学习</span><span class="tag">注意力机制</span><span class="tag">复数CNN</span><span class="tag">遮挡分类</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>毫米波雷达在恶劣条件下提供稳健的感知能力，可以穿透薄材料进行非视觉感知。MIMO毫米波雷达已被证明能够穿透纸板包装进行遮挡物体分类。然而，现有模型仍有改进空间，且需要扩展到不同的感知频率。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>现有的基于IQ信号的遮挡物体分类方法主要依赖传统的CNN架构，未能充分利用复数数据的特性。作者希望通过结合复数深度学习、注意力机制和对比学习，进一步提升遮挡物体分类的准确性和鲁棒性。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>复数CNN骨干网络：</strong>直接处理复数IQ雷达信号</li>
+          <li><strong>多头注意力层：</strong>增强特征表示能力，关注重要信号区域</li>
+          <li><strong>混合损失函数：</strong>结合加权交叉熵和 supervised contrastive learning</li>
+          <li><strong>跨频段验证：</strong>在64 GHz和67 GHz两个频段上进行评估</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>在64 GHz数据集上达到<strong>96.60%</strong>的准确率</li>
+          <li>在67 GHz数据集上达到<strong>93.59%</strong>的准确率</li>
+          <li>在10个物体的分类任务中超越了之前的雷达特定模型和适应性图像模型</li>
+          <li>结果表明复数深度学习、注意力和对比学习的集成带来了显著收益</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次将注意力机制和对比学习结合应用于复数雷达信号处理</li>
+          <li>在跨频段场景下展示了良好的泛化能力</li>
+          <li>高准确率使其适用于工业和机器人应用中的遮挡物体分类</li>
+          <li>混合损失函数设计有效提升了特征判别能力</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>数据集规模相对较小（10个物体），扩展到更大规模数据集是未来的方向</li>
+          <li>在更复杂的遮挡场景（如多层材料）下的性能有待验证</li>
+          <li>模型的实时处理能力需要进一步评估</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>ACCOR通过注意力增强的复数对比学习方法，显著提升了毫米波雷达在遮挡物体分类任务中的性能。其跨频段的鲁棒性和高准确率，为工业环境中恶劣条件下的感知提供了可靠的解决方案。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 5：复数投影空间中的神经预编码</h2>
+      
+      <div class="paper">
+        <h3>Neural Precoding in Complex Projective Spaces</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2603.07811" target="_blank">2603.07811</a></p>
+          <p><strong>👥 作者：</strong>Zaid Abdullah, Merouane Debbah, Symeon Chatzinotas, Bjorn Ottersten</p>
+          <p><strong>🏛️ 机构：</strong>University of Luxembourg, Khalifa University, University of Oulu</p>
+          <p><strong>📅 发表时间：</strong>2026-03-08</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数投影空间</span><span class="tag">MIMO预编码</span><span class="tag">端到端学习</span><span class="tag">无线通信</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>在多用户MISO系统中，基于深度学习的预编码涉及训练DL模型将信道系数派生的特征映射到预编码权重派生的标签。传统的复数值信道和预编码器系数参数化方法未能利用预编码性能依赖于信道和预编码向量之间内积幅度的全局相位旋转不变性。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>传统的复数表示方法（如实部和虚部、幅度和相位）存在全局相位冗余，导致学习效率低下和泛化性能下降。作者希望利用复数投影空间（CPS）参数化方法去除全局相位冗余，实现几何对齐的物理信道-预编码器映射学习。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>复数投影空间（CPS）参数化：</strong>去除全局相位冗余，实现几何对齐的表示</li>
+          <li><strong>两种CPS参数化方案：</strong>基于实值嵌入和复数超球面坐标</li>
+          <li><strong>WMMSE预编码器：</strong>在复数投影空间中参数化加权最小均方误差预编码器</li>
+          <li><strong>几何对齐学习：</strong>使DL模型学习物理上不同的信道-预编码器映射</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>在频谱效率方面相比基线方法有显著提升</li>
+          <li>泛化能力显著改善，在未见过的信道条件下表现稳定</li>
+          <li>模型复杂度增加可忽略不计</li>
+          <li>两种CPS参数化方案均优于传统表示方法</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次将复数投影空间概念应用于神经网络预编码</li>
+          <li>去除全局相位冗余显著提高了学习效率和泛化能力</li>
+          <li>几何对齐的表示更符合无线通信的物理本质</li>
+          <li>对多用户MISO系统的端到端学习具有重要指导意义</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>主要关注MU-MISO系统，扩展到MIMO系统的复杂性需要进一步研究</li>
+          <li>CPS参数化的计算开销在大规模天线系统中需要优化</li>
+          <li>与非深度学习方法的性能对比可以更全面</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>该论文提出了一种创新的复数投影空间参数化方法，通过去除全局相位冗余，显著提高了基于深度学习的无线预编码性能。其几何对齐的学习框架为复数神经网络在通信系统中的应用提供了新的理论视角。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>趋势分析与展望</h2>
+      
+      <h3>🔬 本周CVNN研究亮点</h3>
+      <ul class="trend-list">
+        <li><strong>信号处理应用持续主导：</strong>本周的5篇新论文全部集中在信号处理领域，涵盖无线通信、雷达感知、语音处理等方向</li>
+        <li><strong>复数Transformer架构兴起：</strong>物理信息复数Transformer的出现标志着CVNN架构的重要演进</li>
+        <li><strong>注意力机制与CVNN的融合：</strong>多篇论文探索了注意力机制与复数网络的结合，显著提升了特征提取能力</li>
+        <li><strong>实际应用场景深化：</strong>从实验室走向实际应用的趋势明显，特别是人工耳蜗语音增强和机器人感知等具有明确临床和商业价值的应用</li>
+      </ul>
+
+      <h3>📈 技术趋势</h3>
+      <ul class="trend-list">
+        <li><strong>端到端复数学习：</strong>避免将复数信号分解为实部和虚部，直接处理复数数据</li>
+        <li><strong>物理信息嵌入：</strong>将领域知识（如信道物理特性）嵌入网络架构和损失函数</li>
+        <li><strong>多模态融合：</strong>复数IQ信号与变换域特征（如FFT）的融合</li>
+        <li><strong>对比学习：</strong>在复数表示空间中引入对比学习提升判别能力</li>
+      </ul>
+
+      <h3>🔮 未来展望</h3>
+      <ul class="trend-list">
+        <li>复数神经网络在6G通信中的应用将更加深入</li>
+        <li>雷达感知与CVNN的结合将在自动驾驶和机器人领域发挥更大作用</li>
+        <li>语音和生物医学信号处理中的CVNN应用值得关注</li>
+        <li>复数Transformer架构有望成为CVNN领域的新范式</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>CVNN Research Daily | 2026-04-11</p>
+      <p>Generated at 2026-04-11 04:00 (Asia/Shanghai)</p>
+      <p>🔧 Jarvis AI Research Assistant</p>
+    </footer>
+  </div>
+</body>
+</html>
