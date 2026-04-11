@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily - 2026年4月12日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .summary-table th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        .summary-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .summary-table tr:last-child td { border-bottom: none; }
+        .trend-section { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .trend-section h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🚀 LLM Research Daily</h1>
+        <div class="date">2026年4月12日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">部署</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">蒸馏</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：本报告覆盖 <strong>过去24小时（2026-04-09 至 2026-04-10）</strong> 发布的arXiv论文。数据采集时间：2026年4月12日 03:32 (GMT+8)。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.07955" target="_blank">1. Rethinking Residual Errors in Compensation-based LLM Quantization</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.07955" target="_blank">arXiv:2604.07955 [cs.CL]</a> · 2026年4月9日</p>
+            <p><strong>作者</strong>: Shuaiting Li, Juncan Deng, Kedong Xu, Rongtao Deng, Hong Gu, Minghan Jiang, Haibin Shen, Kejie Huang</p>
+            <p><strong>机构</strong>: Zhejiang University</p>
+            <p><strong>主题</strong>: <span class="badge">后训练量化</span> <span class="badge">权重补偿</span> <span class="badge">GPTQ改进</span></p>
+            <a href="https://arxiv.org/pdf/2604.07955.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>基于权重补偿的迭代量化方法（如GPTQ）近年来在大型语言模型量化领域取得了显著成功。这类方法通过逐层应用量化与权重补偿来最小化输出误差，使得数十亿参数模型的量化成为可能。GPTAQ在此基础上引入非对称校准过程，将残差误差纳入权重补偿框架。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有补偿方法在校准过程中存在一个关键缺陷：它们将量化输出与经过补偿后的权重输出对齐，而非原始全精度模型的真实输出。这种次优的校准目标导致残差误差估计不准确，限制了量化性能的进一步提升。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>重新定义校准目标</strong>：将量化模型的输出与原始全精度模型输出精确对齐</li>
+                <li><strong>补偿感知误差</strong>：揭示残差误差不仅来自前一层输出差异，还包含层内补偿权重与原始权重之间的差异</li>
+                <li><strong>神经元分解技术</strong>：继承GPTAQ的神经元分解方法，高效将补偿感知误差纳入权重更新过程</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>与GPTQ和GPTAQ无缝集成，显著提升量化性能</li>
+                <li>不改变原有算法复杂度</li>
+                <li>在多种LLM和量化设置上验证有效</li>
+                <li>代码已开源：https://github.com/list0830/ResComp</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>本文从理论上重新审视了补偿式量化中的残差误差来源，发现并修正了现有方法的校准目标偏差。通过引入补偿感知误差，在不增加额外开销的情况下显著提升了GPTQ/GPTAQ的量化效果，为后训练量化提供了新的优化方向。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.07888" target="_blank">2. Bit-by-Bit: Progressive QAT Strategy with Outlier Channel Splitting for Stable Low-Bit LLMs</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.07888" target="_blank">arXiv:2604.07888 [cs.CL]</a> · 2026年4月9日</p>
+            <p><strong>作者</strong>: Binxing Xu, Hao Gu, Lujun Li, Hao Wang, Bei Liu, Jiacheng Liu, Qiyuan Zhu, Xintong Yang, Chao Li, Sirui Han, Yike Guo</p>
+            <p><strong>机构</strong>: Shanghai Jiao Tong University, The Hong Kong University of Science and Technology</p>
+            <p><strong>主题</strong>: <span class="badge">量化感知训练</span> <span class="badge">W2A2</span> <span class="badge">异常通道拆分</span></p>
+            <a href="https://arxiv.org/pdf/2604.07888.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>直接在超低精度下进行LLM的量化感知训练（QAT）面临巨大挑战。低比特QAT经常遭遇收敛不稳定和高昂训练成本的问题，这主要源于重尾异常通道带来的量化噪声以及跨层误差累积。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>如何在保持训练稳定性的同时实现W2A2等极低比特配置的有效量化？现有方法要么需要大量微调数据，要么在超低比特下性能急剧退化。研究者希望开发一种渐进式训练框架，通过分阶段降低精度来实现稳定优化。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>块级渐进训练</strong>：分阶段逐步降低精度，为低比特优化提供稳定初始化</li>
+                <li><strong>嵌套整数量化网格</strong>：实现"训练一次、多精度部署"范式，单一模型支持多种位宽无需重新训练</li>
+                <li><strong>舍入感知异常通道拆分</strong>：在缓解量化误差的同时保持恒等变换，不破坏量化输出</li>
+                <li><strong>自定义W2A2/W2A16算子</strong>：针对OCP/NVIDIA标准开发高效内核，较BF16实现最高11倍加速</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>W2A2配置下WikiText2困惑度仅比全精度高<strong>2.25</strong></li>
+                <li>显著超越BitDistiller和EfficientQAT等基线</li>
+                <li>支持Llama2/3系列模型</li>
+                <li>自定义算子实现高达<strong>11倍</strong>推理加速</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Bit-by-Bit通过渐进式训练、嵌套量化网格和异常通道拆分技术，突破了超低比特QAT的稳定性和性能瓶颈。其"训练一次、任意精度部署"的能力对于需要在多硬件平台上灵活部署LLM的场景具有重要意义。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.07853" target="_blank">3. QaRL: Rollout-Aligned Quantization-Aware RL for Fast and Stable Training under Training--Inference Mismatch</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.07853" target="_blank">arXiv:2604.07853 [cs.CL]</a> · 2026年4月9日</p>
+            <p><strong>作者</strong>: Hao Gu, Hao Wang, Jiacheng Liu, Lujun Li, Qiyuan Zhu, Bei Liu, Binxing Xu, Lei Wang, Xintong Yang, Sida Lin, Sirui Han, Yike Guo</p>
+            <p><strong>机构</strong>: Shanghai Jiao Tong University, The Hong Kong University of Science and Technology</p>
+            <p><strong>主题</strong>: <span class="badge">量化感知RL</span> <span class="badge">训练-推理不匹配</span> <span class="badge">低比特训练加速</span></p>
+            <a href="https://arxiv.org/pdf/2604.07853.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>大型语言模型的强化学习（RL）训练常被rollout生成阶段所瓶颈，导致端到端训练速度缓慢。近期研究通过在rollout阶段使用量化来加速解码（RL循环中最昂贵的阶段），但这引入了新的问题。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>量化rollout虽然能显著提升解码速度，但会造成训练-推理差距的扩大：rollout在低精度下运行，而学习更新却在全精度下计算。这种不匹配导致优化不稳定，长文本回答中尤其容易出现重复、混乱的token。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>QaRL框架</strong>：将训练侧前向传播与量化rollout对齐，最小化训练-推理不匹配</li>
+                <li><strong>TBPO（Trust-Band Policy Optimization）</strong>：序列级目标函数，通过双重裁剪处理负样本，将更新限制在信任区域内</li>
+                <li><strong>Error Token识别</strong>：发现并解决量化rollout中长文本生成重复混乱token的问题</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在Qwen3-30B-A3B MoE数学任务上较量化rollout基线提升<strong>+5.5</strong></li>
+                <li>在保持低比特吞吐量优势的同时显著提升训练稳定性</li>
+                <li>为大语言模型RL训练提供实用的加速方案</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>QaRL首次系统性地解决了量化rollout在RL训练中的应用难题，通过rollout对齐和TBPO稳定化策略，在不牺牲量化加速收益的前提下实现了稳定的训练。这项工作对需要大规模RL训练的LLM开发具有重要的实用价值。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.08133" target="_blank">4. Alloc-MoE: Budget-Aware Expert Activation Allocation for Efficient Mixture-of-Experts Inference</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.08133" target="_blank">arXiv:2604.08133 [cs.LG]</a> · 2026年4月9日 · ACL 2026 Main</p>
+            <p><strong>作者</strong>: Baihui Liu, Kaiyuan Tian, Wei Wang, Zhaoning Zhang, Linbo Qiao, Dongsheng Li</p>
+            <p><strong>机构</strong>: National University of Defense Technology</p>
+            <p><strong>主题</strong>: <span class="badge">MoE推理优化</span> <span class="badge">专家激活预算</span> <span class="badge">稀疏激活</span></p>
+            <a href="https://arxiv.org/pdf/2604.08133.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>混合专家（MoE）架构凭借其稀疏激活机制成为扩展大语言模型的主流方案。然而，庞大的专家激活数量在推理时造成严重的延迟瓶颈，尤其在资源受限的部署场景中这一问题尤为突出。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有减少专家激活的方法往往导致模型性能严重退化。如何在控制激活预算的同时最小化性能损失？研究者将问题重新定义为预算约束下的最优分配问题，希望在层级别和token级别协调优化专家激活数量。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>激活预算概念</strong>：将专家激活数量作为显式约束，建立统一的优化框架</li>
+                <li><strong>Alloc-L（层级别分配）</strong>：利用敏感度分析和动态规划，确定跨层专家激活的最优分配</li>
+                <li><strong>Alloc-T（token级别分配）</strong>：基于路由分数动态重新分配激活配额，不增加额外延迟</li>
+                <li><strong>协调优化</strong>：将层级别和token级别策略统一整合到Alloc-MoE框架中</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在DeepSeek-V2-Lite上，原始预算减半时仍保持模型性能</li>
+                <li>实现<strong>1.15倍</strong>prefill加速和<strong>1.34倍</strong>decode加速</li>
+                <li>在多种MoE模型上验证有效</li>
+                <li>不增加推理延迟</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Alloc-MoE通过将MoE推理优化重新定义为预算分配问题，在层和token两个粒度上实现了协调优化。这一框架为在资源受限环境中部署大规模MoE模型提供了重要的效率优化工具和理论基础。</p>
+        </div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.08075" target="_blank">5. Dual-Pool Token-Budget Routing for Cost-Efficient and Reliable LLM Serving</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.08075" target="_blank">arXiv:2604.08075 [cs.CL]</a> · 2026年4月9日</p>
+            <p><strong>作者</strong>: Xunzhuo Liu, Bowei He, Xue Liu, Andy Luo, Haichen Zhang, Huamin Chen</p>
+            <p><strong>机构</strong>: University of Toronto, McGill University, Carnegie Mellon University</p>
+            <p><strong>主题</strong>: <span class="badge">LLM serving</span> <span class="badge">成本优化</span> <span class="badge">请求路由</span></p>
+            <a href="https://arxiv.org/pdf/2604.08075.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>生产环境中的vLLM集群通常为每个实例按最坏情况上下文长度进行配置，导致大量的KV缓存过度分配和并发利用率不足。实际上80-95%的请求都是短上下文，却在为长上下文优化的配置下运行，浪费了4-8倍的吞吐能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有部署普遍存在"配置-流量不匹配"问题，这是引发OOM崩溃、请求抢占、请求拒绝等可靠性问题的根本原因。如何在不改变模型的情况下，通过轻量级的请求调度机制显著提升集群效率和可靠性？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>双池Token预算路由</strong>：将同构集群划分为高吞吐短上下文池和高容量长上下文池</li>
+                <li><strong>无Tokenizer预算估计</strong>：基于每类别字节-token比率在线学习（指数移动平均），无需Tokenizer即可估计请求总token预算</li>
+                <li><strong>成本预测模型</strong>：根据工作负载特征和实测吞吐差异预测集群级成本节省</li>
+                <li><strong>与现有优化无缝兼容</strong>：可与PagedAttention、连续批处理、prefill-decode解耦等技术组合使用</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在Azure LLM推理数据集和LMSYS-Chat-1M上减少GPU小时<strong>31-42%</strong></li>
+                <li>在fleet规模下年省<strong>$2.86M</strong>（Llama-3-70B on A100）</li>
+                <li>抢占率降低<strong>5.4倍</strong>，P99 TTFT提升<strong>6%</strong></li>
+                <li>Qwen3-235B-A22B on AMD MI300X案例预计年省<strong>$15.4M</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Dual-Pool Token-Budget Routing以极低的调度开销（O(1)）解决了LLM生产服务中的核心效率问题。其基于实际token预算的智能路由策略不仅能显著降低成本，还能大幅提升系统可靠性，是大规模LLM serving部署中不可或缺的优化手段。</p>
+        </div>
+    </div>
+
+    <!-- 趋势总结 -->
+    <div class="trend-section">
+        <h2>📈 趋势总结</h2>
+        
+        <h3 style="color: #667eea; margin: 20px 0 10px;">量化技术发展趋势</h3>
+        <ul>
+            <li><strong>从"如何量化"到"如何更好地量化"</strong>：补偿式量化的校准目标被重新审视（ResComp），揭示了现有GPTQ/GPTAQ方法中残差误差估计的系统性偏差</li>
+            <li><strong>超低比特训练取得突破</strong>：Bit-by-Bit通过渐进式训练和异常通道拆分技术，实现了稳定的W2A2 QAT，并支持"训练一次、多精度部署"</li>
+            <li><strong>量化与RL训练深度融合</strong>：QaRL首次系统性地解决了量化rollout在RL训练中的训练-推理不匹配问题，为大模型后训练提供了新的加速路径</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">部署与推理优化趋势</h3>
+        <ul>
+            <li><strong>MoE架构的服务优化成为热点</strong>：Alloc-MoE从预算分配视角重新切入稀疏激活优化，在减少专家激活数的同时保持模型性能</li>
+            <li><strong>系统级优化创造巨额经济价值</strong>：Dual-Pool方案展示了工程优化对成本的巨大影响——年省数百万美元不再是理论数字</li>
+            <li><strong>效率提升机会从模型层向系统层扩展</strong>：未来的部署优化需要同时考虑算法压缩和系统架构两个层面</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">关键论文推荐</h3>
+        <table class="summary-table">
+            <tr>
+                <th>论文</th>
+                <th>核心贡献</th>
+                <th>适用场景</th>
+            </tr>
+            <tr>
+                <td>Rethinking Residual Errors</td>
+                <td>修正补偿式量化的校准目标</td>
+                <td>后训练量化改进</td>
+            </tr>
+            <tr>
+                <td>Bit-by-Bit</td>
+                <td>W2A2渐进QAT与多精度部署</td>
+                <td>边缘低比特部署</td>
+            </tr>
+            <tr>
+                <td>QaRL</td>
+                <td>量化感知RL训练稳定化</td>
+                <td>大规模RL训练加速</td>
+            </tr>
+            <tr>
+                <td>Alloc-MoE</td>
+                <td>专家激活预算优化</td>
+                <td>MoE模型推理优化</td>
+            </tr>
+            <tr>
+                <td>Dual-Pool Routing</td>
+                <td>Token预算感知请求路由</td>
+                <td>LLM生产服务降本</td>
+            </tr>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv</p>
+        <p style="margin-top: 10px; font-size: 0.85em; color: #999;">本报告由AI助手自动生成，内容基于arXiv公开论文</p>
+        <p style="margin-top: 5px; font-size: 0.85em; color: #999;">发布时间: 2026-04-12 03:32 (GMT+8) · 第15周</p>
+    </footer>
+</body>
+</html>
