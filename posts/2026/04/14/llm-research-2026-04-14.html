@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Research Daily - 2026年4月14日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .summary-table th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        .summary-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .summary-table tr:last-child td { border-bottom: none; }
+        .trend-section { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .trend-section h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .paper-img { width: 100%; max-width: 700px; border-radius: 8px; margin: 15px auto; display: block; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .img-caption { text-align: center; font-size: 0.85em; color: #666; margin-bottom: 15px; }
+        .img-note { background: #f0f0f0; padding: 10px; border-radius: 6px; font-size: 0.85em; color: #666; text-align: center; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🚀 LLM Research Daily</h1>
+        <div class="date">2026年4月14日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">量化</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">部署</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">蒸馏</span>
+        </div>
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ 说明</strong>：本报告覆盖 <strong>过去24小时（2026-04-13 announcements）</strong> 发布的arXiv论文。数据采集时间：2026年4月14日 03:11 (GMT+8)。
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.09083" target="_blank">1. EdgeFlow: Fast Cold Starts for LLMs on Mobile Devices</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.09083" target="_blank">arXiv:2604.09083 [cs.OS]</a> · 2026年4月10日</p>
+            <p><strong>作者</strong>: Yongsheng Yan, Jiacheng Shen, Xuchuan Luo, Yangfan Zhou</p>
+            <p><strong>机构</strong>: Fudan University, Duke Kunshan University</p>
+            <p><strong>主题</strong>: <span class="badge">移动部署</span> <span class="badge">NPU感知量化</span> <span class="badge">冷启动优化</span></p>
+            <a href="https://arxiv.org/pdf/2604.09083.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="img-note">该论文图表均为矢量图形，arXiv图片提取脚本未能获取到可用图片</div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>将大型语言模型部署到移动设备上是实现数据隐私和离线可访问性的新兴趋势。现代移动神经处理单元（NPU）使这种部署日益可行。然而，现有移动LLM推理框架在模型未驻留在设备内存中时，不可避免地面临冷启动问题，导致启动延迟极高。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>移动LLM应用的冷启动延迟严重影响用户体验——以Llama3 8B为例，state-of-the-art的llm.npu框架在128输入token下冷启动的首次token时间（TTFT）高达9.1秒。研究者发现，现有框架将所有权重统一量化为相同精度（如INT8），忽略了不同权重对模型精度的贡献差异，从而浪费了宝贵的闪存带宽。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>NPU感知自适应量化算法</strong>：以输出通道粒度为权重分配不同精度（1-8位），在满足NPU仅支持粗粒度、均匀、对称量化的约束下，通过贪婪位宽分配算法最小化相对误差</li>
+                <li><strong>SIMD友好打包格式</strong>：将混合精度权重分解为1/2/4位基本单元，并以交错布局存储，配合基于Neon的SIMD解包算法，平均每个权重仅需0.48条SIMD指令</li>
+                <li><strong>协同细粒度流水线</strong>：在CPU和NPU之间进行算子级动态调度，包括位置引导的算子优先级和CPU任务窃取机制，将流水线气泡率从91%大幅降低</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>相比llama.cpp、MNN和llm.npu，EdgeFlow的冷启动延迟（TTFT）分别降低最多<strong>4.07×</strong>、<strong>2.40×</strong>和<strong>1.55×</strong></li>
+                <li>在5-bit平均精度配置下，模型精度与llm.npu的INT8基线相当</li>
+                <li>在小米15 Pro（骁龙8 Elite + Hexagon NPU）上进行了端到端验证</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>EdgeFlow通过量化算法与移动推理系统的协同设计，首次系统性地解决了移动LLM部署中的冷启动瓶颈。其NPU感知自适应量化在精度与带宽利用率之间取得了优异的平衡，为端侧大模型的高效部署提供了重要的工程实践参考。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.09107" target="_blank">2. TensorHub: Scalable and Elastic Weight Transfer for LLM RL Training</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.09107" target="_blank">arXiv:2604.09107 [cs.DC]</a> · 2026年4月10日</p>
+            <p><strong>作者</strong>: Chenhao Ye, Huaizheng Zhang, Mingcong Han, Baoquan Zhong, Xiang Li, Qixiang Chen, Xinyi Zhang, Weidong Zhang, Kaihua Jiang, Wang Zhang, He Sun, Wencong Xiao, Andrea C. Arpaci-Dusseau, Remzi H. Arpaci-Dusseau</p>
+            <p><strong>机构</strong>: ByteDance Seed, University of Wisconsin–Madison</p>
+            <p><strong>主题</strong>: <span class="badge">分布式RL训练</span> <span class="badge">权重传输</span> <span class="badge">弹性扩展</span></p>
+            <a href="https://arxiv.org/pdf/2604.09107.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <img src="images/tensorhub-fig.jpg" alt="TensorHub workflow" class="paper-img">
+        <div class="img-caption">TensorHub系统架构与Reference-Oriented Storage工作流程示意</div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>现代LLM强化学习（RL）工作负载需要在训练器和rollout工作器之间进行高频、大容量的模型权重传输。随着集群规模扩大和rollout策略多样化（独立rollout、弹性spot实例、跨数据中心），现有基于NCCL集体通信或分布式存储的权重传输方案面临扩展性瓶颈。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>现有方案无法在拓扑感知、弹性扩展、最小协调、最小数据移动和无额外存储开销这五个目标上同时满足需求。NCCL需要静态通信组，对动态集群和故障敏感；P2P通信缺乏全局负载视图；分布式存储则因"push-then-pull"模式导致数据移动翻倍，且TB级LLM权重的存储开销巨大。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>Reference-Oriented Storage (ROS)</strong>：一种无数据所有权的存储抽象。ROS不物理存储权重副本，而是跟踪持有权重的GPU工作器，通过RDMA直接从源GPU内存读取到目标GPU内存</li>
+                <li><strong>可变性契约与保留协议</strong>：通过publish/unpublish语义确保共享权重的完整性；保留协议在极端情况下将最新版本卸载到CPU内存，防止所有副本同时丢失</li>
+                <li><strong>TensorHub生产级系统</strong>：扩展ROS with拓扑感知调度、流水线复制（pipeline replication）、模型并行一致性事务和故障容错，已部署于字节跳动生产环境</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在1024 GPU训练任务中，TensorHub相比NCCL将GPU stall时间降低最多<strong>6.7×</strong></li>
+                <li>在弹性spot集群中，权重更新速度相比UCX提升<strong>4.8×</strong></li>
+                <li>跨数据中心场景下，通过避免冗余TCP传输，GPU stall时间降低<strong>19×</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>TensorHub通过ROS架构革新性地解决了大规模RL训练中的权重传输难题，在保留存储接口灵活性的同时消除了传统方案的数据移动和存储开销。这项工作对构建可扩展、弹性的LLM RL基础设施具有重要的系统级参考价值。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.09048" target="_blank">3. Watt Counts: Energy-Aware Benchmark for Sustainable LLM Inference on Heterogeneous GPU Architectures</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.09048" target="_blank">arXiv:2604.09048 [cs.DC]</a> · 2026年4月10日</p>
+            <p><strong>作者</strong>: Mauricio Fadel Argerich, Jonathan Fürst, Marta Patiño-Martínez</p>
+            <p><strong>机构</strong>: Universidad Politécnica de Madrid, Zurich University of Applied Sciences</p>
+            <p><strong>主题</strong>: <span class="badge">能源效率</span> <span class="badge">异构GPU部署</span> <span class="badge">开源基准测试</span></p>
+            <a href="https://arxiv.org/pdf/2604.09048.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <img src="images/watt-counts-fig.jpg" alt="Watt Counts energy analysis" class="paper-img">
+        <div class="img-caption">Watt Counts数据集：异构GPU架构上的LLM推理能效分析</div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>LLM推理部署的能源消耗问题日益受到关注，但系统运维人员缺乏能够指导异构硬件上能效权衡的基准测试和数据。现有研究大多局限于特定GPU或批处理场景，无法为实际的异构LLM系统部署提供全面的决策依据。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>如何在没有物理功率计的情况下，系统性地评估50个LLM模型在10种NVIDIA GPU（覆盖5代架构）上的能源效率？不同部署场景（批处理vs在线服务）下，最优的LLM-GPU组合是否一致？这些问题亟需大规模、开源、可复现的实证数据集来回答。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>Watt Counts数据集与基准</strong>：基于vLLM引擎，覆盖50个LLM、10个GPU、批处理/低负载服务/高负载服务三种场景，共计5000+次独立实验、370+个LLM-GPU组合、1400万+功率采样点</li>
+                <li><strong>EnergyMeter + NVML方案</strong>：通过pyNVML以10Hz频率采样GPU功率，无需外部功率计即可在裸机和云实例上复现</li>
+                <li><strong>严格的实验控制</strong>：固定随机种子、温度=0、top_p=1、暖机+冷却期（GPU温度&lt;65°C且功率波动&lt;3W），确保结果可复现</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>发布迄今最大规模的LLM推理能源消耗开放数据集</li>
+                <li>批处理场景中H100在90%的模型上能效最优；但在服务场景中，L4和T4因低空闲功耗反而更节能</li>
+                <li>通过为特定TTFT约束选择最优GPU，服务场景可节能最多<strong>70%</strong>，批处理场景可节能最多<strong>20%</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Watt Counts填补了LLM异构GPU能效评估领域的关键空白，其系统级分析揭示了模型架构、GPU特性与部署场景之间复杂的能效权衡关系。对于需要在性能与可持续性之间做决策的系统运维人员，这是一份极具实用价值的参考基准。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.09547" target="_blank">4. Tango: Taming Visual Signals for Efficient Video Large Language Models</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.09547" target="_blank">arXiv:2604.09547 [cs.CV]</a> · 2026年4月10日</p>
+            <p><strong>作者</strong>: Shukang Yin, Sirui Zhao, Hanchao Wang, Baozhi Jia, Xianquan Wang, Chaoyou Fu, Enhong Chen</p>
+            <p><strong>机构</strong>: University of Science and Technology of China, Reconova AI Lab, Nanjing University</p>
+            <p><strong>主题</strong>: <span class="badge">Video LLM</span> <span class="badge">Token剪枝</span> <span class="badge">高效推理</span></p>
+            <a href="https://arxiv.org/pdf/2604.09547.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <img src="images/tango-overview.jpg" alt="Tango framework" class="paper-img">
+        <div class="img-caption">Tango框架：多样性驱动选择与ST-RoPE时空位置编码</div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>Token剪枝已成为开发高效Video LLM的主流方法。现有方法主要分为两类：基于注意力分数的显著性选择和基于相似度的聚类合并。然而，这两种范式在实际应用中均存在明显的局限性，限制了压缩比与精度的平衡。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>研究者发现两个关键问题：(1) 注意力分布通常是空间多模态且长尾的，简单的Top-k选择策略无法充分捕捉这种分布；(2) 直接基于相似度的聚类容易产生空间碎片化的簇，导致池化后的表示失真。如何同时优化这两种视觉信号的利用成为提升Video LLM效率的核心挑战。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>多样性驱动的显著Token选择</strong>：先扩展候选集（Top-αk），再通过DPC-KNN密度峰值聚类将候选划分为k个语义区域，最后从每个簇中选取注意力分数最高的Token，实现更全面的语义覆盖</li>
+                <li><strong>ST-RoPE（时空旋转位置编码）</strong>：将1D RoPE扩展为三维时空位置编码，通过长程衰减特性显式惩罚时空距离较远的Token之间的相似度，使聚类结果在空间上更加连续</li>
+                <li><strong>三阶段剪枝框架</strong>：时序视频分段（TVS）→ 显著Token选择（STS）→ 时空合并（STM），在保留10% Token时仍能保持98.9%性能</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在LLaVA-OV-7B上仅保留10%视频Token时，性能保留<strong>98.9%</strong>，推理加速<strong>1.88×</strong></li>
+                <li>在LLaVA-Video-7B和Qwen2.5-VL-7B上均取得一致的性能提升</li>
+                <li>与intra-LLM剪枝方法结合后可进一步获得0.8-0.9点的精度增益</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>Tango通过对注意力分布和相似度聚类两大基础范式的深入改进，实现了Video LLM在极高压缩比下的近无损推理。ST-RoPE的引入为视觉Token的空间连续性约束提供了一种优雅且通用的解决方案，对多模态大模型的高效化具有重要的借鉴意义。</p>
+        </div>
+
+        <img src="images/tango-results.jpg" alt="Tango results" class="paper-img">
+        <div class="img-caption">Tango在多个Video LLM基准上的实验结果对比</div>
+    </div>
+
+    <!-- 论文5 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.09442" target="_blank">5. UIPress: Bringing Optical Token Compression to UI-to-Code Generation</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.09442" target="_blank">arXiv:2604.09442 [cs.CL]</a> · 2026年4月10日</p>
+            <p><strong>作者</strong>: Dasen Dai, Shuoqi Li, Ronghao Chen, Huacan Wang, Biao Wu, Qizhen Lan</p>
+            <p><strong>机构</strong>: （arXiv未公开完整机构信息）</p>
+            <p><strong>主题</strong>: <span class="badge">VLM Token压缩</span> <span class="badge">UI-to-Code</span> <span class="badge">编码器端学习压缩</span></p>
+            <a href="https://arxiv.org/pdf/2604.09442.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <img src="images/uipress-fig.jpg" alt="UIPress architecture" class="paper-img">
+        <div class="img-caption">UIPress架构：在ViT编码器与LLM解码器之间的轻量级学习压缩模块</div>
+
+        <div class="section">
+            <h3>📌 背景</h3>
+            <p>UI-to-Code生成任务要求视觉-语言模型（VLM）从单张截图生成数千个token的HTML/CSS代码。这使得视觉token效率至关重要。现有压缩方法要么在推理时使用任务无关的启发式规则进行选择，要么仅将低注意力特征置零而不真正缩短序列——两者都未能真正降低prefill延迟。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 动机</h3>
+            <p>光学（encoder-side learned）压缩在文档OCR中已取得显著成效，但尚未被引入UI-to-Code领域。UI截图具有非均匀的信息密度，需要一种能够自适应地学习如何压缩视觉token的方法，而不是依赖手工设计的推理时策略。</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 技术点</h3>
+            <ul>
+                <li><strong>轻量级学习压缩模块</strong>：在冻结的ViT编码器和LLM解码器之间插入UIPress模块，结合深度可分离卷积、元素引导的空间重加权和Transformer精炼，将约6,700个视觉token压缩至固定256个token</li>
+                <li><strong>LoRA桥接表示差距</strong>：在解码器上使用低秩适配来桥接压缩后的表示与原始表示之间的差距</li>
+                <li><strong>极低训练开销</strong>：整个系统仅增加约21.7M可训练参数（占8B基模型的0.26%）</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 收益点</h3>
+            <ul>
+                <li>在Design2Code基准上，256 token配置的CLIP分数达到0.8127，比未压缩基线提升<strong>+7.5%</strong>，比最强的推理时压缩方法提升<strong>+4.6%</strong></li>
+                <li>TTFT（首次token时间）实现<strong>9.1×</strong>加速</li>
+                <li>首个将encoder-side learned压缩引入UI-to-Code任务的方法</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>UIPress展示了在特定垂直任务（UI-to-Code）中，encoder-side learned压缩相比通用的推理时token选择具有显著优势。其极低的额外参数开销和卓越的prefill加速效果，为VLMs在需要高视觉token效率的下游任务中的应用开辟了新的可能性。</p>
+        </div>
+    </div>
+
+    <!-- 趋势总结 -->
+    <div class="trend-section">
+        <h2>📈 趋势总结</h2>
+        
+        <h3 style="color: #667eea; margin: 20px 0 10px;">端侧部署与移动优化</h3>
+        <ul>
+            <li><strong>冷启动成为新战场</strong>：EdgeFlow从移动LLM冷启动这一被长期忽视的角度切入，通过NPU感知自适应量化将启动延迟降低4倍以上。随着端侧AI应用爆发，系统-算法协同设计将成为移动端LLM部署的标配</li>
+            <li><strong>量化粒度进一步细化</strong>：从统一的INT8到通道级自适应位宽（1-8位），移动NPU的约束正推动量化算法向更精细的方向发展</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">训练基础设施与系统优化</h3>
+        <ul>
+            <li><strong>ROS架构革新权重传输</strong>：TensorHub用无所有权存储（Reference-Oriented Storage）解决了大规模RL训练中的权重传输难题，在字节跳动生产环境中验证了其扩展性和弹性</li>
+            <li><strong>系统级优化带来数量级提升</strong>：这提醒我们，在追求模型算法创新的同时，底层基础设施的优化同样能带来决定性的效率提升</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">能效与可持续部署</h3>
+        <ul>
+            <li><strong>不存在 universally optimal 的GPU</strong>：Watt Counts的系统级数据揭示，最优GPU选择强烈依赖于模型大小和部署场景。批处理中H100占优，而服务场景中L4/T4因低空闲功耗更节能</li>
+            <li><strong>硬件感知部署是绿色AI的必由之路</strong>：通过为特定TTFT约束选择最优GPU，可节能最多70%</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">多模态Token压缩</h3>
+        <ul>
+            <li><strong>Video LLM压缩取得突破</strong>：Tango的ST-RoPE为视觉Token的空间连续性约束提供了通用解法，在仅保留10% Token时实现近无损推理</li>
+            <li><strong>任务特定压缩超越通用启发式</strong>：UIPress证明，针对UI-to-Code任务学习的encoder-side压缩，可以显著优于通用的推理时token选择策略</li>
+        </ul>
+
+        <h3 style="color: #667eea; margin: 20px 0 10px;">关键论文推荐</h3>
+        <table class="summary-table">
+            <tr>
+                <th>论文</th>
+                <th>核心贡献</th>
+                <th>适用场景</th>
+            </tr>
+            <tr>
+                <td>EdgeFlow</td>
+                <td>NPU感知自适应量化，移动冷启动优化</td>
+                <td>移动端LLM部署</td>
+            </tr>
+            <tr>
+                <td>TensorHub</td>
+                <td>ROS无所有权存储，生产级RL权重传输</td>
+                <td>大规模RL训练基础设施</td>
+            </tr>
+            <tr>
+                <td>Watt Counts</td>
+                <td>异构GPU能效大规模基准数据集</td>
+                <td>绿色AI部署决策</td>
+            </tr>
+            <tr>
+                <td>Tango</td>
+                <td>ST-RoPE时空位置编码，Video LLM Token剪枝</td>
+                <td>视频多模态模型加速</td>
+            </tr>
+            <tr>
+                <td>UIPress</td>
+                <td>Encoder-side learned UI视觉Token压缩</td>
+                <td>UI-to-Code / VLM垂直任务</td>
+            </tr>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 K's Blog · 文献调研报告 · 数据来自arXiv</p>
+        <p style="margin-top: 10px; font-size: 0.85em; color: #999;">本报告由AI助手自动生成，内容基于arXiv公开论文</p>
+        <p style="margin-top: 5px; font-size: 0.85em; color: #999;">发布时间: 2026-04-14 03:11 (GMT+8) · 第16周</p>
+    </footer>
+</body>
+</html>

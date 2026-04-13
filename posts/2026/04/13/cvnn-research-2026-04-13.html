@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN Research Daily | 2026-04-13</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0066cc;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .meta {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+    .section {
+      margin-bottom: 50px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      color: #0066cc;
+      font-size: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .paper {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .paper:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .paper h3 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    .paper h4 {
+      color: #0066cc;
+      font-size: 15px;
+      margin: 20px 0 10px;
+    }
+    .paper-meta {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .paper-meta p {
+      margin: 5px 0;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .paper-meta a:hover {
+      text-decoration: underline;
+    }
+    .tag {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #0066cc;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 5px;
+    }
+    .summary-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .summary-box h3 {
+      color: #0066cc;
+      margin-bottom: 15px;
+    }
+    .trend-list {
+      list-style: none;
+      padding: 0;
+    }
+    .trend-list li {
+      padding: 10px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    .trend-list li:before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #0066cc;
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      .section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CVNN Research Daily</h1>
+      <p class="subtitle">复数神经网络前沿文献调研</p>
+      <p class="meta">📅 2026-04-13 | 🔬 3篇新论文 | 📊 控制理论/分布式学习/语音生成</p>
+    </header>
+
+    <div class="summary-box">
+      <h3>📋 调研概况</h3>
+      <p><strong>时间范围：</strong>2026-03-14 至 2026-04-13（过去30天）</p>
+      <p><strong>新论文数量：</strong>3篇</p>
+      <p><strong>主要领域：</strong>复数Kuramoto网络控制、基于复数GNN的分布式控制、复数神经网络声码器</p>
+    </div>
+
+    <div class="section">
+      <h2>论文 1：复数Kuramoto网络的统一控制理论框架</h2>
+      
+      <div class="paper">
+        <h3>Complex-Valued Kuramoto Networks: A Unified Control-Theoretic Framework</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2604.07249" target="_blank">2604.07249</a></p>
+          <p><strong>👥 作者：</strong>Lorenzo Giordano, Josep M. Olm, Mario di Bernardo</p>
+          <p><strong>🏛️ 机构：</strong>University of Bristol, Universitat Politècnica de Catalunya</p>
+          <p><strong>📅 发表时间：</strong>2026-04-08</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数网络</span><span class="tag">控制理论</span><span class="tag">Kuramoto模型</span><span class="tag">同步控制</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>耦合振荡器网络的同步现象经典上通过Kuramoto模型进行研究，但该模型的内在非线性特性限制了分析的可处理性并增加了控制设计的复杂度。复数值扩展通过将相位动力学嵌入到更高维的线性状态空间中，可以规避这一问题——将复状态模量调节到一个共同值即可恢复Kuramoto相位行为。然而，现有方法在性能上存在各自的约束。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>现有的状态反馈和混合重置策略在处理复数Kuramoto网络时存在性能限制。作者希望提出一种统一的控制理论框架，克服这些局限性，实现对耦合振荡器网络更精确、更鲁棒的同步控制，同时保证相位对应关系的准确性。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>切换前馈控制律：</strong>确保在所有时刻都实现精确的相位对应关系</li>
+          <li><strong>前馈加滑模控制律：</strong>实现有限时间收敛，无需进行频谱增益调参</li>
+          <li><strong>非自治复数值MIMO滑模控制器：</strong>能够在有限时间内以预设频率实现相位锁定，不受自然频率和耦合强度的影响</li>
+          <li><strong>统一框架视角：</strong>将现有各种方法归类为状态反馈和混合重置策略，并指出其性能约束</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>仿真验证了所提方法在瞬态响应、稳态精度和鲁棒性方面的提升</li>
+          <li>成功实现了经典实值Kuramoto模型无法同步的异构网络的同步</li>
+          <li>切换控制设计克服了现有方法的性能约束</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次为复数Kuramoto网络提供了统一的控制理论框架</li>
+          <li>提出的切换控制策略显著提升了同步控制的性能和鲁棒性</li>
+          <li>有限时间收敛特性对实时控制应用具有重要价值</li>
+          <li>能够处理异构网络，扩展了Kuramoto模型的应用范围</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>论文主要基于理论分析和仿真验证，在物理系统上的实验验证是未来方向</li>
+          <li>大规模网络（数百个以上节点）中的可扩展性需要进一步研究</li>
+          <li>切换控制可能引入抖振问题，在实际实现中需要平滑处理</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>该论文为复数Kuramoto网络提出了一个统一的控制理论框架，通过切换前馈和滑模控制策略克服了现有方法的性能限制。其在有限时间收敛和异构网络同步方面的突破，为复杂耦合振荡器系统的控制提供了新的理论基础。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 2：用于平面系统分布式基不变控制的复数GNN</h2>
+      
+      <div class="paper">
+        <h3>Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2604.02615" target="_blank">2604.02615</a></p>
+          <p><strong>👥 作者：</strong>Samuel Honor, Mohamed Abdelnaby, Kevin Leahy</p>
+          <p><strong>🏛️ 机构：</strong>Florida Institute of Technology, Worcester Polytechnic Institute</p>
+          <p><strong>📅 发表时间：</strong>2026-04-02</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数GNN</span><span class="tag">分布式控制</span><span class="tag">基不变性</span><span class="tag">多智能体系统</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>图神经网络（GNN）由于其能够以分布式方式部署，已成为网络动态系统学习型控制的重要工具。然而，当前的分布式GNN架构假设网络中所有节点都在兼容的坐标系下收集几何观测，这限制了此类控制器在GPS拒止和指南针拒止环境中的应用。在缺乏全局坐标参考的实际场景中，每个节点只能基于自身局部坐标系进行观测。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>现有分布式GNN控制器无法处理局部坐标系不一致的问题。作者希望设计一种对局部基的选择全局不变的GNN参数化方法，使得学习到的控制策略在不同局部坐标系下观察时保持一致，从而提高在拒止环境中的数据效率和泛化性能。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>复数域表示：</strong>将2D几何特征和基之间的转换表示在复数域中，利用复数乘法的旋转特性</li>
+          <li><strong>相位等变激活函数：</strong>在每个GNN层中使用复数值线性层配合相位等变激活函数</li>
+          <li><strong>全局基不变性：</strong>从固定全局坐标系观察时，所有学到的策略对局部坐标系的选择严格不变</li>
+          <li><strong>分布式架构保持：</strong>在不改变GNN分布式部署特性的前提下实现基不变性</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>在模仿学习的集群（flocking）任务上，与实值基线相比显著提高了数据效率</li>
+          <li>跟踪性能明显优于实值GNN基线</li>
+          <li>在面对新的局部坐标系配置时展现了更强的泛化能力</li>
+          <li>验证了基不变性对分布式学习控制的重要价值</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次提出了对局部坐标系选择全局不变的复数GNN控制架构</li>
+          <li>解决了分布式控制器在GPS/指南针拒止环境中的关键部署障碍</li>
+          <li>复数表示天然适合处理2D几何旋转，体现了领域知识与网络架构的深度融合</li>
+          <li>显著提升了数据效率和泛化性能</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>当前方法专注于平面（2D）系统，扩展到3D空间的四元数或更高维复数表示是未来方向</li>
+          <li>仅在模拟的集群任务上验证，在真实机器人平台上的部署需要进一步研究</li>
+          <li>相位等变激活函数的表达能力上限值得深入分析</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>该论文通过复数GNN和相位等变激活函数，创新性地解决了分布式控制中的基不变性问题。其在拒止环境中的优越表现，对无人机集群、自主车辆协同等实际应用具有重要意义。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>论文 3：用于波形生成的复数神经网络声码器</h2>
+      
+      <div class="paper">
+        <h3>Toward Complex-Valued Neural Networks for Waveform Generation</h3>
+        
+        <div class="paper-meta">
+          <p><strong>🔗 arXiv:</strong> <a href="https://arxiv.org/abs/2603.11589" target="_blank">2603.11589</a></p>
+          <p><strong>👥 作者：</strong>Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee</p>
+          <p><strong>🏛️ 机构：</strong>Korea University</p>
+          <p><strong>📅 发表时间：</strong>2026-03-11</p>
+          <p><strong>🏷️ 标签：</strong><span class="tag">复数声码器</span><span class="tag">波形生成</span><span class="tag">语音合成</span><span class="tag">对抗训练</span></p>
+        </div>
+
+        <h4>📖 研究背景</h4>
+        <p>神经声码器近年来在波形生成方面取得了显著进展，能够产生自然且富有表现力的音频。其中，基于iSTFT的声码器通过预测复数值频谱图然后经iSTFT合成波形，避免了可能增加计算成本的学习上采样阶段。然而，现有方法使用实值网络独立处理实部和虚部，这限制了它们捕捉复数频谱图内在结构的能力。</p>
+
+        <h4>💡 研究动机</h4>
+        <p>实值网络将复数频谱图拆分为实部和虚部分别处理，忽略了复数表示中幅度和相位之间的耦合关系。作者认为，使用原生复数运算的生成器和判别器能够更好地建模复数频谱图的结构特性，从而提高合成质量。</p>
+
+        <h4>🔧 核心技术点</h4>
+        <ul>
+          <li><strong>原生复数生成器与判别器：</strong>ComVo的生成器和判别器都使用原生复数算术，实现对抗训练框架中的结构化反馈</li>
+          <li><strong>相位量化：</strong>对相位值进行离散化，以结构化方式引导相位变换，并正则化训练过程</li>
+          <li><strong>分块矩阵计算方案：</strong>通过减少冗余操作来提高训练效率</li>
+          <li><strong>统一复数表示学习：</strong>避免了实部/虚部分离带来的信息损失</li>
+        </ul>
+
+        <h4>📊 实验结果</h4>
+        <ul>
+          <li>ComVo在合成质量上超越了可比的实值基线</li>
+          <li>分块矩阵方案将训练时间减少了25%</li>
+          <li>实验证明了复数算术在语音波形生成中的有效性</li>
+          <li>项目页面和代码均已公开发布</li>
+        </ul>
+
+        <h4>✅ 收益点</h4>
+        <ul>
+          <li>首次将原生复数生成对抗网络应用于神经声码器</li>
+          <li>相位量化方法为复数域中的相位控制提供了新思路</li>
+          <li>分块矩阵计算在保持性能的同时显著降低了训练成本</li>
+          <li>为其他需要复数表示生成的音频任务提供了可借鉴的架构</li>
+        </ul>
+
+        <h4>⚠️ 局限性/未来工作</h4>
+        <ul>
+          <li>论文评估主要在标准语音数据集上进行，在音乐合成等其他波形生成任务上的泛化有待验证</li>
+          <li>复数运算在硬件加速（如CUDA核函数）上的优化潜力尚未充分挖掘</li>
+          <li>相位量化的离散化级别对合成质量的影响可以进一步系统研究</li>
+        </ul>
+
+        <h4>📝 总结</h4>
+        <p>ComVo通过原生复数生成器和判别器，突破了传统实值声码器在处理复数频谱图时的结构限制。其相位量化和分块矩阵优化方案，为复数神经网络在语音生成领域的应用开辟了新的方向。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>趋势分析与展望</h2>
+      
+      <h3>🔬 本周CVNN研究亮点</h3>
+      <ul class="trend-list">
+        <li><strong>控制理论深度融合：</strong>本周研究突出展示了复数神经网络与控制理论的深度结合，从Kuramoto振荡器同步到分布式多智能体控制</li>
+        <li><strong>几何与基不变性：</strong>复数GNN为处理几何变换和坐标系不一致问题提供了天然优势</li>
+        <li><strong>端到端复数学习：</strong>从声码器到控制器，原生复数运算逐渐成为处理相位/旋转信息的首选方案</li>
+      </ul>
+
+      <h3>📈 技术趋势</h3>
+      <ul class="trend-list">
+        <li><strong>复数GNN的崛起：</strong>在分布式控制和图学习中的复数扩展日益受到关注</li>
+        <li><strong>滑模控制与深度学习结合：</strong>经典控制方法的复数神经网络实现展现出良好的理论保证</li>
+        <li><strong>音频信号处理的复数复兴：</strong>复数声码器标志着音频生成领域对复数表示的重新认识</li>
+      </ul>
+
+      <h3>🔮 未来展望</h3>
+      <ul class="trend-list">
+        <li>复数控制框架在机器人和自动驾驶中的应用潜力巨大</li>
+        <li>复数GNN的基不变性思想有望推广到3D场景（四元数/八元数网络）</li>
+        <li>复数生成模型在多媒体内容生成中的应用值得持续关注</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>CVNN Research Daily | 2026-04-13</p>
+      <p>Generated at 2026-04-13 04:30 (Asia/Shanghai)</p>
+      <p>🔧 Jarvis AI Research Assistant</p>
+    </footer>
+  </div>
+</body>
+</html>
