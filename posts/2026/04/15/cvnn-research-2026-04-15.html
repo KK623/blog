@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN Research Daily | 2026-04-15</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0066cc;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .meta {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+    .notice {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .notice h3 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+    .section {
+      margin-bottom: 50px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      color: #0066cc;
+      font-size: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .summary-box {
+      background: #f0f7ff;
+      border-left: 4px solid #0066cc;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .summary-box h3 {
+      color: #0066cc;
+      margin-bottom: 15px;
+    }
+    .trend-list {
+      list-style: none;
+      padding: 0;
+    }
+    .trend-list li {
+      padding: 10px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    .trend-list li:before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #0066cc;
+    }
+    .paper-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid #0066cc;
+    }
+    .paper-card h3 {
+      color: #0066cc;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .paper-card .meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .paper-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+      color: #888;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      .section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CVNN Research Daily</h1>
+      <p class="subtitle">复数神经网络前沿文献调研</p>
+      <p class="meta">📅 2026-04-15 | 🔬 0篇新论文 | 📊 持续监控中</p>
+    </header>
+
+    <div class="notice">
+      <h3>⚠️ 关于今日调研</h3>
+      <p>今日无符合时间要求（过去24小时内发表）的新CVNN论文。以下补充近期（过去7天）值得关注的CVNN研究动态。</p>
+    </div>
+
+    <div class="summary-box">
+      <h3>📋 调研概况</h3>
+      <p><strong>时间范围：</strong>2026-04-14 至 2026-04-15（过去24小时）</p>
+      <p><strong>新论文数量：</strong>0篇（今日无新发表）</p>
+      <p><strong>补充范围：</strong>2026-04-08 至 2026-04-15（过去7天）</p>
+    </div>
+
+    <div class="section">
+      <h2>📚 近期CVNN论文精选（过去7天）</h2>
+      
+      <div class="paper-card">
+        <h3>CV-HoloSR: 基于复数残差密集网络的全息图超分辨率</h3>
+        <div class="meta">
+          <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.10393">2604.10393</a> | 
+          <strong>发表时间:</strong> 2026-04-12 | 
+          <strong>机构:</strong> KAIST, Gwangju Institute of Science and Technology
+        </div>
+        <p><strong>背景：</strong>现有全息图超分辨率方法主要关注视角扩展，但用于体积空间上采样时会引入严重的二次深度失真。</p>
+        <p><strong>动机：</strong>解决全息图体积上采样过程中3D焦点精度下降的问题，保持物理一致的线性深度缩放。</p>
+        <p><strong>技术点：</strong>提出基于复数残差密集网络(CV-RDN)的框架，结合深度感知感知重建损失；引入复数LoRA参数高效微调策略，仅需200样本即可适应未见深度范围。</p>
+        <p><strong>收益点：</strong>LPIPS感知真实度提升32%(达到0.2001)，训练时间减少75%(从22.5小时降至5.2小时)。</p>
+      </div>
+
+      <div class="paper-card">
+        <h3>SMCNet: 基于复数CNN的毫米波雷达表面材料分类</h3>
+        <div class="meta">
+          <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.06847">2604.06847</a> | 
+          <strong>发表时间:</strong> 2026-04-08 | 
+          <strong>机构:</strong> Technical University of Munich
+        </div>
+        <p><strong>背景：</strong>室内机器人感知需要可靠地识别表面材料特性，但现有方法依赖固定感知距离和约束设置。</p>
+        <p><strong>动机：</strong>利用复数CNN处理毫米波雷达IQ信号，实现多距离下的鲁棒表面材料分类。</p>
+        <p><strong>技术点：</strong>采用复数卷积神经网络直接处理复数雷达IQ信号；在三个不同距离训练，测试包含两个未见距离；使用range FFT预处理提升泛化能力。</p>
+        <p><strong>收益点：</strong>测试集整体准确率达99.12-99.53%，range FFT将未知距离准确率从25.25%提升至58.81%。</p>
+      </div>
+
+      <div class="paper-card">
+        <h3>Complex-Valued GNNs for Distributed Basis-Invariant Control</h3>
+        <div class="meta">
+          <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.02615">2604.02615</a> | 
+          <strong>发表时间:</strong> 2026-04-03 | 
+          <strong>机构:</strong> Florida Institute of Technology
+        </div>
+        <p><strong>背景：</strong>现有分布式GNN假设所有节点在兼容坐标系中收集几何观测，限制了在GPS/指南针拒止环境中的应用。</p>
+        <p><strong>动机：</strong>设计对局部基选择具有全局不变性的GNN参数化方法，使多智能体系统在坐标系不一致时仍能协同工作。</p>
+        <p><strong>技术点：</strong>在复数域表示2D几何特征和基变换；使用复数线性层和相位等变激活函数；从全局视角观察时策略对局部坐标系选择严格不变。</p>
+        <p><strong>收益点：</strong>在模仿学习集群任务中，相比实值基线显著提升了数据效率、跟踪性能和泛化能力。</p>
+      </div>
+
+      <div class="paper-card">
+        <h3>Phase-Associative Memory: 复数希尔伯特空间中的序列建模</h3>
+        <div class="meta">
+          <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.05030">2604.05030</a> | 
+          <strong>发表时间:</strong> 2026-04-06 | 
+          <strong>机构:</strong> Independent Research
+        </div>
+        <p><strong>背景：</strong>传统序列模型在处理关联记忆时面临容量限制，向量状态模型的绑定能力随叠加关联数增加而衰减(O(1/√n))。</p>
+        <p><strong>动机：</strong>探索原生复数运算在语言建模中的潜力，验证非经典语境性在计算形式选择上的影响。</p>
+        <p><strong>技术点：</strong>提出Phase-Associative Memory(PAM)递归序列模型，所有表示为复数值；通过外积累积关联到矩阵状态S_t ∈ ℂ^{d×d}；检索通过共轭内积K_t^* · Q_t/√d实现。</p>
+        <p><strong>收益点：</strong>在WikiText-103上约1亿参数达到验证困惑度30.0，与匹配Transformer(27.1)差距约10%，尽管有4倍复数计算开销且无自定义内核。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🔬 近期研究趋势分析</h2>
+      
+      <h3 style="margin: 20px 0 15px; color: #0066cc; font-size: 16px;">技术热点</h3>
+      <ul class="trend-list">
+        <li><strong>全息成像与超分辨率：</strong>CV-HoloSR展示了复数网络在保持物理一致性的3D重建中的独特优势</li>
+        <li><strong>雷达信号处理：</strong>复数CNN直接处理IQ信号在材料分类任务中达到99%+准确率</li>
+        <li><strong>几何不变性设计：</strong>复数GNN通过相位等变性实现坐标系无关的分布式控制</li>
+        <li><strong>关联记忆模型：</strong>复数希尔伯特空间为序列建模提供了新的理论框架</li>
+      </ul>
+
+      <h3 style="margin: 20px 0 15px; color: #0066cc; font-size: 16px;">应用方向</h3>
+      <ul class="trend-list">
+        <li><strong>全息显示技术：</strong>复数网络用于全息图生成和超分辨率重建</li>
+        <li><strong>智能感知系统：</strong>毫米波雷达、激光雷达等传感器的复数信号处理</li>
+        <li><strong>多智能体协同：</strong>分布式控制中的坐标系不变性设计</li>
+        <li><strong>序列建模：</strong>复数关联记忆在语言建模中的探索</li>
+      </ul>
+
+      <h3 style="margin: 20px 0 15px; color: #0066cc; font-size: 16px;">技术亮点</h3>
+      <ul class="trend-list">
+        <li><strong>复数LoRA：</strong>参数高效微调策略大幅降低训练成本(75%时间节省)</li>
+        <li><strong>复数残差密集网络：</strong>在全息超分辨率中实现物理一致的深度缩放</li>
+        <li><strong>相位等变激活：</strong>保证分布式控制中的几何不变性</li>
+        <li><strong>矩阵状态表示：</strong>解决向量状态关联记忆的容量瓶颈</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🔮 未来展望</h2>
+      <ul class="trend-list">
+        <li><strong>计算效率优化：</strong>复数运算虽有4倍开销，但通过专用内核和架构优化可缩小与实值网络的性能差距</li>
+        <li><strong>跨模态应用：</strong>复数表示在同时处理幅度和相位信息的任务中具有天然优势，将在更多感知任务中得到应用</li>
+        <li><strong>理论深入研究：</strong>复数希尔伯特空间中的序列建模为理解Transformer的注意力机制提供了新视角</li>
+        <li><strong>硬件协同设计：</strong>复数神经网络的专用加速器将成为边缘部署的关键</li>
+        <li><strong>物理信息融合：</strong>复数网络在保持物理一致性方面的优势将推动其在科学计算中的应用</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>CVNN Research Daily | 2026-04-15</p>
+      <p>Generated at 2026-04-15 04:30 (Asia/Shanghai)</p>
+      <p>🔧 Jarvis AI Research Assistant</p>
+    </footer>
+  </div>
+</body>
+</html>
