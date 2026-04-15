@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 - 2026-04-16</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            font-size: 0.95em;
+            color: #666;
+        }
+        
+        .meta-item {
+            background: #f8f9fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .notice-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+        }
+        
+        .notice-box h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notice-box p {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+        
+        .paper-section {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .paper-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title-group {
+            flex: 1;
+        }
+        
+        .paper-title-group h2 {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .paper-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        
+        .paper-link:hover {
+            background: #bbdefb;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .info-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            font-size: 0.9em;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .content-block {
+            margin-bottom: 25px;
+        }
+        
+        .content-block h3 {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .content-block p {
+            font-size: 0.95em;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .summary-box h3 {
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .highlights {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .highlights h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-icon {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.6em;
+            }
+            
+            .paper-section {
+                padding: 20px;
+            }
+            
+            .paper-title-group h2 {
+                font-size: 1.2em;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 LLM 量化/部署/蒸馏文献调研</h1>
+            <div class="meta-info">
+                <span class="meta-item">📅 2026年4月16日</span>
+                <span class="meta-item">⏰ 03:00 (Asia/Shanghai)</span>
+                <span class="meta-item">📊 第16周</span>
+                <span class="meta-item">🔍 3篇论文</span>
+            </div>
+        </div>
+        
+        <div class="notice-box">
+            <h3>📋 调研范围说明</h3>
+            <p>本次调研聚焦 <strong>LLM 量化、部署优化、低精度推理、知识蒸馏</strong> 四个核心方向，重点筛选 arXiv 过去24小时发布的最新研究（2026-04-14至2026-04-15）。</p>
+        </div>
+
+        <!-- 论文1 -->
+        <div class="paper-section">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title-group">
+                    <h2>OSC: Hardware Efficient W4A4 Quantization via Outlier Separation in Channel Dimension</h2>
+                    <div class="paper-links">
+                        <a href="https://arxiv.org/abs/2604.12782" class="paper-link" target="_blank">📎 arXiv:2604.12782</a>
+                        <a href="https://arxiv.org/pdf/2604.12782" class="paper-link" target="_blank">📄 PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">👤 作者</div>
+                    <div class="info-value">Zhiyuan Zhang et al.</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">📅 发表时间</div>
+                    <div class="info-value">2026-04-14</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">🏷️ 分类</div>
+                    <div class="info-value">cs.LG / 量化</div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3>🔍 背景</h3>
+                <p>大语言模型(LLM)的4-bit量化已成为高吞吐量部署的必备技术，但激活异常值(activation outliers)的存在始终是低比特格式的主要挑战。传统W8A8量化在压缩到W4A4时，异常值导致的动态范围受限问题会显著降低模型精度。现有异常值抑制方法要么需要复杂的在线计算，要么与硬件加速器的优化矩阵乘法(GEMM)不兼容。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>💡 动机</h3>
+                <p>作者观察到两个核心痛点：<strong>精度损失严重</strong>（异常值在4-bit表示中被截断）和<strong>硬件友好性差</strong>（现有方案无法充分利用现代AI加速器的4-bit微缩放硬件特性）。因此提出一种既能有效保护异常值、又能与现代硬件高效协同的量化框架。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>🔬 技术点</h3>
+                <p><strong>核心创新 - OSC框架</strong></p>
+                <p>1. <strong>异常值空间分布分析</strong>：发现token-persistent结构性聚类效应——高幅度异常值在不同token间占据固定的通道位置。</p>
+                <p>2. <strong>双路径计算架构</strong>：低精度4-bit GEMM路径处理正常值 + 高精度16-bit分支路径专门处理异常值通道，并行执行。</p>
+                <p>3. <strong>结构化子张量提取</strong>：离线识别异常值通道，在线聚合成紧凑密集张量，通过正则化GEMM实现保护。</p>
+                <p>4. <strong>W2回退策略</strong>：针对2-bit权重场景，集成FP8作为回退策略保证稳定性。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>📈 收益点</h3>
+                <p>✅ <strong>精度保持优异</strong>：Qwen3-8B精度下降仅2.19点，Qwen3-30B仅1.12点</p>
+                <p>✅ <strong>硬件效率卓越</strong>：与现代4-bit微缩放硬件无缝适配，实现<strong>1.78倍峰值加速</strong></p>
+                <p>✅ <strong>部署价值</strong>：消除不规则内存访问，保持高吞吐量的同时实现极致压缩</p>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 总结</h3>
+                <p>OSC代表了LLM量化向实用化部署的重要一步。通过揭示异常值的通道级聚类特性，设计硬件协同的双路径架构，在精度、速度和压缩率之间取得优异平衡，特别适合边缘设备和高吞吐量服务端部署。</p>
+            </div>
+        </div>
+
+        <!-- 论文2 -->
+        <div class="paper-section">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title-group">
+                    <h2>Lightning OPD: Efficient Post-Training with Offline On-Policy Distillation</h2>
+                    <div class="paper-links">
+                        <a href="https://arxiv.org/abs/2604.13010" class="paper-link" target="_blank">📎 arXiv:2604.13010</a>
+                        <a href="https://arxiv.org/pdf/2604.13010" class="paper-link" target="_blank">📄 PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">👤 作者</div>
+                    <div class="info-value">Yecheng Wu, Song Han, Hai Cai</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">📅 发表时间</div>
+                    <div class="info-value">2026-04-14</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">🏷️ 分类</div>
+                    <div class="info-value">cs.LG / 蒸馏</div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3>🔍 背景</h3>
+                <p>On-policy distillation (OPD)已成为LLM后训练的高效范式，使用学生模型自己生成的样本进行训练。然而，标准OPD需要在整个训练过程中保持在线教师推理服务器，带来巨大的基础设施开销——不仅需要维护昂贵的教师模型推理集群，还需要处理实时的网络通信延迟。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>💡 动机</h3>
+                <p>核心问题：<strong>OPD能否完全离线执行？</strong> 预先计算教师log概率然后在训练中复用的直观方法在实践中无法可靠匹配标准OPD性能。作者发现了根本原因——<strong>教师一致性(teacher consistency)</strong>这一被忽视的关键条件。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>🔬 技术点</h3>
+                <p><strong>核心创新 - Lightning OPD框架</strong></p>
+                <p>1. <strong>教师一致性理论</strong>：SFT和OPD阶段必须使用相同的教师模型；违反此条件会引入不可约的梯度偏差，导致收敛到次优固定点。</p>
+                <p>2. <strong>离线OPD设计</strong>：预先在SFT rollouts上计算教师log概率，确保教师一致性，消除对在线教师服务器的依赖。</p>
+                <p>3. <strong>理论保证</strong>：证明在教师一致性下，Lightning OPD与标准OPD共享相同最优解，具有有界梯度差异和防止策略漂移的隐式正则化效应。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>📈 收益点</h3>
+                <p>✅ <strong>性能优异</strong>：Qwen3-8B-Base在AIME 2024达到<strong>69.9%</strong>，仅需<strong>30 GPU小时</strong></p>
+                <p>✅ <strong>4.0倍加速</strong>：相比标准OPD，无需维护教师推理服务器</p>
+                <p>✅ <strong>学术友好</strong>：大幅降低LLM后训练研究的门槛，资源有限团队也能进行高质量post-training</p>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 总结</h3>
+                <p>Lightning OPD是LLM蒸馏领域的重要突破。首次揭示教师一致性的关键作用，实现真正的离线蒸馏，4倍加速+优异性能，使得高质量LLM后训练对学术界更加可及，为推理模型训练效率提升提供了新可能性。</p>
+            </div>
+        </div>
+
+        <!-- 论文3 -->
+        <div class="paper-section">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title-group">
+                    <h2>Rethinking On-Policy Distillation: Phenomenology, Mechanism, and Recipe</h2>
+                    <div class="paper-links">
+                        <a href="https://arxiv.org/abs/2604.13016" class="paper-link" target="_blank">📎 arXiv:2604.13016</a>
+                        <a href="https://arxiv.org/pdf/2604.13016" class="paper-link" target="_blank">📄 PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">👤 作者</div>
+                    <div class="info-value">Yaxuan Li et al. (Tsinghua)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">📅 发表时间</div>
+                    <div class="info-value">2026-04-14</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">🏷️ 分类</div>
+                    <div class="info-value">cs.LG / 蒸馏机理</div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3>🔍 背景</h3>
+                <p>On-policy distillation (OPD)已成为LLM后训练的核心技术，但其训练动态机制仍然 poorly understood。什么情况下OPD会成功/失败，以及token-level学习机制，这些基础问题一直没有得到系统性解答，限制了OPD方法的进一步改进。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>💡 动机</h3>
+                <p>通过系统性现象学观察和机制分析，回答：1) OPD成功的必要条件；2) 教师-学生需要满足什么关系；3) OPD在token级别如何学习；4) 如何诊断和修复失败的OPD。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>🔬 技术点</h3>
+                <p><strong>核心发现</strong></p>
+                <p>1. <strong>OPD成功的两个必要条件</strong>：<strong>思维兼容性</strong>（学生与教师必须共享兼容的"思考模式"）+ <strong>新能力提供</strong>（教师必须提供学生未见过的真正新能力）。</p>
+                <p>2. <strong>弱到强反向蒸馏验证</strong>：同家族1.5B和7B教师从学生视角分布上无法区分，验证思维兼容性重要性。</p>
+                <p>3. <strong>Token级机制</strong>：成功OPD特征是在学生访问状态上高概率token渐进对齐，小共享token集合集中97%-99%概率质量。</p>
+                <p>4. <strong>修复策略</strong>：<strong>离策略冷启动</strong> + <strong>教师对齐提示选择</strong>。</p>
+                <p>5. <strong>隐形成本揭示</strong>：OPD"免费午餐"的密集token级奖励实际有代价，引发长时域蒸馏扩展问题。</p>
+            </div>
+
+            <div class="content-block">
+                <h3>📈 收益点</h3>
+                <p>✅ <strong>理论洞察</strong>：首次系统阐释OPD动态机制，明确成功/失败判定条件</p>
+                <p>✅ <strong>实践指导</strong>：提供诊断OPD失败的方法论和两种实用修复策略</p>
+                <p>✅ <strong>研究指引</strong>：揭示长时域蒸馏是OPD重要挑战，指明后续研究方向</p>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 总结</h3>
+                <p>OPD领域的奠基性理论工作，通过大量实验观察和token级机制分析，提供可操作的诊断工具和修复策略。与Lightning OPD同期发表形成互补——一个专注理论机制，一个专注工程优化，共同推动OPD技术走向成熟。</p>
+            </div>
+        </div>
+
+        <!-- 总体观察 -->
+        <div class="highlights">
+            <h3>🎯 本周研究热点与趋势</h3>
+            <div class="highlight-item">
+                <span class="highlight-icon">▸</span>
+                <div><strong>量化技术追求硬件协同设计</strong>：OSC代表了新一代量化方法的方向——不仅追求精度，更注重与现代AI加速器的硬件特性深度适配。</div>
+            </div>
+            <div class="highlight-item">
+                <span class="highlight-icon">▸</span>
+                <div><strong>蒸馏技术进入精细化时代</strong>：两篇OPD相关工作同时发表，表明社区对蒸馏机理的重视已从"经验调参"转向"理论指导"。</div>
+            </div>
+            <div class="highlight-item">
+                <span class="highlight-icon">▸</span>
+                <div><strong>效率优先成为共识</strong>：无论是4-bit量化还是离线蒸馏，核心目标都是降低LLM部署和训练的成本门槛。</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>报告生成时间: 2026-04-16 03:00 (Asia/Shanghai) | 数据来源: arXiv.org</p>
+            <p>🔧 Jarvis LLM Research Daily</p>
+        </div>
+    </div>
+</body>
+</html>
