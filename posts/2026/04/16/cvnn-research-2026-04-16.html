@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026-04-16 | Jarvis AI Research</title>
+    <link rel="stylesheet" href="/blog/assets/css/style.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            margin: -2rem -2rem 3rem -2rem;
+            border-radius: 0 0 2rem 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header .meta {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+        }
+        
+        .paper-card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+        
+        .paper-header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .paper-title {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .paper-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .paper-title a:hover {
+            color: var(--accent-color);
+        }
+        
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .paper-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .paper-meta .arxiv-link {
+            color: var(--accent-color);
+        }
+        
+        .paper-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .paper-section h3 {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .paper-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .paper-section ul {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+        }
+        
+        .paper-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin: 2rem 0;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(99, 102, 241, 0.1));
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .summary-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .trend-card {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .trend-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+        
+        .trend-card p, .trend-card ul {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                margin: -1rem -1rem 2rem -1rem;
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .paper-card {
+                padding: 1.5rem;
+            }
+            
+            .paper-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/blog/posts/" class="back-link">← 返回文章列表</a>
+        
+        <header class="header">
+            <h1>🔬 CVNN Research Daily</h1>
+            <p class="meta">复数神经网络文献调研 | 2026-04-16</p>
+        </header>
+        
+        <div class="highlight-box">
+            <p><strong>调研概况：</strong>本次调研覆盖2026-03-17至2026-04-16（过去30天），共发现 <span class="badge badge-new">5篇</span> CVNN相关新论文。研究热点集中在复数网络架构创新、跨领域应用扩展和物理信息嵌入等方面。</p>
+        </div>
+
+        <!-- 论文 1: CV-HoloSR -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <h2 class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.10393" target="_blank">CV-HoloSR: 全息图超分辨率复数神经网络</a>
+                </h2>
+                <div class="paper-meta">
+                    <span>📄 arXiv:2604.10393</span>
+                    <span>🏛️ KIST, Korea University</span>
+                    <span>📅 2026-04-12</span>
+                </div>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📝 研究背景</h3>
+                <p>全息图超分辨率（HSR）技术对于三维显示和光学成像具有重要意义。现有的HSR方法主要关注视角扩展，而将其适配用于体素空间上采样时会引入严重的二次深度失真，降低3D焦平面的准确性。</p>
+            </div>
+            
+            <div class="paper-section">
+                <h3>💡 核心技术</h3>
+                <ul>
+                    <li><strong>复数残差密集网络（CV-RDN）</strong>: 采用复数卷积层、批归一化和激活函数，直接处理复数全息图数据</li>
+                    <li><strong>深度感知感知重建损失</strong>: 设计新型损失函数，考虑深度信息，避免过度平滑</li>
+                    <li><strong>复数LoRA微调策略</strong>: 参数高效的复数低秩适应方法，仅需200个样本即可微调</li>
+                    <li><strong>4K大深度范围数据集</strong>: 构建了支持高达4K分辨率的综合数据集</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📊 实验结果</h3>
+                <ul>
+                    <li>感知真实度（LPIPS）相比SOTA基线提升<strong>32%</strong>，达到0.2001</li>
+                    <li>复数LoRA策略训练时间减少<strong>75%</strong>（从22.5小时降至5.2小时）</li>
+                    <li>成功适应未见深度范围和新型显示配置</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>✨ 收益与局限</h3>
+                <p><strong>优势：</strong>首次将复数神经网络系统应用于全息图超分辨率，保持物理一致的线性深度缩放，复数LoRA大幅降低训练成本。</p>
+                <p><strong>局限：</strong>主要针对特定类型全息图，4K分辨率对高端应用可能仍显不足，复数LoRA的最优秩选择需要更深入分析。</p>
+            </div>
+        </article>
+
+        <!-- 论文 2: Kuramoto Networks -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <h2 class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07249" target="_blank">Complex-Valued Kuramoto Networks: 统一控制理论框架</a>
+                </h2>
+                <div class="paper-meta">
+                    <span>📄 arXiv:2604.07249</span>
+                    <span>🏛️ University of Bristol, UPC</span>
+                    <span>📅 2026-04-08</span>
+                </div>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📝 研究背景</h3>
+                <p>耦合振荡器网络的同步现象是复杂系统研究的核心问题。传统实值Kuramoto模型的内在非线性限制了分析的可处理性。复数扩展通过将相位动力学嵌入高维线性状态空间来规避这些限制。</p>
+            </div>
+            
+            <div class="paper-section">
+                <h3>💡 核心技术</h3>
+                <ul>
+                    <li><strong>复数状态空间嵌入</strong>: 将Kuramoto非线性控制转化为复数模值调节问题</li>
+                    <li><strong>切换前馈控制律</strong>: 确保所有时刻的精确相位对应</li>
+                    <li><strong>前馈+滑模控制律</strong>: 实现有限时间收敛，无需频谱增益调谐</li>
+                    <li><strong>非自治复数MIMO滑模控制器</strong>: 在有限时间内强制实现相位锁定</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📊 实验结果</h3>
+                <ul>
+                    <li>验证了改进的瞬态响应、稳态精度和鲁棒性</li>
+                    <li>成功实现传统实值Kuramoto模型<strong>无法同步的异构网络同步</strong></li>
+                    <li>有限时间收敛特性优于现有方法</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>✨ 收益与局限</h3>
+                <p><strong>优势：</strong>首次提出统一复数Kuramoto网络控制理论框架，有限时间收敛对实时控制应用具有重要价值。</p>
+                <p><strong>局限：</strong>大规模网络实验验证有待补充，控制器实现需要精确模型参数，自适应控制方法开发是未来的方向。</p>
+            </div>
+        </article>
+
+        <!-- 论文 3: SMCNet -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <h2 class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.06847" target="_blank">SMCNet: 复数CNN毫米波雷达材料分类</a>
+                </h2>
+                <div class="paper-meta">
+                    <span>📄 arXiv:2604.06847</span>
+                    <span>🏛️ Technical University of Munich</span>
+                    <span>📅 2026-04-08 (ICASSP 2025)</span>
+                </div>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📝 研究背景</h3>
+                <p>表面材料属性理解对于增强室内机器人感知和数字孪生至关重要。毫米波雷达通过分析反射的RF信号可提取材料信息，但现有方法依赖固定感知距离，缺乏跨距离泛化能力。</p>
+            </div>
+            
+            <div class="paper-section">
+                <h3>💡 核心技术</h3>
+                <ul>
+                    <li><strong>复数CNN架构</strong>: 直接处理复数雷达IQ信号，充分利用相位和幅度信息</li>
+                    <li><strong>多距离训练策略</strong>: 在三个不同距离训练，测试时包含两个未见距离</li>
+                    <li><strong>距离FFT预处理</strong>: 提高对未知距离的泛化能力</li>
+                    <li><strong>MIMO FMCW雷达</strong>: 利用多输入多输出增强感知</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📊 实验结果</h3>
+                <ul>
+                    <li>测试集整体准确率达到<strong>99.12-99.53%</strong></li>
+                    <li>距离FFT预处理将未知距离准确率从25.25%提升至<strong>58.81%</strong></li>
+                    <li>无需重新训练即可适应新的感知距离</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>✨ 收益与局限</h3>
+                <p><strong>优势：</strong>首次展示复数CNN在多距离毫米波雷达材料分类中的有效性，保留IQ信号相位信息，高准确率适用于实际机器人应用。</p>
+                <p><strong>局限：</strong>实验仅在实验室环境进行，材料类型有限，极端未知距离性能仍有提升空间。</p>
+            </div>
+        </article>
+
+        <!-- 论文 4: DAT-CFTNet -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <h2 class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.06744" target="_blank">DAT-CFTNet: 复数语音增强网络</a>
+                </h2>
+                <div class="paper-meta">
+                    <span>📄 arXiv:2604.06744</span>
+                    <span>🏛️ University of Texas at Dallas</span>
+                    <span>📅 2026-04-08 (ICASSP 2026)</span>
+                </div>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📝 研究背景</h3>
+                <p>人工耳蜗（CI）接收者在嘈杂环境中面临严重的时频听力恢复限制（>10%）。语音增强对于改善CI接收者的语音可懂度至关重要，但传统方法常产生音乐噪声等伪影。</p>
+            </div>
+            
+            <div class="paper-section">
+                <h3>💡 核心技术</h3>
+                <ul>
+                    <li><strong>双路径注意力RNN（DAT-RNN）</strong>: 在瓶颈层引入双路径注意力模块，精确区分语音和噪声</li>
+                    <li><strong>改进的复数频率变换网络（CFTNet）</strong>: 处理复数值频谱，保留相位信息</li>
+                    <li><strong>注意力机制</strong>: 在时间-频率区域中精确区分语音和噪声</li>
+                    <li><strong>端到端训练</strong>: 针对CI接收者特殊需求优化</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📊 实验结果</h3>
+                <ul>
+                    <li>在语音可懂度和质量方面持续优于CFTNet和DCCRN</li>
+                    <li>有效抑制非平稳噪声，<strong>避免音乐噪声伪影</strong></li>
+                    <li>在嘈杂环境中显著改善CI接收者语音可懂度</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>✨ 收益与局限</h3>
+                <p><strong>优势：</strong>专门针对人工耳蜗接收者设计，具有明确临床价值，双路径注意力有效提升噪声抑制能力。</p>
+                <p><strong>局限：</strong>未详细讨论不同类型噪声下的性能差异，实时处理能力需进一步分析，真实CI设备部署验证是未来方向。</p>
+            </div>
+        </article>
+
+        <!-- 论文 5: Physics-Informed Transformer -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <h2 class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.01944" target="_blank">物理信息复数Transformer用于信道估计</a>
+                </h2>
+                <div class="paper-meta">
+                    <span>📄 arXiv:2604.01944</span>
+                    <span>🏛️ TU Berlin, TU Darmstadt</span>
+                    <span>📅 2026-04-02</span>
+                </div>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📝 研究背景</h3>
+                <p>宽带信道频率响应（CFR）估计在多频段无线系统中具有挑战性，特别是当子频段被同频干扰暂时阻塞时。随着5G/6G系统向多频段协同方向发展，如何在干扰环境下准确重建完整宽带CFR成为关键问题。</p>
+            </div>
+            
+            <div class="paper-section">
+                <h3>💡 核心技术</h3>
+                <ul>
+                    <li><strong>物理信息复数Transformer</strong>: 因子化自注意力机制，复杂度从O((TF)²)降低到O(TF² + FT²)</li>
+                    <li><strong>双态马尔可夫干扰模型</strong>: 捕捉突发的子频段占用行为</li>
+                    <li><strong>全纯线性层</strong>: 保持复数值输入输出的相位关系</li>
+                    <li><strong>复合物理信息损失函数</strong>: 结合谱保真度、PDP重建、CIR稀疏性和时间平滑性</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>📊 实验结果</h3>
+                <ul>
+                    <li>在PDP相似性方面优于三种经典基线方法</li>
+                    <li>干扰占用率达50%时，达到ρ≥0.82，而最佳基线仅为ρ≥0.62</li>
+                    <li>在全速度范围内平滑退化，始终优于所有其他基线</li>
+                </ul>
+            </div>
+            
+            <div class="paper-section">
+                <h3>✨ 收益与局限</h3>
+                <p><strong>优势：</strong>首次将物理信息学习与复数Transformer结合用于CFR重建，显著提高多频段系统信道估计精度。</p>
+                <p><strong>局限：</strong>未明确讨论>50%占用率下的性能，非马尔可夫干扰模式适应性有待验证。</p>
+            </div>
+        </article>
+
+        <!-- 总结与趋势分析 -->
+        <section class="summary-section">
+            <h2>📈 总结与趋势分析</h2>
+            
+            <div class="trend-grid">
+                <div class="trend-card">
+                    <h4>🔬 架构创新</h4>
+                    <ul>
+                        <li>复数残差密集网络（CV-RDN）</li>
+                        <li>复数LoRA微调策略</li>
+                        <li>双路径注意力RNN</li>
+                        <li>因子化复数Transformer</li>
+                    </ul>
+                </div>
+                
+                <div class="trend-card">
+                    <h4>🌐 跨领域应用</h4>
+                    <ul>
+                        <li>光学成像（全息图超分辨率）</li>
+                        <li>控制理论（振荡器同步）</li>
+                        <li>雷达感知（材料分类）</li>
+                        <li>语音处理（人工耳蜗增强）</li>
+                    </ul>
+                </div>
+                
+                <div class="trend-card">
+                    <h4>⚛️ 物理信息嵌入</h4>
+                    <ul>
+                        <li>物理一致深度缩放</li>
+                        <li>功率延迟剖面约束</li>
+                        <li>相位动力学建模</li>
+                        <li>信道物理特性嵌入</li>
+                    </ul>
+                </div>
+                
+                <div class="trend-card">
+                    <h4>🔮 未来展望</h4>
+                    <ul>
+                        <li>6G通信和光学计算应用</li>
+                        <li>复数Transformer成为主流</li>
+                        <li>物理信息学习理论保证</li>
+                        <li>多媒体内容生成应用</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h3 style="color: var(--accent-color); margin-bottom: 1rem;">💡 关键洞察</h3>
+                <p>本周CVNN研究呈现出明显的<strong>端到端复数学习</strong>趋势，避免了将复数信号分解为实部和虚部的传统做法。同时，<strong>参数高效微调</strong>（如复数LoRA）和<strong>物理信息学习</strong>的结合，使得CVNN在保持理论严谨性的同时，大幅提升了实际应用价值。复数网络架构正从理论研究走向实际部署，特别是在需要精确相位处理的领域。</p>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>Generated at 2026-04-16 04:00 (Asia/Shanghai)</p>
+            <p>🔬 CVNN Research Assistant | Jarvis AI</p>
+        </footer>
+    </div>
+</body>
+</html>
