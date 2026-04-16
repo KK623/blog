@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-17</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --border: #475569;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta span {
+            margin: 0 10px;
+        }
+        
+        .paper-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title {
+            flex: 1;
+        }
+        
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--bg-card);
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.05));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-card);
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        
+        .highlight-box h4 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        .badge-new {
+            background: var(--success);
+            color: white;
+        }
+        
+        .badge-arxiv {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-title h2 {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔬 LLM 量化/部署/蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026年04月17日</span>
+                <span>🔍 arXiv 过去24小时</span>
+                <span>📝 5篇精选论文</span>
+                <span>⏱️ 发布时间: 03:15 (GMT+8)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Paper 1: DASH-Q -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>DASH-Q: Robust Ultra Low-Bit Post-Training Quantization via Stable Diagonal Curvature Estimate</h2>
+                    <a href="https://arxiv.org/abs/2604.13806" target="_blank">📄 arXiv:2604.13806</a>
+                    <span class="badge badge-new">EUROMLSYS 2026</span>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ PTQ量化</span>
+                <span class="tag">🏷️ 超低比特</span>
+                <span class="tag">🏷️ Hessian优化</span>
+                <br>
+                👥 Jaemin Kim, Sungkyun Kim, Junyeol Lee, Jiwon Seo | 📅 2026-04-15
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>大型语言模型(LLMs)已广泛应用于多个领域，但其规模使得部署面临巨大挑战。后训练量化(Post-Training Quantization, PTQ)能够在不重训练模型的情况下减少内存占用，通过利用小型校准数据集来实现量化。这是模型部署中的关键技术，因为完整的再训练成本极高。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>现有的基于Hessian的PTQ方法通过利用跨通道依赖关系来补偿量化误差，但这类方法在低比特位宽下性能会显著下降。根本原因在于：有限的校准数据导致曲率估计存在噪声，而这种噪声在低比特设置下会被放大，从而严重影响量化精度。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出DASH-Q框架，使用<strong>对角Hessian近似</strong>替代完整的Hessian矩阵计算，采用迭代加权最小二乘法进行优化。通过丢弃噪声敏感的通道间依赖关系，有效过滤采样噪声，优先保留显著特征功率，确保关键信息不被量化误差破坏。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在超低比特环境下显著超越其他PTQ基线方法。在5个基线LLM模型上，<strong>零样本准确率平均提升7.01%</strong>，相比最强基线方法最高提升达<strong>14.01%</strong>。在极小校准数据量下仍保持鲁棒和稳定的性能。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>DASH-Q为解决超低比特PTQ中的噪声问题提供了新思路。通过使用对角Hessian近似并专注于保留显著特征，该方法在保持计算效率的同时显著提升了量化模型的精度。这项工作对于在资源受限设备上部署大语言模型具有重要意义。</p>
+            </div>
+        </article>
+
+        <!-- Paper 2: KL Lens -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>A KL Lens on Quantization: Fast, Forward-Only Sensitivity for Mixed-Precision SSM-Transformer Models</h2>
+                    <a href="https://arxiv.org/abs/2604.13440" target="_blank">📄 arXiv:2604.13440</a>
+                    <span class="badge badge-arxiv">代码已开源</span>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ 混合精度量化</span>
+                <span class="tag">🏷️ SSM-Transformer</span>
+                <span class="tag">🏷️ KL散度</span>
+                <br>
+                👥 Jason Kong, Nilesh Prasad Pandey, Flavio Ponzina, Tajana Rosing | 📅 2026-04-15
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>在边缘设备上部署大型语言模型面临严重的计算和内存限制，这限制了实时处理和端侧智能的实现。混合架构结合了结构化状态空间模型(SSMs)和基于Transformer的LLMs，在效率和性能之间取得平衡。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>现有的量化敏感度分析方法通常需要反向传播和梯度计算，这在数据受限场景(如专有数据或隐私约束)下难以应用。此外，传统的MSE和SQNR指标在语言建模任务中不能很好地反映量化对模型性能的真实影响。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出基于<strong>KL散度</strong>的敏感度分析框架，仅需前向传播计算。通过代理模型识别混合SSM-Transformer架构中最易受量化影响的组件。形式化分析证明KL散度在语言建模任务中优于MSE和SQNR，支持混合精度量化决策。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在Intel Lunar Lake硬件上实现<strong>接近FP16的困惑度</strong>，模型大小和吞吐量与Uniform INT4相当，但精度显著更高。为资源受限边缘设备上部署先进混合模型提供实用解决方案。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>这项工作通过KL散度视角重新审视了量化敏感度分析，证明了KL指标在语言建模任务中的优越性。该框架的轻量化特性使其特别适合数据受限的实际部署场景，为边缘AI应用开辟了新的可能性。代码已开源：<a href="https://github.com/jasonkongie/kl-ssm-quant">github.com/jasonkongie/kl-ssm-quant</a></p>
+            </div>
+        </article>
+
+        <!-- Paper 3: OSC -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>OSC: Hardware Efficient W4A4 Quantization via Outlier Separation in Channel Dimension</h2>
+                    <a href="https://arxiv.org/abs/2604.12782" target="_blank">📄 arXiv:2604.12782</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ W4A4量化</span>
+                <span class="tag">🏷️ 异常值处理</span>
+                <span class="tag">🏷️ 硬件友好</span>
+                <br>
+                👥 Zhiyuan Zhang, Yanzhao Li, Zhiqiang Zou, et al. | 📅 2026-04-14
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>4比特量化对于实现大型语言模型的高吞吐量部署至关重要。然而，激活值中的异常值(outliers)经常导致显著的精度下降，这是由于低比特格式的动态范围受限所致。这一问题在Transformer架构中尤为突出。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>现有的异常值处理方法往往依赖复杂的硬件支持或引入额外的计算开销。为了在保持硬件友好性的同时有效处理异常值，需要深入研究异常值的空间分布特征，并设计能够与现代AI加速器无缝集成的解决方案。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>发现<strong>token持续的结构化聚类效应</strong>：高幅度异常值在不同token间占据固定通道。采用<strong>双路径计算</strong>：低精度4-bit GEMM路径和高精度16-bit分支GEMM路径。离线组策略识别异常值通道，在线执行结构化子张量提取。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在Qwen3-8B和Qwen3-30B上，平均精度下降分别限制在<strong>2.19和1.12个点</strong>。在现代AI加速器上相比W8A8 GEMM基线实现<strong>最高1.78倍加速</strong>，与4-bit微缩硬件无缝兼容。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>OSC通过利用异常值的结构化分布特征，提出了一种硬件高效的W4A4量化方案。双路径计算机制既保护了异常值，又充分利用了低比特计算的效率优势。这项工作为在实际硬件上部署4比特量化模型提供了实用的解决方案。</p>
+            </div>
+        </article>
+
+        <!-- Paper 4: TIP -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title">
+                    <h2>TIP: Token Importance in On-Policy Distillation</h2>
+                    <a href="https://arxiv.org/abs/2604.14084" target="_blank">📄 arXiv:2604.14084</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ On-Policy蒸馏</span>
+                <span class="tag">🏷️ Token选择</span>
+                <span class="tag">🏷️ 知识蒸馏</span>
+                <br>
+                👥 Yuanda Xu, Hejian Sang, Zhengze Zhou, et al. | 📅 2026-04-15
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>On-policy知识蒸馏(OPD)通过让学生模型在自己的输出序列上训练，并在token级别接受教师模型的监督，已成为大规模语言模型后训练的有效范式。然而，不同token位置的重要性差异显著。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>在OPD中，并非所有token都承载相同的学习价值。识别哪些token携带最有用的学习信号，对于提高蒸馏效率和降低计算成本至关重要。特别是，需要理解高熵区域和低熵但师生分歧大的区域各自的价值。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出<strong>TIP框架</strong>，建立基于学生熵和师生分歧的双轴分类法。发现两个关键区域：高学生熵位置，以及低学生熵+高师生分歧位置。熵采样保留50%token即可匹配全token训练效果，低熵高分歧token(少于10%)几乎可匹配全token基线。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p><strong>峰值内存节省高达47%</strong>，显著降低蒸馏成本。在DeepPlanning长程规划基准上，仅用<20%token的Q3-only训练超越全token OPD。支持内存高效的更大模型蒸馏，适用于有限GPU预算。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>TIP通过系统分析token在on-policy蒸馏中的重要性，揭示了熵和师生分歧两个维度的价值。这一发现不仅提升了蒸馏效率，也为理解知识蒸馏的动态过程提供了新视角。该工作对于降低大模型蒸馏成本、提高训练效率具有重要意义。</p>
+            </div>
+        </article>
+
+        <!-- Paper 5: Nemotron 3 Super -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">5</div>
+                <div class="paper-title">
+                    <h2>Nemotron 3 Super: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model</h2>
+                    <a href="https://arxiv.org/abs/2604.12374" target="_blank">📄 arXiv:2604.12374</a>
+                    <span class="badge badge-new">NVIDIA开源</span>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ MoE架构</span>
+                <span class="tag">🏷️ Mamba</span>
+                <span class="tag">🏷️ NVFP4</span>
+                <span class="tag">🏷️ 1M上下文</span>
+                <br>
+                👥 NVIDIA 团队 (150+ 作者) | 📅 2026-04-14
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>大型语言模型的部署成本主要受推理吞吐量和内存占用限制。混合架构结合了Mamba状态空间模型和Transformer注意力机制的优势，能够在保持性能的同时提高效率。Mixture-of-Experts(MoE)架构通过条件计算进一步扩展模型容量。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>现有的开源模型在推理效率方面仍有改进空间。NVIDIA旨在开发一个开放、高效的超大规模语言模型，结合最新的架构创新，为社区提供性能与效率兼顾的基础模型。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p><strong>120B总参数(激活12B)</strong>的混合Mamba-Attention MoE架构。首个在<strong>NVFP4精度</strong>下进行预训练的模型。采用LatentMoE架构，包含<strong>MTP(Multi-Token Prediction)层</strong>支持原生推测解码。支持<strong>最高1M上下文长度</strong>。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>相比GPT-OSS-120B推理吞吐量提升<strong>2.2倍</strong>，相比Qwen3.5-122B提升<strong>7.5倍</strong>。完整的模型系列开源(基础版、后训练版、量化版)，数据集和训练细节全部公开。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>Nemotron 3 Super代表了当前开源大语言模型的前沿水平，通过融合多种架构创新实现了卓越的效率。作为完全开放的模型，它为研究人员和开发者提供了宝贵的资源。这项工作展示了MoE、Mamba、量化等技术组合的强大潜力。</p>
+            </div>
+        </article>
+
+        <!-- Trends Section -->
+        <section class="trends-section">
+            <h2>📊 研究趋势总结</h2>
+            
+            <div class="highlight-box">
+                <h4>🔥 主要发现</h4>
+                <ul style="margin-left: 20px; color: var(--text-secondary);">
+                    <li><strong>超低比特量化成为主流</strong>：多篇论文聚焦于W4A4甚至更低比特的量化方案</li>
+                    <li><strong>敏感度分析精细化</strong>：KL散度等更精细的量化敏感度分析指标带来更好的效果</li>
+                    <li><strong>蒸馏效率持续优化</strong>：通过token选择和离线计算降低训练成本</li>
+                    <li><strong>混合架构兴起</strong>：Mamba-Transformer混合架构成为重要的效率优化方向</li>
+                </ul>
+            </div>
+            
+            <h3 style="margin-top: 20px; color: var(--text-primary);">关键技术方向对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>方向</th>
+                        <th>代表工作</th>
+                        <th>核心贡献</th>
+                        <th>关键指标</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>超低比特PTQ</td>
+                        <td>DASH-Q</td>
+                        <td>对角Hessian近似，噪声过滤</td>
+                        <td>+7.01% 准确率</td>
+                    </tr>
+                    <tr>
+                        <td>混合精度量化</td>
+                        <td>KL Lens</td>
+                        <td>KL散度敏感度分析</td>
+                        <td>接近FP16困惑度</td>
+                    </tr>
+                    <tr>
+                        <td>异常值处理</td>
+                        <td>OSC</td>
+                        <td>通道维度异常值分离</td>
+                        <td>1.78× 加速</td>
+                    </tr>
+                    <tr>
+                        <td>Token级蒸馏</td>
+                        <td>TIP</td>
+                        <td>熵+分歧双轴重要性</td>
+                        <td>-47% 内存</td>
+                    </tr>
+                    <tr>
+                        <td>混合架构</td>
+                        <td>Nemotron 3</td>
+                        <td>Mamba+MoE+量化组合</td>
+                        <td>7.5× 吞吐提升</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>📊 LLM Research Daily | 2026 Week 16</p>
+            <p>🔧 Generated by Jarvis | 📅 Published: 2026-04-17 03:15 (GMT+8)</p>
+            <p style="margin-top: 10px; font-size: 0.75rem;">
+                本报告由AI自动生成，内容基于arXiv公开论文摘要<br>
+                如有任何问题或建议，欢迎反馈
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // KaTeX auto-render
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        });
+    </script>
+</body>
+</html>
