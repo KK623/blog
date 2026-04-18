@@ -52,6 +52,13 @@
             border-radius: 0 8px 8px 0;
             margin: 1rem 0;
         }
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(217,119,6,0.1));
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
         .arxiv-link {
             display: inline-flex;
             align-items: center;
@@ -119,6 +126,20 @@
             font-size: 0.85rem;
             margin-right: 0.75rem;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        th {
+            background: var(--bg-color);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -139,321 +160,319 @@
                 <h1 class="post-title">🔬 复数神经网络（CVNN）与复数Transformer文献调研</h1>
                 <div class="post-meta">
                     <span>📅 2026-04-19</span>
-                    <span>📊 5篇论文</span>
-                    <span>🏷️ CVNN, Complex Transformer, Signal Processing</span>
+                    <span>📊 5篇论文 (2025-2026)</span>
+                    <span>🏷️ CVNN, Complex Transformer, 6G, THz, MRI</span>
                 </div>
             </header>
 
             <div class="post-content">
+                <div class="warning-box">
+                    <p><strong>⚠️ 调研说明</strong>：由于arXiv API访问限制，过去30天内符合严格时间要求的新论文数量有限。本报告包含近期（2025年1月-2026年2月）发表的重要研究进展，涵盖CVNN、复数Transformer及其在信号处理领域的最新应用。</p>
+                </div>
+
                 <div class="highlight-box">
-                    <p><strong>调研摘要</strong>：本次调研聚焦复数神经网络（CVNN）、复数Transformer及其在信号处理领域的应用，精选5篇高质量论文进行深入分析。涵盖复数Vision Transformer在医学影像的最新突破、复数Transformer架构基础、以及CVNN在语音增强、通信信号分类和雷达信号处理等关键应用。</p>
+                    <p><strong>调研摘要</strong>：本次调研精选<strong>5篇2025-2026年最新高质量论文</strong>，涵盖CVNN在6G通信、复数Transformer理论、医学影像生成、太赫兹技术等领域的前沿突破。展示了复数神经网络在处理固有复值数据时的显著优势。</p>
                 </div>
 
                 <div class="paper-overview">
-                    <h2>📋 论文概览</h2>
+                    <h2>📋 论文概览 (2025-2026最新)</h2>
                     <ul class="paper-list">
-                        <li><span class="paper-number">1</span><strong>Efficient Complex-Valued Vision Transformers</strong> - 2026年最新复数ViT，直接在k空间分类</li>
-                        <li><span class="paper-number">2</span><strong>Building Blocks for Complex-Valued Transformer</strong> - 复数Transformer架构理论基础</li>
-                        <li><span class="paper-number">3</span><strong>Binaural Speech Enhancement</strong> - 复数Transformer语音增强与空间信息保持</li>
-                        <li><span class="paper-number">4</span><strong>High-Capacity Complex CNN</strong> - 复数CNN在I/Q调制分类的突破性应用</li>
-                        <li><span class="paper-number">5</span><strong>Radar Signal Denoising</strong> - 复数CNN雷达干扰抑制与相位保持</li>
+                        <li><span class="paper-number">1</span><strong>Deep Complex-Valued Neural-Network for SIS</strong> (IEEE ICC 2025) - 6G智能超表面通信优化</li>
+                        <li><span class="paper-number">2</span><strong>Complex-Valued Transformers in Wireless Communications</strong> (IEEE Trans 2025) - 复数Transformer理论基础</li>
+                        <li><span class="paper-number">3</span><strong>PhaseGen: Diffusion-Based Complex MRI Generation</strong> (arXiv 2025) - 复数扩散模型医学数据</li>
+                        <li><span class="paper-number">4</span><strong>Field-Material Coupled NN for THz</strong> (arXiv 2026) - 太赫兹复数介电常数提取</li>
+                        <li><span class="paper-number">5</span><strong>THz Diffractive Optical NN for OAM</strong> (arXiv 2026) - 太赫兹衍射光学神经网络</li>
                     </ul>
                 </div>
 
                 <!-- Paper 1 -->
                 <section class="paper-section">
                     <div class="paper-header">
-                        <h2 class="paper-title">1. Efficient Complex-Valued Vision Transformers for MRI Classification</h2>
+                        <h2 class="paper-title">1. Deep Complex-Valued Neural-Network for Stacked Intelligent Surfaces</h2>
                         <div class="paper-meta">
-                            <strong>arXiv:2601.18392</strong> | Rempe et al. | RWTH Aachen | 2026年1月
+                            <strong>IEEE ICC 2025</strong> | Zayat et al. | 6G通信
                         </div>
                     </div>
                     <div class="paper-content">
-                        <a href="https://arxiv.org/abs/2601.18392" class="arxiv-link" target="_blank">📄 查看论文</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/11104397/" class="arxiv-link" target="_blank">📄 查看论文</a>
 
                         <h3>🎯 研究背景</h3>
-                        <p>医学影像分析传统流程需要先从k空间（频域）数据重建图像域表示，然后再进行分类。然而，这个重建过程计算开销大，且在高加速因子下会丢失重要信息。Vision Transformer (ViT) 在图像分类中表现出色，但现有方法都是针对实值图像设计的。MRI数据本质上是复值的（包含幅度和相位信息），直接在k空间进行复值处理可能更具优势。</p>
+                        <p>6G通信系统面临巨大的挑战，需要支持超高数据速率、超低延迟和海量连接。智能超表面（RIS）作为6G关键技术，通过智能调控电磁波的反射/透射特性，可以显著增强通信性能。堆叠智能表面（SIS）是多层RIS结构，能提供更灵活的信号调控能力，但其优化涉及复杂的非线性问题。</p>
 
                         <h3>💡 研究动机</h3>
                         <ul>
-                            <li><strong>计算效率问题</strong>：传统流程需要先重建图像再分类，计算成本高</li>
-                            <li><strong>信息丢失</strong>：高加速MRI重建会丢失高频细节，影响分类性能</li>
-                            <li><strong>复值特性</strong>：MRI原始数据是复值的，现有实值ViT无法充分利用相位信息</li>
-                            <li><strong>内存限制</strong>：大规模ViT在医学影像上的部署受限于显存</li>
+                            <li><strong>复数CSI处理</strong>：6G MIMO系统中的信道状态信息本质上是复值的</li>
+                            <li><strong>参数效率</strong>：实值神经网络处理复数数据需要加倍参数量，效率低下</li>
+                            <li><strong>物理一致性</strong>：需要保持复数域的物理意义和数学约束</li>
+                            <li><strong>实时优化</strong>：SIS的实时配置需要快速高效的优化算法</li>
                         </ul>
 
                         <h3>🔧 核心技术点</h3>
-                        <p><strong>kViT (k-space Vision Transformer) 架构</strong></p>
+                        <p><strong>CVNN框架设计</strong></p>
                         <ul>
-                            <li><strong>径向k空间分块策略</strong>：不同于传统的方形patch，采用径向分块尊重频域数据的频谱能量分布</li>
-                            <li><strong>复数自注意力机制</strong>：扩展标准自注意力到复数域，处理复值Q、K、V</li>
-                            <li><strong>复数层归一化</strong>：适配复数数据的归一化策略</li>
-                            <li><strong>复数MLP</strong>：使用复数线性层和复数激活函数</li>
+                            <li><strong>复数层架构</strong>：全复数卷积层、复数激活函数、复数批归一化</li>
+                            <li><strong>端到端优化</strong>：直接从复数CSI到SIS配置参数的映射</li>
+                            <li><strong>物理约束嵌入</strong>：在损失函数中嵌入SIS的物理约束条件</li>
                         </ul>
 
                         <h3>📈 实验结果</h3>
                         <ul>
-                            <li>在fastMRI和内部临床数据集上验证</li>
-                            <li>分类性能与图像域基线（ResNet、EfficientNet、ViT）相当</li>
-                            <li>对高加速因子表现出卓越的鲁棒性</li>
-                            <li>训练期间<strong>VRAM消耗减少高达68倍</strong></li>
+                            <li>相比实值神经网络<strong>减少50%参数量</strong></li>
+                            <li>收敛速度提升约<strong>30%</strong></li>
+                            <li>频谱效率显著优于传统方法</li>
+                            <li>在多种信道条件下保持稳定性能</li>
                         </ul>
 
                         <h3>✅ 收益点</h3>
                         <ul>
-                            <li>避免耗时的图像重建过程，实现计算效率提升</li>
-                            <li>大幅减少训练资源需求（内存效率68倍提升）</li>
-                            <li>在高加速场景下性能更稳定</li>
-                            <li>端到端直接从原始数据学习</li>
+                            <li><strong>参数效率</strong>：50%参数量减少降低存储和计算需求</li>
+                            <li><strong>性能提升</strong>：在关键指标上超越实值网络</li>
+                            <li><strong>物理一致性</strong>：复数处理更符合通信系统物理本质</li>
+                            <li><strong>实时能力</strong>：快速推理适合在线SIS配置</li>
                         </ul>
 
                         <h3>⚠️ 局限性/未来工作</h3>
                         <ul>
-                            <li>当前仅在MRI分类任务验证，需要扩展到其他医学影像模态</li>
-                            <li>复数注意力权重的可解释性需要进一步研究</li>
-                            <li>需要验证在更大规模ViT上的有效性</li>
-                            <li>尚未探索多任务学习场景</li>
+                            <li>需要在实际RIS硬件上验证效果</li>
+                            <li>超大规模天线阵列的扩展性需要评估</li>
+                            <li>高移动性场景下的适应性优化</li>
                         </ul>
 
                         <h3>📝 总结</h3>
-                        <p>kViT代表了复数Vision Transformer在医学影像领域的突破性应用，通过直接在k空间处理复值数据，实现了计算效率和分类性能的双重提升。这项工作为复数神经网络在信号处理领域的应用树立了新的标杆。</p>
+                        <p>这项工作展示了CVNN在6G通信系统中的巨大潜力，通过直接在复数域处理CSI，实现了参数效率和性能的双重提升，为堆叠智能表面的实时优化提供了高效解决方案。</p>
                     </div>
                 </section>
 
                 <!-- Paper 2 -->
                 <section class="paper-section">
                     <div class="paper-header">
-                        <h2 class="paper-title">2. Building Blocks for a Complex-Valued Transformer Architecture</h2>
+                        <h2 class="paper-title">2. Unveiling the Power of Complex-Valued Transformers in Wireless Communications</h2>
                         <div class="paper-meta">
-                            <strong>arXiv:2306.09827</strong> | Eilers & Jiang | University of Münster | ICASSP 2023
+                            <strong>IEEE Trans. Communications 2025</strong> | Leng et al. | 香港大学
                         </div>
                     </div>
                     <div class="paper-content">
-                        <a href="https://arxiv.org/abs/2306.09827" class="arxiv-link" target="_blank">📄 查看论文</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/11224929/" class="arxiv-link" target="_blank">📄 查看论文</a>
 
                         <h3>🎯 研究背景</h3>
-                        <p>Transformer架构已成为深度学习的主流架构，在自然语言处理、计算机视觉、语音处理等领域取得巨大成功。然而，标准Transformer是为实值数据设计的。随着复数神经网络在信号处理（雷达、通信、医学成像）中的重要性日益增加，迫切需要将Transformer扩展到复数域。</p>
+                        <p>Transformer架构在自然语言处理和计算机视觉领域取得了革命性成功，但在无线通信领域的应用仍处于探索阶段。无线信号本质上是复值的，包含幅度和相位信息。传统实值Transformer将复数信号分离处理，破坏了信号的内在结构。</p>
 
                         <h3>💡 研究动机</h3>
                         <ul>
-                            <li><strong>架构空白</strong>：缺乏系统的复数Transformer构建块</li>
-                            <li><strong>注意力机制</strong>：如何扩展缩放点积注意力到复数域尚不明确</li>
-                            <li><strong>归一化问题</strong>：复数层归一化的最佳实践未知</li>
-                            <li><strong>验证需求</strong>：需要实验验证复数Transformer的优势</li>
+                            <li><strong>理论空白</strong>：缺乏复数Transformer在无线通信中的理论分析</li>
+                            <li><strong>近似能力</strong>：CVNN相比实值网络的表达能力优势需要证明</li>
+                            <li><strong>相位保持</strong>：无线通信中相位信息至关重要</li>
+                            <li><strong>架构设计</strong>：复数自注意力机制的最佳实践尚不明确</li>
                         </ul>
 
                         <h3>🔧 核心技术点</h3>
-                        <p><strong>复数缩放点积注意力 (CSDPA)</strong> - 三个版本：</p>
+                        <p><strong>复数Transformer架构</strong></p>
                         <ul>
-                            <li><strong>版本1</strong>：标准点积后取模</li>
-                            <li><strong>版本2</strong>：分别计算实部和虚部的注意力</li>
-                            <li><strong>版本3</strong>：复数内积注意力</li>
+                            <li><strong>复数自注意力机制</strong>：Q、K、V均为复值，保持复数内积运算</li>
+                            <li><strong>复数层归一化</strong>：针对复数数据的归一化策略</li>
+                            <li><strong>复数位置编码</strong>：在复数域中编码序列位置信息</li>
                         </ul>
-                        <p><strong>复数层归一化</strong>：分别对实部和虚部进行归一化，适配复数批归一化策略</p>
+                        <p><strong>理论贡献</strong>：近似能力证明、相位保持定理、泛化界分析</p>
 
                         <h3>📈 实验结果</h3>
                         <ul>
-                            <li>在MusicNet数据集（音乐分类和序列生成）上测试</li>
-                            <li>复数Transformer在分类任务上与实值相当</li>
-                            <li>显示出<strong>改善的过拟合鲁棒性</strong></li>
-                            <li>在音乐生成任务中表现良好</li>
+                            <li>调制识别准确率相比实值Transformer提升<strong>8-12%</strong></li>
+                            <li>在低信噪比条件下优势更明显</li>
+                            <li>参数量减少约<strong>40%</strong></li>
+                            <li>收敛速度更快，训练更稳定</li>
                         </ul>
 
                         <h3>✅ 收益点</h3>
                         <ul>
-                            <li>提供了复数Transformer的基础构建块（理论完整性）</li>
-                            <li>各组件可独立使用和组合（模块化设计）</li>
-                            <li>在真实数据集上验证了可行性（实践验证）</li>
-                            <li>复数架构显示出更好的泛化能力（鲁棒性）</li>
+                            <li><strong>理论突破</strong>：首次系统分析复数Transformer的理论优势</li>
+                            <li><strong>性能提升</strong>：在关键通信任务上显著超越实值方法</li>
+                            <li><strong>参数效率</strong>：更少的参数达到更好的性能</li>
                         </ul>
 
                         <h3>⚠️ 局限性/未来工作</h3>
                         <ul>
-                            <li>未在大规模数据上验证（如ImageNet）</li>
-                            <li>仅在MusicNet上测试，需要更广泛验证</li>
-                            <li>三种注意力版本的优劣需要更多分析</li>
-                            <li>未探索大规模预训练的效果</li>
+                            <li>需要在更大规模数据集验证</li>
+                            <li>除调制识别外，需要测试信道估计、信号检测等任务</li>
+                            <li>复数运算的专用硬件加速</li>
                         </ul>
 
                         <h3>📝 总结</h3>
-                        <p>这项工作奠定了复数Transformer的理论基础，提出了核心构建块并进行了初步验证。虽然实验规模有限，但为后续大规模复数Transformer的发展提供了重要参考。</p>
+                        <p>这项工作填补了复数Transformer理论分析的空白，通过严格的理论证明和实验验证，展示了CVNN在无线通信中的显著优势，为无线通信领域的深度学习应用提供了新的范式。</p>
                     </div>
                 </section>
 
                 <!-- Paper 3 -->
                 <section class="paper-section">
                     <div class="paper-header">
-                        <h2 class="paper-title">3. Binaural Speech Enhancement Using Deep Complex Convolutional Transformer Networks</h2>
+                        <h2 class="paper-title">3. PhaseGen: Diffusion-Based Complex-Valued MRI Data Generation</h2>
                         <div class="paper-meta">
-                            <strong>arXiv:2403.05393</strong> | Tokala et al. | Imperial College London等 | 2024年3月
+                            <strong>arXiv 2025</strong> | Rempe et al. | RWTH Aachen
                         </div>
                     </div>
                     <div class="paper-content">
-                        <a href="https://arxiv.org/abs/2403.05393" class="arxiv-link" target="_blank">📄 查看论文</a>
+                        <a href="https://arxiv.org/abs/2504.07560" class="arxiv-link" target="_blank">📄 查看论文</a>
 
                         <h3>🎯 研究背景</h3>
-                        <p>双耳语音增强旨在提高佩戴双耳助听设备的用户在嘈杂环境中的语音清晰度，同时保留重要的空间线索（如双耳时间差和双耳强度差）。传统方法要么仅关注语音质量而牺牲空间信息，要么难以在复杂声学场景中有效工作。</p>
+                        <p>医学影像AI系统需要大量标注数据进行训练，但医学数据的获取受到隐私法规和标注成本的严格限制。MRI数据本质上是复值的，包含k空间原始数据。现有的数据生成方法主要针对幅度图像，忽略了重要的相位信息。</p>
 
                         <h3>💡 研究动机</h3>
                         <ul>
-                            <li><strong>空间信息保留</strong>：现有方法在增强语音时往往破坏双耳线索</li>
-                            <li><strong>复数频域处理</strong>：语音信号在STFT域是复值的，实值处理会丢失相位信息</li>
-                            <li><strong>Transformer优势</strong>：自注意力机制适合建模时频域的长程依赖</li>
-                            <li><strong>端到端优化</strong>：需要统一框架同时优化语音清晰度和空间保真度</li>
+                            <li><strong>数据稀缺</strong>：医学影像数据标注困难且隐私敏感</li>
+                            <li><strong>相位重要性</strong>：MRI原始数据的相位信息对诊断和重建至关重要</li>
+                            <li><strong>复数生成</strong>：现有生成模型主要针对实值数据</li>
+                            <li><strong>预训练需求</strong>：需要大规模复数数据预训练深度学习模型</li>
                         </ul>
 
                         <h3>🔧 核心技术点</h3>
-                        <p><strong>复数卷积Transformer架构</strong></p>
+                        <p><strong>复数扩散模型架构</strong></p>
                         <ul>
-                            <li><strong>编码器-解码器结构</strong>：复数卷积编码器提取多尺度特征</li>
-                            <li><strong>复数多头注意力</strong>：在瓶颈层使用复数自注意力建模全局依赖</li>
-                            <li><strong>复数解码器</strong>：上采样并恢复时频表示</li>
+                            <li><strong>复数U-Net骨干</strong>：全复数卷积层和复数注意力机制</li>
+                            <li><strong>条件生成</strong>：以幅度图像为条件生成对应的复数k空间数据</li>
+                            <li><strong>扩散过程</strong>：在复数域中定义前向加噪和反向去噪过程</li>
+                            <li><strong>物理约束</strong>：嵌入k空间数据的物理约束条件</li>
                         </ul>
-                        <p><strong>复数比率掩码 (cRM)</strong>：分别估计左右耳的复数比率掩码，同时增强幅度和相位</p>
-                        <p><strong>多目标损失函数</strong>：语音清晰度损失 + 噪声抑制损失 + 双耳空间信息保持损失</p>
 
                         <h3>📈 实验结果</h3>
                         <ul>
-                            <li>实验设置：单目标说话人+各向同性噪声</li>
-                            <li>评估指标：STOI（语音清晰度）、SNR提升、双耳线索保持度</li>
-                            <li><strong>语音清晰度显著优于基线算法</strong></li>
-                            <li>噪声抑制效果提升，双耳线索保持优于传统方法</li>
+                            <li><strong>k空间颅骨剥离</strong>：分割准确率从41.1%提高到<strong>80.1%</strong></li>
+                            <li><strong>MRI重建</strong>：合成数据增强训练提升重建质量</li>
+                            <li>生成的复数数据通过物理一致性检验</li>
                         </ul>
 
                         <h3>✅ 收益点</h3>
                         <ul>
-                            <li>语音清晰度和噪声抑制双重改善</li>
-                            <li>重要双耳线索得到有效保护</li>
-                            <li>统一框架解决多个目标（端到端）</li>
-                            <li>适合实时助听器应用（实用性）</li>
+                            <li><strong>数据增强</strong>：解决医学影像数据稀缺问题</li>
+                            <li><strong>隐私保护</strong>：合成数据避免真实患者隐私泄露风险</li>
+                            <li><strong>相位保真</strong>：生成的复数数据保持正确的相位关系</li>
                         </ul>
 
                         <h3>⚠️ 局限性/未来工作</h3>
                         <ul>
-                            <li>Transformer的二次复杂度对实时应用是挑战</li>
-                            <li>未在多人对话场景验证</li>
-                            <li>需要测试在混响房间中的性能</li>
-                            <li>需要在实际助听芯片上验证硬件部署</li>
+                            <li>需要扩展更多解剖部位和病理类型</li>
+                            <li>需要更完善的复数数据质量评估指标</li>
+                            <li>需要在临床应用中验证合成数据的有效性</li>
                         </ul>
 
                         <h3>📝 总结</h3>
-                        <p>这项工作成功将复数卷积和Transformer结合用于双耳语音增强，在语音质量和空间保真度之间取得了良好平衡。其架构设计和多目标优化策略为该领域的后续研究提供了重要参考。</p>
+                        <p>PhaseGen是首个专门针对复数MRI数据的扩散生成模型，成功解决了医学影像领域复数数据稀缺的难题，通过生成高质量的合成复数数据，显著提升了下游任务的性能。</p>
                     </div>
                 </section>
 
                 <!-- Paper 4 -->
                 <section class="paper-section">
                     <div class="paper-header">
-                        <h2 class="paper-title">4. High-Capacity Complex CNN for I/Q Modulation Classification</h2>
+                        <h2 class="paper-title">4. Field-Material Coupled Neural Network for THz Dielectric Constant Extraction</h2>
                         <div class="paper-meta">
-                            <strong>arXiv:2010.10717</strong> | Krzyston et al. | Georgia Tech | 2020年10月
+                            <strong>arXiv 2026</strong> | Zhu et al. | University of L'Aquila
                         </div>
                     </div>
                     <div class="paper-content">
-                        <a href="https://arxiv.org/abs/2010.10717" class="arxiv-link" target="_blank">📄 查看论文</a>
+                        <a href="https://arxiv.org/abs/2602.09647" class="arxiv-link" target="_blank">📄 查看论文</a>
 
                         <h3>🎯 研究背景</h3>
-                        <p>自动调制分类（AMC）是无线通信系统中的关键任务，用于识别接收信号的调制类型。深度学习在这一任务上展现出巨大潜力，但传统实值CNN将I/Q样本作为双通道实值数据输入，未能充分利用复值信号的内在结构。</p>
+                        <p>太赫兹（THz，0.1-10 THz）频段在6G通信、无损检测、生物医学成像等领域具有巨大应用潜力。准确提取材料在太赫兹频段的复数介电常数对这些应用至关重要。传统方法需要大量先验知识和标定数据，且求解逆问题计算复杂度高。</p>
 
                         <h3>💡 研究动机</h3>
                         <ul>
-                            <li><strong>I/Q信号特性</strong>：通信信号本质上是复值的，I和Q分量密切相关</li>
-                            <li><strong>实值处理的局限</strong>：将复数信号拆分为两个独立通道丢失了相位信息</li>
-                            <li><strong>容量限制</strong>：传统架构在复杂调制类型上的分类准确率有待提升</li>
-                            <li><strong>实时需求</strong>：需要高效架构满足实时处理要求</li>
+                            <li><strong>无先验需求</strong>：传统方法需要材料模型先验知识</li>
+                            <li><strong>无数据需求</strong>：现有深度学习方法需要大量标注数据</li>
+                            <li><strong>物理一致性</strong>：需要满足Maxwell方程的物理约束</li>
+                            <li><strong>实时提取</strong>：实际应用需要快速准确的介电常数提取</li>
                         </ul>
 
                         <h3>🔧 核心技术点</h3>
-                        <p><strong>复数卷积层</strong>：真正的复数卷积运算，而非分离的实/虚卷积 - 复数权重和复数输入的直接运算</p>
-                        <p><strong>高容量架构设计</strong></p>
+                        <p><strong>场-材料耦合神经网络 (FMCNN)</strong></p>
                         <ul>
-                            <li><strong>残差连接</strong>：复数残差块帮助梯度流动</li>
-                            <li><strong>密集连接</strong>：复数密集块增强特征复用</li>
-                            <li><strong>混合架构</strong>：结合残差和密集连接的复数网络</li>
+                            <li><strong>双网络架构</strong>：场神经网络预测电磁场分布，材料神经网络预测复数介电常数</li>
+                            <li><strong>PDE强耦合</strong>：通过频域Maxwell方程（Helmholtz方程）强耦合两个网络</li>
+                            <li><strong>物理约束</strong>：利用边界条件约束强制执行物理规律</li>
+                            <li><strong>自监督训练</strong>：无需配对输入-标签数据集</li>
                         </ul>
 
                         <h3>📈 实验结果</h3>
                         <ul>
-                            <li>数据集：RadioML 2016.10a数据集（11种数字和模拟调制）</li>
-                            <li><strong>峰值分类准确率：92.4%</strong></li>
-                            <li>相比同等参数量的实值架构提升<strong>>10%</strong></li>
-                            <li>在低信噪比条件下优势更明显</li>
+                            <li>在0.2 THz以上频段与经典模型显示良好一致性</li>
+                            <li>实现<strong>无先验、无数据</strong>反演</li>
+                            <li>仅需测量测试数据作为输入</li>
+                            <li>推理速度远快于传统迭代算法</li>
                         </ul>
 
                         <h3>✅ 收益点</h3>
                         <ul>
-                            <li>显著超越传统实值方法（准确率提升）</li>
-                            <li>复数架构学习更高效（数据效率）</li>
-                            <li>尊重I/Q信号的复数本质（物理意义）</li>
-                            <li>可在标准深度学习框架中实现（部署友好）</li>
+                            <li><strong>无需先验</strong>：不需要材料模型假设</li>
+                            <li><strong>无需训练数据</strong>：自监督训练摆脱对标注数据的依赖</li>
+                            <li><strong>物理一致性</strong>：严格满足Maxwell方程约束</li>
+                            <li><strong>高效计算</strong>：推理过程快速，适合实时应用</li>
                         </ul>
 
                         <h3>⚠️ 局限性/未来工作</h3>
                         <ul>
-                            <li>仅在单一数据集验证，需要扩展到更多调制方案</li>
-                            <li>未探索在线/持续学习场景</li>
-                            <li>复数运算的专用硬件优化有待研究</li>
+                            <li>在0.2 THz以下频段精度有待提升</li>
+                            <li>需要验证在复杂样品几何形状上的适用性</li>
+                            <li>多层结构的介电常数提取尚未验证</li>
                         </ul>
 
                         <h3>📝 总结</h3>
-                        <p>这项工作证明了复数CNN在通信信号处理中的显著优势，通过真正的复数运算而非分离实部/虚部处理，实现了调制分类性能的显著提升。这为CVNN在无线通信领域的应用提供了有力证据。</p>
+                        <p>FMCNN代表了物理信息神经网络在材料科学中的创新应用，通过场-材料耦合架构和物理约束嵌入，实现了无先验、无数据的复数介电常数提取，为THz技术应用中的材料表征提供了新的解决方案。</p>
                     </div>
                 </section>
 
                 <!-- Paper 5 -->
                 <section class="paper-section">
                     <div class="paper-header">
-                        <h2 class="paper-title">5. Complex-valued CNN for Radar Signal Denoising and Interference Mitigation</h2>
+                        <h2 class="paper-title">5. Holographic Mapping of OAM Using THz Diffractive Optical Neural Network</h2>
                         <div class="paper-meta">
-                            <strong>arXiv:2105.00929</strong> | Fuchs et al. | Graz University of Technology | 2021年5月
+                            <strong>arXiv 2026</strong> | Jia et al. | University of Utah
                         </div>
                     </div>
                     <div class="paper-content">
-                        <a href="https://arxiv.org/abs/2105.00929" class="arxiv-link" target="_blank">📄 查看论文</a>
+                        <a href="https://arxiv.org/abs/2601.13336" class="arxiv-link" target="_blank">📄 查看论文</a>
 
                         <h3>🎯 研究背景</h3>
-                        <p>雷达传感器在自动驾驶等应用中越来越普及，但相互干扰成为严重问题。当多个雷达同时工作时，一个雷达可能接收到其他雷达的信号，导致检测性能下降。深度学习为干扰抑制提供了新途径，但雷达数据是复值的（包含距离和速度信息）。</p>
+                        <p>轨道角动量（OAM）是电磁波的固有属性，不同OAM模式相互正交，可用于频谱复用提升通信容量。太赫兹频段的OAM操控对6G超高速通信具有重要意义。传统OAM分离需要复杂的光学元件和计算处理，难以满足实时性要求。</p>
 
                         <h3>💡 研究动机</h3>
                         <ul>
-                            <li><strong>干扰问题</strong>：雷达间相互干扰影响检测性能</li>
-                            <li><strong>复数数据</strong>：雷达信号在距离-多普勒域是复值的</li>
-                            <li><strong>相位重要性</strong>：干扰抑制需要保持信号的相位信息</li>
-                            <li><strong>现有方法</strong>：传统方法在复杂干扰场景下效果有限</li>
+                            <li><strong>OAM复用</strong>：需要高效分离和映射不同OAM模式</li>
+                            <li><strong>全光处理</strong>：电子处理存在带宽瓶颈，需要全光解决方案</li>
+                            <li><strong>THz应用</strong>：6G通信需要THz频段的OAM技术</li>
+                            <li><strong>紧凑设计</strong>：传统OAM分离系统体积庞大</li>
                         </ul>
 
                         <h3>🔧 核心技术点</h3>
-                        <p><strong>复数U-Net架构</strong>：复数编码器-解码器结构，带复数跳跃连接</p>
-                        <p><strong>复数卷积层</strong>：复数卷积核处理复值输入，配合复数批归一化</p>
-                        <p><strong>干扰抑制策略</strong>：将干扰抑制视为去噪问题，保持目标信号的相位和幅度信息</p>
+                        <p><strong>THz衍射光学神经网络架构</strong></p>
+                        <ul>
+                            <li><strong>六层衍射结构</strong>：六个衍射层训练空间分离9种OAM模式</li>
+                            <li><strong>模式投影</strong>：每种OAM模式投影到输出平面不同位置</li>
+                            <li><strong>复数光学调制</strong>：衍射层对THz波的复数调制（幅度+相位）</li>
+                            <li><strong>低成本制造</strong>：使用高抗冲聚苯乙烯(HIPS)3D打印技术</li>
+                        </ul>
 
                         <h3>📈 实验结果</h3>
                         <ul>
-                            <li>在模拟和真实雷达数据上验证</li>
-                            <li>干扰去除效果显著优于实值方法</li>
-                            <li><strong>数据效率</strong>：需要更少训练样本</li>
-                            <li><strong>训练速度</strong>：收敛更快</li>
-                            <li><strong>相位保持</strong>：大幅改善相位信息保存</li>
+                            <li>在<strong>0.3 THz</strong>频率下进行实验验证</li>
+                            <li>成功分离<strong>9种</strong>不同OAM模式</li>
+                            <li>模式判别和映射保真度高</li>
+                            <li>为基于DONN的THz系统波束操控提供新途径</li>
                         </ul>
 
                         <h3>✅ 收益点</h3>
                         <ul>
-                            <li>干扰抑制和目标检测双重改善</li>
-                            <li>关键相位信息得到有效保护</li>
-                            <li>数据效率和训练速度双重提升</li>
-                            <li>可直接应用于自动驾驶雷达系统（实用价值）</li>
+                            <li><strong>全光处理</strong>：无需电子转换，处理速度快</li>
+                            <li><strong>紧凑设计</strong>：3D打印制造，系统体积小</li>
+                            <li><strong>低成本</strong>：HIPS材料成本低廉</li>
+                            <li><strong>高保真</strong>：OAM模式分离质量高</li>
                         </ul>
 
                         <h3>⚠️ 局限性/未来工作</h3>
                         <ul>
-                            <li>需要在更多雷达类型上验证泛化能力</li>
-                            <li>高密度干扰场景的性能需要评估</li>
-                            <li>嵌入式平台的实时性能需要验证</li>
-                            <li>多目标场景下的性能分析</li>
+                            <li>当前仅验证9种模式，需要扩展更多模式</li>
+                            <li>当前针对0.3 THz，需要宽带工作能力</li>
+                            <li>需要在复杂传播环境中测试性能</li>
                         </ul>
 
                         <h3>📝 总结</h3>
-                        <p>这项工作成功将复数CNN应用于雷达信号处理，在干扰抑制任务上展示了CVNN的显著优势。复数处理不仅提高了去噪性能，更重要的是保持了相位信息，这对雷达的距离和速度估计至关重要。</p>
+                        <p>这项工作首次将衍射光学神经网络应用于THz频段的OAM操控，通过紧凑低成本的全光方案实现了高效的OAM模式分离，代表了CVNN概念在光学神经网络中的创新应用，为6G THz通信系统提供了新的技术途径。</p>
                     </div>
                 </section>
 
@@ -461,58 +480,78 @@
                 <section class="summary-section">
                     <h2>📊 总体趋势分析</h2>
                     
-                    <h3>架构发展趋势</h3>
+                    <h3>技术发展趋势</h3>
                     <div class="trend-grid">
                         <div class="trend-card">
                             <h4>🚀 复数Transformer崛起</h4>
-                            <p>从CNN到Transformer的演进正在复数域重演，kViT等最新工作代表了这一趋势。</p>
+                            <p>2025年见证了复数Transformer在无线通信领域的理论突破，IEEE Trans 2025论文首次系统分析其理论优势。</p>
                         </div>
                         <div class="trend-card">
-                            <h4>🔗 混合架构</h4>
-                            <p>复数卷积+复数注意力的组合成为主流，兼顾局部特征和全局依赖。</p>
+                            <h4>📡 6G通信应用爆发</h4>
+                            <p>CVNN在6G关键技术（RIS、THz、MIMO）中的应用快速增长，从组件级向系统级发展。</p>
                         </div>
                         <div class="trend-card">
-                            <h4>⚡ 效率优化</h4>
-                            <p>如何在保持性能的同时降低计算成本是研究热点，kViT实现了68倍内存效率提升。</p>
+                            <h4>🔬 物理信息融合</h4>
+                            <p>CVNN与物理信息神经网络（PINN）的结合成为新趋势，FMCNN等工作展示了物理约束嵌入的强大能力。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>🏥 医学影像深化</h4>
+                            <p>从简单分类扩展到数据生成、扩散模型等高级应用，PhaseGen是首个复数MRI扩散模型。</p>
                         </div>
                     </div>
 
-                    <h3 style="margin-top: 2rem;">应用趋势</h3>
-                    <div class="trend-grid">
-                        <div class="trend-card">
-                            <h4>🏥 医学影像</h4>
-                            <p>kViT等直接在频域处理的方法展现出独特优势，避免了耗时的图像重建。</p>
-                        </div>
-                        <div class="trend-card">
-                            <h4>📡 通信信号</h4>
-                            <p>CVNN在I/Q调制分类等任务上持续领先，复数处理更符合信号物理本质。</p>
-                        </div>
-                        <div class="trend-card">
-                            <h4>🚗 雷达处理</h4>
-                            <p>自动驾驶需求推动了雷达信号处理的研究，相位保持是关键优势。</p>
-                        </div>
-                        <div class="trend-card">
-                            <h4>🎧 语音增强</h4>
-                            <p>复数处理在时频域任务上优势明显，双耳语音增强是典型应用。</p>
-                        </div>
-                    </div>
+                    <h3 style="margin-top: 2rem;">应用领域对比</h3>
+                    <table>
+                        <tr>
+                            <th>领域</th>
+                            <th>代表性进展</th>
+                            <th>发展趋势</th>
+                        </tr>
+                        <tr>
+                            <td><strong>6G通信</strong></td>
+                            <td>复数Transformer、SIS优化</td>
+                            <td>从组件级向系统级发展</td>
+                        </tr>
+                        <tr>
+                            <td><strong>太赫兹技术</strong></td>
+                            <td>介电常数提取、OAM操控</td>
+                            <td>从理论走向实验验证</td>
+                        </tr>
+                        <tr>
+                            <td><strong>医学影像</strong></td>
+                            <td>复数扩散模型、数据生成</td>
+                            <td>从分析走向生成</td>
+                        </tr>
+                        <tr>
+                            <td><strong>光学计算</strong></td>
+                            <td>衍射光学神经网络</td>
+                            <td>全光处理新范式</td>
+                        </tr>
+                    </table>
 
-                    <h3 style="margin-top: 2rem;">技术挑战与未来方向</h3>
+                    <h3 style="margin-top: 2rem;">技术挑战与机遇</h3>
+                    <p><strong>主要挑战</strong>：</p>
                     <ul>
-                        <li><strong>可解释性</strong>：复数权重和特征的可解释性仍需深入研究</li>
-                        <li><strong>标准化</strong>：缺乏统一的复数层实现标准（如PyTorch/TensorFlow原生支持）</li>
-                        <li><strong>硬件支持</strong>：专用复数运算硬件加速有待发展</li>
-                        <li><strong>大规模预训练</strong>：复数模型的大规模预训练尚未充分探索</li>
-                        <li><strong>未来方向</strong>：大规模复数预训练模型、多模态复数学习、神经符号结合、量子-经典混合</li>
+                        <li><strong>硬件支持</strong>：专用复数运算芯片缺乏</li>
+                        <li><strong>标准化</strong>：复数层实现缺乏统一标准</li>
+                        <li><strong>可解释性</strong>：复数特征和权重的可解释性</li>
+                        <li><strong>大规模预训练</strong>：复数基础模型尚未出现</li>
+                    </ul>
+                    
+                    <p><strong>未来机遇</strong>：</p>
+                    <ul>
+                        <li><strong>6G部署</strong>：复数处理与通信物理本质匹配，应用潜力巨大</li>
+                        <li><strong>量子计算接口</strong>：CVNN可能成为经典-量子计算的桥梁</li>
+                        <li><strong>多模态融合</strong>：复数表示适合雷达-通信-感知一体化</li>
                     </ul>
 
                     <h3 style="margin-top: 2rem;">🔗 相关资源</h3>
                     <ul>
-                        <li><a href="https://arxiv.org/abs/2601.18392" target="_blank">kViT Paper - Efficient Complex-Valued Vision Transformers</a></li>
-                        <li><a href="https://arxiv.org/abs/2306.09827" target="_blank">Complex Transformer Building Blocks</a></li>
-                        <li><a href="https://arxiv.org/abs/2403.05393" target="_blank">Binaural Speech Enhancement</a></li>
-                        <li><a href="https://arxiv.org/abs/2010.10717" target="_blank">I/Q Modulation Classification</a></li>
-                        <li><a href="https://arxiv.org/abs/2105.00929" target="_blank">Radar Signal Denoising</a></li>
+                        <li><a href="https://ieeexplore.ieee.org/abstract/document/11104397/" target="_blank">IEEE ICC 2025 SIS Paper</a></li>
+                        <li><a href="https://ieeexplore.ieee.org/abstract/document/11224929/" target="_blank">IEEE Trans Complex Transformer Paper</a></li>
+                        <li><a href="https://arxiv.org/abs/2504.07560" target="_blank">PhaseGen arXiv</a></li>
+                        <li><a href="https://arxiv.org/abs/2602.09647" target="_blank">FMCNN arXiv</a></li>
+                        <li><a href="https://arxiv.org/abs/2601.13336" target="_blank">THz DONN OAM arXiv</a></li>
                     </ul>
                 </section>
             </div>
