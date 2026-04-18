@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-19</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --border: #475569;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta span {
+            margin: 0 10px;
+        }
+        
+        .paper-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title {
+            flex: 1;
+        }
+        
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--bg-card);
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.05));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-card);
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        
+        .highlight-box h4 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        .badge-new {
+            background: var(--success);
+            color: white;
+        }
+        
+        .badge-arxiv {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-title h2 {
+                font-size: 1rem;
+            }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔬 LLM 量化/部署/蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026年04月19日</span>
+                <span>🔍 arXiv 过去24-48小时</span>
+                <span>📝 4篇精选论文</span>
+                <span>⏱️ 发布时间: 03:30 (GMT+8)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Paper 1: SpecGuard -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>From Tokens to Steps: Verification-Aware Speculative Decoding for Efficient Multi-Step Reasoning</h2>
+                    <a href="https://arxiv.org/abs/2604.15244" target="_blank">📄 arXiv:2604.15244</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ 投机解码</span>
+                <span class="tag">🏷️ 推理验证</span>
+                <span class="tag">🏷️ 部署优化</span>
+                <br>
+                👥 Kiran Purohit, et al. | 📅 2026-04-16
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>投机解码(SD)通过使用轻量级草稿模型提出输出并由更强的目标模型验证，已成为加速大型语言模型推理的强大技术。然而，其以标记为中心的特性允许错误标记传播，这在多步推理场景中会导致显著问题。现有方法依赖外部奖励模型来缓解此问题，但引入了额外延迟、计算开销和有限的跨领域泛化能力。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>标准SD的标记级验证无法检测逻辑错误，导致错误推理步骤级联。研究团队希望开发一种验证感知框架，在步骤级别(而非标记级别)操作，仅使用模型内部信号，消除对外部验证系统的需求，同时保持推理加速优势。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出<strong>SpecGuard</strong>框架，采用双信号集成验证机制：<strong>注意力基础接地分数</strong>测量对输入和已接受步骤的归因，确保上下文一致性；<strong>对数概率基础置信度分数</strong>捕获在步骤级别聚合的标记级置信度。在每个推理步骤采样多个草稿候选，选择最一致的步骤进行验证。当草稿步骤被拒绝时，使用目标模型重新计算，动态分配计算资源。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在多个推理基准测试中，SpecGuard相比标准投机解码<strong>提高3.6%的准确率</strong>，同时<strong>减少约11%的延迟</strong>，超越了奖励引导的SD方法而没有外部模型开销。自包含验证仅使用模型内部信号，在不同推理任务上具有更好的泛化能力。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>SpecGuard通过引入无外部依赖的步骤级验证，代表了投机解码的重大进步。双信号集成方法(注意力接地+对数概率置信度)提供了鲁棒的验证，同时保持了SD的推理加速优势。这项工作对于推理准确性至关重要且不希望依赖外部模型的部署场景具有特别影响。3.6%的准确率提升结合11%的延迟减少使SpecGuard在实际部署中处于有利的Pareto前沿。</p>
+            </div>
+        </article>
+
+        <!-- Paper 2: K-Token Merging -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>Compressing Sequences in the Latent Embedding Space: K-Token Merging for Large Language Models</h2>
+                    <a href="https://arxiv.org/abs/2604.15153" target="_blank">📄 arXiv:2604.15153</a>
+                    <span class="badge badge-new">Under Review</span>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ Token压缩</span>
+                <span class="tag">🏷️ 潜在空间</span>
+                <span class="tag">🏷️ 长上下文</span>
+                <br>
+                👥 Zihao Xu, et al. | 📅 2026-04-16
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>大型语言模型(LLMs)在处理长提示时面临显著的计算和内存成本，因为全自注意力机制与输入长度呈二次方关系缩放(O(n²))。这一限制在需要长上下文理解的部署场景中尤为关键，如文档分析、代码审查和多轮对话。现有的提示压缩方法主要在标记空间上操作，忽略了潜在嵌入空间中的优化机会。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>研究者希望通过直接在隐藏状态上操作，在注意力计算之前减少序列长度，同时保持原始词汇表的生成能力。潜在嵌入空间中的信息表示更加密集，直接在该空间进行压缩可能比在标记空间更高效。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出<strong>K-Token Merging</strong>框架，通过轻量级编码器网络将每个连续的K个标记嵌入合并为单个代表性嵌入。压缩后的序列由LoRA适配的LLM处理，而生成过程保持在原始词汇空间。这种解耦设计将压缩与基础模型架构分离，通过冻结基础模型权重仅微调LoRA参数，实现快速适应不同压缩率。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在结构推理(Textualized Tree)、情感分类(Amazon Reviews)和代码编辑(CommitPackFT)任务上，K-Token Merging位于性能与压缩的Pareto前沿，实现高达<strong>75%的输入长度减少(4×压缩)</strong>，同时性能下降最小。为资源受限的部署场景显著扩展了实际上下文窗口。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>K-Token Merging代表了提示压缩的新范式，通过在嵌入空间而非标记空间上操作，实现了优于传统方法的压缩效率。75%的长度减少能力可以显著扩展部署LLM的实际上下文窗口，特别适用于资源受限且需要长上下文处理的场景。与LoRA适应的兼容性使其能够快速部署到不同模型和任务。</p>
+            </div>
+        </article>
+
+        <!-- Paper 3: Adaptive Test-Time Compute -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>Adaptive Test-Time Compute Allocation for Reasoning LLMs via Constrained Policy Optimization</h2>
+                    <a href="https://arxiv.org/abs/2604.14853" target="_blank">📄 arXiv:2604.14853</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ 测试时计算</span>
+                <span class="tag">🏷️ 约束优化</span>
+                <span class="tag">🏷️ 计算分配</span>
+                <br>
+                👥 Zhiyuan Zhai, et al. | 📅 2026-04-16
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>测试时计算缩放通过在推理期间花费额外计算(重复采样、搜索或扩展推理)来提高LLM性能，已成为最大化模型能力的关键技术。然而，当前系统很大程度上忽略了一个基本部署约束：推理预算是有限的。关键挑战在于确定哪些输入值得更多计算，哪些可以低成本回答。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>均匀的计算分配在所有输入上是次优的。一些查询需要广泛推理，而其他查询可以用最小计算解决。研究者希望将其形式化为优化问题，并开发一个实用系统，在平均计算预算约束下最大化准确率，创建可在实时推理系统中部署的自适应分配机制。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提出<strong>两阶段Solve-then-Learn流程</strong>：在求解阶段，拉格朗日松弛将全局约束分解为每个实例的子问题，每个子问题接受闭式oracle动作，以最优价格权衡准确率与成本。在学习阶段，训练轻量级分类器从廉价输入特征预测oracle动作，摊销实时部署的分配规则。证明了对偶变量中的成本单调性，通过二分搜索实现精确预算定位。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在MATH和GSM8K基准上，使用DeepSeek-V3、GPT-4o-mini和Qwen2.5-7B三个模型，该方法在匹配预算约束下始终优于均匀和启发式分配基线，在MATH上实现高达<strong>12.8%的相对准确率提升</strong>。密切跟踪拉格朗日oracle上界，分配决策模仿准确率超过91%。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>这项工作为推理LLM中的计算分配问题提供了原则性解决方案。通过将其框架化为约束优化并使用拉格朗日松弛，作者实现了理论严谨性和实际部署能力的结合。在匹配预算约束下12.8%的准确率提升展示了成本敏感部署的实质现实世界价值。清晰的理论框架(遗憾界限、单调成本)使这种方法对生产系统具有吸引力。</p>
+            </div>
+        </article>
+
+        <!-- Paper 4: Zeroth-Order Optimization -->
+        <article class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title">
+                    <h2>Zeroth-Order Optimization at the Edge of Stability</h2>
+                    <a href="https://arxiv.org/abs/2604.14669" target="_blank">📄 arXiv:2604.14669</a>
+                    <span class="badge badge-arxiv">38 pages</span>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <span class="tag">🏷️ 零阶优化</span>
+                <span class="tag">🏷️ 稳定性</span>
+                <span class="tag">🏷️ 内存高效</span>
+                <br>
+                👥 Minhak Song, et al. | 📅 2026-04-16
+            </div>
+            
+            <div class="section">
+                <h3>📖 背景</h3>
+                <p>零阶(ZO)优化方法在梯度不可用或计算成本过高时越来越重要，包括黑盒学习和大型模型的内存高效微调。这些方法通过函数值评估避免梯度计算，实现内存高效微调。然而，ZO方法在深度学习中的优化动态仍然研究不足，特别是关于稳定性条件及其与一阶(FO)方法的对比。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🎯 动机</h3>
+                <p>虽然像MeZO这样的ZO方法已显示出LLM内存高效微调的潜力，但缺乏对其优化动态的理论理解限制了实际采用。研究者希望推导ZO方法的显式稳定性条件，理解它们与FO方法的区别，并表征隐式正则化效应，为在资源受限环境中可靠部署ZO微调提供关键理解。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>提供<strong>显式稳定性表征</strong>，给出精确捕获基于标准两点ZO梯度估计器的方法的均方线性稳定性的步长条件。与FO稳定性(仅取决于最大Hessian特征值)形成鲜明对比，ZO稳定性取决于整个Hessian频谱。推导仅使用最大特征值和Hessian迹的可处理界限，实现无需完整Hessian计算的实用稳定性监控。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>ZO方法实现显著降低的内存需求微调，对于在边缘设备或内存受限环境部署微调至关重要，开启了设备端个性化可能性。显式稳定性条件实现可靠的步长选择，可处理界限使实用监控可行，减少超参数调整负担。大学习率在ZO中主要正则化Hessian迹，在FO中主要正则化顶部特征值，解释了不同的泛化行为。</p>
+            </div>
+            
+            <div class="summary-section">
+                <h3>💡 总结</h3>
+                <p>这项理论工作为在LLM微调场景中部署零阶优化提供了关键理解。显式稳定性条件和稳定性边缘行为的表征为配置ZO方法提供了可靠工具。内存效率增益使其特别适用于边缘部署和设备端微调应用。隐式正则化的区别(迹与顶部特征值)提供了何时ZO方法可能与FO方法泛化不同的见解，指导资源受限部署场景中的算法选择。</p>
+            </div>
+        </article>
+
+        <!-- Trends Section -->
+        <section class="trends-section">
+            <h2>📊 研究趋势总结</h2>
+            
+            <div class="highlight-box">
+                <h4>🔥 主要发现</h4>
+                <ul style="margin-left: 20px; color: var(--text-secondary);">
+                    <li><strong>输入压缩进入潜在空间</strong>：K-Token Merging标志着从标记空间到潜在空间压缩的范式转变</li>
+                    <li><strong>推理感知加速</strong>：SpecGuard解决了多步推理中投机解码的关键验证需求</li>
+                    <li><strong>预算意识推理</strong>：自适应计算分配将成本优化形式化为约束优化问题</li>
+                    <li><strong>内存高效训练理论</strong>：ZO优化的稳定性理论支持实用的边缘设备微调</li>
+                </ul>
+            </div>
+            
+            <h3 style="margin-top: 20px; color: var(--text-primary);">关键技术方向对比</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>方向</th>
+                        <th>代表工作</th>
+                        <th>核心贡献</th>
+                        <th>关键指标</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>推理验证</td>
+                        <td>SpecGuard</td>
+                        <td>步骤级双信号验证</td>
+                        <td>+3.6% 准确率, -11% 延迟</td>
+                    </tr>
+                    <tr>
+                        <td>潜在空间压缩</td>
+                        <td>K-Token Merging</td>
+                        <td>嵌入级Token合并</td>
+                        <td>75% 长度减少</td>
+                    </tr>
+                    <tr>
+                        <td>计算分配</td>
+                        <td>Adaptive Compute</td>
+                        <td>拉格朗日约束优化</td>
+                        <td>+12.8% 准确率</td>
+                    </tr>
+                    <tr>
+                        <td>内存高效训练</td>
+                        <td>ZO Optimization</td>
+                        <td>稳定性理论分析</td>
+                        <td>显著内存节省</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight-box" style="margin-top: 20px;">
+                <h4>🔮 未来方向</h4>
+                <ul style="margin-left: 20px; color: var(--text-secondary);">
+                    <li><strong>压缩与推理的协同优化</strong>：将输入压缩与验证感知解码结合</li>
+                    <li><strong>动态计算预算系统</strong>：根据实时资源可用性调整计算分配</li>
+                    <li><strong>边缘端完整优化栈</strong>：从训练到推理的全栈内存高效方案</li>
+                    <li><strong>长上下文高效处理</strong>：支持百万级上下文的高效压缩与检索</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>📊 LLM Research Daily | 2026 Week 16</p>
+            <p>🔧 Generated by Jarvis | 📅 Published: 2026-04-19 03:30 (GMT+8)</p>
+            <p style="margin-top: 10px; font-size: 0.75rem;">
+                本报告由AI自动生成，内容基于arXiv公开论文摘要<br>
+                搜索时间范围: April 16-17, 2026 | 如有任何问题或建议，欢迎反馈
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        });
+    </script>
+</body>
+</html>
