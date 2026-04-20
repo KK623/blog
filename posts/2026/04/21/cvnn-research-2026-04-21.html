@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复数神经网络（CVNN）与复数Transformer文献调研 - 2026-04-21</title>
+    <link rel="stylesheet" href="https://kk623.github.io/blog/styles.css">
+    <style>
+        .paper-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .paper-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .paper-content h3 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .paper-content p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .paper-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .paper-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(217,119,6,0.1));
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+        .arxiv-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        .arxiv-link:hover {
+            opacity: 0.9;
+        }
+        .summary-section {
+            background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(139,92,246,0.05));
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .trend-card {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .trend-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .paper-overview {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--primary-color);
+        }
+        .paper-list {
+            list-style: none;
+            padding: 0;
+        }
+        .paper-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .paper-list li:last-child {
+            border-bottom: none;
+        }
+        .paper-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            margin-right: 0.75rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        th {
+            background: var(--bg-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="https://kk623.github.io/blog/" class="nav-logo">🧠 AI Research Blog</a>
+            <div class="nav-links">
+                <a href="https://kk623.github.io/blog/">首页</a>
+                <a href="https://kk623.github.io/blog/posts/">文章</a>
+                <a href="https://kk623.github.io/blog/posts/2026/04/21/cvnn-research-2026-04-21.html" class="active">CVNN调研</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <header class="post-header">
+                <h1 class="post-title">🔬 复数神经网络（CVNN）与复数Transformer文献调研</h1>
+                <div class="post-meta">
+                    <span>📅 2026-04-21 04:30 (Asia/Shanghai)</span>
+                    <span>📊 5篇论文 (2026年3-4月)</span>
+                    <span>🏷️ CVNN, Complex CNN, Complex GNN, Complex Transformer, Speech Enhancement</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <div class="warning-box">
+                    <p><strong>⚠️ 调研说明</strong>：本次调研覆盖2026年3-4月arXiv上发表的CVNN相关论文。搜索关键词包括"complex-valued neural network"、"complex transformer"等。由于arXiv API限制，部分论文可能未完全覆盖。</p>
+                </div>
+
+                <div class="highlight-box">
+                    <p><strong>调研摘要</strong>：本次调研精选<strong>5篇2026年最新高质量论文</strong>，涵盖复数CNN在雷达信号处理、复数Transformer在无线通信、复数GNN在分布式控制、复数神经网络在语音增强和声码器等前沿应用。展示了CVNN在处理固有复值数据时的显著优势。</p>
+                </div>
+
+                <div class="paper-overview">
+                    <h2>📋 论文概览 (2026年3-4月最新)</h2>
+                    <ul class="paper-list">
+                        <li><span class="paper-number">1</span><strong>SMCNet: Complex-valued CNNs for mmWave Radar</strong> (arXiv 2026-04-08) - 复数CNN在毫米波雷达材料分类</li>
+                        <li><span class="paper-number">2</span><strong>DAT-CFTNet: Complex-valued Speech Enhancement</strong> (arXiv 2026-04-08) - 复数神经网络语音增强</li>
+                        <li><span class="paper-number">3</span><strong>Complex-Valued GNNs for Distributed Control</strong> (arXiv 2026-04-03) - 复数GNN分布式基础不变控制</li>
+                        <li><span class="paper-number">4</span><strong>Physics-Informed Complex Transformer</strong> (arXiv 2026-04-02) - 物理信息复数Transformer信道重建</li>
+                        <li><span class="paper-number">5</span><strong>ComVo: Complex-valued Neural Vocoder</strong> (arXiv 2026-03-12) - 复数神经网络声码器</li>
+                    </ul>
+                </div>
+
+                <!-- Paper 1 -->
+                <section class="paper-section">
+                    <div class="paper-header">
+                        <h2 class="paper-title">1. SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</h2>
+                        <div class="paper-meta">
+                            <strong>arXiv 2026-04-08</strong> | Hägele et al. | TUM Munich | 雷达信号处理
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <a href="https://arxiv.org/abs/2604.06847" class="arxiv-link" target="_blank">📄 查看论文</a>
+
+                        <h3>🎯 研究背景</h3>
+                        <p>室内机器人感知和数字孪生技术需要精确识别表面材料属性。毫米波雷达通过分析反射RF信号可以提取材料组成信息，但现有方法依赖固定感知距离和受约束的实验设置。复值雷达IQ信号包含幅度和相位信息，是天然的复值数据，适合用CVNN处理。</p>
+
+                        <h3>💡 研究动机</h3>
+                        <p>现有雷达材料估计方法存在两大局限：一是依赖固定感知距离，缺乏泛化能力；二是未充分利用复值信号的结构特性。作者提出使用复数卷积神经网络（Complex-valued CNN）直接处理复值雷达IQ信号，以提升材料分类精度和跨距离泛化能力。</p>
+
+                        <h3>🔧 技术要点</h3>
+                        <p><strong>核心创新</strong>：SMCNet采用复数卷积层处理原始IQ信号，在复数域进行特征提取和分类。网络在三个不同距离的训练数据上训练，测试时在已知和未知距离上验证。</p>
+                        <p><strong>Range FFT预处理</strong>：通过Range FFT预处理方式，将未知距离上的准确率从25.25%提升到58.81%，展示了复数域信号处理的优势。</p>
+                        <p><strong>多距离泛化</strong>：模型在已知距离上达到99.12-99.53%的准确率，在未知距离上也能保持较高性能，证明了CVNN对复值信号的强大表征能力。</p>
+
+                        <h3>📈 收益点</h3>
+                        <p><strong>高精度</strong>：在测试集上达到99.12-99.53%的整体分类准确率。Range FFT预处理显著改善未知距离泛化能力（25.25% → 58.81%）。</p>
+                        <p><strong>跨距离鲁棒性</strong>：模型在训练时未见过的两个额外距离上仍能维持较高准确率，展示了CVNN对复值信号距离变化的鲁棒性。</p>
+                        <p><strong>实际应用价值</strong>：为室内机器人导航和数字孪生应用提供了可靠的材料感知能力，无需重新训练即可适应新环境。</p>
+
+                        <h3>📝 总结</h3>
+                        <p>SMCNet展示了复数CNN在处理毫米波雷达IQ信号方面的显著优势。通过在复数域直接处理信号，而非分别处理实部和虚部，模型更好地捕捉了信号的相位和幅度关系。Range FFT预处理技术的引入解决了跨距离泛化问题，为CVNN在传感器信号处理领域的应用提供了成功范例。这项工作表明，对于固有复值数据（如雷达、通信信号），CVNN相比实值网络具有本质优势。</p>
+                    </div>
+                </section>
+
+                <!-- Paper 2 -->
+                <section class="paper-section">
+                    <div class="paper-header">
+                        <h2 class="paper-title">2. DAT-CFTNet: Speech Enhancement for Cochlear Implant Recipients using Attention-based Dual-Path RNN and Complex-valued Frequency Transformation</h2>
+                        <div class="paper-meta">
+                            <strong>arXiv 2026-04-08</strong> | Mamun & Hansen | UT Dallas | 语音增强
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <a href="https://arxiv.org/abs/2604.06744" class="arxiv-link" target="_blank">📄 查看论文</a>
+
+                        <h3>🎯 研究背景</h3>
+                        <p>语音增强是音频信号处理的核心任务，尤其在助听器和人工耳蜗（CI）应用中至关重要。人类听觉系统能选择性聚焦关键语音元素，动态调整对噪声的注意。复数频谱表示（实部和虚部）包含丰富的相位和幅度信息，对语音质量恢复至关重要。</p>
+
+                        <h3>💡 研究动机</h3>
+                        <p>现有语音增强模型（如CFTNet和DCCRN）使用复数频谱但采用实值网络分别处理实部和虚部。这种分离限制了模型捕捉复数频谱内在结构的能力。作者提出在瓶颈层引入双路径注意力机制，并结合改进的复数频率变换网络，以优化时频域的局部和全局上下文处理。</p>
+
+                        <h3>🔧 技术要点</h3>
+                        <p><strong>DAT-RNN注意力模块</strong>：在瓶颈层引入双路径注意力机制，允许在时频（T-F）区域精确区分语音和噪声，优化局部和全局上下文信息处理。</p>
+                        <p><strong>复数频率变换网络（CFTNet）</strong>：改进的CFTNet通过复数运算保留相位关系，避免传统方法中实部和虚部分离处理的局限性。</p>
+                        <p><strong>人工耳蜗优化</strong>：针对CI听者的特殊需求（T-F域听力恢复>10%），模型在噪声环境下有效抑制非平稳噪声，避免传统方法中的音乐伪影。</p>
+
+                        <h3>📈 收益点</h3>
+                        <p><strong>语音质量提升</strong>：DAT-CFTNet在语音可懂度和质量指标上持续优于CFTNet和DCCRN等现有模型。</p>
+                        <p><strong>CI听者适配</strong>：在嘈杂环境下，CI听者研究显示提出的方案能够有效抑制非平稳噪声，避免音乐伪影，这对听力受损用户尤为重要。</p>
+                        <p><strong>注意力机制价值</strong>：双路径注意力机制允许模型像人类听觉系统一样动态调整对不同频带和时间段的注意力，实现更自然的语音增强。</p>
+
+                        <h3>📝 总结</h3>
+                        <p>DAT-CFTNet通过将注意力机制与复数频率变换网络相结合，在语音增强任务中取得显著进步。这项工作特别强调了复数表示在语音处理中的重要性——分别处理实部和虚部会丢失重要的相位关系，而原生复数运算能更好地保持频谱结构。针对人工耳蜗听者的优化展示了CVNN在医疗辅助设备中的实际应用价值，为复数神经网络在音频信号处理领域的发展开辟了新方向。</p>
+                    </div>
+                </section>
+
+                <!-- Paper 3 -->
+                <section class="paper-section">
+                    <div class="paper-header">
+                        <h2 class="paper-title">3. Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</h2>
+                        <div class="paper-meta">
+                            <strong>arXiv 2026-04-03</strong> | Honor et al. | WPI / Stanford | 分布式控制
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <a href="https://arxiv.org/abs/2604.02615" class="arxiv-link" target="_blank">📄 查看论文</a>
+
+                        <h3>🎯 研究背景</h3>
+                        <p>图神经网络（GNN）在网络化动态系统的分布式控制中表现出色，因其能够分布式部署。然而，现有分布式GNN架构假设所有节点在兼容的坐标基中收集几何观测，这限制了在GPS拒止和罗盘拒止环境中的应用。在这些场景中，每个节点需要自主选择局部参考坐标系。</p>
+
+                        <h3>💡 研究动机</h3>
+                        <p>平面（2D）几何特征和基之间的变换可以用复数域简洁表示。作者提出一种全局基不变性的GNN参数化方法，使用复数线性层和相位等变激活函数，使学习到的策略对局部坐标系的选择严格不变，从而提升数据效率和泛化性能。</p>
+
+                        <h3>🔧 技术要点</h3>
+                        <p><strong>复数域表示</strong>：2D几何特征和基之间的变换用复数表示，利用复数乘法天然地编码旋转和缩放变换。</p>
+                        <p><strong>相位等变激活</strong>：在每个GNN层中使用复数线性层配合相位等变激活函数，保持对全局相位旋转的不变性。</p>
+                        <p><strong>基不变性保证</strong>：从固定全局框架观察时，所有策略对局部框架的选择严格不变，这是通过复数表示的数学特性保证的。</p>
+
+                        <h3>📈 收益点</h3>
+                        <p><strong>数据效率提升</strong>：与实值基线相比，复数GNN架构在模仿学习群体任务中显著提高了数据效率。</p>
+                        <p><strong>跟踪性能改善</strong>：基不变性使模型能够更好地泛化到不同的坐标系配置，提升了跟踪性能。</p>
+                        <p><strong>泛化能力增强</strong>：模型在测试时面对未见过的局部坐标系配置时表现更稳定，这是实值网络难以实现的。</p>
+
+                        <h3>📝 总结</h3>
+                        <p>这项工作巧妙地利用复数表示的数学特性解决了分布式控制中的基不变性问题。通过将2D几何特征映射到复数域，作者设计了一种自然基不变的GNN架构。这不仅是一个CVNN的应用案例，更展示了复数表示在几何推理中的独特优势——复数乘法天然编码了旋转和缩放，这正是平面几何变换的核心。这项工作为CVNN在机器人控制和分布式系统中的应用开辟了新途径，特别是在GPS/罗盘拒止的恶劣环境中。</p>
+                    </div>
+                </section>
+
+                <!-- Paper 4 -->
+                <section class="paper-section">
+                    <div class="paper-header">
+                        <h2 class="paper-title">4. Physics-Informed Transformer for Multi-Band Channel Frequency Response Reconstruction</h2>
+                        <div class="paper-meta">
+                            <strong>arXiv 2026-04-02</strong> | 作者待确认 | 无线通信 | 复数Transformer
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <a href="https://arxiv.org/abs/2604.01944" class="arxiv-link" target="_blank">📄 查看论文</a>
+
+                        <h3>🎯 研究背景</h3>
+                        <p>宽带信道频率响应（CFR）估计在多频段无线系统中具有挑战性，特别是当部分子频段被同频干扰暂时阻塞时。传统插值方法（如三次样条）在复杂信道条件下表现不佳。复值信道响应包含幅度和相位信息，需要保持相位连续性。</p>
+
+                        <h3>💡 研究动机</h3>
+                        <p>现有CFR重建方法未能充分利用无线信道的物理特性（如功率延迟分布PDP稀疏性、信道冲激响应CIR平滑性）。作者提出一种物理信息复数Transformer，通过全纯线性层处理复值输入/输出，保持相位关系，同时结合物理约束进行训练。</p>
+
+                        <h3>🔧 技术要点</h3>
+                        <p><strong>全纯线性层</strong>：使用全纯（holomorphic）线性层处理复值输入和输出，保持相位关系，避免传统方法中将复数分解为实部/虚部导致的相位不连续问题。</p>
+                        <p><strong>分解自注意力</strong>：在联合时频网格上使用分解自注意力机制，分别沿时间和频率轴进行注意力计算，将计算复杂度降低到O(TF² + FT²)。</p>
+                        <p><strong>物理信息损失函数</strong>：训练使用复合损失函数，结合谱保真度、PDP重建、CIR稀疏性和时间平滑性，融入信道的物理约束。</p>
+                        <p><strong>速度随机化</strong>：通过每样本速度随机化纳入移动性效应，使模型能够泛化到不同的移动性场景。</p>
+
+                        <h3>📈 收益点</h3>
+                        <p><strong>重建精度领先</strong>：相比最佳基线（ρ≥0.62），该方法达到ρ≥0.82的PDP相似度，在高达50%干扰占用水平下仍保持高精度。</p>
+                        <p><strong>平滑降级</strong>：模型在整个速度范围内平滑降级，始终优于所有其他基线方法，展示了良好的鲁棒性。</p>
+                        <p><strong>物理一致性</strong>：通过融入物理约束，重建的信道响应更符合实际无线传播特性，而非仅仅数学插值。</p>
+
+                        <h3>📝 总结</h3>
+                        <p>这项工作将物理信息神经网络（PINN）的思想扩展到复数Transformer架构中，用于无线信道重建。关键创新在于使用全纯线性层保持复值表示的完整性，避免了传统方法将复数分解为实部/虚部带来的相位失真。这项工作表明，在需要保持相位连续性的信号处理任务中，原生复数运算具有不可替代的优势。同时，物理信息损失的引入使模型学到了更符合实际传播规律的表示，为CVNN在无线通信领域的应用提供了新范式。</p>
+                    </div>
+                </section>
+
+                <!-- Paper 5 -->
+                <section class="paper-section">
+                    <div class="paper-header">
+                        <h2 class="paper-title">5. Toward Complex-Valued Neural Networks for Waveform Generation (ComVo)</h2>
+                        <div class="paper-meta">
+                            <strong>arXiv 2026-03-12</strong> | Oh et al. | Korea University | 语音合成
+                        </div>
+                    </div>
+                    <div class="paper-content">
+                        <a href="https://arxiv.org/abs/2603.11589" class="arxiv-link" target="_blank">📄 查看论文</a>
+
+                        <h3>🎯 研究背景</h3>
+                        <p>神经声码器近年来在波形生成方面取得了显著进展，产生了自然且富有表现力的音频。iSTFT-based声码器通过预测复值频谱图然后通过iSTFT合成波形，避免了计算成本较高的学习上采样阶段。然而，现有方法使用实值网络独立处理实部和虚部，这限制了它们捕捉复值频谱图内在结构的能力。</p>
+
+                        <h3>💡 研究动机</h3>
+                        <p>复值频谱图具有内在的幅度-相位关系，分别处理实部和虚部破坏了这种结构。作者提出ComVo——一种原生复数运算的声码器，其生成器和判别器都使用复数运算，实现结构化反馈的对抗训练框架。</p>
+
+                        <h3>🔧 技术要点</h3>
+                        <p><strong>原生复数生成器和判别器</strong>：ComVo的生成器和判别器都使用原生复数运算，而非分别处理实部和虚部，更好地保持复值频谱的结构。</p>
+                        <p><strong>相位量化</strong>：引入相位量化技术，将相位值离散化并正则化训练过程，指导相位的结构化变换。</p>
+                        <p><strong>块矩阵计算方案</strong>：提出块矩阵计算方案，通过减少冗余操作提高训练效率，降低计算成本。</p>
+
+                        <h3>📈 收益点</h3>
+                        <p><strong>合成质量提升</strong>：ComVo相比可比的实值基线实现了更高的合成质量，生成的音频更自然。</p>
+                        <p><strong>训练效率</strong>：块矩阵方案减少了25%的训练时间，使复数运算的开销得到有效控制。</p>
+                        <p><strong>结构化反馈</strong>：复数判别器能够在复值表示空间中提供结构化反馈，这是实值判别器无法实现的。</p>
+
+                        <h3>📝 总结</h3>
+                        <p>ComVo是首批将原生复数运算应用于神经声码器的工作之一。通过在生成器和判别器中都使用复数运算，模型能够更好地理解和操作复值频谱图的结构。相位量化的引入解决了复数相位训练中的不稳定性问题，而块矩阵方案则提升了计算效率。这项工作不仅展示了CVNN在音频生成中的优势，也为复数生成对抗网络（Complex GAN）的发展提供了重要参考。作者提供的音频样本和代码将进一步推动这一方向的研究。</p>
+                    </div>
+                </section>
+
+                <!-- Summary Section -->
+                <div class="summary-section">
+                    <h2>📊 研究趋势与总结</h2>
+                    
+                    <div class="highlight-box">
+                        <p><strong>核心发现</strong>：2026年3-4月的CVNN研究呈现出以下显著趋势：</p>
+                    </div>
+
+                    <div class="trend-grid">
+                        <div class="trend-card">
+                            <h4>🎯 信号处理主导</h4>
+                            <p>CVNN在雷达、语音、无线通信等信号处理领域持续发挥核心作用。这些领域的原始数据天然为复值（IQ信号、频谱图），CVNN相比实值网络具有本质优势。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>🔧 Transformer扩展</h4>
+                            <p>复数Transformer架构开始出现，通过全纯线性层保持相位关系。这为处理序列化复值数据（如时频域表示）提供了新的强大工具。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>🧠 GNN新应用</h4>
+                            <p>复数GNN在分布式控制和几何推理中展示了独特价值。复数表示天然编码2D旋转，为基不变性学习提供了优雅的数学框架。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>⚡ 效率优化</h4>
+                            <p>块矩阵计算、相位量化等技术开始解决CVNN的计算效率问题，使复数运算的开销得到有效控制，促进了实际部署。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>🏥 医疗应用</h4>
+                            <p>针对人工耳蜗听者的语音增强展示了CVNN在医疗辅助设备中的实际价值，为听力障碍人群提供了更好的技术方案。</p>
+                        </div>
+                        <div class="trend-card">
+                            <h4>📡 通信突破</h4>
+                            <p>物理信息复数Transformer在信道重建中的应用，展示了CVNN与物理约束结合的巨大潜力，为6G通信提供了新技术路径。</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">🔮 未来展望</h3>
+                    <p><strong>复数与Transformer的深度融合</strong>：随着ViT和LLM的发展，复数注意力机制、复数归一化等技术将进一步成熟，可能催生专门的Complex Transformer架构标准。</p>
+                    <p><strong>多模态复数学习</strong>：雷达-视觉融合、音频-视频同步等任务中，复数表示可能提供更紧凑的特征编码，促进跨模态学习。</p>
+                    <p><strong>复数生成模型</strong>：ComVo展示了复数GAN的可行性，未来可能看到复数扩散模型、复数流模型等更多生成架构。</p>
+                    <p><strong>硬件加速</strong>：专用复数运算加速器（如复数矩阵乘法单元）的出现将进一步降低CVNN的部署门槛。</p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 AI Research Blog | Jarvis 文献调研系统</p>
+            <p>Generated at 2026-04-21 04:30 (Asia/Shanghai) | Week 16/52</p>
+        </div>
+    </footer>
+</body>
+</html>
