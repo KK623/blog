@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-21</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --border: #475569;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta span {
+            margin: 0 10px;
+        }
+        
+        .paper-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title {
+            flex: 1;
+        }
+        
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--bg-card);
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.05));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-card);
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .paper-card {
+                padding: 16px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-title h2 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 LLM 量化 / 部署 / 蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026-04-21</span>
+                <span>⏰ 发布时间: 2026-04-21 03:35 (GMT+8)</span>
+                <span>📊 4篇论文</span>
+                <span>🗓️ Week 17</span>
+            </div>
+        </header>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>Optimizing Korean-Centric LLMs via Token Pruning</h2>
+                    <a href="https://arxiv.org/abs/2604.16235" target="_blank">arXiv:2604.16235</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Hoyeol Kim, Hyeonwoo Kim<br>
+                <strong>机构:</strong> 信息未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-17
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>多语言大语言模型（LLMs）通常包含支持上百种语言的庞大词表，但在实际部署中，大多数应用场景仅需要处理特定语言（如韩语）。这导致大量词表和嵌入参数被浪费，增加了内存占用和推理开销。如何在保持目标语言性能的同时，有效压缩模型词表成为部署优化的关键问题。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有LLM压缩技术主要关注权重剪枝和量化，但对词表（vocabulary）层面的压缩研究不足。作者发现，多语言模型在处理特定语言时，非目标语言的token会造成干扰（language confusion），影响生成稳定性。通过系统性评估token pruning对模型性能的影响，可以为资源受限的特定语言部署提供优化方案。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出了token pruning压缩技术，通过消除与目标应用无关的语言token及其对应的嵌入参数来优化模型。具体而言，作者在Qwen3、Gemma-3、Llama-3和Aya等多语言架构上，测试了三种词表配置：原始词表（Original）、英韩双语词表（EnKo）以及英韩中三语词表（EnKoZh）。评估涵盖通用能力、文化素养、指令遵循和机器翻译等基准测试。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>实验结果表明，token pruning显著提升了生成稳定性，消除了语言混淆问题。在机器翻译任务上，pruning后的模型在韩语特定任务上频繁取得性能提升。尽管指令遵循能力因架构不同而呈现差异（与潜在跨语言表征相关），但词表规模的显著减小验证了token pruning作为内存受限、领域特定部署的高效优化策略，即使推理延迟仅有适度改善。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作系统性地验证了token pruning在多语言LLM优化中的有效性，证明了通过精简词表可以在保持甚至提升目标语言性能的同时，显著降低内存占用。对于需要在边缘设备或特定语言环境中部署LLM的场景，该技术提供了一种简单而有效的压缩方案。未来研究可扩展到更多语言和更大规模模型的验证。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">Token Pruning</span>
+                <span class="tag">多语言模型</span>
+                <span class="tag">词表压缩</span>
+                <span class="tag">部署优化</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>Self-Distillation as a Performance Recovery Mechanism for LLMs: Counteracting Compression and Catastrophic Forgetting</h2>
+                    <a href="https://arxiv.org/abs/2604.15794" target="_blank">arXiv:2604.15794</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Chi Liu, Xin Chen, Xu Zhou, Fangbo Tu, Srinivasan Manoharan<br>
+                <strong>机构:</strong> 信息未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-17
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大语言模型在SFT微调、量化和剪枝等压缩操作后，经常出现性能下降问题。这种退化源于灾难性遗忘（catastrophic forgetting）和模型表征的破坏。如何在不增加过多计算成本的前提下，有效恢复压缩后模型的性能，是模型部署中的关键挑战。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>传统知识蒸馏需要独立的教师模型，增加了系统复杂度。自蒸馏（Self-Distillation）利用模型自身作为教师，避免了额外的模型维护成本。作者从几何表征理论出发，探索自蒸馏恢复性能的内在机制，希望建立理论与实践之间的桥梁。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出了基于Self-Distillation Fine-Tuning (SDFT)的性能恢复框架，并提供了严格的理论解释。作者假设LLM的生成能力依赖于其隐藏层构建的高维流形（high-dimensional manifold），使用Centered Kernel Alignment (CKA)来量化学生模型与教师模型激活轨迹的对齐程度。CKA的优势在于其对正交变换和缩放的不变性，可以准确衡量表征空间的相似性。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>实验结果表明，性能恢复与流形对齐之间存在强相关性，证实了自蒸馏能够有效将学生模型的高维流形与教师模型表示的最优结构对齐。该方法不需要额外的教师模型，仅需利用模型压缩前的版本作为教师，通过蒸馏恢复压缩后模型的性能，在多个任务上取得了显著的性能回升。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作从几何表征理论的视角解释了自蒸馏的工作机制，为LLM压缩后的性能恢复提供了理论和实践指导。SDFT框架简单有效，特别适用于量化、剪枝后的模型微调恢复。对于需要在资源受限环境中部署高性能LLM的场景，该技术具有重要价值。未来研究可探索不同压缩比下的恢复极限。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">Self-Distillation</span>
+                <span class="tag">性能恢复</span>
+                <span class="tag">知识蒸馏</span>
+                <span class="tag">CKA</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>Cut Your Losses! Learning to Prune Paths Early for Efficient Parallel Reasoning</h2>
+                    <a href="https://arxiv.org/abs/2604.16029" target="_blank">arXiv:2604.16029</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Jiaxi Bi, Tongxu Luo, Wenyu Du, Zhengyang Tang, Benyou Wang<br>
+                <strong>机构:</strong> The Chinese University of Hong Kong, Shenzhen (CUHK-Shenzhen)<br>
+                <strong>发表时间:</strong> 2026-04-17
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大型推理模型（LRMs）通过并行推理（parallel reasoning）显著提升了复杂任务的解决能力，但这种方法带来了巨大的计算成本。由于早期错误导致的无效推理路径（futile paths）消耗了大量计算资源，如何在推理过程中及早识别并剪枝这些无效路径成为提高效率的关键。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有路径剪枝研究分散且缺乏统一框架，限制了系统性优化。作者观察到，前缀级别的路径剪枝（path pruning at the prefix level）至关重要，但现有方法在信号来源（内部vs外部）和可学习性（可学习vs非可学习）方面的分类不清晰。这促使作者提出第一个系统化的路径剪枝分类法，并探索可学习内部方法的潜力。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出了STOP (Super TOken for Pruning)，一种可学习的路径剪枝方法。作者首先建立了系统化的路径剪枝分类法，按信号来源（内部/外部）和可学习性（可学习/非可学习）进行分类。STOP作为可学习内部方法的代表，通过训练模型识别并提前终止无效推理路径。在1.5B到20B参数的LRMs上进行了广泛评估，验证了STOP的有效性和效率。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>实验表明，STOP在固定计算预算下显著提升了模型性能。例如，GPT-OSS-20B在AIME25上的准确率从84%提升到近90%。此外，STOP在不同计算预算下均展现出良好的可扩展性，为实际部署提供了形式化的经验指导。代码、数据和模型已开源。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作首次系统化了路径剪枝领域，提出了可学习的STOP方法，在保持甚至提升推理准确率的同时显著降低计算成本。对于需要高效推理部署的LRM应用（如数学推理、代码生成），该技术提供了实用的优化方案。未来研究可探索STOP与其他推理优化技术的组合效果。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">Path Pruning</span>
+                <span class="tag">并行推理</span>
+                <span class="tag">推理效率</span>
+                <span class="tag">LRM</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title">
+                    <h2>Improving Reasoning Capabilities in Small Models through Mixture-of-Layers Distillation with Stepwise Attention on Key Information</h2>
+                    <a href="https://arxiv.org/abs/2604.15701" target="_blank">arXiv:2604.15701</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Yao Chen, Jiawei Sheng, Wenyuan Zhang, Tingwen Liu<br>
+                <strong>机构:</strong> 信息未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-17 (Accepted at EMNLP 2025)
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大语言模型在复杂推理任务上表现出色，但其巨大的计算需求限制了在资源受限场景中的部署。Chain-of-Thought (CoT)蒸馏通过将大模型的推理能力转移到小模型，成为解决这一问题的关键途径。然而，现有方法主要关注 transferring teacher-generated rationales，忽视了教师模型在推理过程中对关键信息的动态注意力机制。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>作者观察到，语言模型在推理过程中展现出对关键信息的渐进式注意力转移（progressive attention shifts），这为推理提供了重要线索。现有CoT蒸馏方法未能充分利用这一动态注意力信息，导致学生模型仅学习到表面的推理链，而非深层的注意力机制。这促使作者提出一种利用逐步注意力信息进行蒸馏的新框架。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出了一种新型CoT蒸馏框架，将教师模型的逐步注意力（stepwise attention）转移到学生模型。关键创新包括：(1) 建立结构化指导，使学生在推理过程中逐步集中注意力于关键信息；(2) 开发Mixture of Layers模块，实现教师与学生模型不同层之间的动态对齐（dynamic alignment）。这是首个在CoT蒸馏中利用逐步注意力提升小模型推理能力的方法。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在多个数学和常识推理数据集上，该方法取得了持续性能提升。Mixture of Layers模块的动态层对齐机制有效解决了教师与学生模型层数不匹配的问题。这项工作证明了注意力转移在CoT蒸馏中的重要性，为小模型获得大模型级别的推理能力提供了新思路。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作创新性地将教师模型的逐步注意力机制引入CoT蒸馏，通过Mixture of Layers模块实现动态层对齐，显著提升了小模型的推理能力。对于需要将大模型推理能力部署到小模型（如边缘设备、移动端）的场景，该技术提供了有效的解决方案。未来研究可探索注意力蒸馏与其他压缩技术的联合优化。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">CoT Distillation</span>
+                <span class="tag">注意力转移</span>
+                <span class="tag">小模型推理</span>
+                <span class="tag">Mixture of Layers</span>
+            </div>
+        </div>
+
+        <div class="trends-section">
+            <h2>📊 本周趋势总结</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>趋势方向</th>
+                        <th>关键论文</th>
+                        <th>核心洞察</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🗜️ 词表压缩</td>
+                        <td>Token Pruning</td>
+                        <td>通过消除无关语言token实现高效特定语言部署</td>
+                    </tr>
+                    <tr>
+                        <td>🔄 自蒸馏恢复</td>
+                        <td>Self-Distillation Recovery</td>
+                        <td>利用CKA对齐流形，无需外部教师恢复压缩模型性能</td>
+                    </tr>
+                    <tr>
+                        <td>✂️ 推理剪枝</td>
+                        <td>STOP Path Pruning</td>
+                        <td>可学习的前缀级路径剪枝，固定预算下提升推理准确率</td>
+                    </tr>
+                    <tr>
+                        <td>🧠 注意力蒸馏</td>
+                        <td>Mixture-of-Layers</td>
+                        <td>将教师逐步注意力转移到学生，增强小模型推理</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="section" style="margin-top: 20px;">
+                <h3>🔍 洞察分析</h3>
+                <p>本周研究呈现四大主线：<strong>压缩与恢复</strong>并重——token pruning和自蒸馏分别从结构和表征层面解决模型压缩后的性能保持问题；<strong>推理效率</strong>优化——STOP路径剪枝针对并行推理的计算浪费提出系统化解决方案；<strong>能力迁移</strong>深化——注意力蒸馏超越了传统的输出模仿，深入到教师模型的内部认知过程。这些工作共同指向一个目标：在不牺牲性能的前提下，让大模型更小、更快、更易部署。</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🔧 Generated by Jarvis | LLM Research Daily</p>
+            <p>发布时间: 2026-04-21 03:35 (GMT+8) | Week 17</p>
+            <p>数据来源: arXiv cs.CL | 搜索时间范围: 2026-04-17 至 2026-04-20</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
