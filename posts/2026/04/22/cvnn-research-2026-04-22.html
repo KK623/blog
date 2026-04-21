@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年4月22日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .notice { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .supplement { background: #e8f5e9; border: 1px solid #4caf50; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月22日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值生成模型</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值CNN</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值GNN</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值网络控制</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">雷达信号处理</span>
+        </div>
+    </div>
+
+    <div class="notice">
+        <strong>📢 调研说明</strong>：本次调研时间范围为 <strong>2026年3月23日 - 2026年4月22日（过去30天）</strong>。成功检索到 <strong>4篇</strong> 高度相关的复数神经网络论文，覆盖医学成像、网络控制、雷达信号处理和图神经网络四大应用领域。此外补充 <strong>2篇</strong> 2026年早期重要工作，确保调研的全面性。
+    </div>
+
+    <div class="summary">
+        <h3>📋 调研概述</h3>
+        <p>本次调研聚焦于复数神经网络(CVNN)、复数Transformer以及复数神经网络在信号处理应用的最新研究进展。在过去30天内，CVNN研究呈现出明显的应用驱动趋势：从脑MRI复值数据生成到分布式控制系统的图神经网络，从毫米波雷达信号分类到Kuramoto振荡器网络的同步控制。这些工作展示了CVNN在保留相位信息方面的独特优势，以及复数运算在物理系统建模中的天然适配性。</p>
+        <p><strong>核心发现</strong>：(1) 医学成像领域首个联合建模幅度和相位的脑MRI生成框架，合成数据训练分类器AUROC达0.880，超越真实数据基线0.842；(2) 复值Kuramoto网络统一控制框架，提出切换前馈+滑模控制律，实现有限时间收敛；(3) 复值CNN SMCNet在毫米波雷达表面材料分类中达到99.12-99.53%准确率；(4) 复值GNN实现局部坐标系的基不变控制，在模仿学习集群任务中数据效率显著提升。</p>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.14800" target="_blank">1. Generative Modeling of Complex-Valued Brain MRI Data</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.14800" target="_blank">arXiv:2604.14800</a> · 2026年4月16日</p>
+            <p><strong>作者</strong>: 多机构研究团队（详细见arXiv页面）</p>
+            <p><strong>主题</strong>: <span class="badge">复值生成模型</span> <span class="badge">医学成像</span> <span class="badge">MRI</span> <span class="badge">肿瘤诊断</span></p>
+            <a href="https://arxiv.org/pdf/2604.14800.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>标准磁共振成像(MRI)重建流程在采集过程中丢弃了相位信息，尽管有证据表明相位信息编码了与肿瘤诊断相关的组织特性。当前的机器学习方法继承了这一局限性，仅对重建的幅度图像进行操作。相位信息在MRI中承载着关于组织磁化率、血流和组织边界的重要物理信息，丢弃相位意味着丢失了潜在的病理性特征。</p>
+            <p>复数神经网络(CVNN)能够直接处理复数值数据，同时建模幅度和相位信息。然而，在医学成像领域，如何构建能够联合建模MRI扫描的幅度和相位信息的生成框架仍然是一个开放问题。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队提出了三个核心问题：<strong>第一</strong>，能否构建一个生成框架，同时建模复值MRI扫描的幅度和相位信息，而不是仅使用幅度图像？<strong>第二</strong>，合成生成的复值MRI样本在质量上是否能与真实数据难以区分？<strong>第三</strong>，基于合成复值数据训练的下游分类器能否达到甚至超越基于真实数据训练的性能？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复值条件变分自编码器</strong>：提出一种条件变分自编码器，将复值MRI扫描压缩为紧凑的潜在表示，同时保持相位相干性。自编码器设计专门处理复值输入，确保在编码和解码过程中不丢失相位关系。</li>
+                
+                <li><strong>流匹配生成模型</strong>：将条件变分自编码器与基于流匹配的生成模型相结合，实现高质量的复值MRI样本合成。流匹配方法在生成建模中表现出色，能够与条件VAE的潜在空间无缝集成。</li>
+                
+                <li><strong>相位相干性保持</strong>：自编码器在压缩复值MRI扫描时保持相位相干性达到0.997以上，确保合成样本在相位维度上与真实数据的统计特性一致。</li>
+                
+                <li><strong>真实vs合成分类评估</strong>：通过训练真实vs合成分类器来评估合成样本质量。低AUROC值（0.50-0.66）表明生成的样本与真实数据几乎无法区分。</li>
+                
+                <li><strong>下游异常组织检测</strong>：在下游正常vs异常分类任务中，完全基于合成数据训练的分类器在fastMRI公开数据集上达到AUROC 0.880，超越真实数据基线0.842。这一优势在不同机构的独立外部测试集（含活检确认标签）上仍然保持。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>相位相干性</strong>：自编码器保持相位相干性达到0.997以上</li>
+                <li><strong>合成样本质量</strong>：真实vs合成分类AUROC在0.50-0.66之间，表明合成样本质量极高</li>
+                <li><strong>下游分类性能</strong>：合成数据训练分类器AUROC = 0.880，超越真实数据基线0.842</li>
+                <li><strong>泛化能力</strong>：在独立外部测试集上的优势持续存在，验证了方法的鲁棒性</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>数据增强突破</strong>：首次证明合成复值MRI数据可以完全替代真实数据训练下游分类器，且性能更优；<strong>相位信息利用</strong>：突破了传统MRI分析仅使用幅度图像的局限，充分挖掘相位信息的诊断价值；<strong>跨机构泛化</strong>：在不同机构的独立测试集上保持一致优势，展示了方法的临床转化潜力；<strong>病理特征研究</strong>：为系统研究幅度和相位如何联合编码病理特异性特征提供了技术基础；<strong>资源节约</strong>：减少了对大量标注真实MRI数据的依赖，降低了医学AI开发的门槛。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li><strong>病种覆盖</strong>：当前评估集中于脑MRI，其他部位（如乳腺、前列腺）的复值MRI生成有待验证</li>
+                <li><strong>序列多样性</strong>：需要更广泛地覆盖临床常用的MRI序列类型</li>
+                <li><strong>3D扩展</strong>：当前框架主要处理2D切片，完整3D体积的复值生成面临更大的计算挑战</li>
+                <li><strong>临床验证</strong>：需要在更大规模的多中心临床队列中进行前瞻性验证</li>
+                <li><strong>物理约束</strong>：可以进一步引入MRI物理模型作为额外约束，提升生成样本的物理一致性</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作在医学成像领域实现了复数生成模型的重要突破。通过将条件变分自编码器与流匹配生成模型相结合，研究团队首次构建了能够联合建模幅度和相位的脑MRI生成框架。令人惊讶的是，基于合成数据训练的分类器不仅达到了真实数据训练的性能，还实现了超越。</p>
+            <p>对于CVNN领域，该工作展示了复数神经网络在医学数据建模中的独特优势——相位相干性的保持是实值网络无法实现的。对于医学AI领域，这项工作为数据稀缺的场景提供了新的解决思路。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.07249" target="_blank">2. Complex-Valued Kuramoto Networks: A Unified Control-Theoretic Framework</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.07249" target="_blank">arXiv:2604.07249</a> · 2026年4月8日</p>
+            <p><strong>作者</strong>: 控制理论研究团队</p>
+            <p><strong>主题</strong>: <span class="badge">复值网络</span> <span class="badge">Kuramoto模型</span> <span class="badge">同步控制</span> <span class="badge">振荡器网络</span></p>
+            <a href="https://arxiv.org/pdf/2604.07249.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>耦合振荡器网络的同步是复杂系统科学中的经典问题，Kuramoto模型是研究这一现象的核心数学工具。然而，经典的实值Kuramoto模型具有内在的非线性特性，限制了分析的可处理性，并使控制设计变得复杂。复数扩展通过将相位动力学嵌入到更高维的线性状态空间中，提供了一种绕过这些限制的途径。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队观察到现有控制策略的三个核心局限：<strong>第一</strong>，状态反馈策略虽然稳定但收敛速度慢；<strong>第二</strong>，混合重置策略虽然能实现快速收敛但会引入状态跳变；<strong>第三</strong>，现有方法都需要对网络耦合强度进行精确调谐。核心问题：能否设计切换控制策略，在保持连续状态轨迹的同时实现有限时间收敛，且无需依赖网络参数的先验知识？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复值状态空间嵌入</strong>：将Kuramoto相位动力学嵌入到复值线性状态空间，通过调节复状态模量实现相位同步。这种嵌入将非线性相位耦合转化为线性模量调节问题。</li>
+                
+                <li><strong>切换前馈控制律</strong>：提出一种切换前馈控制律，确保在所有时刻实现精确的相位对应关系。与混合重置策略不同，该控制律保持状态轨迹的连续性。</li>
+                
+                <li><strong>前馈+滑模控制律</strong>：设计前馈加滑模控制律，实现有限时间收敛，且无需光谱增益调谐。滑模控制提供了对参数不确定性和外部扰动的鲁棒性。</li>
+                
+                <li><strong>非自治复值MIMO滑模控制器</strong>：提出非自治复值MIMO滑模控制器，在有限时间内强制相位锁定到预定频率，且独立于自然频率和耦合强度。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>瞬态响应</strong>：切换控制设计显著改善了瞬态响应特性</li>
+                <li><strong>稳态精度</strong>：稳态同步精度优于传统状态反馈和混合重置策略</li>
+                <li><strong>鲁棒性</strong>：对参数不确定性和外部扰动表现出强鲁棒性</li>
+                <li><strong>异构网络同步</strong>：在经典实值Kuramoto模型失效的异构网络中成功实现同步</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>统一理论框架</strong>：将现有分散的控制方法纳入统一框架；<strong>有限时间收敛</strong>：前馈+滑模控制律实现了有限时间收敛，优于渐近收敛的传统方法；<strong>参数无关性</strong>：非自治MIMO控制器不依赖自然频率和耦合强度；<strong>异构网络适用性</strong>：解决了经典Kuramoto模型无法处理的异构网络同步问题；<strong>控制连续性</strong>：切换前馈律避免了混合重置策略的状态跳变，更适合物理实现。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li><strong>高维扩展</strong>：当前框架针对二维平面系统，三维及更高维空间的扩展需要进一步研究</li>
+                <li><strong>大规模网络</strong>：理论分析主要针对小规模网络，大规模网络的可扩展性有待验证</li>
+                <li><strong>噪声影响</strong>：实际系统中存在测量噪声和通信噪声，鲁棒性分析需要更深入的噪声建模</li>
+                <li><strong>物理实现</strong>：从理论控制律到实际电路或机械系统的实现存在工程挑战</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作为复值Kuramoto网络的控制提供了统一的理论框架和先进的控制设计。通过将相位动力学嵌入复值状态空间，研究团队不仅解决了经典模型的分析困难，还提出了一系列具有优越性能的控制律。对于CVNN领域，该工作展示了复数表示在动态系统建模中的理论优势。对于控制理论领域，这项工作为耦合振荡器网络的同步控制提供了新的设计范式。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.07157" target="_blank">3. SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.07157" target="_blank">arXiv:2604.07157</a> · 2026年4月8日</p>
+            <p><strong>作者</strong>: 雷达信号处理研究团队（5位作者）</p>
+            <p><strong>主题</strong>: <span class="badge">复值CNN</span> <span class="badge">毫米波雷达</span> <span class="badge">信号处理</span> <span class="badge">材料分类</span></p>
+            <a href="https://arxiv.org/pdf/2604.07157.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>理解表面材料属性对于增强室内机器人感知和室内数字孪生至关重要。通过分析毫米波雷达传感器反射的RF信号，可以从特定表面提取关于反射材料及其组成的信息。传统的雷达材料估计方法依赖于固定感知距离和受限的实验设置，这限制了其在实际应用中的可用性。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>核心问题：<strong>第一</strong>，能否设计一个复值CNN架构，直接使用毫米波雷达的复值IQ信号进行室内表面材料分类？<strong>第二</strong>，该架构是否能泛化到训练时未见过的感知距离？<strong>第三</strong>，如何通过适当的预处理进一步提升模型在未知条件下的性能？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复值CNN架构 SMCNet</strong>：提出SMCNet——一种基于毫米波MIMO FMCW雷达的表面材料分类器，采用复值卷积神经网络和复值雷达IQ信号输入。这是首个专门为多距离场景设计的复值雷达信号分类网络。</li>
+                
+                <li><strong>多距离训练策略</strong>：与当前依赖固定感知距离的方法不同，SMCNet在三个不同距离的数据上进行训练，并在这些距离以及两个未见过的距离上进行测试。</li>
+                
+                <li><strong>Range FFT预处理</strong>：引入Range FFT预处理步骤，将原始IQ信号转换到距离域。实验表明，这一预处理将模型在未知距离上的准确率从25.25%提升到58.81%，且无需重新训练。</li>
+                
+                <li><strong>端到端复值处理</strong>：整个处理流程完全在复数域进行，从原始IQ信号输入到最终的分类输出，充分保留了雷达信号的相位信息。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>测试集准确率</strong>：在已知距离上达到99.12-99.53%的总体准确率</li>
+                <li><strong>未知距离泛化</strong>：Range FFT预处理后，在未知距离上的准确率从25.25%提升至58.81%</li>
+                <li><strong>训练效率</strong>：复值架构仅需极少epoch即可达到高精度</li>
+                <li><strong>距离无关性</strong>：在多距离设置下训练后，模型对距离变化的敏感度显著降低</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>端到端复值处理</strong>：首个端到端复值雷达材料分类系统；<strong>多距离泛化</strong>：突破固定距离限制，在实际部署中更具实用性；<strong>数据效率</strong>：在有限的多距离训练数据上实现强泛化；<strong>预处理增益</strong>：Range FFT预处理为复值雷达信号分类提供了有效的特征增强手段；<strong>机器人感知应用</strong>：为室内机器人导航和数字孪生提供了可靠的材料感知能力。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li><strong>材料类别</strong>：当前实验覆盖的材料类别有限，更广泛的材料库需要进一步扩展</li>
+                <li><strong>环境变化</strong>：温度、湿度等环境因素对雷达信号的影响尚未充分研究</li>
+                <li><strong>3D场景</strong>：当前主要针对平面表面，复杂3D几何形状的材料分类有待探索</li>
+                <li><strong>实时性</strong>：在边缘设备上的实时推理性能需要进一步优化</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作展示了复值CNN在毫米波雷达信号处理中的强大能力。SMCNet通过直接处理复值IQ信号，实现了高精度的表面材料分类，并首次展示了在多距离场景下的强泛化能力。对于CVNN领域，该工作验证了复值卷积操作在物理信号处理任务中的实际价值——相位信息的保留直接转化为分类性能的提升。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.02615" target="_blank">4. Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.02615" target="_blank">arXiv:2604.02615</a> · 2026年4月3日</p>
+            <p><strong>作者</strong>: 图神经网络与控制研究团队（3位作者）</p>
+            <p><strong>主题</strong>: <span class="badge">复值GNN</span> <span class="badge">分布式控制</span> <span class="badge">图神经网络</span> <span class="badge">基不变性</span></p>
+            <a href="https://arxiv.org/pdf/2604.02615.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>图神经网络(GNN)因其能够以分布式方式部署而被广泛认为是网络化动态系统学习控制的有力工具。然而，当前的分布式GNN架构假设网络中所有节点都以兼容的坐标系收集几何观测，这限制了此类控制器在GPS拒止和指南针拒止环境中的实用性。在实际的多智能体系统中，每个智能体通常只能基于自身的局部坐标系进行观测和决策。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>核心问题：能否设计一种GNN参数化方法，使其对局部坐标系的选择具有全局不变性？当每个节点在其自选的局部基中观测几何特征时，如何确保学习到的控制策略在全局视角下与局部基的选择无关？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>复值几何表示</strong>：将二维几何特征和基之间的变换表达在复数域中。复数表示天然适合描述平面旋转和平移，一个复数可以同时编码位置和方向信息。</li>
+                
+                <li><strong>相位等变激活函数</strong>：在每个GNN层内部，使用复值线性层配合相位等变激活函数。这种设计确保网络输出对输入的局部旋转变换具有等变性。</li>
+                
+                <li><strong>全局基不变性</strong>：当从固定的全局坐标系观察时，该架构学习到的所有策略对局部坐标系的选择具有严格不变性。</li>
+                
+                <li><strong>分布式部署能力</strong>：保持了GNN的分布式部署特性，每个节点仅需要局部邻居信息即可计算控制动作，无需全局通信。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>数据效率</strong>：与实值基线相比，数据效率显著提升</li>
+                <li><strong>跟踪性能</strong>：在模仿学习集群任务中，跟踪精度优于实值GNN基线</li>
+                <li><strong>泛化能力</strong>：对未见过的初始构型和运动模式表现出更强的泛化能力</li>
+                <li><strong>基不变性验证</strong>：实验验证了策略确实不受局部基选择的影响</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📈 收益点</h3>
+            <p><strong>GPS/指南针无关性</strong>：控制器不再依赖全局定位基础设施，适用于拒止环境；<strong>理论保证</strong>：提供了全局基不变性的严格数学证明；<strong>数据效率提升</strong>：在有限训练数据下实现更好的控制性能；<strong>分布式特性保持</strong>：在增加基不变性的同时不牺牲GNN的分布式部署优势；<strong>实用价值</strong>：可直接应用于无人机集群、机器人编队、自动驾驶车队等场景。</p>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li><strong>三维扩展</strong>：当前框架针对平面(2D)系统，三维空间中的基不变控制需要更复杂的表示方法</li>
+                <li><strong>动态环境</strong>：实验中环境相对静态，动态障碍物和变化环境的适应性有待验证</li>
+                <li><strong>通信拓扑</strong>：通信图拓扑的变化对控制性能的影响需要进一步分析</li>
+                <li><strong>理论深化</strong>：可以进一步研究复值GNN的表达能力极限和近似理论</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作通过将复数表示引入图神经网络，成功解决了分布式控制中的基不变性问题。复数域中的几何表示和相位等变激活函数的设计展示了数学elegance与工程实用性的完美结合。对于CVNN领域，该工作将复值神经网络的应用从传统的信号处理扩展到了控制和机器人学领域。对于分布式系统领域，这项工作为GPS拒止环境中的多智能体控制提供了可靠的解决方案。</p>
+        </div>
+    </div>
+
+    <!-- 补充论文 -->
+    <div class="supplement">
+        <h3 style="color: #2e7d32; margin-bottom: 15px;">📚 2026年早期补充论文</h3>
+        
+        <p style="margin-bottom: 15px;"><strong>5. Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</strong></p>
+        <p>arXiv: <a href="https://arxiv.org/abs/2602.06577" target="_blank">2602.06577</a> · 2026年2月6日</p>
+        <p>首篇系统分析CVNN对抗鲁棒性的工作。设计Phase Attacks专门针对复值输入的相位信息，并推导常用对抗攻击的复值版本。实验表明，在某些场景中CVNN比RVNN更鲁棒，但两者都对相位变化非常敏感。</p>
+        
+        <p style="margin: 15px 0;"><strong>6. Toward Quantum-Aware Machine Learning: Improved Prediction of Quantum Dissipative Dynamics via Complex Valued Neural Networks</strong></p>
+        <p>arXiv: <a href="https://arxiv.org/abs/2601.03964" target="_blank">2601.03964</a> · 2026年1月7日</p>
+        <p>引入CVNN作为学习量子耗散动力学的物理一致框架，在自旋玻色子模型上的基准测试表明CVNN在收敛速度、训练稳定性和物理保真度方面均优于RVNN，为CVNN在量子物理仿真中的应用奠定了理论基础。</p>
+    </div>
+
+    <div class="footer">
+        <p>🔬 CVNN Research Daily · 2026年第17周</p>
+        <p>调研时间：2026-04-22 04:00 CST · 分析师：Jarvis</p>
+        <p>本报告由 AI 自动生成，内容基于公开学术文献</p>
+    </div>
+</body>
+</html>
