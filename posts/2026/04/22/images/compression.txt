@@ -1,0 +1,173 @@
+Predicting LLM Compression Degradation from
+Spectral Statistics
+
+arXiv:2604.18085v1 [cs.LG] 20 Apr 2026
+
+Mingxue (Mercy) Xu
+Department of Electrical and Electronic Engineering,
+Imperial College London, London, United Kingdom
+
+Abstract
+Model compression based on matrix-level low-rank structured representation has emerged
+as a viral approach for cutting down the cost of Large Language Models (LLMs). However,
+compression progress itself and subsequent evaluation on language tasks are prohibitively
+compute-expensive. Can we predict compression-induced degradation before committing
+to expensive compute? Through systematic analysis of Qwen3 (Yang et al., 2025a) and
+Gemma3 model families across four representative low-rank compression methods, Vanilla
+SVD, two variants of ASVD (Yuan et al., 2024), and SVD-LLM (Wang et al., 2025), we
+identify that stable rank and information density (bits-per-parameter) dominate
+the LLM performance degradation, and the interaction term γ · ρ̄s (compression
+ratio times stable rank) is a robust predictor of accuracy degradation, which achieves
+leave-one-out cross-validation Pearson correlation 0.890 for attention layers and 0.839
+for MLP. We provide theoretical intuition for why this predictor succeeds, connecting it
+to standard SVD truncation bounds and error composition mechanisms in transformer
+layers. These findings enable a predict-then-compress workflow - compute γ · ρ̄s from
+weights, estimate degradation, then invest compute only in desirable configurations.
+
+1. Introduction
+Low-rank compression promises efficient LLM inference (Wang et al., 2025; Yuan et al., 2024), but
+the practitioners face a unfavorable circumstance - the compress-evaluate-adjust loop can consume
+hours of compute per configuration, yet no principled method exists to predict which configurations
+are desirable. Thus we wonder,
+How to predict compression-induced model performance degradation before committing to expensive compute?
+We discovered simple formulas suffices accurate degradation prediction. The interaction term
+γ · ρ̄s (compression ratio times stable rank) predicts accuracy degradation with leave-one-out crossvalidation Pearson correlation 0.890 for attention layer compression and 0.839 for MLP compression,
+across four representative compression methods (vanilla SVD, ASVD, SVD-LLM) and six language
+task benchmarks (Clark et al., 2018; 2019; Zellers et al., 2019; Bisk et al., 2019; Sakaguchi et al.,
+2021).
+The reason that such a simple predictor works is fundamental. Stable rank measures spectral
+concentration - low ρs means energy concentrates in top singular values (easy to compress),
+Preprint. April 21, 2026.
+
+1
+
+whereas high ρs means energy spreads across many directions (hard to compress). The product
+γ · ρ̄s thus captures compression aggressiveness times intrinsic resistance - grounded in standard
+SVD truncation bounds that show higher spectral rank raises the error floor.
+Meanwhile, our analysis reveals unexpected patterns:
+• Layer type matters more than compression method. Within-layer predictions consistently outperform overall predictions-suggesting layer-specific calibration is more valuable than methodspecific tuning.
+• Accuracy is more predictable than perplexity. The best overall perplexity leave-one-out correlation
+is only 0.093, yet layer-specific analysis reaches 0.736 for MLP. This heterogeneity suggests
+perplexity degradation follows different dynamics than accuracy.
+• Perplexity-accuracy coupling varies dramatically by task. Pearson correlation ranges from 0.77
+(HellaSwag) to 0.20 (BoolQ), determined by scoring method and adversarial filtering-implying
+perplexity-based predictions transfer only to specific task types.
+These patterns admit theoretical explanation. Attention relies on matrix products whose errors are
+composed with spectral norms and architecture quantities. MLP (SwiGLU) involves Hadamard
+products whose errors depend on activation correlations-introducing data-dependence. This explains why attention is slightly more predictable, though both layer types achieve strong correlation
+with the same formula.
+Contributions.
+1. Propose a systematic formula discovery framework. We construct 42 interpretable formula
+templates and discover 20 additional formulas with symbolic regression to test competing
+hypotheses about compression performance degradation (Section 3).
+2. Identify the dominant predictor for compression degradation. We systematically compare four
+compression methods across Qwen3 (Yang et al., 2025a) series (0.6B-14B) and Gemma3 series
+(270M-27B), and find that the γ · ρ̄ interaction consistently dominates, with layer type explaining
+more variance than compression algorithm (Section 4).
+3. Characterize perplexity-accuracy transfer conditions. We identify when perplexity-based predictions transfer to accuracy (sequence-scored tasks) versus when task-specific formulas are
+required (token-scored or adversarially-filtered tasks) (Section 5).
+4. Explain the attention-MLP predictability gap. We connect the success of the dominant predictor
+to SVD truncation bounds and explain the gap via error composition mechanisms (Section 6).
+Organization. Section 3 presents notation and the formula discovery framework. Section 4
+identifies dominant predictors across compression methods. Section 5 characterizes perplexityaccuracy transfer conditions. Section 6 explains the attention-MLP predictability gap.
+
+2. Related Work
+Neural Scaling Laws. Scaling laws characterize how model performance improves with compute,
+data, and parameters (Kaplan et al., 2020; Hoffmann et al., 2022). Recent work extends these laws
+to post-training regimes. Kumar et al. (2025) derives precision-aware scaling laws for quantization,
+while Xiao et al. (2024) propose the “densing law” relating compression ratio to performance. Our
+work complements these by providing layer-specific scaling laws that distinguish attention from
+MLP compression behavior.
+2
+
+Table 1. Investigated variables. Performance metrics measure model quality, configuration parameters specify
+compression settings, and derived quantities characterize weight matrix properties.
+Symbol
+
+Description
+
+Source
+
+Performance Metrics
+P
+Perplexity (WikiText-2)
+A
+Task accuracy
+yrel
+Relative degradation
+
+Evaluation
+Evaluation
+(A0 − A)/A0
+
+Model Configuration
+N
+Original parameter count
+Ncomp
+Compressed parameter count
+r
+SVD truncation rank
+
+Model config
+Compression config
+Compression config
+
+Derived Quantities
+γ
+Compression ratio
+B
+Bits per parameter
+H
+Dataset entropy
+ρ̄s
+Mean stable rank
+ρ̄eff
+Mean effective rank
+
+Ncomp /N
+Section 3.2
+Embedding activations
+Equation (1)
+Section A
+
+LLM Compression. Three dominant paradigms exist for compressing large language models.
+Quantization methods reduce weight precision, with GPTQ (Frantar et al., 2023) and AWQ (Lin et al.,
+2024) achieving strong results through activation-aware calibration. Pruning approaches remove
+weights or structures: SparseGPT (Frantar & Alistarh, 2023) enables one-shot unstructured pruning,
+Wanda (Sun et al., 2024) uses magnitude-activation products for selection, and SliceGPT (Ashkboos
+et al., 2024) removes entire rows and columns. Low-rank decomposition factorizes weight matrices:
+LoRA (Hu et al., 2022) adds trainable low-rank adapters, ASVD (Yuan et al., 2024) incorporates
+activation statistics into SVD truncation, and SVD-LLM (Wang et al., 2025) optimizes truncation
+boundaries. Our analysis reveals why these methods produce different layer-specific behaviors.
+Transformer Interpretability. Understanding how transformers store and process information
+motivates our architectural analysis. Geva et al. (2021) show that MLP layers function as key-value
+memories storing factual associations, while Meng et al. (2022) localize factual knowledge to
+specific MLP modules. Elhage et al. (2022) demonstrate that networks represent more features
+than dimensions through superposition. These findings support our hypothesis that MLP layers’
+distinct compression behavior stems from their role as distributed knowledge stores.
+
+3. Methodology
+We analyze compression-induced performance degradation through three components - a unified
+notation system (Section 3.1), a Minimum Description Length (MDL)-based information measure
+(Section 3.2), and a systematic formula discovery approach (Section 3.3).
+3.1. Notation and Variables
+Table 1 defines the notation used throughout. The compression ratio γ = Ncomp /N measures
+parameter retention, while derived quantities capture information-theoretic and spectral properties
+of weight matrices.
+Stable Rank. For a matrix W ∈ Rm×n with singular values σ1 ≥ σ2 ≥ · · · ≥ σr > 0, the stable
+rank is
+Pr
+2
+∥W ∥2F
+i=1 σi
+ρs (W ) =
+=
+.
+(1)
+2
+2
+∥W ∥2
+σ1
+3
+
+

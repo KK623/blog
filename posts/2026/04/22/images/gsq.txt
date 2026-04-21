@@ -1,0 +1,177 @@
+GSQ: Highly-Accurate Low-Precision Scalar
+Quantization for LLMs via Gumbel-Softmax Sampling
+
+arXiv:2604.18556v1 [cs.CL] 20 Apr 2026
+
+Alireza Dadgarnia†
+ISTA
+
+Soroush Tabesh
+ISTA
+
+Mahdi Nikdan
+ISTA
+
+Michael Helcig
+ETH Zürich
+
+Dan Alistarh†
+ISTA & Red Hat AI
+
+Eldar Kurtic
+ISTA & Red Hat AI
+
+Abstract
+Weight quantization has become a standard tool for efficient LLM deployment,
+especially for local inference, where models are now routinely served at 2–3 bits
+per parameter. The state of the art is currently split into two sets of methods: simple
+scalar quantization techniques, such as GPTQ or AWQ, which are widely deployed
+but plateau in accuracy at 3–4 bits per parameter (bpp), and “second-generation”
+vector- or trellis-quantized methods, such as QTIP, GPTVQ and AQLM, which push
+the accuracy frontier at low bit-widths but are notoriously hard to implement and
+to scale, and have gained relatively less traction. In this paper, we ask whether this
+gap is fundamental, or whether a carefully optimized scalar quantizer can recover
+most of it. We answer in the affirmative, by introducing GSQ (Gumbel-Softmax
+Quantization), a post-training scalar quantization method which jointly learns the
+per-coordinate grid assignments and the per-group scales using a Gumbel-Softmax
+relaxation of the discrete grid. GSQ matches the cardinality of the relaxation to the
+small number of levels available in the target bit-width regime (e.g., 3–8 levels for
+ternary and 3 bpp, respectively), making the relaxation tight and the optimization
+tractable. Practically, on the standard Llama-3.1-8B/70B-Instruct models, GSQ
+closes most of the gap between scalar quantization and the QTIP frontier at 2
+and 3 bits, while using a symmetric scalar grid with group-wise quantization, and
+thus fully compatible with existing scalar inference kernels. We further show that
+GSQ scales to trillion-scale Mixture-of-Experts models such as Kimi-K2.5, where
+vector-quantized methods are difficult to apply.
+
+1
+
+Introduction
+
+The memory and bandwidth costs of LLM inference have made weight quantization a standard
+approach for efficient deployment. Among the many quantization directions that have been studied [Frantar et al., 2022, Lin et al., 2024, Dettmers et al., 2022, 2023, Lee et al., 2024, Ashkboos et al.,
+2024, Liu et al., 2024, Sun et al., 2024, Xiao et al., 2023, Chee et al., 2023, Tseng et al., 2024a,b,
+Egiazarian et al., 2024, van Baalen et al., 2024, Chen et al., 2025a], weight-only quantization has
+emerged as the standard for local deployment, where the bottleneck is memory rather than compute,
+and where serving stacks such as llama.cpp [Gerganov and contributors, 2023] and Ollama [Ollama
+contributors, 2023] have made compressed models accessible to a broad audience. It is now common
+to obtain usable versions of large open models at around 2–3 bits per parameter, and a whole opensource ecosystem of “quants” has emerged around repositories such as Hugging Face [Hugging Face,
+2024, Unsloth, 2026].
+† Corresponding
+
+Preprint.
+
+authors: alirezadadgarnia1378@gmail.com, dan.alistarh@ist.ac.at
+
+Existing techniques. Broadly, weight quantization techniques can be visualized as two successive
+“waves”. The first wave investigated scalar (1D) quantization methods, with llama.cpp [Gerganov
+and contributors, 2023], bitsandbytes [Dettmers et al., 2021, 2022], GPTQ [Frantar et al., 2022], and
+AWQ [Lin et al., 2024] being among the most popular methods. These approaches round each weight
+independently to a small uniform grid, are simple to implement, and benefit from highly optimized
+and relatively simple unpacking kernels; as a result, they enjoy by far the broadest practical adoption.
+Their main limitation is accuracy: scalar quantization techniques have hit a clear error wall around
+3–4 bits per parameter, below which output quality degrades sharply [Frantar et al., 2022, Chen et al.,
+2025a]. The second wave, by contrast, has focused on much more expressive vector-quantized or
+trellis-coded representations, including AQLM [Egiazarian et al., 2024], QuIP# [Tseng et al., 2024a],
+QTIP [Tseng et al., 2024b] with its implementation exllamav3 [Turboderp, 2025], and GPTVQ [van
+Baalen et al., 2024]. By minimizing reconstruction MSE jointly over groups of weights, these
+methods substantially reduce accuracy loss at 2–3 bits per parameter; yet, unfortunately, the resulting
+representations are considerably harder to implement, integrate, and scale. Specifically, Tseng et al.
+[2024b] observed that, although VQ and trellis methods yield major memory savings, they lead to
+only very small decoding speedups vs BF16 due to format complexity.
+We are thus left with a clear gap: on one side, second-generation VQ / trellis methods push the
+low-bit accuracy frontier, but struggle for scale and adoption. On the other, simple scalar quantization
+techniques are well-supported and easy to apply, but plateau in terms of achievable accuracy. The
+question we ask in this paper is: Can we design a scalar quantization scheme that bridges most of the
+accuracy gap to complex vector- or trellis-based techniques, while remaining a drop-in replacement
+for existing scalar formats?
+Our approach. We answer this question in the affirmative, by proposing GSQ (Gumbel-Softmax
+Quantization), a post-training scalar quantization method which closes most of the gap to second-wave
+techniques while staying entirely within the standard scalar weight-only format. GSQ preserves the
+simplicity of the scalar setting: it produces symmetric, group-wise, b-bit weights drawn from a small
+uniform grid, and is therefore directly compatible with existing scalar inference kernels. Yet, on the
+accuracy side, it substantially improves over previous scalar-focused methods such as GPTQ [Frantar
+et al., 2022], AWQ [Lin et al., 2024], QuIP [Chee et al., 2023], and EfficientQAT [Chen et al., 2025a]
+at 2 and 3 bits, where recovers the majority of the gap to the strongest vector- and trellis-quantized
+baselines. Although calibration-based, GSQ also scales to very large Mixture-of-Experts (MoE)
+models, including the trillion-parameter-scale Kimi-K2 [Team et al., 2025], where second-wave
+methods have so far never been applied.
+Method overview. The key idea behind GSQ is that we want to reformulate layer-wise reconstruction as a differentiable discrete-assignment problem. For each weight coordinate, we introduce a
+small set of trainable logits over the candidate grid points, and obtain a soft quantized weight via
+Gumbel-Softmax sampling [Maddison et al., 2016, Jang et al., 2016]. The resulting reconstruction
+loss is fully differentiable in both the per-group scales and the discrete assignments, and can be
+optimized jointly via gradient-based methods. As the temperature is annealed, the soft assignments
+collapse onto hard grid points, yielding a fully discrete quantized layer at the end of training.
+One key observation about grid size is that the Gumbel-Softmax relaxation a natural fit for low-bit
+scalar quantization. In the regimes we are interested in, for instance at ternary and 2-bit precision,
+the cardinality of the per-coordinate grid is 3–4, so a Gumbel-Softmax distribution over the entire
+grid introduces only a few of logits per weight and can be optimized end-to-end at LLM scale. At
+higher bit-widths (e.g. 3-4 bpp), where the grid grows exponentially, we replace the global relaxation
+with a local-shift formulation in which only a small number of nearest grid points around the current
+assignment are considered, keeping memory and compute overhead linear in the number of weights.
+This combination allows GSQ to operate uniformly across the entire low- to mid-bit range, while
+always reducing to a small, well-behaved discrete optimization problem at each coordinate.
+Accuracy results. Empirically, GSQ sets a new state of the art for scalar quantization at low bitwidths. For standard benchmark experiments on Llama-3.1-8B-Instruct and Llama-3.1-70B-Instruct,
+at 2 bits per parameter, GSQ improves average zero-shot accuracy by a remarkable 4.76 and 4.14
+points, respectively over the best scalar baseline (EfficientQAT), and trails QTIP, the strongest and
+most complex prior method, by only 1.33 and 1.68 points, respectively. At 3 bits, the picture is
+similar: GSQ matches or surpasses all scalar baselines, and is essentially on par with QTIP on the
+2
+
+70B model. Notably, these results are obtained with symmetric group-wise quantization, without any
+zero-point parameters, in contrast to most baselines, which is direct evidence that the gains come from
+better optimization of the discrete assignments rather than from a more flexible quantizer. On the
+same models, ternary (1.58-bit) GSQ already exceeds all scalar baselines even if they are run at higher
+2-bit precision. Furthermore, because GSQ produces standard scalar layers, it naturally supports
+non-uniform bit allocation across layers; on Llama-3.1-70B-Instruct, mixed 2/3-bit configurations at
+2.37 and 2.62 average bits per parameter retain most of the 3-bit accuracy while substantially reducing
+model size. We provide speedup results by leveraging the recent Humming kernels [InclusionAI,
+2025].
+A second important feature is scalability. Because GSQ only requires per-coordinate discrete
+optimization and per-group scales, its memory footprint is close to that of a standard scalar PTQ
+approach such as GPTQ or AWQ. This allows us to directly apply GSQ to massive Mixture-ofExperts models such as Kimi-K2 and its newer 2.5 variant, where the codebook training and per-block
+updates required by vector-quantized methods become prohibitively expensive, and where secondgeneration methods have so far not been applied. To our knowledge, GSQ is the first method to
+obtain low-bit, close-to-lossless quantization of trillion-parameter MoE models using a fully scalar,
+kernel-compatible format.
+Summary. Overall, our results suggest that the accuracy gap between scalar and second-wave
+quantization techniques is, to a large extent, an optimization gap rather than a representational one:
+most of it can be closed by better discrete optimization within the standard scalar format, without
+giving up kernel compatibility or scalability. The remainder of the paper is organized as follows.
+Section 2 discusses related work in post-training and extreme quantization. Section 3 introduces
+our notation, the Gumbel-Softmax relaxation, and the ternary, 2-bit, and general b-bit instantiations
+of GSQ. Section 4 presents experimental results on dense Llama models and on Kimi-K2/2.5, and
+Section 5 concludes.
+
+2
+
+Related Work
+
+Post-training quantization (PTQ) for LLMs. PTQ addresses the problem of quantizing a pretrained model without the need for costly re-training. LLM.int8() [Dettmers et al., 2022] showed
+that quantizing 99.9% of features to INT8 while keeping the outliers in 16-bit achieves significant
+memory and runtime improvements. Frantar et al. [2022] introduced GPTQ, which uses second-order
+information to minimize layer-wise quantization error based on the Optimal Brain Surgeon framework
+[Hassibi et al., 1993], while AWQ [Lin et al., 2024] used activation statistics to identify and protect a
+small set of weights. Outlier-aware formats [Dettmers et al., 2023, Lee et al., 2024] suggest keeping
+a small set of outlier weights in high-precision. More recently, rotation-based methods have emerged,
+enabling near-lossless 4-bit quantization of weight, activations, and KV cache [Ashkboos et al., 2024,
+Liu et al., 2024, Sun et al., 2024]. As discussed, vector/codebook methods target 2-bit compression
+or less while retaining full-precision execution, where QuIP [Chee et al., 2023], QuIP# [Tseng et al.,
+2024a], QTIP [Tseng et al., 2024b], AQLM [Egiazarian et al., 2024], and PV Tuning [Malinovskii
+et al., 2024] are strong baselines.
+Quantization-aware training (QAT). In contrast to PTQ, quantization-aware training (QAT)
+fine-tunes the model under simulated low-precision arithmetic. EfficientQAT [Chen et al., 2025a]
+makes QAT practical for scalar quantization of LLMs by combining block-wise training of model
+parameters with a final end-to-end optimization of quantization parameters. Early work on training
+binary networks [Courbariaux et al., 2015, Rastegari et al., 2016] established that 1-bit weights are
+possible for general deep neural networks. For LLMs, BitNet [Wang et al., 2023] and follow-up work
+argue that training in ternary (1.58-bit) can be competitive with full precision. TernaryLLM Chen et al.
+[2024b] uses trainable scale and zero-point parameters along with a specialized information-theoretic
+knowledge distillation objective. In the post-training settings, PT2 -LLM [Yan et al., 2025] enables
+ternary quantization via iteratively alternating between refining the grid and rounding. Tequila [Huang
+et al., 2025] reactivates deadzone-trapped weights by re-introducing them as dynamic bias parameters.
+PTQTP [Xiao et al., 2025] decomposes the weights into two trit-planes, achieving multiplicationfree additive inference. PT-BitNet [Guo et al., 2025] first transforms the weights to make them
+quantizaition-friendly, then quantizes each weight block separately. For binary PTQ, BiLLM [Huang
+et al., 2024] compresses outlier weights by a binary residual approximation approach, while simply
+3
+
+

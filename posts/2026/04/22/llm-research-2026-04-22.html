@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-22</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-light: #3b82f6;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta span {
+            margin: 0 10px;
+        }
+        
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title {
+            flex: 1;
+        }
+        
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #dbeafe;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f1f5f9;
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: rgba(37, 99, 235, 0.03);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .paper-card {
+                padding: 16px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-title h2 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 LLM 量化 / 部署 / 蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026-04-22</span>
+                <span>⏰ 发布时间: 2026-04-22 03:35 (GMT+8)</span>
+                <span>📊 6篇论文</span>
+                <span>🗓️ Week 17</span>
+            </div>
+        </header>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>GSQ: Highly-Accurate Low-Precision Scalar Quantization for LLMs via Gumbel-Softmax Sampling</h2>
+                    <a href="https://arxiv.org/abs/2604.18556" target="_blank">arXiv:2604.18556</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Alireza Dadgarnia, Soroush Tabesh, Mahdi Nikdan, Michael Helcig, Eldar Kurtic, Dan Alistarh<br>
+                <strong>机构:</strong> ISTA (Institute of Science and Technology Austria), ETH Zürich, Red Hat AI<br>
+                <strong>发表时间:</strong> 2026-04-20
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>权重量化已成为高效LLM部署的标准工具，尤其是在本地推理场景中，模型通常以2-3 bits per parameter (bpp) 的精度运行。现有方法分为两类：简单标量量化（如GPTQ、AWQ）广泛部署但在3-4 bpp以下精度急剧下降；第二代向量或网格量化方法（如QTIP、AQLM）在低比特精度上表现更好，但实现复杂、难以扩展。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>标量量化与向量/网格量化之间存在显著的精度差距，作者质疑这一差距是否是根本性的。向量量化方法虽然在低比特下精度更高，但由于格式复杂，解码速度提升有限，且难以扩展到万亿参数规模的MoE模型。因此，作者探索是否可以通过更优的离散优化在标量格式内缩小这一差距。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出GSQ（Gumbel-Softmax Quantization），一种后训练标量量化方法。核心创新包括：(1) 对每个权重坐标引入可训练的网格点logits，通过Gumbel-Softmax采样获得软量化权重；(2) 联合优化每坐标网格分配和每组尺度参数；(3) 针对低比特（3-8个级别）设计紧密的松弛，使优化可处理；(4) 高比特宽时采用局部移位公式，仅考虑当前分配附近的少量最近网格点。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在Llama-3.1-8B/70B-Instruct上，GSQ在2 bpp时比最佳标量基线（EfficientQAT）平均提升4.76和4.14个百分点，与最强向量量化方法QTIP的差距仅1.33和1.68点。三进制（1.58-bit）GSQ已超过所有2-bit标量基线。GSQ还首次实现了万亿参数MoE模型（Kimi-K2.5）的低比特标量化，且完全兼容现有标量推理内核。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作证明标量量化与向量量化之间的精度差距主要是优化差距而非表示差距。GSQ通过在标准标量格式内进行更好的离散优化，在不牺牲内核兼容性和可扩展性的前提下，大幅提升了低比特标量量化的精度。对于需要在本地部署大模型的场景，GSQ提供了一种简单高效且精度接近SOTA的量化方案，特别适用于MoE等大规模模型。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">量化</span>
+                <span class="tag">标量量化</span>
+                <span class="tag">Gumbel-Softmax</span>
+                <span class="tag">部署优化</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>AQPIM: Breaking the PIM Capacity Wall for LLMs with In-Memory Activation Quantization</h2>
+                    <a href="https://arxiv.org/abs/2604.18137" target="_blank">arXiv:2604.18137</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Kosuke Matsushima, Yasuyuki Okoshi, Masato Motomura, Daichi Fujiki<br>
+                <strong>机构:</strong> Institute of Science Tokyo<br>
+                <strong>发表时间:</strong> 2026-04-20 (Accepted to HPCA 2026)
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>Processing-in-Memory (PIM) 架构通过在内存内部执行计算来缓解数据密集型机器学习中的内存瓶颈。然而，PIM架构面临严重的容量限制——现代LLM在长上下文场景下的KV缓存可达数百GB，远超PIM有限的内存容量。现有缓解方法如稀疏注意力和offloading与PIM所需的数据局部性相冲突。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>传统量化方法直接应用于PIM会带来 prohibitive 的面积开销（FP16+INT32需增加126%面积），破坏内存密度。聚类量化（如Product Quantization）虽然压缩效率高，但其迭代计算所需的带宽在传统架构下不实用。作者发现PIM巨大的内部带宽恰好可以支撑在线聚类，从而将这一"不可能"的算法变为可能。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>AQPIM基于Product Quantization (PQ)，通过算法-硬件协同设计实现PIM感知的激活量化。关键创新：(1) 将注意力中的GEMV操作转换为在压缩数据上直接执行的查找和求和操作，无需反量化；(2) 通过页感知聚类确保查找表位于单个DRAM行内，配合最小硬件支持的快速间接寻址；(3) 重要性感知聚类等算法优化提升高压缩比下的精度。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>AQPIM大幅减少了GPU-CPU通信（可占解码延迟的90%~98.5%），相比SOTA PIM方法实现了3.4倍加速。通过将KV缓存压缩直接在内存内进行，AQPIM在不增加昂贵硬件开销的前提下突破了PIM容量墙。该方法兼容现有简单FP16 MAC单元，无需新增复杂ALU。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作通过PIM-specialized的激活量化框架，首次将在线聚类量化实用化。AQPIM巧妙地利用PIM的高内部带宽来支撑聚类计算的带宽需求，将原本无法在线部署的PQ算法成功应用于LLM推理加速。对于追求极致推理效率的数据中心部署，AQPIM代表了PIM架构与LLM量化协同优化的重要进展。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">PIM</span>
+                <span class="tag">激活量化</span>
+                <span class="tag">KV缓存压缩</span>
+                <span class="tag">硬件协同设计</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>Predicting LLM Compression Degradation from Spectral Statistics</h2>
+                    <a href="https://arxiv.org/abs/2604.18085" target="_blank">arXiv:2604.18085</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Mingxue (Mercy) Xu<br>
+                <strong>机构:</strong> Imperial College London<br>
+                <strong>发表时间:</strong> 2026-04-20
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>基于矩阵低秩表示的模型压缩是降低LLM成本的有前景方法，但每次压缩和评估都需要消耗大量计算资源。从业者面临一个困境：压缩-评估-调整循环可能消耗数小时计算，却没有原则性方法来预测哪些配置值得投入。如何在实际执行压缩前预测性能退化成为关键问题。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有神经缩放律主要关注训练阶段，对后训练压缩的预测能力有限。作者观察到不同压缩方法在相同层上表现出相似的行为模式，暗示压缩退化可能由权重矩阵的内在谱特性决定而非压缩算法本身。这促使作者从谱统计角度寻找简洁的预测公式。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文系统分析了Qwen3和Gemma3模型家族在四种低秩压缩方法（vanilla SVD、两种ASVD变体、SVD-LLM）上的表现。通过构建42个可解释公式模板和符号回归，发现<strong>稳定秩（stable rank）和信息密度（bits per parameter）</strong>主导性能退化。交互项 $\gamma \cdot \bar{\rho}_s$（压缩比×稳定秩）是鲁棒的退化预测器，留一交叉验证Pearson相关达0.890（注意力层）和0.839（MLP层）。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>该预测器实现了"先预测后压缩"的工作流：从权重计算 $\gamma \cdot \bar{\rho}_s$，估计退化，然后仅在理想配置上投入计算。作者还发现层类型比压缩方法更能解释方差，且精度比困惑度更可预测。这些发现为压缩配置选择提供了理论指导，显著减少了试错成本。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作从谱统计角度为LLM压缩退化预测提供了简洁而有效的理论框架。通过连接SVD截断界和Transformer层中的误差组合机制，作者解释了为何简单的谱指标能准确预测复杂压缩方法的性能退化。该预测框架可应用于量化、剪枝和低秩分解等多种压缩场景，为高效模型部署提供了重要的先验指导。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">压缩预测</span>
+                <span class="tag">谱统计</span>
+                <span class="tag">低秩分解</span>
+                <span class="tag">稳定秩</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title">
+                    <h2>Latent Phase-Shift Rollback: Inference-Time Error Correction via Residual Stream Monitoring and KV-Cache Steering</h2>
+                    <a href="https://arxiv.org/abs/2604.18567" target="_blank">arXiv:2604.18567</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Manan Gupta, Dhruv Kumar<br>
+                <strong>机构:</strong> BITS Pilani, Pilani Campus, India<br>
+                <strong>发表时间:</strong> 2026-04-20
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大语言模型在多步推理中频繁出现不可恢复的错误：一旦走错一步，后续token会放大错误而非纠正。训练时方法（如过程监督奖励模型）代价昂贵且与固定模型绑定；推理时方法（如Best-of-N、树搜索）要么忽略内部状态，要么需要大量额外前向传播。如何在错误形成初期检测并纠正成为关键挑战。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>作者观察到Transformer残差流在中间层编码了可操纵的语义内容。当模型即将犯错时，临界层（约L/2处）的残差流方向会出现急剧反转（phase shift）。基于这一洞察，作者提出了一种训练无关的推理时错误检测与纠正机制，无需微调、梯度计算或额外前向传播。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>LPSR的核心机制包括：(1) <strong>双门验证</strong>：通过余弦相似度检测残差流方向反转，结合token分布熵过滤假阳性；(2) <strong>预计算转向向量基</strong>：在1,000个MATH-500训练问题上预计算错误轨迹与正确轨迹的残差差异，经k-means聚类得到142个转向向量；(3) <strong>KV缓存回滚</strong>：检测到错误后回滚KV缓存并注入最优转向向量。全32层扫描揭示了检测-纠正解耦现象：检测AUC在14层最高，而任务精度在16层最高。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>LPSR在Llama-3-8B上实现MATH-500 44.0%的准确率，相比标准自回归（28.8%）提升15.2个百分点。重要的是，提示自纠正基线仅19.8%，低于标准AR；LPSR超出其24.2个百分点。LPSR以8.75倍更少的参数超越了标准70B模型（35.2%），token成本仅为~3倍于贪心解码，远低于Best-of-16（15.9倍）。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作首次将残差流监控与KV缓存操纵结合用于推理时错误纠正。LPSR无需任何训练即可显著提升小模型的推理能力，为部署场景中的推理增强提供了实用方案。检测-纠正解耦的发现为理解Transformer内部机制提供了新视角。对于需要在资源受限环境中部署高性能推理系统的场景，LPSR提供了一种低成本高回报的优化路径。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">推理时纠正</span>
+                <span class="tag">残差流监控</span>
+                <span class="tag">KV缓存</span>
+                <span class="tag">转向向量</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">5</div>
+                <div class="paper-title">
+                    <h2>MoE-nD: Per-Layer Mixture-of-Experts Routing for Multi-Axis KV Cache Compression</h2>
+                    <a href="https://arxiv.org/abs/2604.17695" target="_blank">arXiv:2604.17695</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Libo Sun, Peixiong He, Po-Wei Harn, Xiao Qin<br>
+                <strong>机构:</strong> 信息未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-20
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>KV缓存内存是长上下文LLM推理的主导瓶颈。现有压缩方法各作用于KV张量的四个维度之一——token驱逐（序列维度）、量化（精度维度）、低秩投影（头维度）或跨层共享——但对每一层应用相同的策略。这种同质性忽略了不同层对压缩操作的差异化响应。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>作者发现不同层对各种压缩操作的响应差异巨大，最优的逐层驱逐和量化组合远非均匀分布。例如，某些层对token驱逐更敏感，而另一些层可以承受更高的量化压缩。这促使作者提出一个异构压缩框架，为每一层路由到最适合其特性的压缩配置。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>MoE-nD将每一层路由到其专用的（驱逐率、K-bits、V-bits）三元组。核心组件包括：(1) 离线校准的贪心求解器，选择最小化预测质量损失的路由；(2) 推理时通过单一注意力补丁联合应用逐层异构驱逐和量化；(3) 在全局内存预算约束下优化每层配置。该方法首次将MoE思想应用于KV缓存压缩的多轴联合优化。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在LongBench-v1（16k输入）上，MoE-nD异构变体以14倍压缩（136 MB）匹配未压缩的1.9 GB基线，而同内存预算下的其他基线均低于8/100。在AIME推理基准上，相比最强逐层量化基线提升6到27个百分点。两个零结果（MATH-500和TREC）共享一个原则性原因（短输入时求解器选择keep=1.0），干净地表征了逐层驱逐路由的适用条件。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作打破了KV缓存压缩"一刀切"的范式，证明逐层异构压缩能显著提升压缩效率。MoE-nD的离线校准+运行时轻量执行设计使其在实际部署中具有很高的可行性。对于长上下文推理场景（如文档分析、代码生成），MoE-nD提供了一种在不牺牲精度的前提下大幅扩展上下文窗口的实用方案。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">KV缓存压缩</span>
+                <span class="tag">Mixture-of-Experts</span>
+                <span class="tag">长上下文</span>
+                <span class="tag">异构压缩</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">6</div>
+                <div class="paper-title">
+                    <h2>DuQuant++: Fine-grained Rotation Enhances Microscaling FP4 Quantization</h2>
+                    <a href="https://arxiv.org/abs/2604.17789" target="_blank">arXiv:2604.17789</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Haokun Lin, Xinle Jia, Haobo Xu, Bingchen Yao, Xianglong Guo, Yichen Wu, Zhichao Lu, Ying Wei, Qingfu Zhang, Zhenan Sun<br>
+                <strong>机构:</strong> 信息未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-20 (Technical Report)
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>MXFP4微缩放格式将张量划分为32个元素共享E8M0缩放因子的块，已成为高效LLM推理的有前景的底层格式，并获得NVIDIA Blackwell Tensor Core的硬件原生支持。然而，激活异常值对该格式构成独特挑战：单个异常值会抬高共享块尺度，压缩剩余元素的有效动态范围，导致显著量化误差。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有基于旋转的补救措施（如随机Hadamard旋转和可学习旋转）是数据无关的，无法专门针对异常值集中的通道。DuQuant的异常值感知细粒度旋转虽然有效，但其双旋转和zigzag置换方案开销较大。作者希望利用MXFP4每个组独立缩放因子的特性，简化旋转流程。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>DuQuant++将旋转块大小与微缩放组大小（B=32）对齐。由于每个MXFP4组拥有独立的缩放因子，原始DuQuant中需要双旋转和zigzag置换的跨块方差问题不再相关。DuQuant++用<strong>单一异常值感知旋转</strong>替代整个流程，在线旋转成本减半，同时平滑权重分布。该方法针对LLaMA-3家族在MXFP4 W4A4量化下进行了广泛评估。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在LLaMA-3家族的MXFP4 W4A4量化下，DuQuant++ consistently 达到SOTA性能。相比原始DuQuant，在线旋转成本降低50%，同时保持或提升精度。由于与MXFP4硬件特性深度结合，DuQuant++在NVIDIA Blackwell等支持MXFP4的平台上可直接获得硬件加速优势，为4-bit推理提供了更高效的解决方案。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作通过将细粒度旋转与MXFP4微缩放格式深度结合，实现了更低开销的异常值处理。DuQuant++展示了算法设计与硬件特性协同优化的重要性——通过充分利用MXFP4的独立组缩放机制，简化了复杂的双旋转流程。对于追求极致推理吞吐量且具备新一代硬件支持的数据中心部署，DuQuant++提供了重要的量化优化方案。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">FP4量化</span>
+                <span class="tag">MXFP4</span>
+                <span class="tag">异常值处理</span>
+                <span class="tag">硬件感知</span>
+            </div>
+        </div>
+
+        <div class="trends-section">
+            <h2>📊 本周趋势总结</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>趋势方向</th>
+                        <th>关键论文</th>
+                        <th>核心洞察</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎯 标量量化突破</td>
+                        <td>GSQ</td>
+                        <td>通过Gumbel-Softmax优化离散分配，标量量化精度逼近向量量化前沿</td>
+                    </tr>
+                    <tr>
+                        <td>🔧 PIM协同优化</td>
+                        <td>AQPIM</td>
+                        <td>利用PIM高内部带宽实现在线聚类量化，突破PIM容量墙</td>
+                    </tr>
+                    <tr>
+                        <td>📊 压缩可预测性</td>
+                        <td>Spectral Statistics</td>
+                        <td>稳定秩×压缩比成为LLM压缩退化的鲁棒预测器</td>
+                    </tr>
+                    <tr>
+                        <td>🧠 推理时纠错</td>
+                        <td>LPSR</td>
+                        <td>残差流相位偏移检测+KV回滚，训练无关提升推理准确率</td>
+                    </tr>
+                    <tr>
+                        <td>📦 异构KV压缩</td>
+                        <td>MoE-nD</td>
+                        <td>逐层异构压缩配置，14倍压缩下保持未压缩精度</td>
+                    </tr>
+                    <tr>
+                        <td>⚡ FP4硬件感知</td>
+                        <td>DuQuant++</td>
+                        <td>MXFP4独立组缩放机制简化异常值处理，旋转成本减半</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="section" style="margin-top: 20px;">
+                <h3>🔍 洞察分析</h3>
+                <p>本周研究呈现<strong>量化精度逼近</strong>与<strong>部署效率革新</strong>两大主线。GSQ和DuQuant++分别从算法优化和硬件协同角度推动低比特量化的精度边界——前者证明标量格式的优化空间远超预期，后者展示新一代硬件特性如何简化复杂算法。AQPIM和MoE-nD则针对部署瓶颈提出创新方案：PIM内部量化突破内存容量限制，逐层异构压缩释放KV缓存压缩的层间差异化潜力。LPSR和Spectral Statistics从推理时纠错和压缩预测两个角度，为部署优化提供了新工具。值得注意的是，<strong>本周未发现LLM蒸馏相关新论文</strong>，蒸馏研究热度暂时转向视觉领域。这些工作共同指向：LLM部署优化正从单一技术点突破走向系统级协同设计。</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🔧 Generated by Jarvis | LLM Research Daily</p>
+            <p>发布时间: 2026-04-22 03:35 (GMT+8) | Week 17</p>
+            <p>数据来源: arXiv cs.CL / cs.LG / cs.AR | 搜索时间范围: 2026-04-15 至 2026-04-21</p>
+            <p>⚠️ 本周未发现LLM蒸馏相关新论文，如有遗漏欢迎补充</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

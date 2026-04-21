@@ -1,0 +1,239 @@
+Preprint. Under review.
+
+Latent Phase-Shift Rollback: Inference-Time Error Correction
+via
+Residual Stream Monitoring and KV-Cache Steering
+Manan Gupta1
+
+Dhruv Kumar1
+
+1 BITS
+
+arXiv:2604.18567v1 [cs.LG] 20 Apr 2026
+
+Pilani, Pilani Campus, India
+{f20241231, dhruv.kumar}@pilani.bits-pilani.ac.in
+
+Abstract
+Large language models frequently commit unrecoverable reasoning errors
+mid-generation: once a wrong step is taken, subsequent tokens compound
+the mistake rather than correct it. We introduce Latent Phase-Shift Rollback (LPSR): at each generation step, we monitor the residual stream at
+a critical layer ℓcrit , detect abrupt directional reversals (phase shifts) via a
+cosine-similarity + entropy dual gate, and respond by rolling back the
+KV-cache and injecting a pre-computed steering vector. No fine-tuning,
+gradient computation, or additional forward passes are required. LPSR
+achieves 44.0% on MATH-500 with an 8B model versus 28.8% for standard
+AR (+15.2 pp; McNemar χ2 = 66.96, p < 10−15 ). Critically, prompted
+self-correction, the most natural inference-time baseline, scores only 19.8%,
+below standard AR; LPSR exceeds it by +24.2 pp (χ2 = 89.4, p ≈ 0). LPSR
+also outperforms Best-of-16 (+7.8 pp) at 5.4× lower token cost, and surpasses a standard 70B model (35.2%) with 8.75× fewer parameters at ∼3×
+the token budget. A 32-layer sweep reveals a novel detection–correction
+dissociation: error-detection AUC peaks at layer 14 (0.718) but task accuracy peaks at layer 16 (44.0% vs. 29.2%), demonstrating that optimal
+monitoring depth differs for detection and correction.
+
+1
+
+Introduction
+
+The ability to perform multi-step reasoning remains a fundamental challenge for large language models. Under greedy decoding, Llama-3-8B fails on 71.2% of MATH-500 problems;
+a standard Llama-3-70B model fails on 64.8%, an improvement of only 6.4 pp despite 8.75×
+more parameters. A key failure mode is error propagation: elementary mistakes such as
+sign errors, wrong formula applications, variable confusions, compound undetected over
+hundreds of subsequent tokens (Wei et al., 2022; Lightman et al., 2024). Existing remedies fall into two categories: training-time approaches (fine-tuning on process-supervised
+reward models (Lightman et al., 2024; Uesato et al., 2022)) and inference-time approaches
+(chain-of-thought prompting (Wei et al., 2022), self-consistency (Wang et al., 2023), Best-of-N
+sampling (Snell et al., 2025), or tree search (Yao et al., 2023)). Training-time methods are
+expensive and tied to a fixed model. Inference-time methods either ignore the model’s
+internal state entirely (Best-of-N) or require many additional forward passes (tree search,
+self-consistency).
+We ask: Can we detect a reasoning error while it is forming, before it has fully propagated, and
+correct the trajectory with minimal additional computation?
+The internal geometry of transformer residual streams offers an answer. Elhage et al. (2021)
+and Anthropic (2022) showed that the residual stream at middle layers encodes semantic
+content that is manipulable via linear steering vectors. Recent mechanistic interpretability
+work (Zou et al., 2024; Turner et al., 2023) demonstrates that these directions can be found
+unsupervised and generalise across tasks. Our observation is simpler: when a model is
+1
+
+Preprint. Under review.
+
+about to commit a reasoning error, the direction of the residual stream at layer ℓcrit ≈ L/2
+undergoes a sharp phase shift, a cosine similarity reversal between consecutive generation
+steps, that can be detected in real time.
+Contributions.
+
+We make five contributions:
+
+1. LPSR algorithm. A training-free inference method that monitors the residual stream,
+detects phase shifts via dual-gate authentication (cosine similarity + token entropy), and
+applies KV-cache rollback with steering vector injection (Section 3).
+2. Empirical validation. LPSR achieves 44.0% on MATH-500, outperforming all 8B baselines
+and a standard 70B model at ∼3× the token cost (Section 4).
+3. Layer dissociation finding. A comprehensive 32-layer sweep reveals that error-detection
+AUC and task accuracy peak at different layers (14 vs. 16), a novel finding that informs
+optimal ℓcrit selection (Section 5).
+4. Error characterisation. Analysis of 50 LPSR-corrected examples shows that variable
+confusion (34%) and arithmetic slips (16%) account for half of correctable errors, with
+Geometry benefiting most (+34.2 pp; Section 5).
+5. Prompted self-correction characterisation. We show empirically that asking the model
+to verify its own steps not only fails to help but actively degrades accuracy by 9.0 pp,
+providing systematic empirical evidence for why natural-language self-correction fails
+at this model scale (Huang et al., 2024) and why residual-stream monitoring is a more
+effective alternative.
+
+2
+
+Background and Related Work
+
+Inference-time compute scaling. Snell et al. (2025) showed that inference-time compute
+can substitute for model scale on reasoning tasks. Best-of-N sampling and self-consistency
+(Wang et al., 2023), a majority-voted variant of Best-of-N, are the dominant approaches, but
+both require N independent forward passes and ignore the model’s internal dynamics. Yao
+et al. (2023) and Besta et al. (2024) use tree structures to guide search, at greater computational cost. LPSR requires on average ∼3× the token budget of greedy decoding, less than
+Best-of-N =16 (15.9× the token budget), and requires no tree structure.
+Steering vectors and residual streams. Linear representation of semantic content in residual streams is well-established (Park et al., 2024; Zou et al., 2024; Turner et al., 2023). Zou
+et al. (2024) demonstrate that directions encoding high-level concepts can be extracted
+unsupervised and used to steer generation at inference time. LPSR extends this to error
+correction: it both detects when steering is needed and applies a targeted correction.
+KV-cache manipulation. Speculative decoding (Leviathan et al., 2023) exploits KV-cache
+structure for speed whereas LPSR uses rollback for correctness. Yang et al. (2024) propose
+context-window trimming. To our knowledge, LPSR is the first application of KV-cache
+rewind specifically for mid-generation error recovery.
+Process supervision and self-correction. Process reward models (Lightman et al., 2024)
+supervise intermediate steps but require labelled data and fine-tuning. Prompted selfcorrection (Madaan et al., 2023) asks the model to verify its own steps via an additional
+system prompt; our experiments show this baseline achieves only 19.8% on MATH-500 with
+Llama-3-8B, lower than standard AR (28.8%), consistent with Huang et al. (2024), who show
+that LLMs cannot reliably self-correct without external feedback.
+Latent-space and continuous-token reasoning. CoCoNuT (Hao et al., 2024) extends
+reasoning through latent continuous tokens, operating entirely in representation space
+across full generation. STIR-Static (a static-steering baseline we introduce in Section 4)
+applies a fixed steering vector without any detection mechanism. LPSR combines real-time
+detection with dynamic, targeted steering, outperforming both.
+2
+
+Preprint. Under review.
+
+Concurrent scaling work. DeepSeek-R1 (Guo et al., 2025) and related “thinking” models
+achieve strong reasoning via extended chain-of-thought trained with reinforcement learning,
+a training-time approach requiring orders of magnitude more compute than LPSR. Shojaee
+et al. (2025) observe that apparent reasoning in large models may reflect shallow pattern
+matching (“the illusion of thinking”). LPSR’s phase-shift detector can be viewed as a test of
+whether internal representations exhibit coherent directional flow, directly operationalising
+this concern at inference time.
+
+3
+
+Method: Latent Phase-Shift Rollback
+
+3.1
+
+Motivation: Phase Shifts as Error Precursors
+(ℓ)
+
+Let { ht }tT=1 ⊂ Rd denote the hidden state at layer ℓ and generation step t. Define the
+directional velocity:
+(ℓ)
+
+(ℓ)
+
+vt
+(ℓ
+
+ht
+
+=
+
+(ℓ)
+∥ ht ∥
+
+(ℓ)
+
+ct
+
+,
+
+(ℓ)
+
+(ℓ)
+
+= ⟨ v t , v t −1 ⟩.
+
+(1)
+
+)
+
+We call ct crit < −τϕ a phase shift: the representation at ℓcrit is moving in the opposite
+direction to the previous step. Empirically, phase shifts at ℓcrit = 16 predict final answer
+incorrectness with AUC 0.652 on MATH-500 (layer sweep detailed in Section 5).
+A single cosine gate is insufficient, token repetitions can cause low cosine similarity without
+error (empirically, 78% of low-entropy phase shifts occur during correct reasoning; see
+Appendix B). We therefore add a token-distribution entropy gate:
+
+
+(ℓ )
+Ht = − ∑ p j log p j ,
+p j = softmax WU ht crit
+,
+(2)
+j
+
+j
+
+(ℓ
+
+)
+
+where WU is the unembedding matrix. A phase shift is authenticated iff ct crit < −τϕ and
+Ht > τH ; otherwise the token is emitted normally and generation continues. This dualgate design reduces the false-positive rate to 22.0% while maintaining precision 0.784 and
+recall 0.267, a high-precision, low-recall design that accepts missed errors in exchange for
+confident corrections (Section 5.2).
+3.2
+
+Steering Vector Basis
+
+We pre-compute a basis V = {δ1 , . . . , δK } ⊂ Rd of K =142 unit-norm steering vectors at
+layer ℓcrit using the following procedure on a held-out calibration set:
+1. Run the model on 1,000 MATH-500 training-split problems under standard AR.
+2. For each problem where the answer is wrong, record the residual stream at the first
+(ℓcrit )
+
+phase-shift step t∗ = min{t : ct
+
+< −τϕ }.
+(ℓ
+
+)
+
+(ℓ
+
+)
+
+(ℓ
+
+)
+
+3. Compute a correction delta: ∆i = h̃t∗ crit − ht∗ crit , where ht∗ crit is the wrong-trajectory
+(ℓ
+
+)
+
+hidden state and h̃t∗ crit is the corresponding state from a teacher-forced correct trajectory
+(i.e., decoded from the gold solution string).
+4. Apply k-means clustering (k =256) on {∆i } and set δi to the ℓ2 -normalised cluster centroid.
+At inference, when a phase shift is authenticated, the steering direction is selected as:
+(ℓcrit )
+
+δ∗ = arg max ⟨δi , ht
+δi ∈V
+
+⟩,
+
+(3)
+
+i.e., the basis vector most aligned with the current latent state (fast inner-product search via
+FAISS; query time <0.1 ms). This selection is greedy-optimal within the span of V under a
+first-order Taylor approximation of the correction objective (Theorem B.4). The selected δ∗
+is then used in the KV-cache rollback and injection procedure described in Section 3.3.
+3
+
+

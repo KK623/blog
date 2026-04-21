@@ -1,0 +1,284 @@
+LoRaQ: Optimized Low Rank Approximation for 4-bit Quantization
+
+Yann Bouquet 1 2 Alireza Khodamoradi 1 Sophie Yáng Shen 1 Kristof Denolf 1 Mathieu Salzmann 2
+
+arXiv:2604.18117v1 [cs.LG] 20 Apr 2026
+
+Abstract
+
+Recent works effectively reduce quantization errors using
+channel-wise scaling and low-rank approximations (Xiao
+et al., 2023; Li et al., 2025). These methods posit that
+maintaining critical weight information at higher precision
+(typically 16-bit) is essential for preserving performance.
+However, we demonstrate that this high-precision requirement is unnecessary. By ignoring modern hardware capabilities for sub-16 bit mixed-precision, existing approaches
+miss the potential of fully quantized pipelines that yield
+superior results.
+
+Post-training quantization (PTQ) is essential
+for deploying large diffusion transformers on
+resource-constrained hardware, but aggressive
+4-bit quantization significantly degrades generative performance. Low-rank approximation methods have emerged as a promising solution by
+appending auxiliary linear branches to restore
+performance. However, current state-of-the-art
+approaches assume these branches must retain
+high precision (W16A16) and rely on heavy, datadependent calibration for initialization. We challenge both limitations with LoRaQ (Low-Rank
+Approximated Quantization), a simple, data-free
+calibration approach that optimizes quantization
+error compensation. By overcoming the need for
+high-precision branches, LoRaQ enables the first
+fully sub-16 bit pipeline, allowing the low-rank
+branch itself to be quantized. We demonstrate
+that, at equal memory overhead, LoRaQ outperforms the state-of-the-art methods in their native
+implementations on PixArt-Σ and SANA. We also
+analyze mixed-precision configurations, showing
+that setups such as W8A8, W6A6, and W4A8 for
+the low-rank branch, alongside a W4 main layer,
+yield superior results while maintaining a fully
+quantized architecture compatible with modern
+mixed-precision hardware.
+
+Furthermore, existing methods rely on costly, datadependent calibration. This imposes significant overhead,
+limiting the quantization of large models on constrained
+resources. We argue that quantization methods should not
+only enable deployment on smaller hardware but also be
+accessible on such hardware. Our proposed data-free optimization framework aligns with this philosophy, offering
+a lightweight alternative that minimizes quantization error
+directly through the low-rank branch.
+Our contributions are threefold. First, we introduce a novel
+optimization for the low-rank branch that is lightweight
+and data-free, enabling efficient model calibration with optimized performance. Second, we achieve the first fully
+quantized linear layer operating entirely in sub-16 bit precision, utilizing mixed-precision strategies and micro-scaling
+formats for both weights and activations to surpass current
+state-of-the-art quality. Third, we release an open-source
+PTQ library for transformer blocks to address the limitations
+of current tools, which lack support for diverse quantization
+schemes and multi-GPU calibration.
+
+1. Introduction
+
+We contextualize our approach within the landscape of diffusion quantization before introducing the Low Rank Approximated Quantization (LoRaQ) framework. Illustrated
+in Figure 1, our method decomposes linear layers into a
+low-rank and a residual branch. Our optimization strategy
+focuses on the low-rank matrices, which uniquely determine
+the residual weights and facilitate the quantization of the
+low-rank branch itself. In the experiments section, we show
+on different datasets and models that LoRaQ outperforms
+the state-of-the-art SVDQuant that relies on full-precision
+branches across multiple metrics. We also analyze various
+mixed-precision configurations of our method, considering
+the support for such operations in modern hardware.
+
+The growth of large-scale diffusion transformers (BlackForest-Labs, 2024; Esser et al., 2024) demands efficient
+inference strategies. Quantization reduces computational
+and memory costs, enabling deployment across diverse hardware. However, aggressive quantization often degrades generative fidelity due to the sensitivity of these architectures
+to perturbations during their iterative denoising process.
+1
+Research and Advancement Development Team, Advanced
+Micro Devices, Inc, USA 2 Computer Vision Laboratory, Ecole
+Polytechnique Fédérale de Lausanne, Lausanne, Switzerland. Correspondence to: Yann Bouquet <yann.bouquet@epfl.ch>.
+
+Preprint. April 21, 2026.
+
+1
+
+LoRaQ: Optimized Low Rank Approximation for 4-bit Quantization
+
+timestep, and channel dimensions. Early quantization efforts struggled with systematic activation outliers which contributed to a degradation of accuracy (Dettmers et al., 2022;
+Wei et al., 2023). A notable breakthrough was achieved by
+Xiao et al. (2023), enabling efficient 8-bit weight quantization (W8) and 8-bit activation quantization (A8) through
+the transfer of quantization difficulty from activations to
+weights using per-channel scaling transformations. Employing these techniques for diffusion models has evolved
+from 8-bit methods like PTQ4DM (Shang et al., 2023) to
+more advanced strategies to employ sub-8-bit data types
+for the weights such as timestep-aware calibration (Li et al.,
+2023), sample-wise dynamic activation quantization (Chen
+et al., 2024c), salient channels (Wu et al., 2024), sensitivityaware quantization (Yang et al., 2023), timestep-conditioned
+methods (He et al., 2023); (Huang et al., 2024), as well as
+extensions to both image (Tang et al., 2024; Zhao et al.,
+2024) and video models (Zhao et al., 2025).
+
++
+
+Data Type 1
+Data Type 2
+
+Figure 1. Overview of the LoRaQ pipeline. A linear layer’s
+weight matrix W is decomposed into two parallel branches. The
+residual branch contains the quantized residual matrix P = W −
+Q2 (LΩ)Q2 (ΩT R), quantized with operator Q1 . The low-rank
+branch contains the matrices L and R, which are rotated by Ω and
+quantized using operator Q2 . We show that inserting Ω between L
+and R minimizes quantization error. The rotation matrix is fused
+with the low-rank matrices and adds no overhead at inference.
+
+Aggressive 4-bit quantization (W4A4) requires new strategies to overcome outlier sensitivity. Ashkboos et al. (2025);
+Liu et al. (2025); Tseng et al. (2024) introduce the use of
+rotation matrices to handle outliers of the activations. Zhang
+et al. (2025) achieved micro-scaling FP4 attention for inference. Li et al. (2025) consolidated outliers from activations
+to weights via smoothing, then decomposed updated weights
+using SVD into high-precision low-rank and 4-bit quantized
+residual branches, with fused kernels eliminating memory
+access overhead for practical W4A4 deployment on GPUs.
+
+2. Related Work
+Diffusion models have rapidly advanced and transformed
+text-to-image synthesis (Sohl-Dickstein et al., 2015; Ho
+et al., 2020). They generate high-quality samples via an
+iterative denoising process starting from Gaussian noise.
+Recently, the core architecture shifted from U-Net (Ronneberger et al., 2015) to transformer-based backbones
+known as DiTs, as pioneered by Peebles & Xie (2023) and
+Bao et al. (2023). Enabled by the scalability of the transformer backbone (Vaswani et al., 2017), this shift opened
+new opportunities for higher image quality. Key advances
+include MM-DiT (Esser et al., 2024) and the FLUX.1 suite
+of models (Black-Forest-Labs, 2024) for efficient scaling
+and high-resolution image synthesis; and PixArt-α (Chen
+et al., 2024b) and PixArt-Σ (Chen et al., 2024a), which
+target training strategies and architecture efficiency.
+
+Our method improves offline quantization through data-free
+optimization that can be seamlessly integrated into existing quantization approach such as (Xiao et al., 2023) and
+Liu et al. (2025). Unlike Li et al. (2025)’s approach of
+maintaining a full-precision low-rank branch, we propose a
+quantized low-rank branch to reduce data movement overhead, eliminating custom kernel requirements and enabling
+flexible mixed-precision weight matrices. In addition, we
+show that the combination of higher ranks with narrower
+data formats improves the model’s performance.
+
+3. Method
+3.1. Quantization Error and Upper Bound
+
+The significant potential of DiTs has motivated the deployment of these models on many resource-constrained devices.
+However, DiTs require substantial computation to achieve
+high image quality (Xie et al., 2025; Li et al., 2025), which
+makes deployment challenging, particularly with efficient
+narrow data types. We focus on overcoming this barrier
+to enable low-precision inference on resource-constrained
+devices while preserving image generation quality. Quantizing DiTs presents several new challenges. Modern GPUs’
+development enables mixed precision operations, calling
+for both weight and activation quantization. This is complicated by substantial data variation across token, condition,
+
+Following the formulation of Li et al. (2025), we examine
+a linear transformation with input matrix X ∈ Rm×d and
+weight matrix W ∈ Rd×n , where m, n, and d correspond
+to the dimensions of input, output and hidden features, respectively. We can express the quantization error as
+E(X, W ) = ∥XW − Q(X)Q(W )∥F ,
+
+(1)
+
+where ∥·∥F represents the Frobenius norm and Q is a quantization operator. The quantization error admits the following
+2
+
+LoRaQ: Optimized Low Rank Approximation for 4-bit Quantization
+
+upper bound:
+E(X, W ) ≤ ∥X − Q(X)∥F ∥W ∥F
++ ∥Q(X)∥F ∥W − Q(W )∥F .
+
+definition, it means that applying the quantization function
+twice is equivalent to applying it once: we define the image of Q as I, then Q(X) = X, ∀X ∈ I. According to
+Equation 3, the equality implies that (W + LR) ∈ I. Thus,
+Q(W + LR) = W + LR. Using this property, it is sufficient to find a low-rank perturbation matrix D = LR in
+order to approximate the quantization error as a low-rank
+matrix.
+
+(2)
+
+See Appendix B.1 for the proof. This reveals that the
+quantization error is constrained by the quantization discrepancies in the original matrices ∥W − Q(W )∥F and
+∥X − Q(X)∥F . Our method focuses on reducing ∥W −
+Q(W )∥F in a more aggressive way than state-of-the-art
+methods (Xiao et al., 2023; Li et al., 2025) and is therefore
+meant to be implemented along existing smoothing methods
+that focus on reducing ∥X − Q(X)∥F .
+
+Thus, we propose to solve the optimization problem
+
+L∗ , R∗ = arg min∥Q(W + LR) − W − LR∥F
+L,R
+
+∝ arg min L(Q(W + LR) − W , LR) ,
+
+(4)
+
+L,R
+
+where L is the Mean Squared Error loss.
+3.2. Absorbing the Quantization Error
+
+Indeed, using this approximation of D, we can now compute
+a gradient of our loss function with respect to L and R as
+detailed in Appendix B.2.
+
+Following the emerging paradigm of incorporating fullprecision low-rank branches into quantized linear layers
+to mitigate quantization error (Li et al., 2025), we propose a
+novel approach that directly approximates the quantization
+error using a low-rank matrix that can be quantized. We
+argue that this strategy is more effective than approximating
+the weight matrix itself with a low-rank decomposition, as
+our method provides explicit quantization error compensation, which adapts to the quantization operator and the
+chosen data format. Intuitively, the quantization function
+introduces structure in the error space that previous methods
+fail to exploit.
+
+This allows us to iteratively update the low-rank matrices
+L and R using gradient descent, effectively absorbing the
+quantization error into a low-rank structure that can be efficiently handled during inference with a fixed rank defined.
+This rank can be chosen based on the desired trade-off
+between computational efficiency and quantization error
+correction, allowing for flexible deployment and further
+improvements.
+We initialize L and R using the Singular Value Decomposition (SVD) of W . This allows us to find the matrix of a
+predefined rank ρ, M = L0 R0 , L0 ∈ Rd×ρ , R0 ∈ Rρ×n
+such that M = minB /rank(B)=ρ ∥W − B∥F . As Li et al.
+(2025), we found it to be a good initialization for our optimization algorithm, where L = −L0 and R = R0 .
+
+Specifically, we seek to find a new point in the input space
+of the quantization function that shapes the quantization
+error to a low-rank matrix such that the quantization error
+can be expressed as
+Ŵ − W = Q(W + D) − W = LR
+
+(3)
+3.3. Quantizing Higher-rank Matrices
+
+where Ŵ is the quantized version of the new point in the
+input space. D ∈ Rd×n is a perturbation matrix, L ∈ Rd×ρ
+and R ∈ Rρ×n for a fixed ρ ≪ d, n. The key insight is
+that by strategically shifting the original weight matrix W
+with D, we can obtain a quantization error that exhibits
+inherent low-rank structure, thereby enabling efficient error
+approximation.
+
+Considering the data formats available in hardware architectures (Microsoft et al., 2023; Li et al., 2025; Zhang et al.,
+2025), we can define a budget β as the maximum allowable memory and computation resources for the low-rank
+branch in our approximation. β is defined by the number
+of bits we require per channel for the low-rank branch. For
+example, SVDQuant uses a float16 low-rank branch with
+ρ = 32 for its 4-bit quantization, thus allocating a budget of
+β = 16 bits/value × 32 values/channel = 512 bits/channel
+for the low-rank branch.
+
+We can express the search of the new point as a gradient
+descent optimization problem where we minimize the difference between the quantized version of the perturbed weight
+matrix Ŵ and the original weight matrix W , subject to the
+constraint that the error is low-rank. However, considering
+that the derivative of the quantization function is zero almost
+everywhere, we cannot directly compute the gradient of the
+quantization function with respect to the perturbation matrix
+D.
+
+In our case, optimizing a low-rank matrix to find a solution
+easily leads to a local minimum. However, the higher the
+rank of the matrix, the better the lower local minimum we
+find. To respect a budget β and leverage the benefits of
+higher rank representations, we also suggest quantizing the
+low-rank branch. We find that the accuracy gains from
+using a higher rank outweigh the loss from quantizing the
+low-rank matrices.
+
+Instead, we can reformulate the problem by considering
+the quantization function as an idempotent operator. By
+3
+
+

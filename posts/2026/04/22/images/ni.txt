@@ -1,0 +1,179 @@
+Published as a conference paper at ICLR 2026
+
+NI S AMPLING : ACCELERATING D ISCRETE D IFFU SION S AMPLING BY T OKEN O RDER O PTIMIZATION
+Zinan Lin†
+Microsoft Research
+zinanlin@microsoft.com
+
+arXiv:2604.18471v1 [cs.LG] 20 Apr 2026
+
+Enshu Liu∗, Xuefei Ning, Yu Wang,
+Department of EE, Tsinghua University
+les23@mails.tsinghua.edu.cn
+foxdoraame@gmail.com
+yu-wang@mail.tsinghua.edu.cn
+
+A BSTRACT
+Discrete diffusion language models (dLLMs) have recently emerged as a promising alternative to traditional autoregressive approaches, offering the flexibility to
+generate tokens in arbitrary orders and the potential of parallel decoding. However, existing heuristic sampling strategies remain inefficient: they choose only a
+small part of tokens to sample at each step, leaving substantial room for improvement. In this work, we study the problem of token sampling order optimization
+and demonstrate its significant potential for acceleration. Specifically, we find that
+fully leveraging correct predictions at each step can reduce the number of sampling iterations by an order of magnitude without compromising accuracy. Based
+on this, we propose Neural Indicator Sampling (NI Sampling), a general sampling order optimization framework that utilize a neural indicator to decide which
+tokens should be sampled at each step. We further propose a novel trajectorypreserving objective to train the indicator. Experiments on LLaDA and Dream
+models across multiple benchmarks show that our method achieves up to 14.3×
+acceleration over full-step sampling with negligible performance drop, and consistently outperforms confidence threshold sampling in the accuracy–step trade-off.
+Code is available at https://github.com/imagination-research/
+NI-Sampling.
+
+1
+
+INTRODUCTION
+
+Diffusion-based large language models (dLLMs) (Austin et al., 2021; Lou et al., 2023; Sahoo et al.,
+2024) are a recently emerged paradigm of text generative modeling, which have attracted increasing
+attention (Nie et al., 2024; Hoogeboom et al., 2021; He et al., 2022; Reid et al., 2022; Sun et al.,
+2022; Nie et al., 2025; Ye et al., 2025; Wu et al., 2025). Currently, dLLMs have demonstrated
+pratical impact in large-scale systems like Mercury (Khanna et al., 2025), Gemini Diffusion (DeepMind), and Seed Diffusion (Song et al., 2025), highlighting their potential for both deployment and
+methodological innovation. Similar to continuous diffusion models (Sohl-Dickstein et al., 2015; Ho
+et al., 2020; Song et al., 2020) for image generation, which recover data from noise through a reverse
+denoising process, dLLMs start from a prior sequential discrete distribution and progressively transform it into the target distribution. Compared to traditional auto-regressive large language models
+(AR LLMs), dLLMs are not restricted to left-to-right decoding scheme and can flexibly choose the
+generation order of all tokens in the sequence. Additionally, dLLMs’ ability of sampling multiple
+tokens per step suggets the potential to surpass AR LLMs in efficiency.
+As mentioned above, the sampling order of tokens should be considered for dLLMs, i.e., how to
+determine which tokens to sample at each step. Since sampling multiple tokens simultaneously may
+break inter-token dependencies (Liu et al., 2024a), default samplers adopt the conservative strategy
+of generating only one token at each step (Nie et al., 2025; Ye et al., 2025; Kim et al., 2025),
+∗
+†
+
+Work mostly done during Enshu Liu’s internship at Microsoft Research
+Project advisor: Zinan Lin
+
+1
+
+Published as a conference paper at ICLR 2026
+
+denoted as full-step sampling. However, this leads to large number of sampling steps and results
+in significant inefficiency. Fast-dLLM (Wu et al., 2025) introduces a heuristic but effective method
+called confidence threshold sampling, where at each step all tokens whose predicted probabilities
+exceed a threshold ϵ are unmasked simultaneously. This strategy substantially reduces the number
+of sampling steps while enabling a trade-off between efficiency and accuracy by varying threshold.
+In this paper, we observe that the efficiency of existing heuristic sampling strategies for dLLMs
+are sub-optimal and still leave substantial room for improvement. Specifically, existing empirical
+methods typically unmask a token only when its predicted confidence is large enough (Wu et al.,
+2025; Nie et al., 2025; Kim et al., 2025; Ye et al., 2025). However, we find that at each step, the
+model is actually capable of correctly predicting a large number of tokens, as the token with the
+highest probability aligns with the final generated token. Existing methods can reveal only a small
+subset of these tokens, as the predicted confidence for most positions remains below the threshold,
+resulting in underutilization of the model’s predictions at each step and, consequently, a substantially
+larger number of sampling steps. Intuitively, if we could identify and sample all correct tokens at
+each step, the total number of generation steps could be significantly reduced.
+Based on this insight, we propose Neural Indicator Sampling (NI Sampling), a new and general
+framework to optimize the token sampling order in dLLMs. Our approach introduces a lightweight
+neural indicator, which determines whether the currently predicted token should be sampled for
+all masked positions in the form of a binary classification task. At each sampling step, all tokens
+judged as positive by the neural indicator are revealed, allowing the sufficient utilization of model
+predictions. To train this indicator, we propose to label the generated data in a trajectory-preserving
+way, which ensures that the optimal indicator can accurately maintain the original high-quality,
+albeit inefficient, generated trajectory with a much faster sampling speed. Note that this framework
+is not limited on our training strategy, leaving room for further exploration.
+Our main contributions can be summarized as follows:
+• In Sec. 3, we demonstrate that selecting an appropriate token sampling order has the potential to
+yield substantial acceleration. Specifically, we identify the phnomenon that the inference results
+of the dLLM at each step are not fully utilized. We show that if all masked positions labelled as
+positive according to our trajectory-preseving criterion are unmasked at every step, the model
+can achieve up to 24× faster than default sampling and more than 3× faster than confidence
+threshold sampling (Wu et al., 2025), while perfectly preseving the performance of the default
+full-step method. This observation highlights the remarkable space for step compression and
+motivates us to optimize the sampling order.
+• In Sec. 4, we introduce NI Sampling, a general framework for optimizing the token sampling
+order in dLLMs. Concretely, NI Sampling trains a lightweight indicator that makes token-wise
+binary decisions on whether each masked position should be revealed at every step. All predicted tokens judged as positive are sampled simultaneously. Following Sec. 3, we leverage the
+trajectory-preserving criterion to generate supervision signals to train this predictor. Importantly,
+the predictor is generic and trained once for different tasks.
+• In Sec. 5, we apply NI Sampling on LLaDA-8B-Instruct (Nie et al., 2025), LLaDA-1.5 (Zhu
+et al., 2025), and Dream-7B-Base model (Ye et al., 2025) and evaluate on mathematical and
+code datasets. Compared with the full-step sampling baseline, NI Sampling achieves up to
+14.3× speedup with only negligible performance degradation, outperforming confidence threshold sampling significantly. Additionally, our accuracy-step trade-off consistently dominates that
+of confidence threshold sampling across all settings. By combining with KV caching technique
+(Wu et al., 2025), we achieve up to 25.0× acceleration compared to full-step sampling.
+
+2
+2.1
+
+P RELIMINARY
+D ISCRETE D IFFUSION M ODELS
+
+Given a discrete random variable with a finite support X = {1, . . . , R}, discrete diffusion models
+gradually perturb its distribution pdata into a prior distribution pT through a predefined forward dift
+ferential equation dp
+dt = Qt pt , over the interval t ∈ [0, T ] (Campbell et al., 2022; Lou et al., 2023).
+t
+To recover pdata , they solve the corresponding reverse differential equation, dp
+dt = Qt pt , from T
+back to 0, where Qt denotes the reverse diffusion matrices parameterized by a neural network.
+2
+
+Published as a conference paper at ICLR 2026
+
+Figure 1: Comparison between NI Sampling and previous sampling methods. At each sampling
+step, NI Sampling uses a neural indicator to assign scores to masked positions. Tokens with sufficiently high indicator scores are then sampled.
+
+Masked Diffusion Models. Among the various design choices for discrete diffusion model, setting pT as a delta distribution on the mask token [M ASK] and using pθ (x0 |xt ) to parameterize
+Qt emerges as the most widely adopted approach, known as masked diffusion models (MDMs).
+Specifically, MDMs treat the forward process as randomly masking tokens:
+n
+n
+Y
+Y
+(1)
+q(xt |x0 ) =
+q(xit |xi0 ) =
+Cat(xit ; (1 − αt )δxi0 + αt δ[M ASK] ),
+i=1
+
+i=1
+
+where n is the sequence length, t ∈ [0, 1] denotes the diffusion timestep, and αt specifies the noise
+schedule. MDMs then train the model to predict the conditional distribution of x0 given a noisy
+sequence xt , resulting in the following training loss:
+n
+X
+L(θ) = −Et,x0 ,xt (wt
+1[xit = [M ASK]] log pθ (xi0 |xt )),
+(2)
+i=1
+
+where x0 is sampled from the training set and 1 refers to the indicator function.
+
+2.2
+
+S AMPLING P ROCESS OF MDM S
+
+A well-trained MDM samples x0 by reversing the forward process Eq. (1), i.e., by iteratively unmasking from the wholely masked sequence x1 . At each step, a set of masked positions is first
+selected to be revealed, and tokens are then sampled according to the predicted conditional probabilities at these positions. Given the prevalent use of greedy sampling in prior works (Ye et al., 2025;
+Nie et al., 2025; Zhu et al., 2025; Wu et al., 2025), which takes the token with highest probability as
+the sampling result, we adopt this setting in our paper.
+Sampling multiple tokens will cause disalignment between the reverse and forward distributions.
+For example, for two masked positions i1 , i2 at some step t, the predictions of the MDM at these
+positions pθ (xi01 |xt ) and pθ (xi02 |xt ), do not account for each other’s sampling results, since both
+xit1 and xit2 are masked. Consequently, sampling them simultaneously would neglect correlations
+(Liu et al., 2024a; Wu et al., 2025). Therefore, typical methods restrict sampling to a single token
+at each step. Various strategies are proposed to select the masked token position i∗ to unmask at
+each step. Top-1 probability (Nie et al., 2025; Chang et al., 2022) selects the token with the highest
+probability: i∗ = arg maxi∈{i|xit =[M ASK]} maxj∈{1,2,...,V } pθ (xi0 = j|xt ), where V is the number
+of tokens in the codebook. Top-1 probability margin (Kim et al., 2025) selects the position with the
+largest gap between the top-1 and the top-2 probabilities: i∗ = arg maxi∈{i|xit =[M ASK]} |pθ (xi0 =
+j1 |xt ) − pθ (xi0 = j2 |xt )|, where j1 and j2 are tokens with top-1 and top-2 probabilities at position
+i, respectively. Top-1 entropy (Ye et al., 2025) selects the position with the highest entropy: i∗ =
+PV
+arg maxi∈{i|xit =[M ASK]} j=1 pθ (xi0 = j|xt ) log pθ (xi0 = j|xt )
+The aforementioned methods suffer from slow generation due to the large number of steps. Confidence threshold sampling (Wu et al., 2025) is proposed to address this issue. At timestep t, it
+samples all tokens with probability exceeds a threshold ϵ: {i| maxj pθ (xi0 = j|xt ) ≥ ϵ}. It can
+be proved that with a sufficiently high threshold, the correspondence loss from sampling multiple
+tokens is negligible under greedy decoding (Wu et al., 2025). In practice, ϵ is typically set to 0.9.
+3
+
+
