@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-23</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-light: #3b82f6;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta span {
+            margin: 0 10px;
+        }
+        
+        .notice-box {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .notice-box h3 {
+            color: var(--warning);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .notice-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .paper-title {
+            flex: 1;
+        }
+        
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #dbeafe;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .paper-card {
+                padding: 16px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .paper-title h2 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 LLM 量化 / 部署 / 蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026-04-23</span>
+                <span>⏰ 发布时间: 2026-04-23 03:00 (GMT+8)</span>
+                <span>📊 3篇论文（补充2026-04-21发布）</span>
+                <span>🗓️ Week 17</span>
+            </div>
+        </header>
+
+        <div class="notice-box">
+            <h3>⚠️ 时间范围说明</h3>
+            <p><strong>搜索范围:</strong> 2026-04-22 (过去24小时)</p>
+            <p><strong>结果:</strong> 今日arXiv未发布符合主题的LLM量化/部署/蒸馏相关新论文。arXiv最新论文发布日期为2026-04-21。</p>
+            <p><strong>补充说明:</strong> 以下补充分析2026-04-21发布的3篇核心相关论文，供参考。</p>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>SimDiff: Depth Pruning via Similarity and Difference</h2>
+                    <a href="https://arxiv.org/abs/2604.19520" target="_blank">arXiv:2604.19520</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Yuli Chen, Shuhao Zhang, Fanshen Meng, Bo Cheng, Jiale Han, Qiang Tong, Xiulei Liu<br>
+                <strong>机构:</strong> Beijing University of Posts and Telecommunications, Hong Kong University of Science and Technology, Beijing Information Science and Technology University<br>
+                <strong>发表时间:</strong> 2026-04-21
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大型语言模型的快速扩展及其沉重的资源需求阻碍了在资源受限环境中的部署，这催生了有效的压缩技术。剪枝是主要方法之一，通过移除冗余组件来缩小模型规模并加速推理。深度剪枝通过移除整个层来缩短顺序计算路径，与宽度剪枝相比，对延迟敏感的应用场景更有效。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有的深度剪枝方法（如ShortGPT）使用余弦相似度来衡量层间表示冗余度，但这种方法仅依赖单一启发式指标。作者发现，仅使用余弦相似度的方法在不同架构上表现出不可预测的性能，甚至可能导致灾难性崩溃。例如，ShortGPT对LLaMA2-7B效果尚可，但对Mistral-7B-v0.3和LLaMA3.1-8B在移除一定数量层后会发生突然的性能崩塌。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出SimDiff，一种联合测量层间相似度和差异度的深度剪枝方法。核心创新包括：(1) 使用余弦距离测量表示相似度；(2) 引入MSSD（最大平方差）指标，对异常值敏感，识别做出决定性修正的层；(3) 引入MASD（平均绝对差）指标，稳健测量层的平均贡献；(4) 设计自适应权重系数α，通过三分搜索优化，实现跨模型架构和规模的自适应剪枝。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在0.5B到13B参数的多个模型上实验表明，SimDiff显著优于现有SOTA基线。在25%剪枝比例下保留LLaMA2-7B超过91%的性能；在LLaMA3.1-8B上剪枝12层实现1.49倍推理加速。被剪枝的模型可以通过少量样本的最小微调有效恢复性能。该方法解决了现有基于单一指标的剪枝方法在不同架构上的不稳定性问题。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>SimDiff通过联合考虑层间相似度和差异度，提供了一种更全面的层重要性评估标准。两个互补的差异度指标（MSSD和MASD）分别捕捉异常值敏感和稳定转换行为，使得深度剪枝更加可靠和鲁棒。这项工作对需要在资源受限环境中部署LLM的实际应用具有重要价值，特别是在延迟敏感场景中。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">深度剪枝</span>
+                <span class="tag">模型压缩</span>
+                <span class="tag">结构化剪枝</span>
+                <span class="tag">推理加速</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>GRASPrune: Global Gating for Budgeted Structured Pruning of Large Language Models</h2>
+                    <a href="https://arxiv.org/abs/2604.19398" target="_blank">arXiv:2604.19398</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Ziyang Wang, Jiangfeng Xiao, Chuan Xiao, Ruoxiang Li, Rui Mao, Jianbin Qin<br>
+                <strong>机构:</strong> Beijing Institute of Technology (Zhuhai), Shenzhen University, Osaka University<br>
+                <strong>发表时间:</strong> 2026-04-21 | <strong>会议:</strong> ACL 2026 Main Conference (已接受)
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>大型语言模型虽然性能强大，但部署成本高昂。模型参数量、注意力计算和KV缓存共同导致显著的内存和延迟开销。结构化剪枝通过移除通道或头组来生成更小的密集检查点，可以用标准服务栈部署，是降低LLM部署成本的有效方法。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有结构化剪枝方法存在三个主要问题：(1) FFN通道和KV头组通常用独立标准分别剪枝，但它们竞争相同的部署预算；(2) 许多方法预设每层保留比例或使用深度相关调度，硬编码预算分配；(3) 许多流程先估计重要性分数再施加预算，削弱了最终稀疏架构与训练目标的联系。作者认为主要问题不是缺乏更好的显著性指标，而是分数学习方式与最终掩码选择方式之间的不匹配。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>GRASPrune提出全局门控结构化剪枝框架，核心创新包括：(1) 在单一全局预算下联合选择FFN通道和KV头组；(2) 使用投影直通估计器(Projected STE)训练，在每一步施加满足预算的硬掩码，同时仅优化标量门控；(3) 掩码固定后，在保留单元上校准缩放因子以减轻剪枝引起的尺度不匹配，并将这些因子折叠到剪枝权重中；(4) 主干权重保持冻结，仅在512个无标签校准序列上优化门控，单张A100 80GB GPU约6分钟完成。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>在LLaMA-2-7B上，GRASPrune移除50%参数后WikiText-2困惑度为12.18，40%参数比例下为16.65，同时保持五个基准测试上竞争力的平均零样本准确率。学习全局分配仅需4轮门控学习加简短校准阶段。生成的更小密集检查点可在标准服务栈上部署，无需额外参数。论文还报告KV缓存和吞吐量结果，将剪枝与服务性能直接关联。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>GRASPrune通过在优化循环内强制执行预算可行性，解决了现有"先学习分数再选择"流程的根本问题。全局门控方法同时考虑FFN和KV结构的不同单位成本，在单一预算约束下学习最优分配。这项工作为LLM结构化剪枝提供了更高效的解决方案，特别适合需要在标准推理栈上快速部署压缩模型的场景。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">结构化剪枝</span>
+                <span class="tag">FFN剪枝</span>
+                <span class="tag">KV缓存优化</span>
+                <span class="tag">部署优化</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>Are Large Language Models Economically Viable for Industry Deployment?</h2>
+                    <a href="https://arxiv.org/abs/2604.19342" target="_blank">arXiv:2604.19342</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Abdullah Mohammad, Sushant Kumar Ray, Pushkar Arora, Rafiq Ali, Ebad Shabbir, Gautam Siddharth Kashyap, Jiechao Gao, Usman Naseem<br>
+                <strong>机构:</strong> DSEU-Okhla (India), University of Delhi, Macquarie University, Stanford University<br>
+                <strong>发表时间:</strong> 2026-04-21 | <strong>会议:</strong> ACL 2026 Industry Track (已接受)
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>生成式AI和LLM正在从研究原型快速转向工业部署，应用于医疗决策支持、金融分析、企业检索和对话自动化等场景。在这些环境中，模型必须满足严格的能量、延迟和硬件利用率约束，而不仅仅是准确率。然而，现有评估流程仍以准确率为中心，缺乏操作和经济标准，形成"部署-评估鸿沟"。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>当前基准测试仅关注准确率，无法揭示实际操作中的权衡。例如，QLoRA虽减少约60%内存，但对小模型增加高达7.2倍的微调能耗，说明内存效率不等于能源效率。这种权衡在准确率基准下不可见，却严重影响实际部署决策。作者认为需要一套面向行业的基准框架，从全生命周期角度评估LLM的经济可行性。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出EDGE-EVAL框架，核心创新包括：(1) 在NVIDIA Tesla T4 GPU上评估LLaMA和Qwen变体的全生命周期（适配→压缩→推理）；(2) 提出五个部署指标：经济盈亏平衡点(Nbreak)、每瓦智能(IPW)、系统密度(ρsys)、冷启动代价(Ctax)和量化保真度(Qret)；(3) 整合LoRA、QLoRA和vLLM进行推理；(4) 在三个工业任务（摘要、RAG、对话代理）上进行评估。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>研究发现清晰的效率前沿：<2B参数模型在经济和生态维度上主导更大的基线。LLaMA-3.2-1B (INT4)中位数14个请求即实现ROI盈亏平衡，每瓦智能比7B模型高3倍，4-bit量化下超过6,900 tokens/s/GB。重要发现：QLoRA虽然减少内存占用，但对小模型增加高达7倍的适配能耗，挑战了边缘部署中量化感知训练的先验假设。这些发现为行业选择LLM部署方案提供了数据支撑。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>EDGE-EVAL填补了LLM评估中的关键空白，首次系统地将经济、能源和基础设施效率纳入模型评估。研究表明小模型+量化在边缘部署中可能优于大模型，而QLoRA的能耗代价被严重低估。这项工作对需要在资源受限硬件上部署LLM的企业具有直接指导意义，特别是在评估总拥有成本(TCO)时应考虑全生命周期能耗而非仅关注准确率。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">工业部署</span>
+                <span class="tag">量化评估</span>
+                <span class="tag">经济性分析</span>
+                <span class="tag">边缘计算</span>
+                <span class="tag">INT4量化</span>
+            </div>
+        </div>
+
+        <div class="trends-section">
+            <h2>📈 趋势观察</h2>
+            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 20px;">
+                <li><strong>深度剪枝的鲁棒性</strong>: SimDiff揭示单一指标（余弦相似度）的局限性，多维度评估成为新方向</li>
+                <li><strong>结构化剪枝的全局优化</strong>: GRASPrune将预算约束内置于优化循环，而非后处理施加</li>
+                <li><strong>经济可行性评估</strong>: EDGE-EVAL开创性地将TCO分析引入LLM部署决策，量化方法不再是"免费"的</li>
+                <li><strong>小模型+量化的边缘优势</strong>: <2B参数模型在INT4量化下展现出意想不到的经济优势</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>🔧 LLM 量化/部署/蒸馏文献调研 | 自动生成的日常调研报告</p>
+            <p>发布时间: 2026-04-23 03:00 (GMT+8) | 分析师: Jarvis</p>
+        </div>
+    </div>
+</body>
+</html>
