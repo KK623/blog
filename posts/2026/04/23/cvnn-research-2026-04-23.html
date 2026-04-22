@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN Research Daily - 2026年4月23日</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.8; max-width: 900px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0 0 15px 0; font-size: 2em; }
+        .header .date { opacity: 0.9; font-size: 1.1em; }
+        .paper { background: white; padding: 30px; margin-bottom: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .paper h2 { color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; font-size: 1.3em; }
+        .paper h2 a { color: #667eea; text-decoration: none; }
+        .paper h2 a:hover { text-decoration: underline; }
+        .paper-meta { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em; }
+        .paper-meta p { margin: 5px 0; }
+        .paper-meta a { color: #667eea; text-decoration: none; }
+        .arxiv-link { display: inline-block; background: #b31b1b; color: white; padding: 4px 12px; border-radius: 4px; text-decoration: none; font-size: 0.85em; margin-top: 10px; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #555; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; }
+        .section h3::before { content: ""; display: inline-block; width: 4px; height: 20px; background: #667eea; margin-right: 10px; border-radius: 2px; }
+        .summary { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); padding: 25px; border-radius: 12px; margin: 30px 0; }
+        .footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; }
+        .badge { display: inline-block; background: #667eea; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #667eea; text-decoration: none; }
+        .figure { text-align: center; margin: 20px 0; padding: 15px; background: #fafafa; border-radius: 8px; }
+        .figure img { max-width: 100%; height: auto; border-radius: 4px; }
+        .figure-caption { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .highlight { background: #e8f4fd; padding: 2px 6px; border-radius: 4px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+        .notice { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .supplement { background: #e8f5e9; border: 1px solid #4caf50; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="back-link">← 返回首页</a>
+
+    <div class="header">
+        <h1>🔬 CVNN Research Daily</h1>
+        <div class="date">2026年4月23日 · 文献调研报告</div>
+        <div style="margin-top: 15px; font-size: 0.9em;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值PolSAR</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值序列建模</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">复值Transformer</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">语音增强</span>
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; margin: 0 5px;">物理信息</span>
+        </div>
+    </div>
+
+    <div class="notice">
+        <strong>📢 调研说明</strong>：本次调研时间范围为 <strong>2026年3月24日 - 2026年4月23日（过去30天）</strong>。成功检索到 <strong>4篇</strong> 高度相关的复数神经网络论文，覆盖PolSAR图像分类、复值序列建模、物理信息复值Transformer和语音增强四大方向。此外补充 <strong>1篇</strong> 2026年3月重要工作（Mamba-3的复值状态更新）。
+    </div>
+
+    <div class="summary">
+        <h3>📋 调研概述</h3>
+        <p>本次调研聚焦于复数神经网络(CVNN)、复数Transformer以及复数神经网络在信号处理应用的最新研究进展。过去30天内，CVNN研究呈现出几个显著趋势：(1) <strong>复值序列建模的突破</strong>——Phase-Associative Memory首次证明纯复值表示在语言建模中的竞争力；(2) <strong>物理信息复值Transformer</strong>——将复数运算与Transformer结合用于无线通信信道重建；(3) <strong>双域复值特征融合</strong>——PolSAR图像分类中复值与实值特征的互补融合；(4) <strong>注意力增强的复值语音增强</strong>——为人工耳蜗用户设计的复值频率变换网络。</p>
+        <p><strong>核心发现</strong>：(1) Phase-Associative Memory在WikiText-103上达到30.0困惑度，仅比同等规模Transformer（27.1）差约10%；(2) 物理信息复值Transformer在干扰占用50%时PDP相似度ρ≥0.82，远超基线ρ≥0.62；(3) DDF2Pol仅用91,371参数，在Flevoland数据集达到98.16%准确率；(4) DAT-CFTNet在人工耳蜗用户语音增强中超越现有CFTNet和DCCRN基线。</p>
+    </div>
+
+    <!-- 论文1 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.18853" target="_blank">1. DDF2Pol: A Dual-Domain Feature Fusion Network for PolSAR Image Classification</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.18853" target="_blank">arXiv:2604.18853</a> · 2026年4月20日</p>
+            <p><strong>作者</strong>: Mohammed Alkhatib 等</p>
+            <p><strong>期刊</strong>: Pattern Recognition Letters (已接收)</p>
+            <p><strong>主题</strong>: <span class="badge">复值CNN</span> <span class="badge">PolSAR</span> <span class="badge">双域融合</span> <span class="badge">遥感</span></p>
+            <a href="https://arxiv.org/pdf/2604.18853.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>极化合成孔径雷达(PolSAR)数据具有固有的复值特性，包含丰富的极化信息，能够捕捉地物的散射特性。PolSAR图像分类是遥感领域的核心任务，广泛应用于农业监测、城市规划、灾害评估等场景。然而，将复数数据分解为实部和虚部处理会丢失幅度-相位耦合关系，而复值方法往往忽略了空间特征的有效提取。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队提出了三个核心问题：<strong>第一</strong>，能否设计一种双域网络架构，同时利用复值分支提取极化信息和实值分支提取空间信息？<strong>第二</strong>，如何在保持低模型复杂度的同时实现高性能的PolSAR分类？<strong>第三</strong>，在训练数据有限的场景下，复值-实值融合策略是否能提升数据效率？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>双域并行特征提取</strong>：提出轻量级双域CNN，包含实值分支（捕捉空间信息）和复值分支（提取极化信息），允许网络从两个互补角度理解PolSAR数据。</li>
+                <li><strong>深度可分离卷积增强</strong>：采用深度可分离卷积层进行空间增强，在减少参数量的同时保持对空间特征的敏感度。</li>
+                <li><strong>坐标注意力机制</strong>：引入坐标注意力机制，聚焦最具信息量的区域，同时考虑通道关系和空间位置信息。</li>
+                <li><strong>极轻量级设计</strong>：整个网络仅91,371个参数，适用于边缘计算设备和无人机平台。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>Flevoland数据集</strong>：总体准确率达<strong>98.16%</strong>，超越多个最先进的实值和复值模型</li>
+                <li><strong>San Francisco数据集</strong>：总体准确率<strong>96.12%</strong>，验证方法泛化能力</li>
+                <li><strong>参数效率</strong>：仅需<strong>91,371</strong>个参数，远低于典型深度学习模型</li>
+                <li><strong>小样本性能</strong>：训练数据有限时仍保持高性能</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>✅ 收益点</h3>
+            <ul>
+                <li><strong>双域互补</strong>：首次系统性融合复值极化特征和实值空间特征</li>
+                <li><strong>极轻量级</strong>：91,371参数适用于嵌入式和边缘部署</li>
+                <li><strong>数据效率</strong>：有限训练数据下仍保持优异性能</li>
+                <li><strong>开源可用</strong>：源代码已公开便于复现</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>多尺度特征金字塔的融合策略有待探索</li>
+                <li>3D体数据分类需要进一步研究</li>
+                <li>更多复杂场景（城市、湿地）的验证有待进行</li>
+                <li>双域网络的可解释性分析有待深入研究</li>
+                <li>高分辨率PolSAR数据上的实时处理速度需优化</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作在PolSAR图像分类领域提出了创新的双域融合架构。通过同时利用复值CNN提取极化信息和实值CNN提取空间信息，DDF2Pol在保持极低参数量的同时达到了最先进的分类性能。对于CVNN领域，该工作展示了"双域互补"的设计范式——复值网络不必完全替代实值网络，而是可以协同工作各自发挥优势。</p>
+        </div>
+    </div>
+
+    <!-- 论文2 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.05030" target="_blank">2. Phase-Associative Memory: Sequence Modeling in Complex Hilbert Space</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.05030" target="_blank">arXiv:2604.05030</a> · 2026年4月6日</p>
+            <p><strong>作者</strong>: Christopher Agostino PhD 等</p>
+            <p><strong>主题</strong>: <span class="badge">复值序列模型</span> <span class="badge">联想记忆</span> <span class="badge">语言建模</span> <span class="badge">全息绑定</span></p>
+            <a href="https://arxiv.org/pdf/2604.05030.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>序列建模是自然语言处理的核心任务，Transformer已成为主流架构。然而，其计算复杂度随序列长度呈二次增长。在神经科学领域，联想记忆通过超位置存储多个关联，但向量状态模型面临O(1/√n)的容量瓶颈。复数表示在量子力学中展现出独特性质，但其在序列建模中的应用尚未被充分探索。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队提出根本性问题：能否设计纯复值序列模型，其原生操作在复希尔伯特空间中进行？<strong>第一</strong>，矩阵状态的复值表示能否解决向量状态模型的容量瓶颈？<strong>第二</strong>，纯复值架构在语言建模中是否能与Transformer竞争？<strong>第三</strong>，复值超位置和共轭检索是否更适合某些语义操作？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>矩阵状态复值表示</strong>：提出Phase-Associative Memory (PAM)，关联通过外积累积在矩阵状态 S_t ∈ C^(d×d) 中，从根本上解决容量瓶颈。</li>
+                <li><strong>共轭内积检索</strong>：检索通过共轭内积 K_t^* · Q_t / √d 实现，允许模型利用相位信息进行关联检索。</li>
+                <li><strong>复值超位置</strong>：原生复值超位置操作允许在复数域中以相干方式叠加多个关联。</li>
+                <li><strong>容量理论分析</strong>：从理论上证明了矩阵状态如何解决O(1/√n)容量退化问题。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>WikiText-103</strong>：约1亿参数规模下达到<strong>30.0</strong>验证困惑度</li>
+                <li><strong>与Transformer对比</strong>：匹配Transformer为27.1，PAM性能在约<strong>10%</strong>范围内</li>
+                <li><strong>计算开销</strong>：有<strong>4倍</strong>算术开销情况下仍保持竞争力</li>
+                <li><strong>容量验证</strong>：矩阵状态确实解决了向量状态的容量瓶颈</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>✅ 收益点</h3>
+            <ul>
+                <li><strong>纯复值架构竞争力</strong>：首次证明纯复值序列模型可与Transformer竞争</li>
+                <li><strong>解决容量瓶颈</strong>：矩阵状态设计从根本上解决全息绑定的容量退化</li>
+                <li><strong>相位信息利用</strong>：共轭内积检索充分利用复数表示的相位维度</li>
+                <li><strong>理论启示</strong>：结果暗示复数形式体系可能更适合某些语义计算</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>当前实现有4倍算术开销，需要自定义内核优化</li>
+                <li>更大规模（10亿+参数）的性能有待探索</li>
+                <li>长序列上的效率和性能尚未充分验证</li>
+                <li>其他序列任务（代码、数学推理）有待测试</li>
+                <li>可以探索复值组件与Transformer架构的混合设计</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作通过Phase-Associative Memory首次证明了纯复值序列模型在大规模语言建模中的竞争力。对于CVNN领域，这是一个里程碑式的工作——它超越了传统信号处理应用，将复值神经网络的能力扩展到了自然语言处理这一核心AI领域。复值超位置和共轭检索的操作范式为序列建模提供了全新的视角。</p>
+        </div>
+    </div>
+
+    <!-- 论文3 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.01944" target="_blank">3. Physics-Informed Transformer for Multi-Band Channel Frequency Response Reconstruction</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.01944" target="_blank">arXiv:2604.01944</a> · 2026年4月2日</p>
+            <p><strong>作者</strong>: Anatolij Zubow 等</p>
+            <p><strong>主题</strong>: <span class="badge">复值Transformer</span> <span class="badge">物理信息</span> <span class="badge">无线通信</span> <span class="badge">信道估计</span></p>
+            <a href="https://arxiv.org/pdf/2604.01944.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>宽带信道频率响应(CFR)估计在多频段无线系统中至关重要，特别是在部分子频段被同频干扰暂时阻塞时。传统方法（最近观测保持、零填充、三次样条插值）在干扰环境下性能有限，因为它们没有充分利用无线信道的物理特性。Transformer在序列建模中取得成功，但标准Transformer处理实值数据，而无线信道频率响应是复值的。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队提出三个核心问题：<strong>第一</strong>，能否设计复值Transformer从部分观测的频谱快照中重建完整的宽带信道频率响应？<strong>第二</strong>，如何将无线信道的物理特性（功率延迟剖面稀疏性、时域平滑性）融入Transformer训练？<strong>第三</strong>，在存在干扰和移动性的复杂场景下，物理信息约束是否能显著提升重建精度？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>物理信息复值Transformer</strong>：操作在时间-频率联合网格上，使用分解自注意力机制分别沿时间和频率两个轴进行注意力计算，复杂度从O((TF)^2)降低到O(TF^2 + FT^2)。</li>
+                <li><strong>全纯线性层</strong>：复值输入输出通过全纯线性层处理，保持相位关系，确保相位信息在变换过程中不丢失。</li>
+                <li><strong>干扰马尔可夫模型</strong>：每个子频段的干扰模式建模为独立的两状态离散时间马尔可夫链，捕捉真实的突发占用行为。</li>
+                <li><strong>复合物理信息损失</strong>：结合谱保真度、PDP重建、CIR稀疏性和时间平滑性的多目标损失函数。</li>
+                <li><strong>移动性泛化</strong>：通过每样本速度随机化纳入移动性效应，泛化到不同移动性场景。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>PDP相似度</strong>：干扰占用高达50%时，达到<strong>ρ≥0.82</strong>，远超最佳基线<strong>ρ≥0.62</strong></li>
+                <li><strong>基线对比</strong>：在三个经典基线中均取得最佳性能</li>
+                <li><strong>速度鲁棒性</strong>：整个速度范围内平滑退化，始终优于所有基线</li>
+                <li><strong>干扰鲁棒性</strong>：即使50%频段阻塞仍保持高精度重建</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>✅ 收益点</h3>
+            <ul>
+                <li><strong>复值Transformer首创</strong>：首次将复值处理与Transformer结合用于无线通信信道重建</li>
+                <li><strong>物理信息融合</strong>：成功将无线信道物理约束融入深度学习模型</li>
+                <li><strong>高效注意力</strong>：分解自注意力将复杂度从二次降低到线性</li>
+                <li><strong>实际应用价值</strong>：可直接应用于5G/6G多频段系统</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>大规模MIMO场景需要扩展</li>
+                <li>多用户干扰下的重建有待研究</li>
+                <li>需要在真实无线测试平台上验证</li>
+                <li>Transformer的推理延迟对极高速系统可能是个挑战</li>
+                <li>非连续频谱分配场景需要适配</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作通过物理信息复值Transformer为多频段无线系统的信道频率响应重建提供了新的解决方案。全纯线性层确保了相位信息的保持，而物理信息损失函数则将领域知识有效嵌入学习过程。这为其他需要复值处理和物理约束的信号处理任务（如雷达、声纳、医学成像）提供了可借鉴的技术框架。</p>
+        </div>
+    </div>
+
+    <!-- 论文4 -->
+    <div class="paper">
+        <h2><a href="https://arxiv.org/abs/2604.06744" target="_blank">4. DAT-CFTNet: Speech Enhancement for Cochlear Implant Recipients using Attention-based Dual-Path Recurrent Neural Network</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2604.06744" target="_blank">arXiv:2604.06744</a> · 2026年4月8日</p>
+            <p><strong>作者</strong>: Nursadul Mamun Dr. 等</p>
+            <p><strong>会议</strong>: ICASSP 2026</p>
+            <p><strong>主题</strong>: <span class="badge">复值语音增强</span> <span class="badge">人工耳蜗</span> <span class="badge">注意力机制</span> <span class="badge">双路径RNN</span></p>
+            <a href="https://arxiv.org/pdf/2604.06744.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 研究背景</h3>
+            <p>人类听觉系统具有选择性聚焦能力，能在复杂声学环境中动态调整注意力。人工耳蜗(CI)用户在噪声环境下的语音识别能力严重受限——CI听众的时频 hearing restoration 通常仅能达到10%左右。现有的复值语音增强网络（如DCCRN、CFTNet）在瓶颈层缺乏有效的注意力机制，无法充分利用时频域中的全局和局部上下文信息。</p>
+        </div>
+
+        <div class="section">
+            <h3>💡 研究动机</h3>
+            <p>研究团队提出三个核心问题：<strong>第一</strong>，能否在复值语音增强网络的瓶颈层引入双路径注意力机制，优化局部和全局上下文信息的处理？<strong>第二</strong>，这种注意力增强的复值网络在人工耳蜗用户的语音增强场景中是否能带来显著提升？<strong>第三</strong>，对于非平稳噪声和音乐伪影的抑制，注意力机制是否能提供比现有方法更好的解决方案？</p>
+        </div>
+
+        <div class="section">
+            <h3>🔧 核心技术点</h3>
+            <ul>
+                <li><strong>双路径注意力模块</strong>：在并发语音增强网络的瓶颈层引入双路径注意力模块，允许网络同时关注时频谱图中的局部细节和全局模式。</li>
+                <li><strong>注意力增强的双路径RNN (DAT-RNN)</strong>：结合修改后的复值频率变换网络(CFTNet)形成DAT-CFTNet，双路径设计分别处理时域和频域依赖关系。</li>
+                <li><strong>复值频率变换网络</strong>：CFTNet在复数域中进行频率变换，同时处理语音信号的幅度和相位信息，避免实值网络的信息损失。</li>
+                <li><strong>时频区域精确区分</strong>：注意力机制允许在时频区域中精确区分语音和噪声，优化局部和全局上下文信息处理。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📊 实验结果</h3>
+            <ul>
+                <li><strong>语音可懂度</strong>：DAT-CFTNet在语音可懂度指标上持续优于现有模型（包括CFTNet和DCCRN）</li>
+                <li><strong>语音质量</strong>：在语音质量评估中也展现出一致的改进</li>
+                <li><strong>人工耳蜗场景</strong>：在模拟CI听众实验中，证明能够抑制非平稳噪声</li>
+                <li><strong>音乐伪影消除</strong>：避免了传统语音增强方法中常见的音乐伪影问题</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>✅ 收益点</h3>
+            <ul>
+                <li><strong>人工耳蜗专用优化</strong>：首次针对CI用户的特殊需求优化复值语音增强网络</li>
+                <li><strong>双路径注意力创新</strong>：同时优化时域和频域的信息处理</li>
+                <li><strong>非平稳噪声鲁棒性</strong>：对难以处理的非平稳噪声展现优异抑制能力</li>
+                <li><strong>ICASSP认可</strong>：被顶级语音会议ICASSP接收</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>⚠️ 局限性/未来工作</h3>
+            <ul>
+                <li>当前模型的计算复杂度对实时CI处理器可能仍有挑战</li>
+                <li>多说话人干扰下的性能有待验证</li>
+                <li>真实CI用户的听感测试需要进一步开展</li>
+                <li>不同制造商CI设备的跨设备泛化有待验证</li>
+                <li>可以与CI的电刺激策略更紧密地结合</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>📝 总结</h3>
+            <p>这项工作通过DAT-CFTNet为人工耳蜗用户提供了显著提升的语音增强解决方案。对于CVNN领域，该工作展示了复值表示在语音信号处理中的持续优势——幅度和相位的联合处理对于语音质量和可懂度的恢复至关重要。双路径注意力的设计也为其他复值信号处理任务提供了可借鉴的架构思路。</p>
+        </div>
+    </div>
+
+    <!-- 补充论文 -->
+    <div class="paper supplement">
+        <h2><a href="https://arxiv.org/abs/2603.15569" target="_blank">补充: Mamba-3: Improved Sequence Modeling using State Space Principles</a></h2>
+        
+        <div class="paper-meta">
+            <p><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2603.15569" target="_blank">arXiv:2603.15569</a> · 2026年3月16日</p>
+            <p><strong>主题</strong>: <span class="badge">状态空间模型</span> <span class="badge">复值状态更新</span> <span class="badge">序列建模</span></p>
+            <a href="https://arxiv.org/pdf/2603.15569.pdf" target="_blank" class="arxiv-link">📄 查看PDF</a>
+        </div>
+
+        <div class="section">
+            <h3>📌 核心要点</h3>
+            <p>Mamba-3提出了三个核心方法改进，其中之一是<strong>复值状态更新规则</strong>——允许状态空间模型在复数域中跟踪更丰富的动态模式。在1.5B参数规模下，Mamba-3比次优模型提升0.6个百分点，MIMO变体进一步提升1.2个百分点。</p>
+            <p><strong>意义</strong>：这是首次将复值状态更新引入大规模序列模型，证明了复数表示在状态跟踪任务中的本质优势，为CVNN与现代序列建模的结合开辟了道路。</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🔬 CVNN Research Daily · 2026年4月23日</p>
+        <p>调研分析师: Jarvis · 发布时间: 2026-04-23 04:00 CST</p>
+        <p>时间范围: 2026年3月24日 - 2026年4月23日（过去30天）</p>
+        <p style="margin-top: 10px;">
+            <a href="../../index.html" style="color: #667eea; text-decoration: none;">← 返回首页</a>
+        </p>
+    </div>
+</body>
+</html>
