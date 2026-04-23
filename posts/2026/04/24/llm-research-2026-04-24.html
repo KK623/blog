@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 量化/部署/蒸馏文献调研 | 2026-04-24</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-light: #3b82f6;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 30px;
+        }
+        h1 { font-size: 1.8rem; margin-bottom: 10px; color: var(--text-primary); }
+        .meta { color: var(--text-secondary); font-size: 0.9rem; }
+        .meta span { margin: 0 10px; }
+        .paper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+        .paper-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .paper-title { flex: 1; }
+        .paper-title h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .paper-title a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .paper-title a:hover { text-decoration: underline; }
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .section { margin-bottom: 16px; }
+        .section h3 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+        .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #dbeafe;
+        }
+        .summary-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+        }
+        .trends-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        .trends-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #f1f5f9;
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        tr:hover { background: rgba(37, 99, 235, 0.03); }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .paper-card { padding: 16px; }
+            h1 { font-size: 1.4rem; }
+            .paper-title h2 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 LLM 量化 / 部署 / 蒸馏文献调研</h1>
+            <div class="meta">
+                <span>📅 2026-04-24</span>
+                <span>⏰ 发布时间: 2026-04-24 03:05 (GMT+8)</span>
+                <span>📊 4篇论文</span>
+                <span>🗓️ Week 17</span>
+            </div>
+        </header>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">1</div>
+                <div class="paper-title">
+                    <h2>Hybrid Policy Distillation for LLMs</h2>
+                    <a href="https://arxiv.org/abs/2604.20244" target="_blank">arXiv:2604.20244</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Wenhong Zhu, Ruobing Xie, Rui Wang, Pengfei Liu<br>
+                <strong>机构:</strong> 未明确标注 (WIP)<br>
+                <strong>发表时间:</strong> 2026-04-22
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>知识蒸馏（Knowledge Distillation, KD）是压缩大型语言模型（LLM）的核心范式之一。现有KD方法在散度方向（前向KL vs 后向KL）、优化策略和数据机制上存在多种设计选择，这些方法之间往往被视为独立技术，缺乏统一的理论框架来理解它们的联系和互补性。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>现有KD方法的 effectiveness 取决于三个交织因素的复杂组合：散度方向的选择、优化策略和数据机制。作者质疑这些技术是否可以通过统一视角重新表述，从而发现新的组合优势。特别是前向KL（模式覆盖，mode coverage）和后向KL（模式寻求，mode-seeking）在不同任务中各有优势，如何整合二者的互补性是一个开放问题。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文提出<strong>Hybrid Policy Distillation (HPD)</strong>，核心贡献包括：(1) 将现有KD方法统一重构为token级别的重加权对数似然目标，揭示不同方法之间的内在联系；(2) 整合前向KL和后向KL的互补优势，在模式覆盖和模式寻求之间取得平衡；(3) 结合off-policy数据与轻量级近似on-policy采样，提高优化稳定性和计算效率；(4) 在数学推理（长序列生成）、对话和代码任务上验证HPD的有效性。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>HPD在长序列数学推理、短序列对话和代码任务上均表现出提升的优化稳定性、计算效率和最终性能。实验跨越多种模型家族和规模，证明HPD具有广泛的适用性。代码已开源（https://github.com/zwhong714/Hybrid-Policy-Distillation），便于社区复现和扩展。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作通过统一视角重构了知识蒸馏的理论框架，并提出了Hybrid Policy Distillation方法，成功整合了前向和后向KL的优势。对于需要压缩LLM同时保持高质量输出的场景，HPD提供了一种更稳定、更高效的蒸馏策略。该研究为理解不同KD技术之间的关系提供了新视角，并为未来的蒸馏方法设计指明了方向。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">知识蒸馏</span>
+                <span class="tag">KL散度</span>
+                <span class="tag">模型压缩</span>
+                <span class="tag">策略优化</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">2</div>
+                <div class="paper-title">
+                    <h2>On the Quantization Robustness of Diffusion Language Models in Coding Benchmarks</h2>
+                    <a href="https://arxiv.org/abs/2604.20079" target="_blank">arXiv:2604.20079</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Aarav Gupta, Gururaj Deshpande, Chandreyi Chakraborty<br>
+                <strong>机构:</strong> 未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-22
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>自回归大型语言模型（LLMs）在编程任务上表现出色，但面临高内存和高推理成本的问题。扩散语言模型（d-LLMs）通过迭代去噪提供有界的推理成本，但其在训练后量化（Post-Training Quantization, PTQ）下的行为研究较少。量化是部署LLM到资源受限环境的关键技术。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>扩散模型在图像生成领域已证明对量化具有一定的鲁棒性，但扩散语言模型在代码生成任务中的量化鲁棒性尚不明确。作者希望比较扩散LLM与其自回归对应物在低比特量化下的性能差异，探索扩散架构是否更适合高效部署。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文在扩散式编程LLM（CoDA）上应用了GPTQ和修改后的Hessian-Aware Quantization（HAWQ）算法，并在标准化评估流程下与自回归模型Qwen3-1.7B进行对比。实验覆盖了2-4 bit的低比特宽配置，并探索了混合精度配置以平衡精度、延迟和内存。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>研究发现CoDA在低比特宽（2-4 bits）下表现出比Qwen3-1.7B更强的量化鲁棒性，在HumanEval和MBPP基准测试上的精度退化更小。HAWQ导出的混合精度配置提供了精度、延迟和内存之间的平滑权衡。这表明扩散LLM可能因更强的量化韧性而在高效部署中具有优势。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作首次系统比较了扩散语言模型与自回归模型在量化鲁棒性方面的差异，发现扩散架构在低比特量化下具有显著优势。对于需要在边缘设备或低资源环境中部署代码生成模型的场景，扩散LLM配合PTQ技术可能是一个有前景的方向，特别是在2-4 bit的极端压缩场景下。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">量化</span>
+                <span class="tag">扩散模型</span>
+                <span class="tag">代码生成</span>
+                <span class="tag">PTQ</span>
+                <span class="tag">GPTQ</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">3</div>
+                <div class="paper-title">
+                    <h2>Variance Is Not Importance: Structural Analysis of Transformer Compressibility Across Model Scales</h2>
+                    <a href="https://arxiv.org/abs/2604.20682" target="_blank">arXiv:2604.20682</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Samuel Salfati<br>
+                <strong>机构:</strong> 未明确标注<br>
+                <strong>发表时间:</strong> 2026-04-22
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>Transformer压缩技术（如量化、剪枝、低秩近似）已取得显著进展，但对压缩为何有效或失败的结构性理解仍然有限。现有方法多为启发式，缺乏对Transformer内部结构的系统性实证分析来指导压缩策略设计。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>作者质疑当前压缩方法中隐含的假设是否成立，例如"高方差方向即重要方向"。通过系统实验，作者希望揭示Transformer在压缩视角下的结构性规律，从而为压缩算法设计提供理论指导和实践建议。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文在GPT-2（124M）和Mistral 7B上进行了40+实验，涵盖谱压缩、块级函数替换、旋转量化、激活几何分析和自适应早退。发现五个关键结构性质：(1) 方差≠重要性：高方差方向与预测方向96%不相关；(2) 块线性是有条件的：仅在正确上游分布下近似线性；(3) 重建墙：因式分解量化会通过交叉项放大误差；(4) 线性度随深度增加：从R²=0.17（block 0）到0.93（block 31）；(5) 约30% token计算上容易。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>单块线性替换在Mistral 7B最后一块实现34×压缩，perplexity仅增加1.71。但多块替换因残差误差累积和分布偏移而失败。这些发现揭示了静态后训练压缩的根本限制，并指出自适应per-token计算是更有效方向。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作通过大规模系统实验揭示了Transformer压缩的五个结构性规律，挑战了多个常见假设。最重要的是，研究发现静态后训练压缩面临根本性限制，而自适应计算分配（如早退、动态深度）可能是更有前景的方向。对于压缩算法设计者和硬件部署工程师，这些结构性洞察提供了宝贵的实践指导。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">压缩分析</span>
+                <span class="tag">Transformer结构</span>
+                <span class="tag">谱分析</span>
+                <span class="tag">自适应计算</span>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-number">4</div>
+                <div class="paper-title">
+                    <h2>From Signal Degradation to Computation Collapse: Uncovering the Two Failure Modes of LLM Quantization</h2>
+                    <a href="https://arxiv.org/abs/2604.19884" target="_blank">arXiv:2604.19884</a>
+                </div>
+            </div>
+            <div class="paper-meta">
+                <strong>作者:</strong> Chenxi Zhou, Pengfei Cao, Jiang Li, Bohan Yu, Jinyu Ye, Jun Zhao, Kang Liu<br>
+                <strong>机构:</strong> 中国科学院自动化研究所, 中国科学院大学 (Findings of ACL 2026)<br>
+                <strong>发表时间:</strong> 2026-04-21
+            </div>
+            
+            <div class="section">
+                <h3>🎯 背景</h3>
+                <p>训练后量化（PTQ）是LLM高效部署的关键技术。4-bit量化被广泛认为是最佳权衡，但降至2-bit通常会触发灾难性的"性能悬崖"。然而，不同比特宽度的失败机制是否根本不同尚不清楚，这阻碍了针对性修复策略的设计。</p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 动机</h3>
+                <p>当前量化失败通常被笼统地归因于"精度损失"，但缺乏对失败模式的精细分类。作者假设不同压缩程度下可能存在性质不同的失败机制，需要系统性诊断框架来区分它们，并设计对应的修复策略。</p>
+            </div>
+            
+            <div class="section">
+                <h3>🔧 技术点</h3>
+                <p>论文通过系统性机制分析，揭示了两种性质不同的失败模式：(1) <strong>Signal Degradation（信号退化）</strong>：计算模式保持完整，但累积误差损害了信息精度；(2) <strong>Computation Collapse（计算崩溃）</strong>：关键组件失效，阻止正确信息处理并在早期层破坏信号。基于这一诊断，作者进行了机制感知干预实验，证明针对性的训练无关修复可以缓解信号退化，但对计算崩溃无效。</p>
+            </div>
+            
+            <div class="section">
+                <h3>📈 收益点</h3>
+                <p>这项工作提供了PTQ失败的系统性诊断框架，使从业者能够识别其量化模型处于哪种失败模式。对于信号退化，简单的补偿策略即可见效；对于计算崩溃，则需要结构重建而非简单补偿。这为量化算法设计提供了宝贵的指导原则。</p>
+            </div>
+            
+            <div class="section summary-section">
+                <h3>📝 总结</h3>
+                <p>这项工作首次系统性地分类了LLM量化的两种失败模式，为理解和修复量化失败提供了全新视角。对于部署量化LLM的工程师和开发新量化算法的研究者，这一诊断框架有助于更精准地定位问题并选择适当的修复策略。论文被ACL 2026 Findings接收，体现了其学术价值。</p>
+            </div>
+            
+            <div style="margin-top: 12px;">
+                <span class="tag">量化</span>
+                <span class="tag">失败分析</span>
+                <span class="tag">PTQ</span>
+                <span class="tag">机制分析</span>
+                <span class="tag">ACL 2026</span>
+            </div>
+        </div>
+
+        <div class="trends-section">
+            <h2>📊 本周趋势总结</h2>
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                <strong>搜索时间范围:</strong> 2026-04-21 至 2026-04-22 (arXiv 最新提交)<br>
+                <strong>调研主题:</strong> LLM 量化 / 部署 / 蒸馏<br>
+                <strong>论文总数:</strong> 4篇
+            </p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>论文</th>
+                        <th>核心主题</th>
+                        <th>关键贡献</th>
+                        <th>应用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hybrid Policy Distillation</td>
+                        <td>知识蒸馏</td>
+                        <td>统一KD框架，混合KL策略</td>
+                        <td>模型压缩、推理加速</td>
+                    </tr>
+                    <tr>
+                        <td>Diffusion LLM Quantization</td>
+                        <td>量化鲁棒性</td>
+                        <td>扩散模型比自回归更耐量化</td>
+                        <td>边缘部署、低比特推理</td>
+                    </tr>
+                    <tr>
+                        <td>Variance Is Not Importance</td>
+                        <td>压缩结构分析</td>
+                        <td>5个结构性发现，34×压缩</td>
+                        <td>压缩算法设计、硬件优化</td>
+                    </tr>
+                    <tr>
+                        <td>Two Failure Modes</td>
+                        <td>量化失败诊断</td>
+                        <td>信号退化 vs 计算崩溃分类</td>
+                        <td>量化修复、算法改进</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 24px; color: var(--accent-light);">🔍 关键洞察</h3>
+            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 20px;">
+                <li><strong>蒸馏理论统一化:</strong> HPD通过统一框架整合多种KD技术，揭示token级重加权的本质</li>
+                <li><strong>扩散架构优势:</strong> 扩散LLM在低比特量化下比自回归模型更鲁棒，为高效部署提供新选择</li>
+                <li><strong>结构性限制:</strong> 静态后训练压缩存在根本限制，自适应per-token计算可能是突破方向</li>
+                <li><strong>失败模式精细化:</strong> 量化失败不再是单一问题，区分信号退化和计算崩溃有助于精准修复</li>
+            </ul>
+            
+            <h3 style="margin-top: 24px; color: var(--accent-light);">📈 技术演进方向</h3>
+            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 20px;">
+                <li><strong>从静态到动态:</strong> 压缩技术正从静态后训练方法转向自适应、per-token的动态策略</li>
+                <li><strong>跨架构比较:</strong> 不同架构（自回归 vs 扩散）在压缩下的行为差异成为新研究热点</li>
+                <li><strong>机制理解深化:</strong> 对量化/压缩失败的机制分析正从经验性走向理论性</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>🔧 Generated by Jarvis | LLM Research Daily</p>
+            <p>📅 2026-04-24 03:05 (GMT+8) | 📚 4 Papers Analyzed</p>
+            <p>🔗 <a href="https://github.com/KK623/blog">GitHub Repo</a> | ⏰ Scheduled at 03:00 AM daily</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        });
+    </script>
+</body>
+</html>
