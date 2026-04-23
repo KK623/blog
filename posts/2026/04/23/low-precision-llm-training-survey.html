@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>低精度LLM训练演进全景调研报告 | 2026-04-23</title>
+    <style>
+        :root {
+            --bg: #fafafa;
+            --text: #1a1a2e;
+            --heading: #16213e;
+            --accent: #0f3460;
+            --accent-light: #e94560;
+            --border: #e0e0e0;
+            --card-bg: #fff;
+            --timeline-line: #0f3460;
+            --timeline-dot: #e94560;
+            --code-bg: #f4f4f4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        h1 {
+            font-size: 2em;
+            color: var(--heading);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+        h2 {
+            font-size: 1.5em;
+            color: var(--heading);
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+        }
+        h3 {
+            font-size: 1.2em;
+            color: var(--accent);
+            margin: 24px 0 12px;
+        }
+        h4 {
+            font-size: 1.05em;
+            color: var(--text);
+            margin: 16px 0 8px;
+            font-weight: 600;
+        }
+        p { margin-bottom: 12px; }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        a:hover { border-bottom-color: var(--accent); }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--timeline-line);
+            border-radius: 3px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--timeline-dot);
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 3px var(--timeline-line);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent-light);
+            font-size: 1.1em;
+        }
+        .timeline-content {
+            margin-top: 4px;
+        }
+        
+        /* Cards */
+        .paper-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+            border-left: 4px solid var(--accent);
+        }
+        .paper-title {
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+        .paper-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .paper-meta span {
+            display: inline-block;
+            margin-right: 16px;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover { background: #f8f9fa; }
+        
+        /* Code blocks */
+        pre, code {
+            background: var(--code-bg);
+            border-radius: 6px;
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        code {
+            padding: 2px 6px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 1.2em; }
+            table { font-size: 0.8em; }
+            th, td { padding: 8px; }
+        }
+        
+        /* Summary box */
+        .summary-box {
+            background: linear-gradient(135deg, var(--accent), #1a1a2e);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+        .summary-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .summary-box li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .summary-box li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-light);
+        }
+        
+        /* Evolution flow */
+        .evolution-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0;
+            padding: 16px;
+            background: #f0f4f8;
+            border-radius: 12px;
+            align-items: center;
+        }
+        .evolution-item {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .evolution-arrow {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .evolution-current {
+            background: var(--accent-light);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 低精度LLM训练演进全景调研报告</h1>
+        <div class="meta">
+            📅 2026-04-23 | 覆盖 2017-2026 | 34+ 篇核心论文 | 学术深度调研（2轮循环研究法）
+        </div>
+
+        <div class="summary-box">
+            <h3>📊 调研概览</h3>
+            <ul>
+                <li>六大技术阶段：FP16奠基 → BF16主流 → FP8前沿 → FP4突破 → INT量化 → 自适应策略</li>
+                <li>34+ 篇核心论文，覆盖 NVIDIA、Microsoft、Google、MIT、Stanford 等顶尖机构</li>
+                <li>从 FP32 到 1.58-bit，训练精度降低 <b>20倍</b>，内存/计算效率持续提升</li>
+                <li>2025年 FP4 训练进入主流：Blackwell硬件支持 + 15+篇论文涌现</li>
+            </ul>
+        </div>
+
+        <h2>一、演进时间线</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">2017</div>
+                <div class="timeline-content">
+                    <b>FP16混合精度奠基</b> — Micikevicius et al. 提出 Loss Scaling + FP32主权重，解决梯度下溢问题
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2018</div>
+                <div class="timeline-content">
+                    <b>理论保证</b> — HALP (De Sa et al.) 首次提供低精度训练的理论收敛保证
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2019</div>
+                <div class="timeline-content">
+                    <b>BF16动态范围扩展 + ZeRO内存优化</b> — Kalamkar实证BF16无需Loss Scaling；Microsoft ZeRO消除内存冗余
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2020-2022</div>
+                <div class="timeline-content">
+                    <b>BF16成为LLM训练主流</b> — GPT-3 (175B)、Chinchilla、LLaMA 全部采用BF16，成为工业标准
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                    <b>FP8格式提出 + 整数量化爆发</b> — Micikevicius E4M3/E5M2；LLM.int8()、SmoothQuant、GPTQ 开启整数量化时代
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content">
+                    <b>FP8工程化 + QAT探索</b> — FP8-LM框架、Transformer Engine工业标准；BitNet、AWQ 探索训练时量化
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content">
+                    <b>极端量化 + 自适应精度</b> — BitNet b1.58 (1.58-bit)；HAQ、AutoQ 探索层间混合精度
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <b class="highlight">FP4训练进入主流</b> — Blackwell原生支持NVFP4；15+篇FP4训练论文涌现；DP-LLM动态精度分配 (NeurIPS)
+                </div>
+            </div>
+        </div>
+
+        <h2>二、精度演进主线</h2>
+        <div class="evolution-flow">
+            <div class="evolution-item">FP32</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">FP16+FP32</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">BF16</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">FP8</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">FP6</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item evolution-current">FP4</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">INT8/4</div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">1.58-bit</div>
+        </div>
+
+        <h2>三、六大技术阶段详解</h2>
+
+        <h3>阶段1：混合精度训练奠基（FP16，2017-2020）</h3>
+        
+        <div class="paper-card">
+            <div class="paper-title">Mixed Precision Training（奠基之作）</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/1710.03740">arXiv:1710.03740</a></span>
+                <span>👤 Micikevicius et al. (NVIDIA, Baidu)</span>
+                <span>📅 2017 (ICLR 2018)</span>
+            </div>
+            <p><b>核心创新：</b>首次系统提出FP16+FP32混合训练方案</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>FP32主权重拷贝（Master Copy）</li>
+                <li>Loss Scaling解决梯度下溢（缩放因子8-128）</li>
+                <li>FP16累加到FP32（Tensor Core）</li>
+            </ul>
+            <p><b>实验收益：</b>内存减少2x，ResNet-50精度持平（73.61%→73.75%）</p>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">HALP: High-Accuracy Low-Precision Training</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/1803.03383">arXiv:1803.03383</a></span>
+                <span>👤 De Sa et al. (Stanford, Intel)</span>
+                <span>📅 2018</span>
+            </div>
+            <p><b>核心创新：</b>首次提供低精度训练的理论收敛保证</p>
+            <p><b>关键技术：</b>SVRG减少梯度方差 + Bit Centering动态量化中心</p>
+            <p><b>实验收益：</b>CPU上比FP32 SVRG快4x，匹配FP32收敛轨迹</p>
+        </div>
+
+        <h3>阶段2：BF16动态范围扩展（2019-2022）</h3>
+
+        <div class="paper-card">
+            <div class="paper-title">BF16全面实证 + GPT-3/Chinchilla/LLaMA</div>
+            <div class="paper-meta">
+                <span>👤 Kalamkar (Intel), Brown (OpenAI), Hoffmann (DeepMind), Touvron (Meta)</span>
+                <span>📅 2019-2023</span>
+            </div>
+            <p><b>核心创新：</b>BF16与FP32相同动态范围（8位指数），无需Loss Scaling</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>BF16: 8位指数 + 7位尾数（vs FP16: 5+10）</li>
+                <li>Google TPU原生支持，NVIDIA Ampere+支持</li>
+                <li>GPT-3 175B、Chinchilla 70B、LLaMA 65B 全部采用</li>
+            </ul>
+            <p><b>实验收益：</b>BF16成为LLM训练<strong>事实标准</strong>，无需调参，硬件广泛支持</p>
+        </div>
+
+        <h3>阶段3：FP8训练前沿（2022-至今）</h3>
+
+        <div class="paper-card">
+            <div class="paper-title">FP8 Formats for Deep Learning（奠基之作）</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/2209.05433">arXiv:2209.05433</a></span>
+                <span>👤 Micikevicius et al. (NVIDIA)</span>
+                <span>📅 2022</span>
+            </div>
+            <p><b>核心创新：</b>提出E4M3/E5M2两种FP8格式，构成FP8规范基础</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>E4M3（4位指数+3位尾数）：前向传播，取消Inf换取动态范围</li>
+                <li>E5M2（5位指数+2位尾数）：反向传播，保留IEEE特殊值</li>
+                <li>每层独立选择格式 + 自动回退机制</li>
+            </ul>
+            <p><b>实验收益：</b>匹配16-bit精度，成功训练175B参数模型</p>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">FP8-LM: Training FP8 Large Language Models</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/2310.18313">arXiv:2310.18313</a></span>
+                <span>👤 Peng et al. (Microsoft/Azure)</span>
+                <span>📅 2023</span>
+            </div>
+            <p><b>核心创新：</b>三级渐进式FP8自动混合精度框架</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>Level 1: FP8权重+激活，梯度BF16</li>
+                <li>Level 2: 梯度压缩至FP8</li>
+                <li>Level 3: 优化器状态+分布式通信全部FP8</li>
+                <li>每层动态缩放 + 自动回退</li>
+            </ul>
+            <p><b>实验收益：</b>内存减少39%，比BF16快<strong>75%</strong>，比Transformer Engine快37%</p>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">NVIDIA Transformer Engine（工业标准库）</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://github.com/NVIDIA/TransformerEngine">GitHub</a></span>
+                <span>👤 NVIDIA</span>
+                <span>📅 2023-2025</span>
+            </div>
+            <p><b>核心创新：</b>工业级FP8/FP4训练推理库，自动维护缩放因子</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>DelayedScaling：历史amax驱动的稳定缩放</li>
+                <li>自动格式选择（E4M3/E5M2/HYBRID）</li>
+                <li>Blackwell新增MXFP8和NVFP4支持</li>
+            </ul>
+            <p><b>实验收益：</b>Blackwell上NVFP4 GEMM比Hopper FP8快<strong>7x</strong></p>
+        </div>
+
+        <h3>阶段4：FP4/NVFP4超低精度（2025-至今）</h3>
+
+        <div class="paper-card">
+            <div class="paper-title">NVIDIA NVFP4 白皮书 + 社区爆发</div>
+            <div class="paper-meta">
+                <span>👤 NVIDIA + 多机构（Metis, TetraJet-v2等）</span>
+                <span>📅 2025</span>
+            </div>
+            <p><b>核心创新：</b>官方FP4训练验证 + 15+篇社区论文涌现</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>NVFP4格式规范 + Blackwell架构原生支持</li>
+                <li>Microscaling技术</li>
+                <li>12B模型×10T tokens预训练验证</li>
+                <li>训练动力学控制：各向异性谱、均值偏差、异常值动态</li>
+            </ul>
+            <p><b>实验收益：</b>FP4 GEMM比Hopper FP8快7x，4-bit训练从"可行"走向"可部署"</p>
+        </div>
+
+        <h3>阶段5：INT8/INT4量化感知训练（2020-至今）</h3>
+
+        <div class="paper-card">
+            <div class="paper-title">LLM.int8() + SmoothQuant + GPTQ</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/2208.07339">LLM.int8</a> | 
+                      <a href="https://arxiv.org/abs/2211.10438">SmoothQuant</a> | 
+                      <a href="https://arxiv.org/abs/2210.17323">GPTQ</a></span>
+                <span>👤 Dettmers (UW), Xiao (MIT), Frantar (IST Austria)</span>
+                <span>📅 2022</span>
+            </div>
+            <p><b>核心创新：</b>系统化异常值处理 + 数学等效变换 + 基于OBS的一次性量化</p>
+            <p><b>关键技术：</b></p>
+            <ul>
+                <li>LLM.int8(): Vector-wise量化 + 混合精度分解</li>
+                <li>SmoothQuant: 离线迁移量化难度（激活→权重）</li>
+                <li>GPTQ: Hessian逆矩阵逐层量化，支持2-bit</li>
+            </ul>
+            <p><b>实验收益：</b>内存减少50%，1.56x-4.5x推理加速</p>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-title">BitNet b1.58: The Era of 1-bit LLMs</div>
+            <div class="paper-meta">
+                <span>📄 <a href="https://arxiv.org/abs/2402.17764">arXiv:2402.17764</a></span>
+                <span>👤 Ma et al. (Microsoft Research)</span>
+                <span>📅 2024</span>
+            </div>
+            <p><b>核心创新：</b>1.58-bit LLM（三值{-1,0,1}），匹配FP16性能</p>
+            <p><b>关键技术：</b>BitLinear层替代nn.Linear + 新缩放定律</p>
+            <p><b>实验收益：</b>显著降低延迟、内存、能耗，开启1-bit LLM专用硬件设计</p>
+        </div>
+
+        <h3>阶段6：自适应/混合精度策略（2023-至今）</h3>
+
+        <div class="paper-card">
+            <div class="paper-title">从HAQ到DP-LLM：动态精度分配</div>
+            <div class="paper-meta">
+                <span>👤 HAQ (2019) | AutoQ (2019) | DP-LLM (NeurIPS 2025)</span>
+                <span>📅 2019-2025</span>
+            </div>
+            <p><b>核心创新：</b>从统一精度到层间自适应，再到运行时动态调整</p>
+            <p><b>关键技术演进：</b></p>
+            <ul>
+                <li>HAQ (2019): 硬件感知RL自动搜索最优bit-width</li>
+                <li>KVTuner (2025): KV Cache敏感性感知混合精度</li>
+                <li>DP-LLM (2025): 动态层间精度分配（NeurIPS）</li>
+                <li>Mixed INT4-INT8 (2025): 渐进式层间分配</li>
+            </ul>
+            <p><b>趋势：</b>从静态策略 → 动态运行时调整</p>
+        </div>
+
+        <h2>四、关键技术对比表</h2>
+        <table>
+            <tr>
+                <th>精度</th>
+                <th>格式</th>
+                <th>动态范围</th>
+                <th>主要挑战</th>
+                <th>代表工作</th>
+                <th>当前状态</th>
+            </tr>
+            <tr>
+                <td>FP32</td>
+                <td>IEEE</td>
+                <td>大</td>
+                <td>内存/计算开销</td>
+                <td>基线</td>
+                <td>已淘汰（训练）</td>
+            </tr>
+            <tr>
+                <td>FP16</td>
+                <td>IEEE</td>
+                <td>中</td>
+                <td>梯度下溢/溢出</td>
+                <td>Micikevicius 2017</td>
+                <td>被BF16取代</td>
+            </tr>
+            <tr style="background:#e8f4f8">
+                <td><b>BF16</b></td>
+                <td>Google</td>
+                <td>大（同FP32）</td>
+                <td>精度略低于FP16</td>
+                <td>Kalamkar 2019</td>
+                <td><b>主流标准</b></td>
+            </tr>
+            <tr style="background:#fff3e0">
+                <td><b>FP8</b></td>
+                <td>E4M3/E5M2</td>
+                <td>小</td>
+                <td>格式选择、缩放策略</td>
+                <td>Micikevicius 2022</td>
+                <td><b>快速普及</b></td>
+            </tr>
+            <tr>
+                <td>FP6</td>
+                <td>自定义</td>
+                <td>极小</td>
+                <td>不规则位宽</td>
+                <td>FP6-LLM 2024</td>
+                <td>研究阶段</td>
+            </tr>
+            <tr style="background:#fce4ec">
+                <td><b>FP4</b></td>
+                <td>NVFP4</td>
+                <td>极小</td>
+                <td>训练稳定性</td>
+                <td>NVIDIA 2025</td>
+                <td><b>前沿突破</b></td>
+            </tr>
+            <tr>
+                <td>INT8</td>
+                <td>整数</td>
+                <td>需缩放</td>
+                <td>异常值处理</td>
+                <td>LLM.int8() 2022</td>
+                <td>推理主流</td>
+            </tr>
+            <tr>
+                <td>INT4</td>
+                <td>整数</td>
+                <td>极小</td>
+                <td>精度损失大</td>
+                <td>GPTQ 2022</td>
+                <td>极限压缩</td>
+            </tr>
+            <tr>
+                <td>1.58-bit</td>
+                <td>三值</td>
+                <td>极简</td>
+                <td>表达能力</td>
+                <td>BitNet 2024</td>
+                <td>研究前沿</td>
+            </tr>
+        </table>
+
+        <h2>五、关键演进趋势</h2>
+
+        <h3>趋势1：从统一到自适应</h3>
+        <div class="evolution-flow">
+            <div class="evolution-item">统一精度<br><small>全FP16/全BF16</small></div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">前后向分离<br><small>E4M3/E5M2</small></div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item">层间混合<br><small>HAQ/AutoQ</small></div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-item evolution-current">运行时动态<br><small>DP-LLM</small></div>
+        </div>
+
+        <h3>趋势2：训练→推理协同优化</h3>
+        <ul>
+            <li>训练时考虑推理量化友好性（QAT）</li>
+            <li>训练-推理精度统一优化</li>
+            <li>端到端低精度流水线</li>
+        </ul>
+
+        <h3>趋势3：硬件-算法协同设计</h3>
+        <ul>
+            <li>NVIDIA Tensor Core 从 FP16 → FP8 → FP4 原生支持</li>
+            <li>Google TPU 原生 BF16</li>
+            <li>Blackwell MXFP8/NVFP4 硬件级优化</li>
+        </ul>
+
+        <h2>六、未来研究方向</h2>
+        <div class="summary-box">
+            <h3>🔮 值得关注的方向</h3>
+            <ul>
+                <li><b>FP4训练成熟化</b>：从研究走向生产部署，解决训练稳定性挑战</li>
+                <li><b>自适应精度</b>：根据层/时间/输入动态调整，实现最优效率-精度权衡</li>
+                <li><b>硬件-算法协同</b>：Blackwell等架构原生支持更低精度，需配套算法优化</li>
+                <li><b>极限量化</b>：探索1-bit甚至更低精度的可行性（BitNet路线）</li>
+                <li><b>训练-推理统一</b>：端到端低精度优化，减少精度转换开销</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 40px 0;">
+        <p style="color: #666; font-size: 0.85em; text-align: center;">
+            📅 生成时间: 2026-04-23 13:00 CST | 
+            🔬 调研方法: 学术深度调研（2轮循环研究法） | 
+            📚 数据来源: arXiv, Google Scholar, NVIDIA技术文档, 会议论文
+        </p>
+    </div>
+</body>
+</html>
