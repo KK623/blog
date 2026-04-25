@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily | 2026-04-26</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .meta {
+      color: #888;
+      font-size: 14px;
+    }
+    .paper {
+      margin: 40px 0;
+      padding: 24px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .paper h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #0066cc;
+    }
+    .paper-meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .section {
+      margin: 16px 0;
+    }
+    .section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 8px;
+      padding-left: 12px;
+      border-left: 3px solid #0066cc;
+    }
+    .section p {
+      font-size: 14px;
+      color: #555;
+      padding-left: 15px;
+    }
+    .summary {
+      margin-top: 40px;
+      padding: 24px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .summary h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    .summary h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      color: #444;
+    }
+    .summary ul {
+      margin-left: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+    .summary li {
+      margin: 8px 0;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 40px 16px; }
+      h1 { font-size: 20px; }
+      .paper { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM Research Daily</h1>
+      <div class="meta">2026-04-26 03:00 (GMT+8) | 5篇论文 | arXiv 2026-04-24</div>
+    </header>
+
+    <div class="paper">
+      <h2>论文 1: FairyFuse — CPU无乘法LLM推理</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.20913">arXiv:2604.20913</a> | 
+        Fei Zuo, Xiaoyan Xi, Quanyi Zeng, Feiyu Wang, Ho Fai Leung | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>大型语言模型越来越多地部署在仅CPU平台上，内存带宽是自回归生成的瓶颈。权重量化到4位或更低可以减少内存压力，但现有系统仍需反量化权重并执行浮点乘法，限制了可实现的增益。三值权重{-1, 0, +1}将乘法替换为条件加法、减法或空操作。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>Fairy2i已证明三值LLM可匹配FP16质量，但其运行时未利用这种结构。作者希望设计推理系统，充分利用三值权重优势，在商用CPU上实现无乘法运算，突破内存带宽瓶颈。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>提出FairyFuse：将每个广线性层的八个子GEMV融合到单个AVX-512循环，使用掩码加法和减法，零浮点乘法。16x权重量化压缩将内存受限GEMV推向计算区域。Roofline分析证明此策略在CPU上有效，在GPU上收益有限。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>内核级加速29.6倍；端到端32.4 tokens/秒（Intel Xeon 8558P）；相比llama.cpp Q4_K_M提升1.24倍；WikiText-2困惑度5.52 vs FP16的5.47；下游准确率66.0%与FP16基线相当。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>通过三值量化和融合内核实现CPU无乘法LLM推理，为CPU-only部署提供高性能方案，保持模型质量的同时大幅提升推理性能。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 2: Absorber LLM — 因果同步长上下文记忆</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.20915">arXiv:2604.20915</a> | 
+        Zhixin Zhang, Shabo Zhang, Chengcan Wu, Zeming Wei, Meng Sun | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>Transformer注意力计算成本随序列长度增长，长流式推理内存消耗成为瓶颈。恒定内存替代方案如RNN和SSM将历史压缩为固定状态，丢失长尾依赖。Test-Time Training（TTT）易过拟合token级投影，无法保持预训练LLM的因果效应。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>如何在保持因果性的前提下将历史上下文压缩到模型参数中，实现恒定内存的长上下文推理？需要既能像TTT记忆上下文，又能保持原始模型因果行为。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>提出因果同步目标：将历史上下文吸收到参数后，无上下文模型应在未来生成上与完整上下文模型匹配。通过同步更新模型的内部行为与原始模型，确保上下文吸收和泛化能力，实现参数即内存。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>长上下文和流式基准测试显示推理内存减少，准确率优于先前参数即内存基线。实现恒定内存占用，与序列长度无关，保持预训练模型因果推理能力。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>通过因果同步机制将长上下文压缩到参数中，为超长上下文流且内存受限的部署提供恒定内存解决方案。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 3: Gist Sparse Attention — 可学习压缩与选择性展开</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.20920">arXiv:2604.20920</a> | 
+        Yuzhen Mao, Michael Y. Li, Emily B. Fox | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>LLM扩展到长上下文面临二次注意力成本挑战。缓解方法包括KV缓存选择或压缩，但通常需要架构修改或外部检索模块，缺乏端到端可学习方案。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>希望提供有效、端到端的可学习桥梁连接KV缓存选择和压缩，无需架构修改或外部模块。核心洞察：可学习摘要token可作为稀疏注意力的路由信号。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>Gist Sparse Attention（GSA）：交错gist压缩token提供可学习摘要；选择性展开先压缩为gist再选择最相关gist并恢复原始块；端到端训练无需外部模块；递归gist-of-gist实现多分辨率访问，对数级解码复杂度。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>LongBench和RAG基准上8x到32x压缩比始终优于压缩基线和推理时稀疏注意力方法。粗到细机制结合紧凑全局表示与细粒度证据访问，解码复杂度从线性降至对数级。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>通过可学习gist token实现KV缓存压缩和稀疏注意力，为长上下文内存受限部署提供无需架构修改的高压缩比解决方案。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 4: TRACES — 推理步骤标记与自适应提前停止</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.21057">arXiv:2604.21057</a> | 
+        Yannis Belkhiter, Seshu Tirupathi, Giulio Zizzo, John D. Kelleher | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>语言推理模型（LRMs）能进行更长更准确推理，但研究表明其仍效率低下，过度生成验证和反思步骤。每个推理步骤的高级角色及不同步骤类型如何贡献正确答案生成，很大程度上未被探索。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>现有LRMs存在过度生成问题浪费计算资源。希望建立轻量级框架实时标记推理步骤，实现自适应、成本高效的提前停止，保持准确率同时显著降低推理成本。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>TRACES框架：实时步骤标记；监控LRMs推理行为变化（达到正确答案后推理行为改变）；基于步骤类型监控产生可解释提前停止标准；根据推理内容动态决定停止生成。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>MATH500、GSM8K、AIME、MMLU、GPQA基准上实现20%到50% token减少，保持与标准生成相当的准确率。提供可解释停止标准，无需修改模型架构或重新训练。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>通过实时标记推理步骤实现自适应提前停止，为大规模部署推理模型提供20-50% token节省的实用框架，无需模型修改。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 5: LoRA Redux — 低秩适应技术全景综述</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.21905">arXiv:2604.21905</a> | 
+        Bingcong Li, Yilang Zhang, Georgios B. Giannakis | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>LoRA已成为基础模型参数高效微调（PEFT）事实标准，以最小计算和内存开销适应十亿参数网络。尽管LoRA及其变体取得成功，但哪些架构选择、优化技术和部署约束应指导实际方法选择仍不够明确。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>LoRA变体众多但缺乏系统性技术机制分析。希望从信号处理角度重新审视LoRA，将现代适配器设计与经典低秩建模工具联系，为方法选择提供理论指导。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>三个互补维度分析LoRA：架构设计（SVD分解、秩增强构造、跨层张量化）；高效优化（初始化、交替求解器、规范不变优化、参数感知方法）；全生命周期应用（预训练、微调、部署/服务）。信号处理视角用于设计有原则的PEFT方法。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>系统性技术机制分析而非简单变体枚举；信号处理角度理论洞察；涵盖LoRA在全生命周期中的新兴应用；指出SP与深度学习交叉处开放研究方向；为实际部署中LoRA方法选择提供指导原则。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>从信号处理角度系统综述LoRA技术，为部署中选择和应用LoRA及其变体提供理论指导和实践建议，帮助在架构设计、优化策略和应用场景间做出明智选择。</p>
+      </div>
+    </div>
+
+    <div class="summary">
+      <h2>本周趋势总结</h2>
+      <h3>关键洞察</h3>
+      <ul>
+        <li><strong>极端量化突破：</strong>FairyFuse通过三值量化和融合内核在CPU上实现29.6倍内核加速和1.24倍端到端提升，将LLM部署推向仅CPU平台新高度</li>
+        <li><strong>长上下文内存革命：</strong>Absorber LLM和Gist Sparse Attention从不同角度解决长上下文内存问题——前者通过参数记忆实现恒定内存，后者通过可学习压缩实现高压缩比</li>
+        <li><strong>推理成本优化：</strong>TRACES通过实时标记推理步骤实现20-50% token减少，为推理模型大规模部署提供成本优化方案</li>
+        <li><strong>适配技术系统化：</strong>LoRA综述为参数高效微调提供系统技术视角，有助于实际部署中做出更好方法选择</li>
+      </ul>
+      <h3>技术演进方向</h3>
+      <ul>
+        <li>从浮点到整数到三值：量化技术朝着更激进数值表示发展，三值权重成为新的极端量化前沿</li>
+        <li>从增长到压缩：长上下文处理从简单KV缓存增长转向智能压缩和参数记忆</li>
+        <li>从静态到动态：推理优化从静态缓存管理转向动态、自适应生成控制</li>
+        <li>从经验到理论：PEFT方法从经验性变体枚举转向有原则的理论分析</li>
+      </ul>
+    </div>
+
+    <footer>
+      Generated by Jarvis | LLM Research Daily<br>
+      2026-04-26 03:00 (GMT+8)
+    </footer>
+  </div>
+</body>
+</html>

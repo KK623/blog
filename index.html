@@ -1,212 +1,24 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>孙凯 | AI 研究院</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #fafafa;
-      color: #333;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 60px 20px;
-    }
-    header {
-      margin-bottom: 60px;
-    }
-    h1 {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .subtitle {
-      color: #666;
-      font-size: 16px;
-    }
-    .nav {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-    .nav a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    .nav a:hover {
-      text-decoration: underline;
-    }
-    .section-title {
-      font-size: 16px;
-      color: #333;
-      font-weight: 600;
-      margin: 40px 0 20px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #0066cc;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .section-title:hover {
-      color: #0066cc;
-    }
-    .section-arrow {
-      font-size: 12px;
-      transition: transform 0.3s;
-    }
-    .section-arrow.expanded {
-      transform: rotate(90deg);
-    }
-    .sub-section-title {
-      font-size: 14px;
-      color: #555;
-      margin: 25px 0 15px;
-      padding-left: 15px;
-      border-left: 3px solid #0066cc;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .sub-section-title:hover {
-      color: #0066cc;
-    }
-    .post {
-      margin-bottom: 24px;
-      padding-left: 15px;
-    }
-    .post-date {
-      font-size: 13px;
-      color: #888;
-    }
-    .post-title {
-      font-size: 17px;
-      font-weight: 500;
-      margin: 4px 0;
-    }
-    .post-title a {
-      color: #333;
-      text-decoration: none;
-    }
-    .post-title a:hover {
-      color: #0066cc;
-    }
-    .expand-btn {
-      display: inline-block;
-      margin: 10px 0 20px 15px;
-      padding: 6px 14px;
-      background: #f0f0f0;
-      border: none;
-      border-radius: 4px;
-      color: #666;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .expand-btn:hover {
-      background: #e0e0e0;
-      color: #333;
-    }
-    .hidden-posts {
-      display: none;
-    }
-    .hidden-posts.expanded {
-      display: block;
-    }
-    .hidden-section {
-      display: none;
-    }
-    .hidden-section.expanded {
-      display: block;
-    }
-    .column-entry {
-      margin-bottom: 16px;
-      padding-left: 15px;
-    }
-    .column-entry a {
-      color: #333;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .column-entry a:hover {
-      color: #0066cc;
-    }
-    footer {
-      margin-top: 80px;
-      padding-top: 40px;
-      border-top: 1px solid #eee;
-      color: #888;
-      font-size: 14px;
-    }
-    .stats {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0 40px;
-    }
-    .stats p {
-      color: #666;
-      font-size: 14px;
-      margin: 5px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>孙凯</h1>
-      <p class="subtitle">AI 研究院 · 文献调研与技术洞察</p>
-    </header>
-    
-    <nav class="nav">
-      <a href="./">首页</a>
-      <a href="./posts/">博客</a>
-      <a href="https://github.com/KK623">GitHub</a>
-    </nav>
-
-    <main>
-      <!-- 第一部分：技术图表 -->
-      <div class="section-title" onclick="toggleSection('section-diagrams', this)">
-        📊 技术图表
-        <span class="section-arrow">▶</span>
-      </div>
-      <div id="section-diagrams" class="hidden-section expanded">
         <article class="post">
-          <span class="post-date">算法可视化</span>
-          <h2 class="post-title"><a href="posts/stochastic-rounding.html">随机舍入 (Stochastic Rounding) 流程图</a></h2>
+          <span class="post-date">2026-04-26 · LLM Research Daily · 5篇论文 · CPU三值量化/长上下文内存压缩/可学习KV压缩/推理提前停止/LoRA综述</span>
+          <h2 class="post-title"><a href="posts/2026/04/26/llm-research-2026-04-26.html">LLM Research Daily：FairyFuse CPU三值量化/Absorber LLM因果同步/Gist Sparse Attention可学习压缩/TRACES推理提前停止/LoRA Redux综述</a></h2>
         </article>
-      </div>
-
-      <!-- 第二部分：最新文章 -->
-      <div class="section-title" onclick="toggleSection('section-latest', this)">
-        📰 最新文章 · 第17周
-        <span class="section-arrow">▶</span>
-      </div>
-      <div id="section-latest" class="hidden-section expanded">
-        <!-- 只显示最近3篇 -->
         <article class="post">
           <span class="post-date">2026-04-25 · LLM Research Daily · 5篇论文 · 参数效率架构/子token KV压缩/蒸馏同质化/嵌入参数缩放/语义感知量化</span>
           <h2 class="post-title"><a href="posts/2026/04/25/llm-research-2026-04-25.html">LLM Research Daily：Hyperloop Transformers/Sub-Token KV压缩/蒸馏行为同质化诊断/X-GRAM嵌入缩放/GS-Quant语义量化</a></h2>
         </article>
         <article class="post">
           <span class="post-date">2026-04-24 · CVNN 文献调研 · 6篇论文 · 贝叶斯CVNN/雷达信号处理/复数GNN/复数神经算子/PolSAR/语音合成</span>
-          <h2 class="post-title"><a href="posts/2026/04/24/cvnn-research-2026-04-24.html">🔬 CVNN 复数神经网络文献调研：BayesCVNN硬件协同设计/毫米波雷达材料分类/基不变复数GNN/复数FNO/PolSAR双域融合/ComVo语音合成</a></h2>
-        </article>
-        <article class="post">
-          <span class="post-date">2026-04-24 · LLM Research Daily · 4篇论文 · 混合策略蒸馏/扩散量化鲁棒性/Transformer压缩结构/量化失败模式</span>
-          <h2 class="post-title"><a href="posts/2026/04/24/llm-research-2026-04-24.html">LLM Research Daily：Hybrid Policy Distillation/扩散LLM量化鲁棒性/Transformer压缩结构分析/量化双重失败模式</a></h2>
+          <h2 class="post-title"><a href="posts/2026/04/24/cvnn-research-2026-04-24.html">🔬 CVNN 复数神经网络文献调研：BayesCVNN硬件协同设计/毫米波雷达材料分类/基不变复数GNN/复值FNO/PolSAR双域融合/ComVo语音合成</a></h2>
         </article>
 
         <!-- 旧文章移至折叠区域 -->
 
         <!-- 旧文章折叠区域 -->
         <div id="more-latest" class="hidden-posts">
+          <article class="post">
+            <span class="post-date">2026-04-24 · LLM Research Daily · 4篇论文 · 混合策略蒸馏/扩散量化鲁棒性/Transformer压缩结构/量化失败模式</span>
+            <h2 class="post-title"><a href="posts/2026/04/24/llm-research-2026-04-24.html">LLM Research Daily：Hybrid Policy Distillation/扩散LLM量化鲁棒性/Transformer压缩结构分析/量化双重失败模式</a></h2>
+          </article>
           <article class="post">
             <span class="post-date">2026-04-23 · CVNN Research Daily · 4篇新论文 · PolSAR双域融合/复值序列建模/物理信息Transformer/语音增强</span>
             <h2 class="post-title"><a href="posts/2026/04/23/cvnn-research-2026-04-23.html">CVNN Research Daily：PolSAR双域融合/Phase-Associative Memory复值序列建模/物理信息复值Transformer/人工耳蜗语音增强</a></h2>
