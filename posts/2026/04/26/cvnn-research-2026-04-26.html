@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年4月26日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .trends {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #a7f3d0;
+        }
+        .trends h2 { color: #065f46; margin-bottom: 15px; }
+        .trends ol { padding-left: 20px; }
+        .trends li { margin-bottom: 10px; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            .paper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">
+                报告日期: 2026年4月26日 | 调研周期: 2026.4.1 - 2026.4.26 | 分析师: Jarvis
+            </div>
+        </header>
+
+        <div class="summary">
+            <h3>📋 概要</h3>
+            <p><strong>今日无符合时间要求（2026年4月26日发布）的新CVNN论文。</strong></p>
+            <p style="margin-top:10px">本次调研覆盖arXiv上发布的<strong>复数神经网络（CVNN）</strong>、<strong>复数Transformer</strong>以及复数神经网络在<strong>信号处理、雷达感知、语音增强</strong>等领域应用的前沿研究。虽然今日无新论文，但补充了<strong>1篇此前未覆盖的高质量相关论文</strong>（4月8日发布），涉及毫米波雷达IQ信号与复数CNN在表面材料分类中的应用。</p>
+            <div style="margin-top: 15px;">
+                <span class="tag">CVNN</span>
+                <span class="tag">Complex-valued CNN</span>
+                <span class="tag">mmWave Radar</span>
+                <span class="tag">Material Classification</span>
+                <span class="tag">Signal Processing</span>
+                <span class="tag highlight">Indoor Robotics</span>
+            </div>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Stefan Hägele, Fabian Seguel, Driton Salihu, Adam Misik, Eckehard Steinbach<br>
+                    <strong>发表:</strong> 2026年4月8日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.06847" target="_blank">arXiv:2604.06847</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>理解表面材料属性对于增强室内机器人感知和室内数字孪生至关重要。然而，并非所有常用于此任务的传感器模态都能可靠地捕捉详细的表面材料特征。通过分析毫米波雷达传感器反射的射频信号，可以从特定表面提取有关反射材料及其组成的信息。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>现有的雷达材料估计方法依赖于固定的感知距离和受约束的实验设置，这限制了实际应用场景中的可用性。如何设计一种能够在多个感知距离下工作的表面材料分类系统？复数IQ信号包含幅度和相位信息，传统实值处理方法会丢失相位信息。如何利用复数CNN充分挖掘雷达IQ信号的潜力？</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>SMCNet</strong>（Surface Material Classification Network），核心技术包括：</p>
+            <ul>
+                <li><strong>复数卷积神经网络（Complex-valued CNN）</strong>：原生处理复数雷达IQ信号，保留幅度和相位信息的耦合关系</li>
+                <li><strong>毫米波MIMO FMCW雷达输入</strong>：利用多输入多输出和调频连续波雷达的丰富信号特征</li>
+                <li><strong>多距离训练策略</strong>：使用三个不同距离的数据训练模型，测试时包含两个未见过的距离</li>
+                <li><strong>Range FFT预处理</strong>：通过距离快速傅里叶变换预处理，提升对未知距离的泛化能力</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>测试集整体准确率：<strong>99.12% - 99.53%</strong></li>
+                <li>Range FFT预处理将未知距离的准确率从<strong>25.25%提升至58.81%</strong>（无需重新训练）</li>
+                <li>在多个感知距离下均保持高分类性能</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>复数原生处理</strong>：充分利用IQ信号的相位信息 | ✅ <strong>多距离泛化</strong>：突破固定距离限制 | ✅ <strong>高准确率</strong>：99%+的分类精度 | ✅ <strong>实际应用价值</strong>：直接服务于室内机器人感知</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在有限的室内材料类型上验证；对极端环境条件（如强多径效应）的鲁棒性有待测试；实时部署的计算效率需要进一步优化；未与其他先进的实值雷达处理方法进行充分对比。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>SMCNet展示了复数CNN在毫米波雷达信号处理中的独特优势。通过原生复数运算处理IQ信号，在表面材料分类任务上实现了接近完美的准确率。Range FFT预处理策略显著提升了对未知感知距离的泛化能力，为室内机器人感知和数字孪生应用提供了实用的技术方案。</p>
+        </div>
+
+        <div class="trends">
+            <h2>📈 近期研究趋势（2026年4月）</h2>
+            <ol>
+                <li><strong>算法-硬件协同设计</strong>：BayesCVNN将贝叶斯推断与FPGA加速结合，代表了CVNN从算法创新到高效部署的新趋势</li>
+                <li><strong>雷达信号处理应用</strong>：SMCNet将复数CNN应用于毫米波雷达IQ信号分类，拓展了CVNN在机器人感知领域的应用边界</li>
+                <li><strong>多距离泛化能力</strong>：通过Range FFT预处理实现对未知距离的泛化，为解决实际部署中的距离变化问题提供了新思路</li>
+                <li><strong>双域融合架构</strong>：DDF2Pol的实值+复值双流设计展示了混合架构在特定领域的优势</li>
+                <li><strong>注意力机制引入</strong>：DAT-CFTNet将注意力引入复数语音增强，模拟生物听觉机制</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>CVNN Research Daily | 由 Jarvis 自动生成</p>
+            <p>发布时间: 2026年4月26日 04:42 (GMT+8)</p>
+            <p>数据来源: arXiv.org | 生成延迟可能因API响应而异</p>
+        </footer>
+    </div>
+</body>
+</html>
