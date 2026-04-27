@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年4月28日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .trends {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #a7f3d0;
+        }
+        .trends h2 { color: #065f46; margin-bottom: 15px; }
+        .trends ol { padding-left: 20px; }
+        .trends li { margin-bottom: 10px; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            .paper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">
+                报告日期: 2026年4月28日 | 调研周期: 2026.3.29 - 2026.4.28 | 分析师: Jarvis
+            </div>
+        </header>
+
+        <div class="summary">
+            <h3>📋 概要</h3>
+            <p><strong>今日无符合时间要求（2026年4月28日发布）的新CVNN论文。</strong></p>
+            <p style="margin-top:10px">本次调研覆盖arXiv上发布的<strong>复数神经网络（CVNN）</strong>、<strong>复数Transformer</strong>以及复数神经网络在<strong>信号处理、医学成像、地球物理</strong>等领域应用的前沿研究。虽然今日无新论文，但补充了<strong>2篇此前未详细覆盖的高质量论文</strong>（2026年1-3月发布）：(1) 首个将薛定谔方程时间演化算子嵌入深度神经网络的4D预测框架，实现物理引导的复数波函数建模；(2) 复数变分自编码器在地球物理勘探中的应用，重建误差低至0.45%。</p>
+            <div style="margin-top: 15px;">
+                <span class="tag">CVNN</span>
+                <span class="tag">Schrödinger-inspired</span>
+                <span class="tag">4D Forecasting</span>
+                <span class="tag">Complex-valued VAE</span>
+                <span class="tag">Geophysics</span>
+                <span class="tag highlight">误差 0.45%</span>
+            </div>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Schrödinger-Inspired Time-Evolution for 4D Deformation Forecasting</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Ahsan Raza Siyal, Markus Haltmeier, Ruth Steiger, Elke Ruth Gizewski, Astrid Ellen Grams<br>
+                    <strong>机构:</strong> Medical University of Innsbruck, University of Innsbruck<br>
+                    <strong>发表:</strong> 2026年1月31日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2602.00661" target="_blank">arXiv:2602.00661</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>四维（3D空间+时间）时空预测在医学成像、流体动力学、地球物理学等领域具有重要应用价值。传统的无约束神经预测模型虽然表达能力强，但在长程预测中容易出现漂移和误差累积问题。物理引导的神经架构通过在深度学习框架中嵌入物理先验，可以显著提高预测的时序稳定性和可解释性。复数波函数表示（ψ = A·e^(iφ)）为建模幅度和相位的耦合关系提供了自然框架，但现有方法尚未充分利用量子力学中的时间演化算子进行神经预测。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>研究团队提出了四个核心问题：<strong>第一</strong>，能否将薛定谔方程的结构化时间演化算子嵌入神经网络，实现物理引导的4D预测？<strong>第二</strong>，复数波函数表示（幅度+相位）能否为时空动态提供更可解释的隐层表示？<strong>第三</strong>，这种物理引导的架构能否缓解长程预测中的漂移和误差累积问题？<strong>第四</strong>，学习到的势能场和相位场能否为解剖结构变形提供物理上可解释的约束？</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>Schrödinger-inspired neural architecture</strong>，核心技术包括：</p>
+            <ul>
+                <li><strong>复数波函数表示</strong>：从观测的体积序列中学习体素级的幅度场(A)、相位场(φ)和势能场(V)，定义复数波函数 ψ = A·e^(iφ)，在复数域中同时编码结构强度（幅度）和输运动态（相位）。</li>
+                <li><strong>可微分薛定谔时间步进器</strong>：将薛定谔时间演化算子实现为可微分神经网络层，通过展开的时间步进机制向前演化波函数。该算子结构化为：(I + i·H·Δt)形式，其中H包含动能和势能项。</li>
+                <li><strong>物理引导的潜在空间</strong>：相位编码输运动态，幅度捕获结构强度，学习到的势能场控制时空相互作用。这种分解提供了端到端可学习的物理约束。</li>
+                <li><strong>形变合成兼容性</strong>：复数波函数表示天然兼容基于形变的合成，对医学成像中保持解剖保真度至关重要。</li>
+                <li><strong>端到端自动微分</strong>：整个框架支持端到端训练，通过反向传播联合优化幅度、相位和势能场的参数。</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li><strong>预测稳定性</strong>：在合成4D基准测试上，相比无约束神经网络，长程预测的漂移显著降低，时序一致性明显提高</li>
+                <li><strong>预测精度</strong>：在模拟真实形状变形和拓扑变化的基准上，准确预测未来4D状态，包括体积强度和形变场</li>
+                <li><strong>可解释性</strong>：学习到的相位场成功编码输运动态，势能场捕获了时空交互模式，幅度场准确定位结构区域</li>
+                <li><strong>解剖保真度</strong>：基于形变的合成保持了医学成像应用中的解剖结构一致性</li>
+                <li><strong>首创性</strong>：首个将薛定谔型演化算子嵌入的端到端4D神经预测框架</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>时序稳定性</strong>：结构化演化算子显著缓解了长程预测中的漂移和误差累积 | ✅ <strong>可解释性</strong>：幅度-相位-势能的分解提供了物理上可理解的隐层表示 | ✅ <strong>物理一致性</strong>：薛定谔演化保证了预测的时序一致性和能量守恒特性 | ✅ <strong>医学成像应用</strong>：对保持解剖保真度的变形合成具有天然兼容性 | ✅ <strong>方法论创新</strong>：为物理引导的深度学习提供了新的架构范式</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前仅在合成基准上验证，真实医学成像数据（如心脏MRI、脑影像）上的有效性有待验证；薛定谔算子的计算复杂度在大规模高分辨率数据上可能需要优化；势能场的物理解释与真实解剖结构变形的对应关系需要进一步研究；与当前SOTA的4D预测方法（如基于扩散模型的方法）的全面对比需要补充；如何处理拓扑变化（如器官分割/融合）的边界条件仍需探索。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>这项工作是将量子力学原理融入深度学习的创新尝试。通过将薛定谔时间演化算子嵌入卷积神经网络框架，研究团队实现了物理引导的4D时空预测，在稳定性、可解释性和解剖保真度方面展现出独特优势。这项工作为医学成像、计算流体力学等领域的时间序列预测提供了新的方法论，也展示了复数表示在时空建模中的强大潜力。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Learning relaxation time distributions from spectral induced polarization data with a complex-valued variational autoencoder</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Charles L. Bérubé, Sébastien Gagnon, Lahiru M. A. Nagasingha, Jean-Luc Gagnon, E. Rachel Kenko, Reza Ghanati, Frédérique Baron<br>
+                    <strong>机构:</strong> Université Laval, Queen's University, Geological Survey of Canada<br>
+                    <strong>发表:</strong> 2026年3月14日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2603.13973" target="_blank">arXiv:2603.13973</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>频谱激发极化（Spectral Induced Polarization, SIP）是一种地球物理方法，通过向地下或实验室样本施加小幅度交流电流，测量频率依赖的复电阻率来表征地下材料。Debye分解（DD）是分析SIP数据的标准方法，可以估计地质材料的弛豫时间分布（RTD）。然而，传统DD方法存在三个关键局限：(1) 独立处理各次测量，忽略了数据间的共享结构；(2) 在实值空间中处理数据，忽略了SIP数据的复值本质；(3) 不确定性量化能力有限。这些局限降低了传统DD在异构数据集上的有效性。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>研究团队致力于解决三个核心挑战：<strong>第一</strong>，如何利用机器学习从大量异构SIP数据中学习共享的映射关系？<strong>第二</strong>，如何在复数域中处理SIP数据以保留幅度和相位的耦合信息？<strong>第三</strong>，如何提供数据驱动的不确定性量化？</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>复数条件变分自编码器（Complex-valued CVAE）</strong>，核心技术包括：</p>
+            <ul>
+                <li><strong>复数数据空间建模</strong>：CVAE直接在复数域中操作，处理复电阻率谱数据，保留幅度和相位的内在耦合关系。编码器将复数输入映射到潜在分布，解码器从潜在变量重建复数输出。</li>
+                <li><strong>Debye分解的变分重构</strong>：将DD重新表述为无监督机器学习问题，CVAE学习从电阻率谱到连续弛豫时间分布的共享映射。通过条件化机制，模型可以处理不同测量条件下的数据。</li>
+                <li><strong>结构化潜在表示</strong>：学习的潜在空间将SIP谱组织成结构化表示。在无监督聚类中，二维投影的Davies-Bouldin指数相比传统RTD参数提高了近3倍。</li>
+                <li><strong>不确定性量化</strong>：变分框架自然提供了重建不确定性估计，弥补了传统DD方法的不足。</li>
+                <li><strong>端到端复数运算</strong>：整个架构（编码器、解码器、重参数化层）都采用复数运算，包括复数全连接层和复数激活函数。</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li><strong>重建精度</strong>：在包含140个实验室和野外SIP测量（颗粒混合物、矿化岩石、水泥材料）的数据集上：
+                    <ul>
+                        <li>复电阻率虚部重建误差：<strong>0.45%</strong></li>
+                        <li>相位分量重建误差：<strong>0.24%</strong></li>
+                    </ul>
+                </li>
+                <li><strong>统计显著性</strong>：相比传统方法，重建误差改善具有统计显著性（p值分别为4×10⁻⁶和2×10⁻³）</li>
+                <li><strong>物理一致性</strong>：推断的RTD稳定且物理一致，总电荷率和平均弛豫时间与可极化颗粒含量和粒径高度相关（决定系数高达0.98）</li>
+                <li><strong>潜在空间质量</strong>：无监督聚类的Davies-Bouldin指数相比传统RTD参数提高近3倍</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>精度突破</strong>：复数重建误差低至0.24%-0.45%，显著优于传统DD方法 | ✅ <strong>复数建模优势</strong>：直接在复数域中处理数据，保留了SIP数据的幅度-相位耦合结构 | ✅ <strong>共享学习</strong>：CVAE从异构数据集中学习共享映射，提高了泛化能力 | ✅ <strong>不确定性量化</strong>：变分框架提供了数据驱动的不确定性估计 | ✅ <strong>可解释性</strong>：潜在空间提供了物理上有意义的材料组织结构</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前仅在140个样本的数据集上验证，更大规模数据集（如全球SIP数据库）上的有效性有待验证；潜在空间的物理解释与地质材料属性的对应关系需要进一步研究；模型对不同测量条件（温度、压力、饱和度）的鲁棒性需要测试；与物理启发的正演模型结合进行联合反演的可能性值得探索；模型复杂度与实时应用需求之间的权衡需要优化。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>这项工作展示了CVNN在地球物理勘探中的巨大潜力。通过将复数变分自编码器应用于SIP数据分析，研究团队不仅将重建精度提高了数倍，还提供了数据驱动的潜在空间表示，为地下材料表征开辟了新的可能性。这项工作为复数神经网络在地球科学领域的应用树立了新的标杆，也为其他领域的复数信号处理提供了参考。</p>
+        </div>
+
+        <div class="trends">
+            <h2>📈 近期研究趋势（2026年4月）</h2>
+            <ol>
+                <li><strong>物理引导的CVNN架构</strong>：Schrödinger-inspired框架将量子力学原理嵌入神经网络，代表了物理-数据混合建模的新方向</li>
+                <li><strong>复数生成模型的崛起</strong>：复数VAE在地球物理数据建模中的成功，展示了生成模型在复数域的独特优势</li>
+                <li><strong>跨学科应用深化</strong>：从医学成像（kViT）到地球物理（SIP-CVAE），CVNN正在多个学科取得实质性突破</li>
+                <li><strong>不确定性量化重视</strong>：BayesCVNN和复数VAE都强调了不确定性量化，这在科学和工程应用中至关重要</li>
+                <li><strong>端到端复数学习</strong>：从数据处理到模型输出，全流程复数运算逐渐成为主流</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>CVNN Research Daily | 由 Jarvis 自动生成</p>
+            <p>发布时间: 2026年4月28日 04:05 (GMT+8)</p>
+            <p>数据来源: arXiv.org | 生成延迟可能因API响应而异</p>
+        </footer>
+    </div>
+</body>
+</html>
