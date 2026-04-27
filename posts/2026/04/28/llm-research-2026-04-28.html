@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily | 2026-04-28</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #0066cc;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .meta {
+      color: #888;
+      font-size: 14px;
+    }
+    .notice {
+      margin: 20px 0;
+      padding: 16px;
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #666;
+    }
+    .paper {
+      margin: 40px 0;
+      padding: 24px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .paper h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #0066cc;
+    }
+    .paper-meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .paper-meta a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .section {
+      margin: 16px 0;
+    }
+    .section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 8px;
+      padding-left: 12px;
+      border-left: 3px solid #0066cc;
+    }
+    .section p {
+      font-size: 14px;
+      color: #555;
+      padding-left: 15px;
+    }
+    .summary {
+      margin-top: 40px;
+      padding: 24px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .summary h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    .summary h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+      color: #444;
+    }
+    .summary ul {
+      margin-left: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+    .summary li {
+      margin: 8px 0;
+    }
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 40px 16px; }
+      h1 { font-size: 20px; }
+      .paper { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>LLM Research Daily</h1>
+      <div class="meta">2026-04-28 03:00 (GMT+8) | 3篇补充论文 | arXiv 2026-04-24</div>
+    </header>
+
+    <div class="notice">
+      <strong>📌 时间范围说明：</strong>2026-04-25至04-28期间，arXiv暂未索引新的LLM量化/部署/蒸馏相关论文（发布延迟）。本报告补充分析2026-04-24发布的相关新论文。
+    </div>
+
+    <div class="paper">
+      <h2>论文 1: SpikingBrain2.0 — 脑启发的高效长上下文与跨平台推理基础模型</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.22575">arXiv:2604.22575</a> | 
+        Yuqi Pan, et al. (多机构) | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>扩展上下文长度正在重塑大模型开发，但全注意力Transformer在长序列上面临计算和推理瓶颈。现有模型在长上下文场景下内存占用巨大，推理延迟高，难以在资源受限的边缘设备部署。亟需一种能在保持性能的同时实现高效长上下文处理的基础模型架构。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>如何设计一种基础模型，在最小训练开销的前提下同时保持性能和长上下文效率？传统的全注意力机制在长序列上的二次复杂度不可接受，需要探索稀疏注意力与事件驱动计算的结合。此外，跨平台部署（GPU、神经形态芯片）需要灵活的量化支持。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>提出SpikingBrain2.0 (SpB2.0)，5B参数模型，核心创新包括：(1) 双空间稀疏注意力(DSSA)：跨层混合稀疏Softmax注意力(MoBA)和稀疏线性注意力(SSE)，优化长上下文建模的性能-效率权衡；(2) 双量化路径：INT8-Spiking编码支持稀疏事件驱动计算，FP8编码加速现代GPU推理；(3) 优化的Transformer-to-Hybrid (T2H)训练管道，支持LLM和VLM的双转换路径。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>在4M上下文长度上实现10.13倍TTFT加速，在8张A100 GPU上支持超过10M tokens（全注意力模型超出内存限制）。FP8 GPU推理在250k序列上实现2.52倍加速。神经形态执行实现64.31%稀疏度，在500MHz下面积和功耗分别降低70.6%和46.5%。仅用不到7k A100 GPU小时恢复大部分Qwen3-4B基础能力。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>SpikingBrain2.0通过脑启发的稀疏注意力机制和双量化路径，为轻量级、多模态、脉冲基础模型提供了实用路径，在资源受限和边缘场景展现出巨大潜力。长上下文效率提升一个数量级，跨平台兼容性出色。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 2: UAE — 通过蒸馏对齐密集检索器与LLM效用</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.22722">arXiv:2604.22722</a> | 
+        Rajinder Sandhu, et al. | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>密集向量检索是RAG（检索增强生成）的实用骨干，但相似度搜索常受精度限制。基于效用的方法利用LLM重排序能获得更好性能，但计算成本高昂且容易受困惑度估计噪声影响。如何在检索阶段就融入生成效用信号是一个关键挑战。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>能否将LLM重排序的优势（高质量）与密集检索的效率结合起来？现有方法要么牺牲精度追求速度，要么在测试时依赖昂贵的LLM推理。需要一种无需测试时LLM推理即可将分级效用信号注入嵌入空间的方法。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>提出Utility-Aligned Embeddings (UAE)，将检索形式化为分布匹配问题，训练双编码器模仿基于困惑度减少的效用分布。核心是使用Utility-Modulated InfoNCE目标函数，将分级效用信号直接注入嵌入空间。检索器学习预测哪些文档能最大程度降低LLM的生成困惑度。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>在QASPER基准上，UAE相比强语义基线BGE-Base，检索Recall@1提升30.59%，MAP提升30.16%，Token F1提升17.3%。关键是UAE比高效的LLM重排序方法快180倍以上，同时保持竞争性性能。证明了将检索与生成效用对齐可以大规模产生可靠的上下文。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>UAE通过蒸馏将LLM的生成效用信号编码到检索器中，实现了高质量和高效率的统一。这种方法为RAG系统的部署优化提供了新思路：在离线阶段完成"昂贵"的效用学习，在线阶段享受高效的向量检索。</p>
+      </div>
+    </div>
+
+    <div class="paper">
+      <h2>论文 3: RouteLMT — 混合LLM翻译部署的学习样本路由</h2>
+      <div class="paper-meta">
+        <a href="https://arxiv.org/abs/2604.22520">arXiv:2604.22520</a> | 
+        Yingfeng Luo, et al. (ACL 2026 Industry Track) | 2026-04-24
+      </div>
+      <div class="section">
+        <h3>背景</h3>
+        <p>LLM在机器翻译上取得显著性能，但大规模部署成本极高。混合系统范式是广泛采用的解决方案：用小模型服务大部分请求，选择性地将部分请求路由到大模型。然而现有路由策略依赖启发式、外部预测器或绝对质量估计，无法准确判断大模型相比小模型是否真的能带来有价值的改进。</p>
+      </div>
+      <div class="section">
+        <h3>动机</h3>
+        <p>如何识别"边际增益"——即大模型相比小模型的实际改进——作为预算分配的最优信号？现有方法要么估计绝对质量（可能小模型已经足够好），要么依赖任务难度（可能与实际增益无关）。需要一种能在小模型内部预测大模型边际增益的高效路由器。</p>
+      </div>
+      <div class="section">
+        <h3>技术点</h3>
+        <p>提出RouteLMT，将路由形式化为预算分配问题。核心洞见：边际增益（大模型相对小模型的改进）是预算决策的最优信号。RouteLMT是一个高效的内置路由器，通过探测小翻译器的prompt-token表示来预测期望增益，无需外部模型或假设解码。基于该预测进行选择性路由。</p>
+      </div>
+      <div class="section">
+        <h3>收益点</h3>
+        <p>RouteLMT在多个翻译任务上优于启发式方法、质量/难度估计基线，实现了更优的质量-预算帕累托前沿。分析表明简单防护变体可以缓解严重的质量损失回归风险。在保持翻译质量的同时显著降低推理成本，为实际部署提供了经济高效的解决方案。</p>
+      </div>
+      <div class="section">
+        <h3>总结</h3>
+        <p>RouteLMT通过精准预测大模型的边际增益而非绝对质量，实现了混合LLM系统的智能路由。这种方法为LLM服务的成本优化提供了新范式：不是简单按任务难度路由，而是按"值得升级"的标准进行决策。</p>
+      </div>
+    </div>
+
+    <div class="summary">
+      <h2>📊 日报总结</h2>
+      
+      <h3>高效推理与边缘部署</h3>
+      <ul>
+        <li><strong>SpikingBrain2.0</strong>：脑启发的双空间稀疏注意力，INT8/FP8双量化路径，长上下文TTFT加速10倍，支持神经形态芯片</li>
+      </ul>
+
+      <h3>蒸馏与模型对齐</h3>
+      <ul>
+        <li><strong>UAE</strong>：将LLM生成效用蒸馏到密集检索器，180倍加速于重排序，RAG检索质量显著提升</li>
+      </ul>
+
+      <h3>服务成本优化</h3>
+      <ul>
+        <li><strong>RouteLMT</strong>：基于边际增益的混合LLM路由，实现质量-预算帕累托最优，显著降低翻译服务成本</li>
+      </ul>
+
+      <h3>趋势观察</h3>
+      <ul>
+        <li><strong>稀疏注意力成为长上下文标配</strong>：SpikingBrain2.0的混合稀疏机制在长序列上实现数量级加速</li>
+        <li><strong>蒸馏从模型压缩扩展到系统优化</strong>：UAE将LLM效用蒸馏到检索器，RouteLMT蒸馏增益预测能力</li>
+        <li><strong>边际思维取代绝对思维</strong>：RouteLMT的边际增益路由策略代表服务优化的新方向——关注"增量价值"而非"绝对能力"</li>
+        <li><strong>跨平台部署需求凸显</strong>：INT8/FP8双量化、神经形态芯片支持反映边缘部署的多样化需求</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>LLM Research Daily | Generated at 2026-04-28 03:00 (GMT+8)</p>
+      <p>Research focus: LLM quantization, deployment, distillation</p>
+      <p style="margin-top: 8px; font-size: 12px; color: #aaa;">注：2026-04-25至04-28期间arXiv暂未索引新论文，本报告基于04-24最新发布论文</p>
+    </footer>
+  </div>
+</body>
+</html>
