@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年4月29日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .trends {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #a7f3d0;
+        }
+        .trends h2 { color: #065f46; margin-bottom: 15px; }
+        .trends ol { padding-left: 20px; }
+        .trends li { margin-bottom: 10px; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            .paper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">
+                报告日期: 2026年4月29日 | 调研周期: 2026.3.29 - 2026.4.29 | 分析师: Jarvis
+            </div>
+        </header>
+
+        <div class="summary">
+            <h3>📋 概要</h3>
+            <p>本次调研聚焦过去30天内arXiv上发布的<strong>复数神经网络（CVNN）</strong>、<strong>复数Transformer</strong>以及复数神经网络在<strong>信号处理</strong>领域应用的前沿研究。共筛选出<strong>6篇高质量相关论文</strong>，涵盖深度展开复数神经网络硬件加速、复数梯度下降收敛理论、贝叶斯CVNN不确定性量化、物理信息复数Transformer无线信道重构、复数声码器波形生成以及雷达目标检测等方向。</p>
+            <div style="margin-top: 15px;">
+                <span class="tag">CVNN</span>
+                <span class="tag">Complex Transformer</span>
+                <span class="tag">Signal Processing</span>
+                <span class="tag">Bayesian Neural Networks</span>
+                <span class="tag">Beamforming</span>
+                <span class="tag">Radar</span>
+                <span class="tag">Vocoder</span>
+                <span class="tag highlight">DAC 2026</span>
+                <span class="tag highlight">ICLR 2026</span>
+            </div>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Coordinated Multipoint Anti-jamming Beam Pattern Synthesis: From AI Accelerated Algorithm to Hardware Implementation</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Zilong Wang, Cheng Zhang, Zhilei Zhang, Yaxuan Hu, Wen Wang, Yongming Huang<br>
+                    <strong>发表:</strong> 2026年4月26日 | <strong>机构:</strong> 东南大学移动通信国家重点实验室<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.23880" target="_blank">arXiv:2604.23880</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>抗干扰波束成形是蜂窝无蜂窝（cell-free）通信系统中的核心挑战。传统优化方法面临三大瓶颈：计算复杂度高（随接入点数量指数增长）、自适应能力差（难以应对动态干扰环境）、以及可扩展性受限（前传开销过大）。现有基于数据驱动的深度学习方法虽然降低了部分计算负担，但泛化能力和实时性仍不理想。复数神经网络（CVNN）因其天然适配复数信道状态信息的特性，逐渐成为无线通信信号处理的研究热点。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>本研究旨在构建一套从算法到硬件的完整解决方案，解决传统抗干扰波束成形的部署瓶颈。具体动机包括：第一，降低前传链路开销——现有协调多点（CoMP）方案需要大量AP-CPU交互；第二，实现实时自适应——传统方法需要在线迭代优化，难以满足低时延要求；第三，验证硬件可行性——将AI加速算法映射到ARM-FPGA异构平台，证明实际部署潜力。作者选择深度展开（deep unfolding）框架，将优化迭代展开为可学习的神经网络层，实现算法与硬件的协同设计。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>DUCoMP-BPS</strong>（深度展开支持的协调多点波束方向图综合）框架，核心技术包括：</p>
+            <ul>
+                <li><strong>分布式架构设计</strong>：AP基于本地角度信息独立确定模拟波束成形，CPU仅执行协作数字波束成形，仅需单次AP-CPU交互，显著降低前传开销</li>
+                <li><strong>深度展开加速</strong>：将模拟波束成形中昂贵的步长搜索转化为可训练参数，离线训练完成后实现快速在线推理</li>
+                <li><strong>复数神经网络推理</strong>：离线训练的CVNN替代传统迭代优化，实现自适应在线推理</li>
+                <li><strong>ARM-FPGA异构实现</strong>：算法-硬件协同验证，软硬件解耦实现高效并行和低延迟执行</li>
+                <li><strong>消声室实测验证</strong>：在实际硬件不完美条件下验证鲁棒性</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验从仿真和硬件两个维度验证方案有效性：</p>
+            <ul>
+                <li>复杂度随AP数量<strong>线性增长</strong>，突破了传统方法的指数级瓶颈</li>
+                <li>单AP模拟波束成形运行时间相比传统优化降低约<strong>67%</strong></li>
+                <li>零陷性能优于纯数据驱动方法，干扰抑制能力更强</li>
+                <li>ARM-FPGA平台验证硬件可行性，实现低延迟并行执行</li>
+                <li>消声室实测在硬件不完美条件下仍保持鲁棒波束成形性能</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>该研究的主要收益在于首次将深度展开CVNN从算法设计推进到硬件实测验证，填补了算法-硬件协同设计的空白。对于5G/6G无蜂窝网络部署，DUCoMP-BPS提供了可落地的低复杂度抗干扰方案。CVNN的应用充分发挥了复数表示对相位信息的天然建模能力，相比实值网络减少了参数冗余。软硬件解耦的设计哲学也为其他CVNN边缘部署场景提供了可复用的工程范式。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前方案在模拟波束成形阶段依赖离线训练的CVNN，对训练数据分布的偏移较为敏感，尚未充分验证在极端非平稳信道下的泛化能力。此外，ARM-FPGA平台的功耗和面积数据未在摘要中披露，与其他嵌入式AI加速器缺乏直接对比。未来工作可探索：在线增量学习以适配时变信道、将数字波束成形部分也纳入神经网络端到端训练、以及在更广泛的阵列构型（如大规模MIMO、智能超表面辅助）上扩展验证。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>本文提出DUCoMP-BPS框架，通过深度展开将传统迭代优化转化为可学习的CVNN推理，结合分布式架构大幅降低前传开销，并在ARM-FPGA平台上完成算法-硬件协同验证。该工作是无线通信领域中CVNN从算法创新走向工程落地的重要里程碑，为6G无蜂窝网络的实时抗干扰波束成形提供了有竞争力的技术路线。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Complex SGD and Directional Bias in Reproducing Kernel Hilbert Spaces</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Natanael Alpay, Emeric Battaglia<br>
+                    <strong>发表:</strong> 2026年4月24日 | <strong>会议/期刊:</strong> arXiv预印本<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.23017" target="_blank">arXiv:2604.23017</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>随机梯度下降（SGD）是大规模凸优化问题的基石算法，以其简单实现和良好扩展性著称。然而，标准SGD理论建立在实值参数空间之上。在复值神经网络（CVNN）、量子机器学习、以及核方法等场景中，参数本身具有复数结构，需要复数域上的优化理论支撑。此前虽已有复数SGD/GD的变体被提出，但<strong>缺乏无需解析性约束的收敛保证</strong>，这限制了理论对实际CVNN训练的指导作用。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>作者注意到，现有复数优化方法要么要求损失函数满足柯西-黎曼条件（过于严格，大多数实际损失函数不满足），要么仅提供经验性观察而缺乏严格证明。本研究的核心动机是：能否在<strong>与实值SGD平行的温和假设下</strong>，为复数SGD建立严格的收敛理论？此外，复值核回归中的方向性偏差（directional bias）现象在实值域已有研究，但其在复值域的对应规律尚不清楚。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>本文从优化理论和泛函分析两个角度展开：</p>
+            <ul>
+                <li><strong>复数SGD变体</strong>：提出允许复数参数的SGD扩展形式，使用Wirtinger导数框架处理非解析激活函数</li>
+                <li><strong>收敛保证</strong>：在与实值SGD平行的假设下（凸性、Lipschitz梯度、有界方差等），证明复数SGD的收敛性，结果同时适用于复数GD</li>
+                <li><strong>方向性偏差扩展</strong>：证明某些方向性偏差结果可以从实值域推广到复值域，适用于核回归问题</li>
+                <li><strong>复再生核希尔伯特空间（RKHS）</strong>：在复RKHS上建立理论框架，包括Fock空间和Hardy空间</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验部分聚焦复值核回归问题：</p>
+            <ul>
+                <li>在复RKHS上的核回归任务中验证了复数SGD的有效性</li>
+                <li>成功从Fock空间恢复<strong>超振荡函数（superoscillation functions）</strong>——这是一种超越传统奈奎斯特极限的特殊信号</li>
+                <li>从Hardy空间恢复<strong>Blaschke乘积</strong>作为特定损失函数的最优解</li>
+                <li>实验结果表明复数SGD在复值函数逼近任务中具有稳定收敛行为</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>该研究为CVNN的训练优化提供了重要的理论基础。此前社区对复数SGD的使用多基于经验或启发式，本文的收敛 guarantee 使得工程师可以更有信心地采用复数优化器。此外，超振荡函数和Blaschke乘积的恢复实验展示了复数方法在信号处理中的独特能力——这些是实值网络难以直接处理的对象。对于核方法和量子机器学习社区，本文的RKHS理论框架也具有参考价值。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前理论主要面向凸优化场景和浅层核回归，尚未涵盖深度CVNN中非凸损失、多层复合函数以及批量归一化等现代训练技术。实验规模相对较小，主要停留在概念验证层面。未来方向包括：将收敛分析扩展到非凸设定（如深度网络）、研究自适应学习率方法（复数Adam、复数AdamW）的理论性质、以及探索更复杂的复值核函数和其在时频分析中的应用。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>本文首次在不依赖解析性约束的条件下，为复数SGD建立了严格的收敛理论，并将方向性偏差分析推广到复值域。虽然理论深度较高，但对CVNN训练实践具有指导意义——它证实了复数优化器的合理性，并为后续自适应优化算法的理论分析奠定了基础。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Algorithm and Hardware Co-Design for Efficient Complex-Valued Uncertainty Estimation</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Zehuan Zhang, Mark Chen, He Li, Wayne Luk<br>
+                    <strong>发表:</strong> 2026年4月21日 | <strong>会议:</strong> DAC 2026<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.19993" target="_blank">arXiv:2604.19993</a> | <strong>代码:</strong> <a href="https://github.com/zehuanzhang/BayesCVNN.git" target="_blank">GitHub</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>复数神经网络（CVNNs）在信号处理、无线通信、雷达和量子计算等领域展现了显著优势，能够直接处理复数输入、保持相位-幅度耦合关系。然而，现有CVNN方法存在一个关键短板：<strong>无法量化预测不确定性</strong>。在安全关键应用中（如自动驾驶雷达感知、医疗信号诊断），不确定性估计与预测精度同等重要。贝叶斯神经网络（BNNs）在实数域已通过Dropout、变分推断等方法实现不确定性量化，但尚未有效扩展到复数域。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>本研究源于三个核心问题：第一，如何为CVNN赋予不确定性量化能力？第二，复数值的双重性质（实部+虚部）如何影响贝叶斯推断的架构设计？第三，如何在算法层面和硬件层面同时实现高效部署？作者观察到，复数值的层混合（layer-mixing）和部分混合（part-mixing）策略可大幅扩展设计空间，但手动寻找最优配置极其困难。因此，自动化搜索与硬件协同设计成为必然选择。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>BayesCVNN</strong>（基于Dropout的贝叶斯复数神经网络），核心技术包括：</p>
+            <ul>
+                <li><strong>Dropout-based贝叶斯推断</strong>：将CVNN扩展为概率模型，通过训练时Dropout和测试时Monte Carlo采样实现预测不确定性估计，首次在复数域实现此能力</li>
+                <li><strong>自动化架构搜索（NAS）</strong>：针对复数值的双重特性，设计层混合与部分混合的搜索空间，自动识别实部和虚部的最优配置组合</li>
+                <li><strong>FPGA定制化加速器框架</strong>：生成针对BayesCVNN优化的FPGA加速器，利用模块化构建块实现高效部署</li>
+                <li><strong>算法-硬件协同优化</strong>：在算法设计阶段即考虑硬件约束（并行度、存储带宽、功耗），实现端到端优化</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验从算法性能和硬件效率两个维度展开：</p>
+            <ul>
+                <li>自动化搜索有效找到最优配置，性能优于人工设计的模型</li>
+                <li>优化后的FPGA加速器相比GPU实现：加速比约<strong>4.5倍至13倍</strong>（不同模型规模）</li>
+                <li>功耗消耗不到GPU的<strong>10%</strong></li>
+                <li>在算法精度和硬件效率两个维度均超越现有工作</li>
+                <li>开源代码已发布，便于社区复现和扩展</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>BayesCVNN填补了CVNN不确定性量化的空白，使CVNN能够部署于安全关键场景。自动化架构搜索解决了复数网络设计空间爆炸的问题，降低了人工调参成本。更重要的是，算法-硬件协同设计范式为CVNN的边缘部署提供了可落地的工程方案——4.5x-13x加速配合<10%功耗，使得在FPGA上实时运行Bayesian CVNN成为可能。该工作也是CVNN领域首个获得DAC（设计自动化会议）认可的研究，标志着CVNN硬件加速进入主流EDA视野。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前BayesCVNN基于Monte Carlo Dropout近似贝叶斯推断，虽然计算高效，但在深度网络中可能低估不确定性（epistemic uncertainty）。此外，FPGA加速器的设计主要针对特定CVNN拓扑，通用性和可编程性有待提升。自动化搜索的计算开销较大，可能需要数GPU小时完成一次搜索。未来方向包括：探索更精确的变分推断方法（如Bayes by Backprop的复数扩展）、将框架扩展到Transformer等更复杂架构、以及针对ASIC实现进一步优化面积-功耗-延迟权衡。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>本文首次实现了CVNN的贝叶斯不确定性量化，并通过自动化架构搜索和FPGA硬件协同设计，将BayesCVNN推向实际部署。该工作在算法创新（贝叶斯复数网络）、系统设计（自动化搜索）和工程实现（FPGA加速）三个层面均取得突破，是CVNN领域从理论研究迈向安全关键应用的重要一步。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">4</span>
+                <div class="paper-title">Physics-Informed Transformer for Multi-Band Channel Frequency Response Reconstruction</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Anatolij Zubow, Joana Angjo, Sigrid Dimce, Falko Dressler<br>
+                    <strong>发表:</strong> 2026年4月2日 | <strong>机构:</strong> 德国柏林工业大学等<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.01944" target="_blank">arXiv:2604.01944</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>宽带信道频率响应（CFR）估计在多频段无线系统中至关重要，特别是在部分子频段被同频干扰暂时阻塞的场景下。传统插值方法（如最近邻保持、零填充、三次样条插值）在频谱碎片化严重时性能急剧下降。Transformer模型凭借自注意力机制在序列建模中表现优异，已被应用于无线通信，但现有工作均为<strong>实值Transformer</strong>，未能充分利用信道响应的复数结构以及物理层的先验知识（如功率延迟分布、脉冲响应稀疏性）。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>作者提出一个核心问题：能否设计一个既保持复数相位关系、又融入无线信道物理约束的Transformer模型？具体动机包括：第一，干扰模式具有突发性和马尔可夫性，传统方法难以建模其时变统计特性；第二，复数信道的幅度和相位具有物理耦合关系，实值分离处理会破坏这种结构；第三，移动性引入多普勒效应，需要模型具备跨速度泛化能力。因此，物理信息（Physics-Informed）与复数表示的结合成为自然选择。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>物理信息复数Transformer</strong>，核心技术包括：</p>
+            <ul>
+                <li><strong>复数输入/输出的全纯线性层</strong>：设计保持相位关系的全纯（holomorphic）线性变换，直接处理复数信道响应，避免实部/虚部分离带来的信息损失</li>
+                <li><strong>因子化自注意力机制</strong>：在时间轴和频率轴分别执行自注意力，将计算复杂度从O(T²F²)降低至<strong>O(TF² + FT²)</strong>，适配高分辨率频谱网格</li>
+                <li><strong>马尔可夫干扰建模</strong>：将每个子频段的干扰模式建模为独立的双态离散时间马尔可夫链，捕捉突发阻塞的动态统计特性</li>
+                <li><strong>复合物理信息损失函数</strong>：融合谱保真度、功率延迟分布（PDP）重构、信道脉冲响应（CIR）稀疏性和时域平滑性四项物理约束</li>
+                <li><strong>速度随机化训练</strong>：每样本随机化移动速度，使模型泛化到不同移动性场景</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验对比三种经典基线和所提方法：</p>
+            <ul>
+                <li>PDP相似度指标ρ≥<strong>0.82</strong>，相比最佳基线（ρ≥0.62）提升显著</li>
+                <li>在干扰占用率高达<strong>50%</strong>时仍保持稳健重构性能</li>
+                <li>在整个速度范围内性能平滑退化，始终优于所有基线</li>
+                <li>因子化注意力机制有效降低了计算开销，适配实时处理</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>该研究是复数Transformer在无线通信物理层应用的代表性工作。全纯线性层的设计保持了复数信道的相位结构，避免了传统"双通道实值"表示的冗余和失真。物理信息损失函数的引入使得神经网络不再纯粹数据驱动，而是与电磁传播理论形成互补，提升了小样本和分布外场景的泛化能力。因子化注意力机制的计算优化也使得该模型在边缘设备上的部署更具可行性。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前模型假设干扰模式可用双态马尔可夫链近似，在超密集网络或认知无线电场景中，干扰统计可能更为复杂（如多用户泊松到达）。此外，实验主要在仿真信道下进行，缺乏真实大规模MIMO测试平台的验证。因子化注意力虽然降低了复杂度，但在极端大带宽（如太赫兹通信）场景下，TF²项仍可能过重。未来工作可探索：更精细的干扰统计建模（如Hawkes过程）、与信道编码的联合优化、以及基于结构化稀疏性的进一步加速。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>本文提出了一种物理信息复数Transformer，通过全纯线性层保持复数相位关系，利用因子化注意力高效建模时间-频率联合网格，并以复合物理损失引导学习。在多频段信道重构任务上，该方法显著超越传统插值基线，为6G动态频谱接入和干扰环境中的稳健通信提供了新的深度学习范式。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">5</span>
+                <div class="paper-title">Toward Complex-Valued Neural Networks for Waveform Generation (ComVo)</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee<br>
+                    <strong>发表:</strong> 2026年3月12日 | <strong>会议:</strong> ICLR 2026<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2603.11589" target="_blank">arXiv:2603.11589</a> | <strong>Demo:</strong> <a href="https://hs-oh-prml.github.io/ComVo/" target="_blank">音频样本</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>神经声码器（neural vocoder）在语音合成领域取得了巨大进展，能够生成自然且富有表现力的音频。iSTFT-based声码器因其直接预测复数值频谱图并通过逆短时傅里叶变换合成波形而备受关注——这种方案避免了传统生成器中学习上采样阶段带来的计算开销。然而，现有iSTFT声码器均采用<strong>实值网络</strong>，将复数频谱的实部和虚部作为独立通道处理，这种分离策略限制了网络捕捉复数频谱图内在结构（幅度-相位耦合关系）的能力。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>作者观察到，复数频谱图的实部和虚部并非统计独立——它们通过傅里叶变换与原始信号的时域特性紧密耦合。将二者割裂处理，相当于人为破坏了信号的完整表示。因此，核心动机是：能否构建一个<strong>原生复数运算</strong>的声码器，让生成器和判别器都在复数域工作，从而充分利用复数结构的内在约束？此外，复数运算的冗余计算（如实部/虚部交叉项）也带来了效率优化空间。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>ComVo</strong>（Complex-valued Vocoder），核心技术包括：</p>
+            <ul>
+                <li><strong>原生复数生成器与判别器</strong>：G和D均使用复数算术运算，实现复数域的对抗训练，提供结构化反馈信号</li>
+                <li><strong>相位量化（Phase Quantization）</strong>：将连续相位值离散化，以结构化方式引导相位变换，正则化训练过程</li>
+                <li><strong>分块矩阵计算方案</strong>：通过矩阵分块减少复数卷积中的冗余运算，提升训练效率</li>
+                <li><strong>复数域损失设计</strong>：在复数表示空间定义对抗损失和重构损失，保持幅度-相位耦合</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验从合成质量和训练效率两个维度评估：</p>
+            <ul>
+                <li>合成质量优于可比较的实值基线（客观指标和主观MOS评分均提升）</li>
+                <li>分块矩阵方案使训练时间降低<strong>25%</strong></li>
+                <li>复数生成器以更少参数实现了更强的频谱细节恢复</li>
+                <li>音频样本已公开发布，可直接对比感知质量</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>ComVo首次将原生复数运算引入神经声码器设计，证明了复数网络在音频生成中的质量优势。对于语音合成社区，这意味着可以用更简洁的架构获得更好的音质。分块矩阵计算方案不仅适用于声码器，也可推广到其他复数CNN的高效实现（如雷达信号处理、无线信道估计）。相位量化的思想为复数生成模型中的相位控制提供了新工具。ICLR 2026的接收也表明，CVNN在生成建模领域正获得顶级会议的关注。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>ComVo当前主要针对iSTFT声码器框架，尚未扩展到更主流的端到端波形生成模型（如HiFi-GAN、BigVGAN等直接波形预测架构）。相位量化虽然稳定了训练，但离散化分辨率对音质的影响需要更细致的分析。此外，复数判别器的训练动态（如模式坍塌风险）在文中未深入讨论。未来方向包括：将复数生成器应用于直接波形预测、探索复数扩散模型在音频生成中的潜力、以及在其他模态（如音乐合成、超声成像）中验证复数声码器思想。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>ComVo通过原生复数运算的生成器和判别器，结合相位量化和分块矩阵加速，在语音合成质量上超越了实值基线，同时降低了训练开销。该工作不仅推进了神经声码器的技术边界，也为CVNN在生成建模领域的更广泛应用提供了有力实证。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">6</span>
+                <div class="paper-title">Detecting radar targets swarms in range profiles with a partially complex-valued neural network</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Martin Bauw<br>
+                    <strong>发表:</strong> 2026年2月10日 | <strong>机构:</strong> 比利时皇家军事学院等<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2602.09597" target="_blank">arXiv:2602.09597</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>雷达目标检测长期面临杂波干扰和波形失真的挑战。当多个目标在距离上相距较近时，问题更加棘手——最坏情况下多个目标会被感知为单一目标，或者相互影响彼此的检测门限。目标 proximity 的负面影响取决于雷达参数定义的距离分辨率和所采用的自适应门限。脉冲压缩是传统处理方法，但其逐脉冲处理的方式难以捕获信号的全局结构。近年来，复数神经网络在雷达信号处理中的应用逐渐增多，但多为全复数架构，尚未探索"部分复数"设计的灵活性。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>作者注意到，雷达接收信号的某些处理阶段（如匹配滤波）天然适合复数表示，而另一些阶段（如非线性门限判决）可能更适合实值运算。因此，"一刀切"地使用全复数或全实数网络均非最优。本研究的核心动机是：设计一个<strong>部分复数神经网络</strong>，在保留复数处理优势的同时，通过实值组件引入必要的非线性判别能力。此外，生成式架构（对整个接收信号一次性生成完整检测剖面）相比逐点处理具有全局上下文优势。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>部分复数神经网络</strong>用于距离剖面目标检测，核心技术包括：</p>
+            <ul>
+                <li><strong>混合复数-实数架构</strong>：网络前端使用复数参数处理原始IQ信号，后端切换为实值层执行目标判别和门限调整</li>
+                <li><strong>生成式处理框架</strong>：与脉冲压缩的逐脉冲处理不同，网络一次性遍历整个接收信号，生成完整的检测剖面</li>
+                <li><strong>端到端学习</strong>：从原始回波到检测结果的映射通过端到端训练优化，自适应地学习杂波抑制和目标增强</li>
+                <li><strong>可控复杂度</strong>：通过部分复数设计，在模型容量和计算效率之间取得平衡</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <p>实验基于模拟数据集，对比脉冲压缩方法和所提网络：</p>
+            <ul>
+                <li>部分复数网络在多变 proximity 场景下表现出自适应检测能力</li>
+                <li>生成式架构有效利用了全局信号上下文，改善了密集目标分辨</li>
+                <li>相比全复数网络，部分复数设计在保持检测性能的同时降低了参数量</li>
+                <li>在波形失真条件下仍保持稳健性</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>部分复数网络的设计理念具有广泛借鉴意义：并非所有层都需要复数运算，根据数据处理阶段的特点灵活选择表示域，可以在性能和效率之间取得更好平衡。对于雷达工程实践，这意味着可以在现有实值深度学习框架上增量式地引入复数模块，降低迁移成本。生成式一次性处理的思想也适用于其他一维信号检测任务（如声纳、超声、光纤传感）。</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>当前实验仅在模拟数据集上进行，缺乏真实雷达采集数据的验证（如不同平台、不同海况/地况）。部分复数架构的设计准则（何时切换为实值层）依赖于经验，缺乏系统化的理论指导。检测性能与计算复杂度的帕累托前沿未充分探索。未来工作包括：在真实雷达数据集上验证、将部分复数思想扩展到MIMO雷达和多普勒处理、以及结合注意力机制增强对远距离弱目标的检测能力。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>本文提出部分复数神经网络用于雷达距离剖面中的密集目标检测，通过混合复数-实数架构和生成式全局处理，在模拟场景中展现了优于传统脉冲压缩的自适应能力。部分复数设计思想为CVNN的工程应用提供了更灵活的选择，降低了全复数迁移的门槛。</p>
+        </div>
+
+        <div class="trends">
+            <h2>🔮 趋势洞察</h2>
+            <ol>
+                <li><strong>算法-硬件协同设计成为CVNN落地关键</strong>：本月两篇工作（DUCoMP-BPS的ARM-FPGA实现、BayesCVNN的FPGA加速器）均将CVNN从算法推向硬件，标志着该领域进入工程化阶段。</li>
+                <li><strong>复数Transformer从概念走向物理层应用</strong>：物理信息复数Transformer在无线信道重构中的成功，证明了Transformer的复数扩展不仅是理论玩具，而是能解决实际通信问题。</li>
+                <li><strong>贝叶斯化与不确定性量化填补CVNN安全短板</strong>：BayesCVNN首次实现复数域不确定性估计，为自动驾驶雷达、医疗诊断等安全关键应用扫清了障碍。</li>
+                <li><strong>复数优化理论追赶实值域成熟度</strong>：复数SGD收敛保证的完善，为CVNN训练提供了更坚实的理论基础，社区可更放心地采用复数自适应优化器。</li>
+                <li><strong>生成建模成为CVNN新战场</strong>：ComVo声码器和PolSAR重建等工作表明，CVNN在生成任务中相比实值网络具有结构优势，预计将有更多复数扩散模型和GAN涌现。</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>© 2026 AI Research | 文献调研报告</p>
+            <p>本报告由 Jarvis 自动生成 | 数据来源于 arXiv</p>
+            <p>生成时间: 2026-04-29 04:00 (Asia/Shanghai)</p>
+        </footer>
+    </div>
+</body>
+</html>
