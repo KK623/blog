@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-04-30</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .paper-images img { max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-04-30 03:00 (GMT+8) · 🔍 9篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年4月29日-30日</strong> 新提交的论文。由于该时间段内直接相关的论文数量有限，本报告补充收录了近期（2026年4月中下旬至2025年11月）该领域的重要研究进展，以确保报告的全面性和参考价值。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: LBLLM -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.19167" target="_blank">LBLLM: Lightweight Binarization of Large Language Models via Three-Stage Distillation</a></div>
+        <div class="paper-meta">📄 arXiv:2604.19167 · 👤 Siqing Song, Chuang Wang, Yong Lang, Yi Yang, Xu-Yao Zhang · 📅 2026-04-21</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大型语言模型（LLMs）在资源受限环境中部署面临计算和内存需求过高的挑战。极端低比特量化（如二值化）是降低模型体积和计算开销的重要方向，但现有方法往往需要复杂的后处理（如旋转矩阵、高精度通道等），增加了部署复杂度。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有二值化方法在LLM上效果有限，主要因为权重和激活的联合量化存在相互干扰。作者希望提出一种简单有效的三阶段量化策略，实现W(1+1)A4（权重1+1位，激活4位）的极端压缩，同时避免引入额外的高精度通道或旋转矩阵。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>三阶段量化策略</strong>：先PTQ初始化高质量量化模型；再通过分层蒸馏量化二值化权重、组位图和量化参数，保持激活全精度；最后训练可学习的激活量化因子，将激活动态量化到4位。2. <strong>解耦设计</strong>：将权重和激活量化解耦，避免相互干扰，提升训练稳定性。3. <strong>极低训练成本</strong>：仅需0.016B token和单GPU训练。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在W2A4设置下超越了现有最先进的二值化方法；在语言建模、常识问答和语言理解任务上均表现优异；无需额外高精度通道或旋转矩阵，部署更简单；训练成本极低：仅用0.016B token和单GPU。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>LBLLM通过三阶段解耦蒸馏策略，实现了LLM的极端低比特量化，在保持性能的同时大幅降低了模型复杂度和训练成本。该方法为资源受限场景下的LLM部署提供了一条实用且高效的路径。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: Rethinking Output Alignment -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2512.21651" target="_blank">Rethinking Output Alignment For 1-bit Post-Training Quantization of Large Language Models</a></div>
+        <div class="paper-meta">📄 arXiv:2512.21651 · 👤 Dung Anh Hoang, Cuong Pham, Cuong Nguyen, Trung le, Jianfei Cai, Thanh-Toan Do · 📅 2025-12-25</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>后训练量化（PTQ）因无需重训练、仅需少量校准数据而备受青睐。现有PTQ方法已将LLM压缩至亚4位并保持大部分性能，但1-bit量化（权重转为±1）仍极具挑战，现有方法相比全精度模型性能下降显著。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>大多数现有1-bit PTQ方法聚焦于权重对齐（对齐全精度与量化模型的权重），而非直接对齐输出。虽然输出匹配更直观，但直接在1-bit LLM上应用往往导致性能退化。作者希望探究输出匹配失败的原因，并提出改进方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>输出匹配失败分析</strong>：系统研究了1-bit LLM量化中输出匹配失败的条件和原因。2. <strong>数据感知PTQ方法</strong>：提出一种新方法，显式考虑激活误差累积，同时保持优化效率。3. <strong>理论+实证</strong>：既有理论分析又有大量实验验证。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在多个基准测试中 consistently 超越现有1-bit PTQ方法；仅需最小开销（minimal overhead）；为1-bit LLM的实用化铺平道路。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>该工作深入分析了1-bit LLM PTQ中输出匹配的挑战，提出了数据感知的解决方案，显著提升了1-bit量化的性能。这是推动LLM向真正极端低比特部署迈进的重要一步。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: SPEED-Q -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2511.08914" target="_blank">SPEED-Q: Staged Processing with Enhanced Distillation towards Efficient Low-bit On-device VLM Quantization</a></div>
+        <div class="paper-meta">📄 arXiv:2511.08914 · 👤 Tianyu Guo, Shanwei Zhao, Shiai Zhu, Chenguang Ma (Ant Group) · 📅 2025-11-11 · 💻 <a href="https://github.com/antgroup/SPEED-Q" target="_blank">Code</a></div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>将视觉语言模型（VLMs）部署到边缘设备（智能手机、机器人）对于低延迟和隐私保护应用至关重要。量化是提升内存效率和降低带宽需求的有效手段，但现有研究很少探索1B-2B参数规模VLMs的激进量化。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>VLM的两个核心组件（视觉ViT和语言LLM）对量化的敏感度存在显著差异，且低比特量化的训练不稳定性和数据依赖问题亟待解决。作者希望提出一个专门针对小型VLM低比特量化的框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>分阶段敏感度自适应机制</strong>：针对不同模态（视觉/语言）的量化敏感度差异，采用分阶段处理策略。2. <strong>蒸馏增强量化策略</strong>：通过知识蒸馏稳定训练过程，降低数据依赖。3. <strong>首个完整的小型VLM低比特量化框架</strong>：首次实现1B-2B参数VLM的完整低比特量化。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在2-bit设置下，SPEED-Q的准确率比现有量化方法高出6倍；在2-bit和4-bit设置下均优于现有设备端VLM；代码和模型已开源。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>SPEED-Q是首个专门针对小型VLM的完整低比特量化框架，通过分阶段处理和蒸馏增强策略，实现了高精度的边缘部署。这项工作对于推动多模态AI在移动设备上的应用具有重要意义。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: Coverage-Based Calibration -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.24008" target="_blank">Coverage-Based Calibration for Post-Training Quantization via Weighted Set Cover over Outlier Channels</a></div>
+        <div class="paper-meta">📄 arXiv:2604.24008 · 👤 Ibne Farabi Shihab等 · 📅 2026-04-27</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>后训练量化（PTQ）的质量高度依赖校准样本的选择。现有校准选择方法多基于通用代表性（如最大困惑度、最大激活方差等），未充分考虑LLM中异常通道（outlier channels）的特殊性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者发现校准样本若未能激活异常通道，会导致量化器低估其动态范围，产生主导性的逐通道重建误差。因此，PTQ校准质量应由异常通道的加权覆盖度决定，而非通用代表性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>异常通道覆盖度</strong>：识别出PTQ校准的关键失败模式——未激活异常通道。2. <strong>加权集覆盖问题建模</strong>：将校准选择建模为异常通道上的加权集覆盖问题，目标函数为单调子模函数。3. <strong>贪心算法COVERCAL</strong>：基于预计算激活统计，无需GPU即可高效选择校准样本。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在LLaMA-2/3和Mistral上，INT4 128样本时MMLU提升1.2-1.5点；困惑度退化降低15-30%；64样本可达到256样本随机校准的效果。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>该工作从异常通道覆盖的角度重新思考了PTQ校准问题，提出了简单高效的COVERCAL算法。其理论分析和实验结果都表明，针对异常通道的校准选择能显著提升低比特量化的性能。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: Hardware Generation -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.25183" target="_blank">Hardware Generation and Exploration of Lookup Table-Based Accelerators for 1.58-bit LLM Inference</a></div>
+        <div class="paper-meta">📄 arXiv:2604.25183 · 📅 2026-04 · 🏛️ ISPASS 2026</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>三值权重量化（如BitNet b1.58，权重为{-1,0,+1}）为缓解LLM推理的内存带宽瓶颈提供了新路径。但传统计算平台缺乏三值运算的原生支持，通常依赖低效的反量化。基于查找表（LUT）的硬件架构通过条件加法替代乘法，是有效替代方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有LUT加速器设计依赖启发式参数选择，缺乏对架构权衡的系统理解。作者希望建立一个开放源代码的硬件生成器和分析成本模型，实现公平的设计空间探索。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>LUT加速器设计空间形式化</strong>：系统定义了三值LUT加速器的设计空间。2. <strong>开源硬件生成器+分析成本模型</strong>：基于TSMC 16nm技术验证。3. <strong>最优架构与激活数据类型相关</strong>：发现最优架构由激活数据类型决定——FP16获益显著，小整数类型收益递减。4. <strong>核心尺寸最大化优于高度平铺</strong>：证明了增大核心尺寸比高度平铺更优。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>优化设计实现2.2倍面积缩减（相比乘法基线）；纠正次优参数可带来1.2倍面积改进；建立了公平跨设计评估的通用基准。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作为1.58-bit LLM推理的硬件加速提供了系统性的设计空间探索框架，开源的生成器和成本模型为后续研究者和工程师提供了宝贵的工具。其发现对实际硬件设计具有重要的指导意义。</p>
+      </div>
+    </article>
+
+    <!-- Paper 6: BitRL -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.24273" target="_blank">BitRL: Reinforcement Learning with 1-bit Quantized Language Models for Resource-Constrained Edge Deployment</a></div>
+        <div class="paper-meta">📄 arXiv:2604.24273 · 👤 Mohammad Sakib Mahmood等 · 📅 2026-04-27</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>将强化学习（RL）智能体部署到资源受限的边缘设备是长期挑战。LLMs作为强大的决策架构，其数十亿参数规模限制了其在云端的部署，带来延迟、隐私和连接性问题。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者希望利用1-bit量化LLM（BitNet b1.58架构）构建可在边缘设备上实际运行和学习的RL智能体，实现极端资源约束下的实际部署。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>BitNet b1.58集成</strong>：利用三值权重（-1,0,+1）和优化推理栈。2. <strong>理论分析</strong>：将量化视为结构化参数扰动，推导冻结骨干架构下量化策略梯度的收敛界。3. <strong>探索-稳定性权衡</strong>：识别极端量化中的探索-稳定性权衡。4. <strong>商品硬件验证</strong>：在商用硬件上验证有效性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>相比全精度基线，内存减少10-16倍，能效提升3-5倍；在多个基准上保持85-98%的任务性能；系统集成了1-bit LLM与RL，适用于边缘部署。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>BitRL展示了1-bit量化LLM在边缘RL应用中的可行性，在大幅减少资源消耗的同时保持了较高的任务性能。这为边缘AI和具身智能的应用开辟了新的可能性。</p>
+      </div>
+    </article>
+
+    <!-- Paper 7: Doing More With Less -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.25098" target="_blank">Doing More With Less: Revisiting the Effectiveness of LLM Pruning for Test-Time Scaling</a></div>
+        <div class="paper-meta">📄 arXiv:2604.25098 · 👤 Ocean Monjur等 · 📅 2026-04-28</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>当前LLMs通过测试时计算缩放（TTS）展现强大推理能力，但其庞大的参数量和高推理成本促使研究者开发剪枝方法。此前研究表明结构化剪枝（移除整层）会显著降低TTS推理性能。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者希望探究非结构化剪枝（仅移除特定冗余/有害权重）是否也存在类似限制，以及不同层稀疏度分配策略的影响。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>非结构化剪枝 vs 结构化剪枝</strong>：系统对比两种剪枝方式对TTS性能的影响。2. <strong>层稀疏度分配策略</strong>：研究不同层稀疏度分配策略的重要性。3. <strong>推理LLM实验</strong>：在s1.1-7B和Qwen3-8B上跨四个推理基准进行广泛实验。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>非结构化剪枝不仅能保持TTS性能，有时甚至能超越未剪枝的全权重LLM；挑战了"剪枝总是降低TTS性能"的传统观念；为通过剪枝提升TTS有效性提供了实证支持。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作挑战了关于LLM剪枝与测试时缩放关系的传统假设，证明精心设计的非结构化剪枝可以成为增强TTS性能的有效手段，而非简单的模型压缩手段。</p>
+      </div>
+    </article>
+
+    <!-- Paper 8: DepthKV -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.24647" target="_blank">DepthKV: Layer-Dependent KV Cache Pruning for Long-Context LLM Inference</a></div>
+        <div class="paper-meta">📄 arXiv:2604.24647 · 👤 Zahra Dehghanighobadi等 · 📅 2026-04-27</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>长上下文推理是LLM的关键能力，但KV缓存的内存占用随序列长度线性增长，成为主要瓶颈。现有KV缓存剪枝方法多采用统一剪枝比例，假设所有层对剪枝的敏感度相同。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者证明不同层对剪枝的敏感度差异显著，统一分配并非最优。因此提出基于层敏感度的自适应分配框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>层敏感度分析</strong>：揭示不同层对KV缓存剪枝的敏感度差异。2. <strong>全局预算层依赖分配</strong>：基于层敏感度分配固定全局KV预算，而非统一分配。3. <strong>跨模型和任务验证</strong>：在多个模型和任务上验证有效性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在相同全局剪枝比例下，DepthKV consistently 优于统一剪枝；更有效地利用KV缓存预算；实现方法简单，易于集成到现有推理框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>DepthKV通过层依赖的KV缓存分配策略，更有效地利用了有限的缓存预算，为长上下文LLM推理的内存优化提供了一个简单而有效的解决方案。</p>
+      </div>
+    </article>
+
+    <!-- Paper 9: TRIM-KV -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2512.03324" target="_blank">Cache What Lasts: Token Retention for Memory-Bounded KV Cache in LLMs (TRIM-KV)</a></div>
+        <div class="paper-meta">📄 arXiv:2512.03324 · 📅 2025-12</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>长程LLM推理中，自注意力的二次成本和不断增长的KV缓存是核心瓶颈。现有策略（量化、卸载、启发式驱逐）或编排成本高，或依赖不可靠的重要性代理。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者希望学习每个令牌在创建时的内在重要性，通过轻量级保留门预测令牌的长期效用，实现更智能的缓存管理。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>轻量级保留门</strong>：每个门预测标量保留分数，随时间衰减，反映令牌对特定层和头的长期效用。2. <strong>蒸馏训练</strong>：通过从冻结LLM蒸馏结合容量损失进行高效训练，仅需门微调。3. <strong>低内存优势</strong>：在低内存场景下表现尤为突出，甚至有时超越全缓存模型。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在GSM8K、MATH-500、LongProc、LongMemEval、LongBenchV2和SCBench上 consistently 优于强基线；低内存场景下优势显著，甚至超越全缓存模型；保留分数与人类直觉一致，自然恢复sink tokens、滑动窗口等启发式；为LLM可解释性提供了新视角。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>TRIM-KV通过学习令牌保留分数实现了更智能的KV缓存管理，在保持性能的同时大幅降低了内存占用。其可解释性分析还为理解LLM内部机制提供了新途径。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势总结</h2>
+
+    <div class="trend-box">
+      <h3>🔥 本期研究热点</h3>
+      <ul>
+        <li><strong>极端低比特量化</strong>：1-bit/1.58-bit/二值化成为热点，多篇论文探索LLM的极限压缩</li>
+        <li><strong>量化+蒸馏结合</strong>：LBLLM、SPEED-Q等工作表明量化与蒸馏的结合能显著提升性能</li>
+        <li><strong>硬件协同设计</strong>：1.58-bit LUT加速器的研究显示算法与硬件的协同优化越来越重要</li>
+        <li><strong>KV缓存优化</strong>：DepthKV、TRIM-KV等工作聚焦推理阶段的内存瓶颈</li>
+        <li><strong>边缘部署</strong>：BitRL等工作将低比特LLM推向边缘设备和RL应用</li>
+        <li><strong>校准与稳定性</strong>：Coverage-Based Calibration和输出对齐研究提升了PTQ的可靠性</li>
+      </ul>
+    </div>
+
+    <div class="trend-box">
+      <h3>💡 值得关注的新方向</h3>
+      <ul>
+        <li><strong>非结构化剪枝+测试时缩放</strong>：挑战传统观念，剪枝可能增强而非削弱推理能力</li>
+        <li><strong>层依赖优化</strong>：DepthKV表明不同层的敏感度差异为精细化优化提供了空间</li>
+        <li><strong>多模态量化</strong>：SPEED-Q对VLM的量化表明视觉-语言模型的压缩是一个新兴领域</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 LLM Research Daily · Generated by Jarvis 🔧 · 2026-04-30 03:00 (GMT+8)</p>
+      <p>文献调研 · 技术洞察 · 学术分享</p>
+    </footer>
+  </div>
+</body>
+</html>
