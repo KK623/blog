@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VQ + Piecewise Quantization Survey · 2026-04-30</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .paper-images img { max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">Vector Quantization + Piecewise Quantization 研究全景调研</h1>
+      <p class="report-meta">📅 2026-04-30 16:00 (GMT+8) · 🔍 28篇核心论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 调研范围</h3>
+      <p>覆盖从1957年Lloyd-Max量化到2024年无VQ自回归生成的全历史演进，涵盖标量/分段量化、向量量化、乘积/残差/加性量化、学习型量化、大模型量化及硬件部署五大方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 核心论文</h2>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/1711.00937" target="_blank">Neural Discrete Representation Learning (VQ-VAE)</a></div>
+        <div class="paper-meta">📄 arXiv:1711.00937 · 👤 van den Oord, Vinyals, Kavukcuoglu · 📅 2017</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>VAE在连续隐空间学习有效表示，但面临后验坍塌问题——当解码器过于强大时，隐变量被忽略。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>引入离散隐空间，避免后验坍塌，使学到的表示更适合与自回归先验结合生成高质量数据。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>Encoder输出连续向量，通过最近邻查找映射到离散码本；使用commitment loss和EMA更新码本；decoder从离散嵌入重建输入。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>可生成高质量图像、视频和语音；支持说话人转换和音素无监督学习；为后续离散表示学习奠定基础。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>VQ-VAE开创了神经离散表示学习的新范式，其码本量化机制成为生成模型（如DALL-E、Stable Diffusion）的核心组件。</p>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2309.15505" target="_blank">Finite Scalar Quantization: VQ-VAE Made Simple (FSQ)</a></div>
+        <div class="paper-meta">📄 arXiv:2309.15505 · 👤 Mentzer, Minnen, Agustsson, Tschannen · 📅 2023</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>VQ-VAE需要复杂的码本维护机制（commitment loss、码本重播、熵惩罚等），且易出现码本坍塌。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>用简单的有限标量量化替代VQ，消除码本查找的复杂性和坍塌风险。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>将VAE表示投影到少量维度（<10），每维量化到少量固定值；码本大小由各维度值的笛卡尔积隐式确定。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>无码本坍塌；无需commitment loss等复杂机制；与VQ-VAE同等性能；实现更简单。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>FSQ用标量量化的笛卡尔积替代向量量化，大幅简化了离散表示学习流程，是码本替代革命的关键一步。</p>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2310.05737" target="_blank">Language Model Beats Diffusion -- Tokenizer is Key to Visual Generation (MAGVIT-v2 / LFQ)</a></div>
+        <div class="paper-meta">📄 arXiv:2310.05737 · 👤 Yu, Lezama, et al. · 📅 2023 (ICLR 2024)</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM在语言生成上超越扩散模型，但在图像/视频生成上落后，关键瓶颈在于视觉tokenizer。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>设计更好的视觉tokenizer，使LLM能在图像和视频生成上匹敌甚至超越扩散模型。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>引入Lookup-Free Quantization (LFQ)，去掉码本查找表，直接使用量化标量值作为token。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>LLM在ImageNet和Kinetics上超越扩散模型；支持视频压缩（可比肩下一代视频编解码器）。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>MAGVIT-v2证明tokenizer质量是LLM视觉生成的关键，LFQ进一步简化了量化流程。</p>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2406.11838" target="_blank">Autoregressive Image Generation without Vector Quantization (MAR)</a></div>
+        <div class="paper-meta">📄 arXiv:2406.11838 · 👤 Li, Tian, Li, Deng, He · 📅 2024 (NeurIPS Spotlight)</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>自回归图像生成传统上依赖VQ将连续像素映射到离散token，但量化会损失信息。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>证明自回归模型可在连续值空间中直接工作，无需任何离散tokenizer。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>使用扩散损失替代分类交叉熵；每token的概率分布通过扩散过程建模；支持标准自回归和masked自回归变体。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>无需VQ即可获得强性能；享受序列建模的速度优势；适用于其他连续值域。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>MAR挑战了"自回归必须配VQ"的传统认知，为连续域自回归生成开辟了新路径。</p>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2210.17323" target="_blank">GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers</a></div>
+        <div class="paper-meta">📄 arXiv:2210.17323 · 👤 Frantar, Ashkboos, Hoefler, Alistarh · 📅 2022 (ICLR 2023)</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>GPT模型规模巨大（175B+），推理需要多GPU，部署成本极高。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>提出一次性权重量化方法，在保持精度的同时大幅压缩模型，使大模型能在单GPU上运行。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>基于近似二阶信息（OBS框架近似）；逐层量化并更新未量化权重补偿误差；支持3-4 bit量化。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>约4 GPU小时量化175B模型；首次实现单GPU运行175B模型；3.25x-4.5x推理加速。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>GPTQ是大模型后训练量化的里程碑，使极端压缩下的高精度推理成为可能。</p>
+      </div>
+    </article>
+
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2306.00978" target="_blank">AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration</a></div>
+        <div class="paper-meta">📄 arXiv:2306.00978 · 👤 Lin, Tang, Tang, Yang, Dang, Han · 📅 2023 (MLSys 2024 Best Paper)</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM权重量化中，保护显著权重可大幅降低误差，但混合精度实现硬件不友好。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>通过激活分布识别显著权重通道，用等效变换放大这些通道，避免硬件低效的混合精度。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>离线收集激活统计确定缩放因子；等效变换放大显著权重通道；无需反向传播或重建。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>保护仅1%显著权重即可大幅降低误差；适用于不同领域和模态；支持指令微调LM和多模态LM。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>AWQ通过激活感知保护关键权重，在硬件友好性和量化精度之间取得最佳平衡。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 演进脉络</h2>
+
+    <div class="trend-box">
+      <h3>标量量化 → 向量量化 → 学习型量化 → 码本替代 → 无VQ生成</h3>
+      <ul>
+        <li><strong>1957-1980s</strong>: Lloyd-Max → LBG → 格点量化（数学奠基）</li>
+        <li><strong>2011-2014</strong>: PQ → OPQ → AQ → RQ（ANN检索）</li>
+        <li><strong>2017</strong>: VQ-VAE（离散表示学习突破）</li>
+        <li><strong>2021-2022</strong>: SoundStream/EnCodec（神经音频编解码）</li>
+        <li><strong>2023</strong>: FSQ/LFQ（码本替代革命）</li>
+        <li><strong>2024</strong>: MAR（无VQ自回归生成）</li>
+      </ul>
+    </div>
+
+    <div class="trend-box">
+      <h3>大模型量化演进</h3>
+      <ul>
+        <li><strong>2015-2016</strong>: BinaryConnect/XNOR-Net/TWN（极端低比特探索）</li>
+        <li><strong>2019</strong>: LSQ（可学习步长量化）</li>
+        <li><strong>2022</strong>: GPTQ（大模型一次性量化）</li>
+        <li><strong>2023</strong>: AWQ/SpQR（激活感知/稀疏异常值处理）</li>
+        <li><strong>2024</strong>: QuIP/QTIP（格点编码/KV-cache量化）</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>Vector Quantization + Piecewise Quantization 研究全景调研 · 2026-04-30</p>
+      <p>完整论文列表与详细分析见 <a href="https://github.com/kk623/blog/blob/main/docs/research/vq-piecewise-survey.md" target="_blank">GitHub 文档</a></p>
+    </footer>
+  </div>
+</body>
+</html>
