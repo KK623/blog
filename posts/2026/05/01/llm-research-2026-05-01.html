@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-01</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .paper-images img { max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-01 03:00 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: CoQuant -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26378" target="_blank">CoQuant: Joint Weight-Activation Subspace Projection for Mixed-Precision LLMs</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26378 · 👤 Zhe Ding, Su Pan, Duowei Pan (南京邮电大学, Amazon AGI) · 📅 2026-04-29 · 💻 <a href="https://github.com/Zachary5895/CoQuant" target="_blank">GitHub</a></div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>后训练量化（PTQ）已成为降低大语言模型（LLM）推理成本的关键技术。现有混合精度方法通过保留关键子空间的高精度来改善超低比特量化效果，但这些方法通常仅依赖激活统计量来构造子空间，忽略了线性运算的本质特性——输出扰动由激活和权重量化噪声共同驱动。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>仅基于激活协方差选择高精度子空间是次优的，因为权重量化噪声同样会显著影响输出质量。作者希望从理论上联合建模权重和激活的量化误差，找到真正最小化输出扰动的最优子空间划分方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>联合误差建模</strong>：采用加性量化噪声模型（AQNM），将输出误差分解为激活误差项、权重误差项及交叉项，通过一阶近似得到期望输出误差的闭式表达。2. <strong>加权PCA闭式解</strong>：通过平衡激活协方差和权重协方差，推导出一个闭式的加权PCA解决方案，用于选择最优的高精度子空间，无需迭代优化。3. <strong>融合投影实现</strong>：对共享相同输入激活的线性层（如Q/K/V投影）进行分组，实现单个共享高精度子空间的高效融合实现。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Llama-3.2（1B/3B）和Qwen2.5（0.5B/1.5B/7B/14B）上，CoQuant在WikiText困惑度和零样本常识推理任务上均持续超越强PTQ基线。相比仅基于激活的混合精度方法，联合建模显著降低了低比特量化下的性能退化。闭式解使得方法实现简单高效，易于集成到现有推理框架中。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>CoQuant通过联合权重-激活子空间建模，为混合精度LLM量化提供了理论上更严谨、实践中更有效的方向。其闭式加权PCA解兼具理论优雅性和实现简洁性，是低比特LLM量化的重要进展。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: Select to Think -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26940" target="_blank">Select to Think: Unlocking SLM Potential with Local Sufficiency</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26940 · 👤 Wenxuan Ye, Yangyang Zhang, Xueli An, Georg Carle, Yunpu Ma · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>小语言模型（SLM）具有计算效率高、易于规模部署的优势，但在复杂多步推理任务上常逊于大语言模型（LLM）。当前协作推理范式在推理分歧点调用LLM生成token，但外部调用带来显著延迟和成本；标准蒸馏又受限于SLM的容量瓶颈，难以精确模仿LLM复杂的生成分布。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者发现，在推理分歧点，LLM偏好的token几乎总是存在于SLM的top-K候选中（即使不是top-1），但SLM缺乏正确排序这些候选的能力。这提示：LLM的角色可以重新定义为"选择者"而非"生成者"，从而大幅简化监督信号。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>局部充分性（Local Sufficiency）</strong>：理论分析和实证验证表明，在推理分歧点，1.5B SLM的top-8候选以95%的命中率包含32B LLM的首选token。这一现象在0.5B到1.5B多个尺度和架构上均成立。2. <strong>S2T框架</strong>：将LLM的角色从开放式生成重新定义为在SLM候选中进行选择，监督信号简化为离散候选排序，而非完整的token分布模仿。3. <strong>S2T-LOCAL蒸馏</strong>：将选择逻辑蒸馏到SLM内部，使其在推理时无需依赖LLM即可自主进行候选重排序，实现完全的本地自主推理。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>S2T-LOCAL在多个基准上将贪婪解码性能平均提升24.1%，计算成本与单轨迹解码相当。性能媲美8路径自一致性解码（self-consistency），但仅需单次前向传播的效率。内部化选择器在保留实例上达到67%的LLM选择一致性，证明该信号可学习且稳定。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Select to Think通过重新定义LLM-SLM协作范式，突破了容量限制对蒸馏的束缚。局部充分性的发现为SLM的推理能力提升开辟了新路径，使小模型在保持高效率的同时逼近大模型的推理质量。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: PAINT -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26573" target="_blank">PAINT: Partial-Solution Adaptive Interpolated Training for Self-Distilled Reasoners</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26573 · 👤 Zhiquan Tan, Yinrong Hong (清华大学, 北京航空航天大学) · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>提升LLM推理能力需要与模型测试时状态对齐且在token级别具有信息量的监督信号。RL with verifiable rewards提供on-policy探索但信用分配稀疏且方差高；SFT和蒸馏提供密集目标但常依赖固定轨迹或更强的教师模型。近期privileged on-policy自蒸馏通过用验证解上下文对student rollout打分探索了中间地带。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者重新审视这一设定，发现关键问题不仅是"是否有特权上下文"，而是"应该揭示多少特权信息"以及"在哪些token位置应用特权分布来塑造student"。过度揭示会导致student过度拟合特权目标，而完全不用则浪费信号。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>自适应部分解掩码</strong>：根据student rollout与参考解的重叠程度，动态掩码验证解的揭示程度。重叠多的位置少揭示（避免过拟合），重叠少的位置多揭示（提供引导）。2. <strong>稀疏能量空间插值</strong>：仅在熵不匹配（entropy-mismatch）的token位置应用小强度的能量空间插值，将特权教师分布与学生分布进行保守混合。3. <strong>熵比选择机制</strong>：利用token级熵比率作为排序统计量，仅在高熵不匹配位置进行干预，避免连续学习插值强度导致的分布替换崩溃。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Qwen3-8B上，PAINT将macro Avg@12提升2.1点（超越OPSD基线）和2.9点（超越GRPO）。在Qwen3-4B和Qwen3-14B所有三个尺度上均一致优于强自蒸馏基线。在AIME 2024/2025、HMMT 2025等竞赛级数学基准上持续取得改进。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>PAINT通过自适应地控制特权信息的揭示程度和干预位置，解决了自蒸馏中信号强度与过拟合之间的核心张力。其稀疏插值策略为推理模型的on-policy训练提供了一个更精细、更稳定的优化框架。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: TIDE -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26951" target="_blank">Turning the TIDE: Cross-Architecture Distillation for Diffusion Large Language Models</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26951 · 👤 Gongbo Zhang, Wen Wang, Ye Tian, Li Yuan (北京大学, 浙江大学) · 📅 2026-04-29 · 💻 <a href="https://github.com/PKU-YuanGroup/TIDE" target="_blank">GitHub</a></div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>扩散大语言模型（dLLM）提供并行解码和双向上下文能力，但SOTA dLLM需要数十亿参数才能取得有竞争力的性能。现有dLLM蒸馏方法仅在单一架构内减少推理步数，未解决跨架构知识迁移问题——教师和学生可能在架构、注意力机制和分词器上均不相同。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>跨架构蒸馏面临三大独特挑战：(1) 教师信号的可靠性随扩散timestep变化；(2) 高mask率下教师上下文不足；(3) 不同分词器之间的词汇映射困难。作者希望建立首个系统性的跨架构dLLM蒸馏框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>TIDAL（双轴Lambda调制）</strong>：联合根据训练进度和扩散timestep调制蒸馏强度，在高噪声阶段（教师不可靠时）自动降低蒸馏权重，低噪声阶段充分利用教师信号。2. <strong>CompDemo（互补掩码分解）</strong>：将mask集合分解为互补子集，使教师能看到更完整的上下文，改善高mask率下的预测质量。3. <strong>Reverse CALM（跨分词器目标）</strong>：反转传统的chunk级似然匹配，得到有界梯度和双端噪声过滤效果，解决不同分词器之间的知识迁移难题。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>将8B dense和16B MoE教师蒸馏到0.6B学生，在8个基准上平均超越基线1.53点。代码生成任务上HumanEval达到48.78，相比AR基线32.3提升显著。共享分词器和跨分词器两条异构管道均取得一致改进，验证了方法的通用性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>TIDE是首个针对dLLM的跨架构蒸馏框架，三个模块化组件分别解决了噪声依赖性、上下文不足和词汇异构三大核心难题。这项工作对于推动高效扩散语言模型的实际部署具有重要意义。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: Quantamination -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26505" target="_blank">Quantamination: Dynamic Quantization Leaks Your Data Across the Batch</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26505 · 👤 Hanna Foerster, Ilia Shumailov, Cheng Zhang, Yiren Zhao, Jamie Hayes, Robert Mullins (剑桥大学, AI Sequrity, Google DeepMind) · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>动态量化通过运行时根据实际输入数据调整量化参数，成为ML serving框架（如vLLM、SGLang、DeepSpeed）推荐的优化初始步骤。相比静态量化，它能显著降低内存占用和计算负载，在几乎不损失精度的情况下提升推理效率。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>动态量化的安全性从未被系统审视。由于同一batch中的多个请求共享动态量化参数（如min/max统计量），作者怀疑这可能创建侧信道，泄露同批次其他用户输入的敏感信息。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>侧信道分析</strong>：证明动态量化的缩放因子和零点会携带同批次其他输入的统计信息，攻击者可通过精心构造的对抗探针提取这些泄露信号。2. <strong>Quantamination攻击框架</strong>：在LLM生成设置和分类设置中分别设计了高效的攻击策略。白盒设置下利用KV cache状态测试候选；黑盒设置下通过API贪婪解码实现可复现的对抗序列。3. <strong>框架审计</strong>：证明至少4个主流ML框架（包括编译器和推理引擎）在默认配置或可配置模式下存在跨批次数据泄露风险。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在MNIST分类实验中，当秘密存在于候选集时，ResNet18/ResNet50上实现100%精确恢复率。在LLM生成任务中，攻击者可部分甚至完全恢复同批次其他用户的输入数据。揭示了动态量化作为ML serving"默认优化"的严重隐私隐患。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Quantamination首次系统揭示了动态量化在批处理场景下的隐私漏洞，对当前主流的ML serving基础设施提出了重要安全警告。这项工作提醒业界在效率优化与隐私保护之间需要更审慎的权衡。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势总结</h2>
+    <div class="trend-box">
+      <h3>本期研究热点</h3>
+      <ul>
+        <li><strong>联合量化建模</strong>：CoQuant的权重-激活联合子空间投影表明，低比特量化需要从"单变量优化"走向"多变量协同建模"。</li>
+        <li><strong>角色重定义蒸馏</strong>：Select to Think通过将LLM从"生成者"变为"选择者"，突破了容量限制对蒸馏的根本束缚。</li>
+        <li><strong>精细化自蒸馏</strong>：PAINT的自适应插值策略显示，特权信息的"如何给"比"给不给"更关键，稀疏干预优于全局混合。</li>
+        <li><strong>跨架构知识迁移</strong>：TIDE填补了扩散语言模型跨架构蒸馏的空白，为非自回归模型的轻量化提供了新工具。</li>
+        <li><strong>量化安全觉醒</strong>：Quantamination标志着社区开始关注量化优化的安全代价，效率与隐私的权衡将成为部署决策的重要维度。</li>
+      </ul>
+    </div>
+    <div class="trend-box">
+      <h3>值得关注的新方向</h3>
+      <ul>
+        <li><strong>本地充分性蒸馏</strong>：S2T-LOCAL展示了将协作逻辑内化为模型能力的潜力，可能启发更多"外部系统→内部能力"的蒸馏范式。</li>
+        <li><strong>扩散模型蒸馏</strong>：dLLM的跨架构蒸馏刚刚起步，不同架构、不同分词器、不同噪声调度之间的知识迁移有大量探索空间。</li>
+        <li><strong>量化安全加固</strong>：动态量化的隐私漏洞需要框架层面的修复方案，如批次隔离量化、差分隐私量化等防御机制。</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 K's Blog · 文献调研与技术洞察</p>
+      <p>报告生成时间: 2026-05-01 03:00 (Asia/Shanghai) · 生成者: Jarvis 🔧</p>
+    </footer>
+  </div>
+</body>
+</html>
