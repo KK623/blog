@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-02</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .paper-images img { max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-02 03:04 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
+      <p class="report-meta">⚠️ 2026-05-01至2026-05-02 arXiv无符合关键词的新论文，本次搜索最近1周（2026-04-25至2026-05-02）的高相关性论文</p>
+    </header>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: Auto-FlexSwitch -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.28109" target="_blank">Auto-FlexSwitch: Efficient Dynamic Model Merging via Learnable Task Vector Compression</a></div>
+        <div class="paper-meta">📄 arXiv:2604.28109 · 👤 Junqi Gao, Dazhi Zhang, Zhichang Guo, Biqing Qi, Yi Ran, Wangmeng Zuo (哈尔滨工业大学, 上海人工智能实验室) · 📅 2026-04-30 16:58</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>模型合并（Model Merging）作为多任务适应的有效路径，通过整合多个任务特定模型的知识来增强单一模型的多任务能力。动态合并方法通过根据输入灵活组合任务向量来缓解任务间参数更新冲突，但要求为每个任务维护独立的参数组件，导致累积的存储开销随任务数量线性增长，在资源受限场景中难以部署。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者通过实验发现，微调后的权重增量（任务向量）具有脉冲式激活模式和高鲁棒性——即仅幅度超过特定阈值的参数对任务有显著贡献，且高稀疏化后的任务向量对低比特表示极度不敏感。这启发了一种极端压缩的任务向量编码方案，将存储需求降低至少16倍而不牺牲性能。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>T-Switch三组件分解</strong>：将任务向量分解为二元稀疏掩码（激活开关）、符号向量（极性开关）和标量缩放因子（旋钮），以两个二进制向量加一个浮点标量实现高保真近似。2. <strong>FlexSwitch可学习框架</strong>：通过可学习门控稀疏化（LGS）和比特宽度自适应选择（BAS），将任务向量的稀疏化和量化从静态规则转变为端到端自适应优化，平均稀疏率可达97%且性能持平全参数微调。3. <strong>SASS稀疏感知存储策略</strong>：采用分组COO格式并自适应选择最优组配置，最大化利用稀疏性减少实际存储占用。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在多种模型架构和下游基准上，Auto-FlexSwitch在保持合并性能的同时实现了显著的存储节省。LGS在97%平均稀疏率下达到与全参数微调可比甚至超越的性能。该方法还展示了作为大语言模型（LLM）微调权重轻量化存储策略的潜力，为动态多任务部署提供了兼具高压缩率和高性能的新范式。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Auto-FlexSwitch首次将任务向量压缩中的稀疏化和量化同时纳入可学习优化框架，从"固定规则压缩"跃迁到"自适应学习压缩"。其脉冲式激活发现和SASS存储策略为模型合并的实用化部署提供了关键的基础设施，对LLM多任务高效部署具有直接参考价值。</p>
+      </div>
+      <div class="paper-images">
+        <img src="https://arxiv.org/html/2604.28109v1/x4.png" alt="Auto-FlexSwitch压缩性能对比">
+      </div>
+    </article>
+
+    <!-- Paper 2: ZipCCL -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.27844" target="_blank">ZipCCL: Efficient Lossless Data Compression of Communication Collectives for Accelerating LLM Training</a></div>
+        <div class="paper-meta">📄 arXiv:2604.27844 · 👤 Wenxiang Lin, Xinglin Pan, Ruibo Fan, Shaohuai Shi, Xiaowen Chu (哈尔滨工业大学深圳, 香港科技大学广州, 香港科技大学) · 📅 2026-04-30 13:29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大语言模型分布式训练中的通信开销已成为关键瓶颈，随着模型规模和GPU集群规模的扩大，梯度、激活和参数的集合通信（collective communication）时间占比持续攀升。尽管已有多种方法尝试减少通信量，但无损压缩的潜力长期被忽视——因为传统压缩/解压开销往往超过减少通信流量带来的收益。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者观察到LLM训练中的通信数据（激活、梯度、参数）通常服从近高斯分布，这是数据压缩的关键特征。然而现有压缩库缺乏针对LLM张量分布特性的理论优化和GPU高效实现，导致压缩/解压的端到端延迟无法抵消通信节省。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>理论驱动的指数编码</strong>：利用LLM张量的高斯分布特性，设计无需昂贵在线统计即可加速压缩的指数编码方案。2. <strong>GPU优化压缩内核</strong>：精心设计内存访问模式和流水线，采用通信感知数据布局，实现GPU上的高效压缩/解压。3. <strong>自适应通信策略</strong>：根据工作负载模式和系统特性动态切换集合操作类型，在不同训练阶段自动选择最优通信策略。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在64-GPU集群上，使用MoE和dense transformer模型评估，ZipCCL将通信时间降低最多1.35倍，端到端训练加速达1.18倍，且对模型质量无任何影响。这是首个系统性地将无损压缩引入LLM训练通信集合的系统，填补了该方向的工程空白。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>ZipCCL证明了无损压缩在LLM分布式训练中的实际价值，打破了"压缩开销大于收益"的传统认知。其理论编码和GPU内核优化为大规模LLM训练的效率提升提供了一条低成本、零精度损失的优化路径。</p>
+      </div>
+      <div class="paper-images">
+        <img src="https://arxiv.org/html/2604.27844v1/x1.png" alt="ZipCCL通信压缩架构">
+      </div>
+    </article>
+
+    <!-- Paper 3: Exploring the Limits of Pruning -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.27115" target="_blank">Exploring the Limits of Pruning: Task-Specific Neurons, Model Collapse, and Recovery in Task-Specific Large Language Models</a></div>
+        <div class="paper-meta">📄 arXiv:2604.27115 · 👤 M. K. Khalidi Siam, Md. Tausif-Ul-Islam, Md. Reshad Romim Khan, Mohammed Ali Hossain, Mushfiqul Amin, Labib Hasan Khan, Niloy Farhan, Farig Sadeque (BRAC University) · 📅 2026-04-29 19:08</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>神经元剪枝作为降低LLM计算成本和参数占用的常用手段，其理论基础尚不充分——尤其是任务特定模型中的神经元是否均匀贡献于任务性能仍不清楚。现有剪枝方法多基于权重幅度等简单启发式，缺乏对神经元任务特异性的系统性理解。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者希望通过大规模实验回答：任务特定LLM中是否存在"任务专属神经元"？关键任务信息是均匀分布还是高度集中？剪枝的安全边界在哪里？这些问题的答案将直接指导更智能的剪枝策略和后剪枝恢复方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>激活选择性度量</strong>：基于神经元激活模式定义任务贡献度量，识别对目标任务贡献低的神经元并进行选择性剪枝，对比随机剪枝验证系统性优势。2. <strong>反向剪枝实验</strong>：移除少量（约10%）高度任务特定的神经元导致完全性能崩溃，证明关键信息高度集中在小比例神经元中。3. <strong>鲁棒性阈值发现</strong>：在1.5B和7B模型上实验揭示15-20%剪枝率作为鲁棒性拐点，超过后精度损失和生成失败急剧增加。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>选择性剪枝在30%-35%比例下仍保持显著性能，同时参数和运行时VRAM使用量一致降低，推理吞吐量随剪枝率增加而提升。后剪枝微调能大幅恢复性能，尤其对激进剪枝模型效果显著。该研究为任务特定LLM的高效推理部署提供了量化的剪枝指南。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作首次为LLM中的"任务专属神经元"假说提供了大规模实证证据，揭示了神经元专业化、信息集中度和剪枝鲁棒性之间的深层联系。15-20%的鲁棒性阈值和反向剪洞实验的发现，为后续的结构性剪枝和动态稀疏推理研究奠定了重要的实验基础。</p>
+      </div>
+      <div class="paper-images">
+        <img src="https://arxiv.org/html/2604.27115v1/g1.png" alt="Pruning性能与鲁棒性分析">
+      </div>
+    </article>
+
+    <!-- Paper 4: Co-Evolving Policy Distillation -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.27083" target="_blank">Co-Evolving Policy Distillation</a></div>
+        <div class="paper-meta">📄 arXiv:2604.27083 · 👤 Naibin Gu, Chenxu Yang, Qingyi Si, Chuanyu Qin, Dingyu Yao, Peng Fu, Zheng Lin, Weiping Wang, Nan Duan, Jiaqi Wang (中国科学院信息工程研究所, 中国科学院大学网络空间安全学院, 京东) · 📅 2026-04-29 18:24</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>RL with Verifiable Rewards（RLVR）和On-policy Distillation（OPD）已成为后训练阶段整合多专家能力的两大标准范式。混合RLVR直接训练单一策略处理多任务，但受困于任务间分歧成本；先训练专家再OPD的流水线虽避免分歧，却因教师-学生行为模式差距过大而无法完全吸收教师能力。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者分析发现，两种范式的核心缺陷分别在于"能力冲突"和"行为断层"。这提示：如果能让多个专家在训练过程中相互指导（而非训练完再蒸馏），或许可以同时避免任务分歧和减小行为差距，实现真正的能力一体化融合。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>并行专家训练</strong>：鼓励多个专家模型并行进行RLVR训练，而非串行训练后蒸馏。2. <strong>双向OPD</strong>：在每个专家的RLVR训练过程中引入OPD，让专家互为教师和学生，实现蒸馏的双向化和训练时同步化。3. <strong>协同进化机制</strong>：通过持续的相互蒸馏，使专家间保持一致的行为模式，同时保留充分的互补知识，避免训练后期的同质化崩溃。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>CoPD实现了文本、图像和视频推理能力的一体化集成，显著超越混合RLVR和MOPD等强基线，甚至超过了各领域专属专家模型的性能。其并行训练模式可能启发全新的训练规模扩展范式，为多模态统一模型的后训练提供了新思路。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Co-Evolving Policy Distillation通过将OPD从"训练后补救"重新定位为"训练中协同"，有效调和了多任务能力整合中的分歧-吸收悖论。其双向蒸馏和协同进化框架为构建真正的全能型多模态基础模型提供了重要的算法基础设施。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: FaaSMoE -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26881" target="_blank">FaaSMoE: A Serverless Framework for Multi-Tenant Mixture-of-Experts Serving</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26881 · 👤 Minghe Wang, Trever Schirmer, Mohammadreza Malekabbasi, David Bermbach (TU Berlin) · 📅 2026-04-29 16:47</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>Mixture-of-Experts（MoE）模型通过稀疏激活实现高容量与高效推理的平衡，但其部署要求所有专家常驻内存，导致激活专家与实际配置资源之间存在显著差距。在多租户场景中，不同租户的请求模式差异使这种资源利用率不足的问题被进一步放大，成为MoE模型规模化部署的关键障碍。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有MoE优化方案主要聚焦单模型效率（如专家并行、预测、去重），未能从根本上解决非激活专家的内存驻留问题，也未考虑多租户共享基础设施下的资源隔离与弹性需求。作者希望利用Serverless（FaaS）的按需调用和scale-to-zero特性来重构MoE的部署架构。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>控制-执行平面解耦</strong>：将MoE的专家部署为无状态FaaS函数，实现按需和跨租户的scale-to-zero专家调用。2. <strong>可配置专家粒度</strong>：支持在函数内部配置专家粒度，在单专家弹性和减少调用开销之间灵活权衡。3. <strong>多租户资源隔离</strong>：基于开源边缘FaaS平台实现原型，确保不同租户间的专家调用互不干扰，共享基础设施的同时保持逻辑隔离。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>使用Qwen1.5-moe-2.7B在多租户工作负载下评估，FaaSMoE相比全模型基线仅使用不到三分之一的资源，同时保持了推理质量。这项工作证明了FaaS作为MoE规模化 serving 基础设施的可行性，为多租户LLM服务的经济性部署提供了实践路径。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>FaaSMoE将Serverless架构引入MoE部署领域，通过解耦控制和执行平面从根本上改变了MoE的资源供给模式。其"按需专家调用"思路对日益增长的MoE模型（如DeepSeek-V3、Qwen-MoE等）的云端部署具有重要的工程参考价值。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势总结</h2>
+    <div class="trend-box">
+      <h3>本期研究热点</h3>
+      <ul>
+        <li><strong>任务向量的极端压缩</strong>：Auto-FlexSwitch揭示了任务向量97%稀疏率下仍保持性能的惊人事实，将模型合并的存储效率推向新极限。</li>
+        <li><strong>训练通信无损压缩</strong>：ZipCCL填补了LLM训练通信压缩的工程空白，1.18倍端到端加速且零精度损失，为大规模集群训练提供了免费午餐。</li>
+        <li><strong>剪极限限实证</strong>：Pruning Limits首次量化证明了任务专属神经元的存在和15-20%鲁棒性阈值，为结构化剪枝提供了坚实的实验基础。</li>
+        <li><strong>蒸馏范式革新</strong>：CoPD将OPD从"后训练补救"转变为"训练中协同进化"，为多模态统一模型的能力整合开辟了新路径。</li>
+        <li><strong>Serverless MoE部署</strong>：FaaSMoE以不到1/3的资源实现多租户MoE服务，重新定义了MoE云端部署的资源经济学。</li>
+      </ul>
+    </div>
+    <div class="trend-box">
+      <h3>值得关注的新方向</h3>
+      <ul>
+        <li><strong>自适应稀疏+量化联合优化</strong>：Auto-FlexSwitch的LGS+BAS框架可扩展到更通用的模型压缩场景，不仅限于任务向量。</li>
+        <li><strong>通信-计算协同优化</strong>：ZipCCL的压缩策略可与梯度压缩、激活检查点等技术叠加，进一步压榨分布式训练的通信瓶颈。</li>
+        <li><strong>多租户LLM服务架构</strong>：FaaS与MoE的结合思路可推广到更广泛的稀疏模型 serving 场景，如MoE+推理引擎的混合架构。</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 K's Blog · 文献调研与技术洞察</p>
+      <p>报告生成时间: 2026-05-02 03:04 (Asia/Shanghai) · 生成者: Jarvis 🔧</p>
+    </footer>
+  </div>
+</body>
+</html>
