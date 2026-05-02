@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月3日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .metric { display: inline-block; margin: 5px 10px 5px 0; }
+        .metric-value { font-size: 1.3em; font-weight: bold; color: var(--primary); }
+        .metric-label { font-size: 0.85em; color: var(--text-light); }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">发布时间：2026年5月3日 04:30 | 第18周 | Jarvis 分析</div>
+        </header>
+
+        <div class="summary">
+            <h2>📊 执行摘要</h2>
+            <p><strong>时间范围：</strong>2026年5月2日 - 5月3日（48小时）</p>
+            <div class="warning-box">
+                <strong>⚠️ 今日无符合时间要求的新论文</strong><br>
+                在 2026-05-02 至 2026-05-03 的 48 小时时间窗口内，arXiv 未收录新的 CVNN（复数神经网络）相关论文。以下为近期（近30天）值得关注的 CVNN 研究进展。
+            </div>
+            <p><strong>近期亮点：</strong></p>
+            <ul>
+                <li>BayesCVNN 首次实现复数神经网络的贝叶斯不确定性量化（DAC'26）</li>
+                <li>ComVo 复数声码器在 ICLR 2026 被接收，使用原生复数运算实现高质量波形生成</li>
+                <li>复数 GNN 实现基不变分布式控制，解决 GPS/指南针缺失环境下的部署问题</li>
+            </ul>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Algorithm and Hardware Co-Design for Efficient Complex-Valued Uncertainty Estimation</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.19993">arXiv:2604.19993</a> | 
+                    🏛️ Zehuan Zhang, Mark Chen, He Li, Wayne Luk | 
+                    📅 2026-04-21 | DAC'26
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">Bayesian CVNN</span>
+                    <span class="tag">FPGA 加速</span>
+                    <span class="tag">不确定性量化</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>复数神经网络（CVNN）在处理复数数据（如雷达信号、PolSAR 图像、语音频谱等）方面具有天然优势。然而，现有 CVNN 无法量化预测不确定性，这在安全关键应用中是一个重大缺陷。贝叶斯神经网络（BNN）虽能估计不确定性，但尚未扩展到复数域。</p>
+
+            <div class="section-title">动机</div>
+            <p>作者观察到：复数数据的独特结构（实部和虚部耦合）使得直接应用实数 BNN 方法不够有效。此外，CVNN 在硬件部署时面临双重复数运算的开销挑战，需要算法与硬件协同优化。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>BayesCVNN：</strong>首次提出基于 dropout 的贝叶斯复数神经网络，通过复数 dropout 实现近似贝叶斯推断</li>
+                <li><strong>层混合与部分混合：</strong>利用复数值的双重特性（实部/虚部），设计了基于层混合和部分混合的自动化搜索空间，自动寻找实部和虚部的最优配置</li>
+                <li><strong>FPGA 加速器：</strong>提出定制化 FPGA 加速器框架，使用优化的构建块生成专用硬件</li>
+            </ul>
+
+            <div class="section-title">收益点</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">4.5x</div>
+                    <div class="metric-label">速度提升（相对 GPU）</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">13x</div>
+                    <div class="metric-label">另一模型速度提升</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">&lt;10%</div>
+                    <div class="metric-label">GPU 功耗占比</div>
+                </div>
+            </div>
+            <p>自动搜索找到的配置在算法和硬件方面均优于现有工作，实现了更高的性能和更低的硬件成本。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作填补了 CVNN 不确定性量化的空白，并提供了高效的硬件部署路径。对于需要可靠置信度估计的雷达、通信和医学成像应用具有重要价值。<strong>代码已开源：</strong><a href="https://github.com/zehuanzhang/BayesCVNN.git">GitHub</a></p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Toward Complex-Valued Neural Networks for Waveform Generation</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2603.11589">arXiv:2603.11589</a> | 
+                    🏛️ Hyung-Seok Oh, Deok-Hyeon Cho, Seung-Bin Kim, Seong-Whan Lee | 
+                    📅 2026-03-12 | ICLR 2026
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">ICLR 2026</span>
+                    <span class="tag">语音合成</span>
+                    <span class="tag">复数声码器</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>神经声码器在波形生成方面取得了显著进展。iSTFT 声码器通过预测复数值频谱图并经由 iSTFT 合成波形，避免了计算量大的上采样阶段。然而，现有方法使用实数网络分别处理实部和虚部，无法捕获复数频谱图的内在结构。</p>
+
+            <div class="section-title">动机</div>
+            <p>复数频谱图的实部和虚部并非独立——它们通过相位和幅度的关系紧密耦合。分别处理会丢失这种耦合信息，限制生成质量。需要原生复数运算来充分利用复数表示的结构。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>ComVo：</strong>完全复数声码器，生成器和判别器均使用原生复数运算</li>
+                <li><strong>对抗训练框架：</strong>在复数表示空间中提供结构化反馈</li>
+                <li><strong>相位量化：</strong>离散化相位值以规范训练过程</li>
+                <li><strong>块矩阵计算：</strong>通过减少冗余操作将训练时间缩短 25%</li>
+            </ul>
+
+            <div class="section-title">收益点</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">SOTA</div>
+                    <div class="metric-label">合成质量</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">-25%</div>
+                    <div class="metric-label">训练时间减少</div>
+                </div>
+            </div>
+            <p>实验表明 ComVo 达到了比同类实数基线更高的合成质量，同时块矩阵方案显著降低训练开销。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作证明了原生复数网络在生成任务中的优势，为复数深度学习在语音和音频领域的应用开辟了新路径。<strong>代码和音频样本：</strong><a href="https://hs-oh-prml.github.io/ComVo/">项目页面</a></p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.02615">arXiv:2604.02615</a> | 
+                    🏛️ Samuel Honor, Mohamed Abdelnaby, Kevin Leahy | 
+                    📅 2026-04-03 | CDC 2026
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">复数 GNN</span>
+                    <span class="tag">分布式控制</span>
+                    <span class="tag">基不变性</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>图神经网络（GNN）在网络化动力系统的分布式控制中表现出色。然而，现有分布式 GNN 架构假设所有节点在兼容的坐标基中收集几何观测，这限制了其在 GPS 缺失和指南针缺失环境中的实用性。</p>
+
+            <div class="section-title">动机</div>
+            <p>实际机器人编队中，每个机器人只能基于自身局部坐标系感知环境，无法保证全局对齐。需要一种对局部坐标基选择具有不变性的控制器。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>复数表示：</strong>将 2D 几何特征和基之间的变换用复数表示</li>
+                <li><strong>相位等变激活：</strong>在 GNN 层内使用带相位等变激活函数的复数线性层</li>
+                <li><strong>基不变性保证：</strong>从固定全局坐标系观察，所有策略对局部坐标基的选择严格不变</li>
+            </ul>
+
+            <div class="section-title">收益点</div>
+            <div class="highlight-box">
+                <p>在模仿学习集群任务中，相比实数基线，该架构实现了：</p>
+                <ul>
+                    <li>更高的数据效率</li>
+                    <li>更好的跟踪性能</li>
+                    <li>更强的泛化能力</li>
+                </ul>
+            </div>
+
+            <div class="section-title">总结</div>
+            <p>这项工作展示了复数 GNN 在几何控制问题中的独特优势，为 GPS/指南针缺失环境下的多机器人系统提供了可靠的分布式控制方案。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">4</span>
+                <div class="paper-title">DDF2Pol: A Dual-Domain Feature Fusion Network for PolSAR Image Classification</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.18853">arXiv:2604.18853</a> | 
+                    🏛️ Mohammed Q. Alkhatib | 
+                    📅 2026-04-20 | Pattern Recognition Letters
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag">PolSAR</span>
+                    <span class="tag">双域融合</span>
+                    <span class="tag">轻量级</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>极化合成孔径雷达（PolSAR）图像分类是遥感领域的重要任务。PolSAR 数据具有固有的复数值特性，需要专门的处理方法。</p>
+
+            <div class="section-title">动机</div>
+            <p>现有方法要么仅使用实值特征，要么仅使用复值特征，未能充分利用两者的互补信息。同时，大型模型在部署时计算开销大。</p>
+
+            <div class="section-title">技术点</div>
+            <ul>
+                <li><strong>双域并行流：</strong>一个实值流和一个复值流分别提取空间和极化信息</li>
+                <li><strong>深度可分离卷积：</strong>用于空间特征增强</li>
+                <li><strong>坐标注意力机制：</strong>聚焦于最具信息量的区域</li>
+                <li><strong>仅 91,371 参数：</strong>极轻量级设计</li>
+            </ul>
+
+            <div class="section-title">收益点</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">98.16%</div>
+                    <div class="metric-label">Flevoland OA</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">96.12%</div>
+                    <div class="metric-label">San Francisco OA</div>
+                </div>
+            </div>
+
+            <div class="section-title">总结</div>
+            <p>DDF2Pol 证明了复数-实数双域融合的有效性，在保持极低参数量的同时达到 SOTA 性能。<strong>代码：</strong><a href="https://github.com/mqalkhatib/DDF2Pol">GitHub</a></p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">5</span>
+                <div class="paper-title">Perturbing the Phase: Analyzing Adversarial Robustness of Complex-Valued Neural Networks</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2602.06577">arXiv:2602.06577</a> | 
+                    🏛️ Florian Eilers, Christof Duhme, Xiaoyi Jiang | 
+                    📅 2026-02-06
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag">对抗鲁棒性</span>
+                    <span class="tag">相位攻击</span>
+                    <span class="tag">安全分析</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>CVNN 在各类应用中日益流行，但其在对抗攻击下的鲁棒性尚未得到充分研究。理解 CVNN 在最坏情况下的行为对其在安全关键场景中的部署至关重要。</p>
+
+            <div class="section-title">动机</div>
+            <p>复数数据的相位信息承载重要语义，但传统对抗攻击同时攻击幅度和相位。需要专门分析仅针对相位的攻击效果。</p>
+
+            <div class="section-title">技术点</div>
+            <ul>
+                <li><strong>Phase Attacks：</strong>专门攻击复数输入相位信息的新型攻击</li>
+                <li><strong>复数攻击扩展：</strong>将常用对抗攻击方法扩展到复数域</li>
+                <li><strong>对比分析：</strong>系统比较 CVNN 与 RVNN 的鲁棒性差异</li>
+            </ul>
+
+            <div class="section-title">收益点</div>
+            <p>研究发现：在某些场景中 CVNN 比 RVNN 更鲁棒；但 Phase Attacks 比同等强度的常规攻击更有效，表明相位信息是 CVNN 的脆弱点。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作为 CVNN 的安全部署提供了重要见解，提醒研究者在设计 CVNN 时特别关注相位信息的保护。</p>
+        </div>
+
+        <div class="summary">
+            <h2>📈 趋势分析</h2>
+            <ul>
+                <li><strong>不确定性量化：</strong>BayesCVNN 的出现标志着 CVNN 从纯粹预测向可靠预测的转变</li>
+                <li><strong>生成任务：</strong>复数声码器 ComVo 证明复数网络在生成任务中的独特优势</li>
+                <li><strong>硬件协同：</strong>FPGA 加速器展示了 CVNN 在实际部署中的效率潜力</li>
+                <li><strong>几何/控制：</strong>复数 GNN 的基不变性为分布式系统提供了新的理论工具</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Jarvis CVNN Research Daily | 自动生成的文献调研报告</p>
+            <p>数据源：arXiv.org | 生成时间：2026-05-03 04:30 AM CST</p>
+        </footer>
+    </div>
+</body>
+</html>
