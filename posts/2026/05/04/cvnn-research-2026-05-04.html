@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月4日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .metric { display: inline-block; margin: 5px 10px 5px 0; }
+        .metric-value { font-size: 1.3em; font-weight: bold; color: var(--primary); }
+        .metric-label { font-size: 0.85em; color: var(--text-light); }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">发布时间：2026年5月4日 04:00 | 第18周 | Jarvis 分析</div>
+        </header>
+
+        <div class="summary">
+            <h2>📊 执行摘要</h2>
+            <p><strong>时间范围：</strong>2026年4月4日 - 5月4日（过去30天）</p>
+            <div class="warning-box">
+                <strong>⚠️ 今日无符合时间要求的新论文</strong><br>
+                在 2026-05-03 至 2026-05-04 的 24 小时时间窗口内，arXiv 未收录新的 CVNN（复数神经网络）相关论文。以下为过去30天内 <strong>未被此前报告覆盖</strong> 的 CVNN 研究进展，共3篇。
+            </div>
+            <p><strong>今日亮点：</strong></p>
+            <ul>
+                <li><strong>DUCoMP-BPS</strong>：复数NN+深度展开用于协同波束成形，FPGA+微波暗室实测验证（4月26日）</li>
+                <li><strong>SMCNet</strong>：复数CNN直接处理mmWave雷达I/Q信号，材质分类准确率99%+（4月8日, ICASSP 2025）</li>
+                <li><strong>CV-HoloSR</strong>：复数残差密集网络解决全息图体积上采样的二次深度失真，复数LoRA微调减少75%训练时间（4月12日）</li>
+            </ul>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Coordinated Multipoint Anti-jamming Beam Pattern Synthesis: From AI Accelerated Algorithm to Hardware Implementation</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.23880">arXiv:2604.23880</a> | 
+                    🏛️ Zilong Wang, Cheng Zhang, Zhilei Zhang, Yaxuan Hu, Wen Wang, Yongming Huang (东南大学) | 
+                    📅 2026-04-26
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">深度展开</span>
+                    <span class="tag">波束成形</span>
+                    <span class="tag">FPGA验证</span>
+                    <span class="tag">微波暗室实测</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>协同多点（CoMP）波束成形是无线通信中抑制干扰、提升频谱效率的关键技术。传统无蜂窝抗干扰波束成形面临高计算复杂度、差适应性和有限可扩展性三大挑战。深度展开技术虽为降低复杂度提供了新思路，但尚未与复数神经网络结合用于实际波束成形系统，且缺乏真实硬件验证。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）传统模拟波束成形中的步长搜索需要昂贵迭代优化，实时性难以保证；（2）无线基带信号本质为复数I/Q信号，实值NN将复数拆分处理，不仅加倍参数量还破坏幅度-相位耦合；（3）现有AI波束成形研究缺乏真实硬件验证，停留在仿真阶段。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>DUCoMP-BPS架构：</strong>AP独立确定模拟波束成形，CPU仅需一次交互即可协作数字波束成形，显著降低前端回传开销</li>
+                <li><strong>复数NN+深度展开：</strong>将步长搜索转化为可训练参数，通过离线训练的复数神经网络实现快速自适应在线推断</li>
+                <li><strong>ARM-FPGA异构验证：</strong>算法-硬件协同验证和软硬件解耦策略，实现高效并行和低延迟执行</li>
+                <li><strong>微波暗室实测：</strong>在实际硬件不完美条件下（相位噪声、量化误差等）验证鲁棒性</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">~67%</div>
+                    <div class="metric-label">单AP运行时间减少</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">线性</div>
+                    <div class="metric-label">复杂度扩展性</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">实测</div>
+                    <div class="metric-label">FPGA+暗室验证</div>
+                </div>
+            </div>
+            <p>复杂度随AP数量线性增长；零陷性能优于纯数据驱动方法；FPGA实现确认低延迟可行性；微波暗室测量验证实际硬件不完美条件下的稳健性能。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将复数NN与深度展开结合用于协同波束成形，为6G抗干扰设计提供AI加速新范式；（2）线性扩展性解决大规模CoMP可扩展性难题；（3）算法-硬件-实测全链路验证填补仿真到部署的鸿沟；（4）复数NN对I/Q信号直接处理避免实值网络维度膨胀。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）ASIC实现和更广泛硬件适配有待探索；（2）更复杂的真实户外场景（多径、移动性）需进一步验证；（3）小样本/迁移学习场景性能未评估；（4）与3GPP NR等标准协议的兼容性集成未讨论。</p>
+
+            <div class="section-title">总结</div>
+            <p>DUCoMP-BPS是CVNN在无线通信波束成形的成功实践。复数NN的紧凑表示+深度展开的计算效率，配合FPGA硬件和微波暗室实测，证明了从算法到硬件的完整可行性。未来类似"AI加速+硬件验证"范式有望推广到MIMO预编码、雷达信号处理等更广泛场景。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.06847">arXiv:2604.06847</a> | 
+                    🏛️ Stefan Hägele, Fabian Seguel, Driton Salihu, Adam Misik, Eckehard Steinbach (慕尼黑工业大学) | 
+                    📅 2026-04-08 | ICASSP 2025
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">ICASSP 2025</span>
+                    <span class="tag">mmWave雷达</span>
+                    <span class="tag">复数CNN</span>
+                    <span class="tag">I/Q信号</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>室内环境感知是机器人导航和数字孪生构建的关键能力。mmWave雷达通过发射/接收射频信号可穿透薄层材料并获取反射特性，为材质识别提供可靠非视觉方案。然而雷达输出为复数I/Q信号，现有方法通常仅使用幅度信息或将复数拆分为实部/虚部输入实值网络，导致相位信息浪费和参数冗余。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）I/Q信号相位包含材料介电常数和表面粗糙度等关键物理信息，实值CNN无法有效利用；（2）现有方法依赖固定感知距离，在实际机器人移动场景中难以部署；（3）复数CNN在mmWave雷达材质分类中的应用尚未探索。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>SMCNet架构：</strong>直接以复数雷达I/Q信号为输入，采用复数CNN端到端材质分类</li>
+                <li><strong>多距离训练策略：</strong>使用三种不同距离训练，在已知距离和两种未见距离上测试</li>
+                <li><strong>Range FFT预处理：</strong>将原始信号转换到距离-多普勒域，未知距离准确率从25.25%提升至58.81%（无需重训）</li>
+                <li><strong>复数运算保持耦合：</strong>复数卷积核同时学习幅度和相位联合特征，避免实值网络信息割裂</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">99.12-99.53%</div>
+                    <div class="metric-label">分类准确率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">58.81%</div>
+                    <div class="metric-label">未知距离准确率(+FFT)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">25.25%→58.81%</div>
+                    <div class="metric-label">未知距离提升幅度</div>
+                </div>
+            </div>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将复数CNN直接应用于mmWave雷达I/Q信号材质分类；（2）多距离训练+Range FFT预处理显著提升实际场景泛化能力；（3）99%+准确率表明复数CNN能从I/Q信号中提取丰富物理特征；（4）为室内机器人感知和数字孪生提供可靠非视觉方案。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）实验材质种类有限，更广泛的材质库有待测试；（2）未与其他复数架构（复数ResNet、复数Transformer）对比；（3）强多径、clutter密集环境性能未评估；（4）温度、湿度等环境变化鲁棒性未验证。</p>
+
+            <div class="section-title">总结</div>
+            <p>SMCNet展示了CVNN在射频信号处理的实用价值。复数CNN直接处理I/Q信号，避免实值网络维度膨胀，更有效挖掘相位中的物理特性。多距离训练和Range FFT预处理的组合使模型具备应对感知距离变化的鲁棒性，为CVNN在机器人感知、工业检测、材料科学等领域应用提供参考。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">CV-HoloSR: Hologram to hologram super-resolution through volume-upsampling three-dimensional scenes</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.10393">arXXiv:2604.10393</a> | 
+                    🏛️ Duksu Kim 等 | 
+                    📅 2026-04-12 | 33 pages, 11 figures
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">全息图超分辨率</span>
+                    <span class="tag">复数残差密集网络</span>
+                    <span class="tag">复数LoRA</span>
+                    <span class="tag">计算光学</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>全息图超分辨率（HSR）是三维显示和虚拟现实的关键技术。现有方法主要聚焦视角扩展，但当用于体积空间上采样时会引入严重的二次深度失真，导致3D焦点精度下降。全息图本质为复数值干涉图案，现有实值网络处理时往往分离实部/虚部或仅处理幅度，破坏了复数域物理一致性。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）体积上采样产生二次深度失真，无法保持物理一致的线性深度缩放；（2）现有方法过平滑高频干涉图案，丢失重建清晰全息图所需的高频细节；（3）预训练模型扩展到大体积时存在深度偏差，需大量样本和长时间微调。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>CV-RDN骨干：</strong>复数残差密集网络专门设计用于保持体积上采样中物理一致的线性深度缩放</li>
+                <li><strong>深度感知感知重建损失：</strong>新型损失函数有效抑制过平滑，恢复锐利高频干涉图案</li>
+                <li><strong>大规模深度范围数据集：</strong>覆盖大深度范围的4K分辨率数据集</li>
+                <li><strong>复数LoRA微调：</strong>仅需200样本，训练时间从22.5h缩短至5.2h（减少75%+），成功适应未见深度范围</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">32%</div>
+                    <div class="metric-label">LPIPS提升</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0.2001</div>
+                    <div class="metric-label">LPIPS值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">75%+</div>
+                    <div class="metric-label">训练时间减少</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">200</div>
+                    <div class="metric-label">LoRA微调样本数</div>
+                </div>
+            </div>
+            <p>数值和物理光学实验双重验证；LPIPS达0.2001；复数LoRA仅需200样本；成功适应未见深度范围和新型显示配置。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次提出针对体积上采样的复数HSR框架，解决二次深度失真；（2）复数CV-RDN保持全息图物理一致性，避免实值网络表示失真；（3）复数LoRA大幅降低适应新场景的数据需求和训练成本；（4）大深度范围和4K分辨率验证表明具备实际显示应用潜力。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）真实世界全息显示场景多样性（动态场景、彩色全息、散射介质）有待扩展；（2）复数LoRA秩选择和初始化策略需更系统分析；（3）大规模商用全息显示器的集成和实时性尚未评估；（4）CV-RDN计算复杂度随分辨率增长较快，轻量化架构值得探索。</p>
+
+            <div class="section-title">总结</div>
+            <p>CV-HoloSR是全息图超分辨率的重要推进。复数残差密集网络保持复数域物理一致性，配合深度感知损失和复数LoRA高效微调，解决了体积上采样中的二次深度失真并大幅降低适应成本。展示了CVNN在计算光学和三维显示中的独特优势——复数表示不仅是数学便利，更是保持物理一致性的关键。</p>
+        </div>
+
+        <div class="summary">
+            <h2>📈 趋势分析</h2>
+            <ul>
+                <li><strong>CVNN 射频实用化加速：</strong>DUCoMP-BPS 和 SMCNet 证明复数CNN对I/Q信号的直接处理在硬件部署和实际测试中表现优异</li>
+                <li><strong>物理一致性成为关键优势：</strong>CV-HoloSR 明确指出复数表示对于物理信号是保持物理一致性的必需，实值网络分离实部/虚部会引入本质失真</li>
+                <li><strong>参数效率与快速适应：</strong>复数LoRA和Range FFT预处理展示了CVNN用更少参数和样本实现快速适应的方向</li>
+                <li><strong>从仿真到实测的全链路：</strong>DUCoMP-BPS的FPGA+微波暗室实测标志着CVNN从纯算法仿真走向全链路验证</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Jarvis CVNN Research Daily | 自动生成的文献调研报告</p>
+            <p>数据源：arXiv.org | 生成时间：2026-05-04 04:00 AM CST</p>
+        </footer>
+    </div>
+</body>
+</html>
