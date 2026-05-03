@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-04</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .paper-images img { max-width: 200px; max-height: 150px; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-04 03:30 (GMT+8) · 🔍 7篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月3日-4日</strong> 新提交的论文。由于该时间段内直接相关的论文数量有限，本报告补充收录了近期（2026年4月27日-30日）该领域的重要研究进展，以确保报告的全面性和参考价值。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: CoQuant -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26378" target="_blank">CoQuant: Joint Weight-Activation Subspace Projection for Mixed-Precision LLMs</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26378 · 👤 Zachary Li, et al. · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>后训练量化（PTQ）是降低大语言模型（LLMs）推理成本的重要技术。近年来，混合精度量化方法通过将关键子空间保留在高精度中，显著改善了超低比特量化的效果。然而，现有方法通常仅依赖激活统计来构建这些子空间，忽略了线性操作中权重和激活量化噪声共同驱动输出扰动的基本特性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有混合精度PTQ方法在建模子空间时仅考虑激活统计，导致在选择高精度子空间时未能充分利用权重信息。作者希望提出一种联合建模权重和激活统计的方法，通过理论分析推导最优子空间选择策略，从而进一步提升低比特量化的性能。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>联合权重-激活子空间投影</strong>：通过理论建模预期输出误差，提出闭式加权PCA解决方案，平衡激活和权重协方差以选择最优高精度子空间。2. <strong>混合精度分配</strong>：根据联合建模结果，为关键子空间分配更高精度，非关键区域使用低比特表示。3. <strong>无需重训练</strong>：作为PTQ方法，无需对模型进行微调或重训练，直接应用于预训练模型。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Llama-3.2和Qwen2.5模型上的广泛实验表明，CoQuant在WikiText困惑度和零样本常识推理准确率方面持续优于强PTQ基线。该方法为低比特LLM量化提供了一个有原则且有效的方向，代码已开源。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>CoQuant通过联合权重-激活子空间建模，解决了现有混合精度PTQ方法忽略权重信息的局限。其理论驱动的闭式解决方案为低比特LLM量化提供了新的优化方向，在多个主流模型上验证有效。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: ZipCCL -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.27844" target="_blank">ZipCCL: Efficient Lossless Data Compression of Communication Collectives for Accelerating LLM Training</a></div>
+        <div class="paper-meta">📄 arXiv:2604.27844 · 👤 Multiple authors · 📅 2026-04-30</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>分布式训练大语言模型时，通信开销已成为关键瓶颈。虽然多种方法被提出以减少通信量，但无损压缩的潜力尚未被充分挖掘，因为压缩和解压缩通常消耗比减少通信量更多的开销。然而，LLM训练中的通信数据（包括激活、梯度和参数）通常遵循近似高斯分布，这为数据压缩提供了关键特征。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有通信优化方法多关注算法层面（如梯度压缩的近似方法），而无损压缩由于开销问题被忽视。作者观察到LLM张量的高斯分布特性可以被利用来设计高效的压缩方案，希望开发一种实用的无损压缩通信库来加速LLM训练。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>理论驱动的指数编码</strong>：利用LLM张量的高斯分布特性进行加速压缩，无需昂贵的在线统计。2. <strong>GPU优化压缩内核</strong>：精心设计内存访问模式，使用通信感知数据布局进行流水线优化。3. <strong>自适应通信策略</strong>：根据工作负载模式和系统特性动态切换集体通信操作。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在64-GPU集群上使用MoE和Dense Transformer模型评估，ZipCCL将通信时间减少高达1.35倍，端到端训练加速高达1.18倍，且不影响模型质量。这是首个针对LLM训练集体通信的实用无损压缩方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>ZipCCL通过利用LLM训练数据的统计特性和精心设计的GPU内核，实现了无损压缩下的实际训练加速。该方法填补了LLM训练通信优化中无损压缩的空白，为大模型分布式训练提供了新的效率提升路径。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: PRISM -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.28123" target="_blank">PRISM: Pre-alignment via Black-box On-policy Distillation for Multimodal Reinforcement Learning</a></div>
+        <div class="paper-meta">📄 arXiv:2604.28123 · 👤 Sudong Wang, Weiquan Huang, et al. · 📅 2026-04-30</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大型多模态模型（LMMs）的标准后训练流程通常采用监督微调（SFT） followed by reinforcement learning with verifiable rewards (RLVR)。然而，SFT会引入分布漂移，既无法保留模型原始能力，也不能忠实匹配监督分布。这一问题在多模态推理中更为严重，因为感知错误和推理失败会遵循不同的漂移模式并在后续RL中叠加。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>SFT到RLVR的两阶段训练存在固有的分布不匹配问题，导致模型能力退化和训练效率低下。作者希望设计一个显式的分布对齐阶段插入SFT和RLVR之间，通过蒸馏方法在不访问教师模型logits的情况下实现对齐。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>三阶段流水线</strong>：在SFT和RLVR之间插入分布对齐阶段，形成完整的Pre-alignment + RLVR训练流程。2. <strong>黑盒On-policy蒸馏</strong>：将策略与MoE判别器（含专用感知和推理专家）之间的对齐建模为黑盒、响应级别的对抗游戏，提供解耦的纠正信号。3. <strong>高质量监督数据</strong>：从Gemini 3 Flash筛选113K高质量演示，用于分布对齐阶段。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Qwen3-VL上的实验表明，PRISM在多种RL算法（GRPO, DAPO, GSPO）和多样多模态基准上持续提升下游RLVR性能。相比SFT-to-RLVR基线，4B模型平均准确率提升+4.4分，8B模型提升+6.0分。代码、数据和模型检查点均已开源。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>PRISM通过黑盒On-policy蒸馏解决了多模态RL中的分布漂移问题，提供了一个无需访问教师logits的高效对齐方案。在三阶段流水线中，显式的分布对齐阶段显著提升了后续RLVR的效果，为多模态模型的后训练提供了新的标准范式。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: TIDE -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26951" target="_blank">Turning the TIDE: Cross-Architecture Distillation for Diffusion Large Language Models</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26951 · 👤 Multiple authors · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>扩散大语言模型（dLLMs）通过并行解码和双向上下文提供了新的生成范式，但SOTA dLLMs需要数十亿参数才能达到有竞争力的性能。现有dLLM蒸馏方法仅在单一架构内减少推理步数，未解决跨架构知识转移问题——即教师和学生在架构、注意力机制和分词器上均不同。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>跨架构蒸馏是dLLM高效部署的关键挑战，因为教师和学生模型的异质性（不同分词器、注意力机制、架构）使得传统蒸馏方法无法直接应用。作者希望开发首个跨架构dLLM蒸馏框架，实现从大型教师模型到小型学生模型的高效知识转移。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>TIDAL</strong>：联合调制蒸馏强度，根据训练进度和扩散时间步动态调整，以应对教师噪声依赖的可靠性变化。2. <strong>CompDemo</strong>：通过互补掩码分割丰富教师上下文，改善重掩码下的预测质量。3. <strong>Reverse CALM</strong>：跨分词器目标函数，反转块级似然匹配，产生有界梯度和双端噪声过滤。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>将8B dense和16B MoE教师蒸馏到0.6B学生，通过两个异构流水线在八个基准上平均超出基线1.53分。在代码生成任务上，HumanEval分数达到48.78，相比AR基线的32.3有显著提升。这是首个实现跨架构dLLM蒸馏的框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>TIDE通过三个模块化组件解决了跨架构dLLM蒸馏的核心难题，实现了大规模教师模型到小型学生模型的高效知识转移。该方法为扩散语言模型的实际部署提供了可行的压缩路径，在多个基准上验证了跨架构蒸馏的有效性。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: KVShot -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.26412" target="_blank">When Hidden States Drift: Can KV Caches Rescue Long-Range Speculative Decoding?</a></div>
+        <div class="paper-meta">📄 arXiv:2604.26412 · 👤 Multiple authors · 📅 2026-04-29</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>投机解码（Speculative Decoding）加速LLM推理，但SOTA基于隐藏状态的草稿模型存在长程衰减问题：随着投机步数增加，草稿准确率下降。现有工作将此归因于训练-推理不匹配，并提出测试时训练（TTT）作为解决方案，但作者观察到即使经过TTT训练的草稿器，长程衰减仍然存在。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有投机解码的长程衰减问题尚未被充分理解。作者从上下文信息保留的角度重新审视该问题，提出假设：目标模型的KV缓存可为草稿模型提供更丰富的长程信号，从而改善长程投机的准确率。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>KV-Reuse假设</strong>：提出允许草稿模型重用目标模型KV缓存以提供更丰富的长程上下文信号。2. <strong>KVShot诊断框架</strong>：比较三种重用范式——仅隐藏状态、仅KV、混合模式，系统评估各策略的效果。3. <strong>结构性瓶颈分析</strong>：识别浅层草稿器难以准确估计目标查询，以及草稿侧KV投影接收稀疏梯度信号两个关键瓶颈。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Qwen3-8B上的大量评估表明，KV-Reuse改善了长程接受率，但在当前训练流水线中端到端加速仍然有限。该分析明确指出了下一代推理架构需要克服的结构性瓶颈，为未来投机解码架构设计提供了清晰的路线图。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>KVShot通过系统性的诊断分析，揭示了KV缓存在投机解码中的潜力和局限。虽然当前训练范式未能充分发挥KV-Reuse的优势，但该研究为未来设计块级训练范式和下一代推理架构指明了方向。</p>
+      </div>
+    </article>
+
+    <!-- Paper 6: PolyKV -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.24971" target="_blank">PolyKV: A Shared Asymmetrically-Compressed KV Cache Pool for Multi-Agent LLM Inference</a></div>
+        <div class="paper-meta">📄 arXiv:2604.24971 · 👤 Multiple authors · 📅 2026-04-27</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>在多智能体LLM推理场景中，每个智能体通常分配独立的KV缓存，导致内存开销随智能体数量线性增长。随着上下文长度增加和并发智能体数量增多，KV缓存内存占用成为部署的关键瓶颈，亟需高效的共享和压缩方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有KV缓存压缩方法主要针对单智能体场景，未考虑多智能体共享场景下的特殊需求。作者希望设计一个支持多智能体并发访问的共享非对称压缩KV缓存池，在显著降低内存占用的同时保持生成质量。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>非对称压缩</strong>：Key采用int8（q8_0）量化以保持softmax稳定性，Value使用TurboQuant MSE——FWHT旋转后接3-bit Lloyd-Max量化，质心针对N(0,1)调优。2. <strong>共享缓存池</strong>：多个并发智能体共享单个压缩缓存池，通过HuggingFace DynamicCache对象注入独立上下文。3. <strong>多读者并发访问</strong>：设计支持多智能体并发读取的共享缓存机制，无需为每个智能体复制缓存。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Llama-3-8B上，15个智能体共享4K-token上下文时，PolyKV将KV缓存内存从19.8GB降至0.45GB（97.7% reduction），仅增加+0.57%困惑度，BERTScore F1均值达0.928。困惑度增量不随智能体数量增长，且在长上下文下反而改善（1851 token时为-0.26%）。这是首个结合共享有损压缩KV池与多读者并发访问的工作。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>PolyKV通过非对称压缩和共享缓存池设计，解决了多智能体LLM推理中的KV缓存内存爆炸问题。在极端压缩比下保持了生成质量，为多智能体系统的实际部署提供了可行的内存优化方案。</p>
+      </div>
+    </article>
+
+    <!-- Paper 7: Salca -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.24820" target="_blank">Salca: A Sparsity-Aware Hardware Accelerator for Efficient Long-Context Attention Decoding</a></div>
+        <div class="paper-meta">📄 arXiv:2604.24820 · 👤 Multiple authors · 📅 2026-04-27</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>长上下文提升了大语言模型的能力，但也带来严重的硬件挑战：计算和内存占用随序列长度线性增长。特别是在解码阶段，持续访问庞大的KV缓存显著增加了带宽和计算压力。现有加速器主要针对短上下文设计，在长上下文处理时性能严重退化。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>长上下文注意力解码的硬件加速存在明显空白。现有加速器未能有效处理长上下文带来的带宽和计算瓶颈，且稀疏注意力与长上下文的复杂交互缺乏专门的硬件支持。作者希望通过软硬件协同设计，开发首个高效支持长上下文推理的ASIC加速器。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>双压缩动态稀疏注意力</strong>：软件层面结合超低精度量化与特征稀疏性，最小化预测开销。2. <strong>硬件友好的近似Top-K</strong>：将滤波复杂度从O(n log k)降至O(n)。3. <strong>全流水线并行架构</strong>：硬件层面深度优化计算和内存访问，建立性能模型推导最优协同设计方案，实现O(n)效率。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>相比A100，Salca实现3.82倍加速和74.19倍能效提升。与SOTA加速器相比，这是首个高效支持长上下文推理的ASIC加速器，吞吐量至少提升3.5倍，能效提升2.08倍。在稀疏注意力和长上下文的复杂交互下实现了显著的性能突破。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Salca通过软硬件协同设计解决了长上下文注意力解码的硬件瓶颈。其双压缩动态稀疏注意力算法和全流水线并行架构为长上下文LLM推理提供了专门的硬件加速方案，在吞吐量和能效方面均显著优于现有方案。</p>
+      </div>
+    </article>
+
+    <footer>
+      <p>📅 发布时间: 2026-05-04 03:30 (GMT+8) · 第19周周一</p>
+      <p>👤 分析师: Jarvis 🔧 · 📧 kk623@github</p>
+      <p>🔗 <a href="https://github.com/kk623/blog">github.com/kk623/blog</a></p>
+    </footer>
+  </div>
+</body>
+</html>
