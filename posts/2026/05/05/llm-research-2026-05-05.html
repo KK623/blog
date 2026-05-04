@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-05</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-05 03:00 (GMT+8) · 🔍 4篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月1日-4日</strong> 新提交的论文。共筛选出4篇与LLM量化/部署/低精度/蒸馏直接相关的高质量论文，涵盖训练量化、推理量化、消费级部署和边缘联邦学习四大方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: AGoQ -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.00539" target="_blank">AGoQ: Activation and Gradient Quantization for Memory-Efficient Distributed Training of LLMs</a></div>
+        <div class="paper-meta">📄 arXiv:2605.00539 · 👤 Wenxiang Lin, Juntao Huang, Luhan Zhang, Laili Li, Xiang Bao, Mengyang Zhang, Bing Wang, Shaohuai Shi · 📅 2026-05-01 · cs.CL / cs.DC</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>量化是降低大语言模型（LLM）训练GPU内存需求的关键方法。然而，现有方法在4-bit激活和8-bit梯度量化方面效果不佳，容易导致收敛缓慢或精度损失。分布式训练超大模型时，激活和梯度的内存占用成为关键瓶颈。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>当前训练量化方案无法有效处理4-bit激活和8-bit梯度，限制了训练效率的进一步提升。作者希望开发一种能够同时实现近4-bit激活存储和8-bit梯度存储与通信的量化框架，在不牺牲收敛性和下游任务精度的前提下，大幅降低训练内存占用。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Layer-aware激活量化</strong>：根据层类型和流水线阶段为不同层分配适当的激活位宽，实现近4-bit激活存储。2. <strong>8-bit梯度量化与All-Reduce</strong>：采用8-bit梯度存储，并设计精度保持的8-bit All-Reduce通信原语，同时减少内存和通信时间。3. <strong>分布式训练集成</strong>：与Megatron-LM、ZeRO、COAT和DeepSpeed等主流训练系统兼容。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在多达64 GPU的集群上，使用8B到32B参数的LLaMA模型进行广泛实验。AGoQ最多减少52%内存，训练速度提升达1.34倍，同时在预训练收敛损失和下游任务准确率上与全精度基线相当。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>AGoQ通过层感知激活量化和8-bit梯度量化，解决了LLM分布式训练中内存和通信的双重瓶颈。在多个主流训练框架和模型规模上验证了有效性，为大规模LLM训练提供了实用的内存优化方案。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: BWLA -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.00422" target="_blank">BWLA: Breaking the Barrier of W1AX Post-Training Quantization for LLMs</a></div>
+        <div class="paper-meta">📄 arXiv:2605.00422 · 👤 Zhixiong Zhao, Zukang Xu, Dawei Yang · 📅 2026-05-01 · cs.LG / cs.AI · Accepted by ACL-Main 2026</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大语言模型的内存和计算需求阻碍了实际部署。二值化可将权重压缩至1-bit，从根本上降低计算和带宽成本。然而，现有方法无法处理激活的长尾分布，必须保持激活高精度，阻碍了真正的端到端加速。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有PTQ方法无法同时实现1-bit权重和低bit激活的高精度量化。作者希望突破这一限制，提出首个在保持高精度的同时实现1-bit权重+低bit激活（如6-bit）的后训练量化框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>正交Kronecker变换（OKT）</strong>：通过EM最小化学习正交映射，将单峰权重转换为对称双峰形式，同时抑制激活尾部和不一致性。2. <strong>近端SVD投影（PSP）</strong>：通过近端SVD投影进行轻量级低秩细化，以最小开销进一步提升可量化性。3. <strong>PTQ无需重训练</strong>：完全后训练量化，无需对预训练模型进行微调。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Qwen3-32B上，BWLA在6-bit激活下达到11.92的Wikitext2困惑度（SOTA为38），五个零样本任务提升超过70%，推理速度提升3.26倍。这是首个实现W1A6高精度PTQ的框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>BWLA通过OKT和PSP两个核心技术，突破了W1AX量化的精度障碍。在超大模型上实现了显著的压缩比和加速比，为LLM的实际部署提供了强有力的量化工具，已被ACL-Main 2026接收。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: Silicon Showdown -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.00519" target="_blank">Silicon Showdown: Performance, Efficiency, and Ecosystem Barriers in Consumer-Grade LLM Inference</a></div>
+        <div class="paper-meta">📄 arXiv:2605.00519 · 👤 Allan Kazakov, Abdurrahman Javat · 📅 2026-05-01 · cs.PF / cs.AI / cs.AR</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>本地LLM推理已从轻量级模型转向超过70B参数的数据中心级权重，为消费者硬件带来深刻的系统挑战。Nvidia和Apple Silicon两大生态系统在架构设计上有根本性差异，影响模型部署策略。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>70B+模型在消费级硬件上的部署面临VRAM墙、量化精度损失和生态系统摩擦等挑战。作者希望系统性地比较Nvidia Blackwell和Apple Silicon架构在消费级LLM推理中的权衡。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Backend Dichotomy分析</strong>：TensorRT-LLM中的NVFP4格式相比BF16基线提供1.6倍吞吐量（151 vs 92 tokens/s），但需要权衡启动延迟。2. <strong>VRAM Wall刻画</strong>：离散GPU用户在激进量化（Q2）和PCIe受限的CPU offloading之间面临破坏性选择。3. <strong>能效对比</strong>：Apple统一内存架构在能效上展现高达23倍优势（tokens/joule）。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>Apple UMA架构在80B参数模型上实现线性扩展，4-bit精度下表现良好。该研究为消费者级LLM推理的硬件选择提供了数据驱动的决策框架，揭示了计算密度与内存容量之间的复杂权衡。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Silicon Showdown通过系统的实证分析，揭示了消费级LLM推理中的关键系统瓶颈。Nvidia的计算密度优势与Apple的内存容量优势形成鲜明对比，为不同应用场景的硬件选型提供了重要参考。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: FED-FSTQ -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2604.25421" target="_blank">FED-FSTQ: Fisher-Guided Token Quantization for Communication-Efficient Federated Fine-Tuning of LLMs on Edge Devices</a></div>
+        <div class="paper-meta">📄 arXiv:2604.25421 · 👤 Changyu Li, Shuanghong Huang, Jiashen Liu, Ming Lei, Jidu Xing, Kaishun Wu, Lu Wang, Fei Luo · 📅 2026-04-28 · cs.LG / cs.AI</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>联邦微调为在边缘设备上适应LLM提供了实用途径，无需集中私有数据。然而，移动部署中的训练wall-clock时间常被异构带宽和间歇性参与导致的straggler-limited上行通信所瓶颈。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>虽然PEFT减少了可训练参数，但每轮通信负载在非IID场景下仍然过高。均匀压缩会丢弃稀有但任务关键的信号。作者希望开发一种Fisher引导的token量化方案，实现通信高效的联邦LLM微调。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Fisher代理估计</strong>：使用轻量级Fisher代理估计token敏感度，实现重要性感知的token选择。2. <strong>非均匀混合精度量化</strong>：为信息性证据分配更高精度，同时抑制冗余传输。3. <strong>模型无关drop-in模块</strong>：兼容标准联邦PEFT流水线（如LoRA），无需修改服务器聚合规则。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在多语言QA和医学QA的非IID分区实验显示，Fed-FSTQ相比标准LoRA基线将累积上行流量减少46倍，端到端wall-clock时间提升52%。在NVIDIA Jetson级边缘设备上实现1.55倍端到端加速。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Fed-FSTQ通过Fisher引导的重要性感知token量化和非均匀混合精度分配，解决了联邦LLM微调中的通信瓶颈。在边缘设备上的实际部署验证了显著的时间和带宽节省，为隐私保护型LLM适应提供了高效方案。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势洞察</h2>
+    <div class="trend-box">
+      <h3>🔥 本周热点方向</h3>
+      <ul>
+        <li><strong>W1AX极端量化突破</strong>：BWLA实现1-bit权重+6-bit激活的SOTA精度，为端到端低精度推理铺平道路</li>
+        <li><strong>训练阶段量化深化</strong>：AGoQ将激活量化推进到近4-bit，梯度量化到8-bit，覆盖训练全链路</li>
+        <li><strong>消费级部署实证研究</strong>：Silicon Showdown系统对比Nvidia/Apple生态，为70B+模型本地部署提供决策依据</li>
+        <li><strong>联邦学习通信优化</strong>：Fed-FSTQ通过Fisher引导的非均匀量化，将通信量减少46倍</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 孙凯 | AI 研究院</p>
+      <p>文献调研 · 技术洞察 · 学术分享</p>
+      <p>报告链接：https://kk623.github.io/blog/posts/2026/05/05/llm-research-2026-05-05.html</p>
+    </footer>
+  </div>
+</body>
+</html>
