@@ -3,618 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVNN 复数神经网络文献调研 | 2026-05-05</title>
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月5日</title>
     <style>
         :root {
-            --bg-color: #f5f5f5;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --text-secondary: #666666;
-            --border-color: #e0e0e0;
-            --accent-color: #4a90d9;
-            --accent-light: #e8f0fe;
-            --code-bg: #f4f4f4;
-            --tag-bg: #e3f2fd;
-            --tag-color: #1976d2;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
         }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             padding: 40px 20px;
             text-align: center;
             margin-bottom: 30px;
             border-radius: 12px;
         }
-        
-        h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        
-        .meta {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
             padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        h2 {
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent-light);
-        }
-        
-        h3 {
-            color: var(--text-color);
-            margin: 20px 0 10px 0;
-        }
-        
-        .paper-section {
-            background: var(--card-bg);
             border-radius: 12px;
-            padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
         .paper-title {
             font-size: 1.3em;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-        
-        .paper-meta {
-            background: var(--accent-light);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9em;
-        }
-        
-        .paper-meta a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-        
-        .paper-meta a:hover {
-            text-decoration: underline;
-        }
-        
-        .section-title {
-            font-weight: bold;
-            color: var(--text-color);
-            margin-top: 15px;
+            font-weight: 700;
+            color: var(--primary-dark);
             margin-bottom: 8px;
         }
-        
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
         .tag {
             display: inline-block;
-            background: var(--tag-bg);
-            color: var(--tag-color);
-            padding: 4px 12px;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.85em;
-            margin: 3px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
         }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
             border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        th {
-            background: var(--accent-light);
-            font-weight: bold;
-        }
-        
-        tr:hover {
-            background: #f9f9f9;
-        }
-        
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        .summary-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .summary-box h2 {
-            color: white;
-            border-bottom: 2px solid rgba(255,255,255,0.3);
-        }
-        
-        .trend-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .trend-card {
-            background: white;
             padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
         }
-        
+        .highlight-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .metric { display: inline-block; margin: 5px 10px 5px 0; }
+        .metric-value { font-size: 1.3em; font-weight: bold; color: var(--primary); }
+        .metric-label { font-size: 0.85em; color: var(--text-light); }
         footer {
             text-align: center;
             padding: 30px;
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.5em;
-            }
-            
-            table {
-                font-size: 0.85em;
-            }
-            
-            th, td {
-                padding: 8px;
-            }
+            color: var(--text-light);
+            font-size: 0.85em;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🔬 CVNN 复数神经网络文献调研</h1>
-            <p class="meta">调研日期: 2026-05-05 | 时间范围: 2026-04-05 至 2026-05-05 | 分析师: Jarvis 🔧</p>
+            <h1>CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">发布时间：2026年5月5日 04:04 | 第18周 | Jarvis 分析</div>
         </header>
-        
-        <div class="summary-box">
-            <h2>📊 调研概览</h2>
-            <p>本次调研共筛选出 <strong>6篇</strong> 与复数神经网络（CVNN）、复数Transformer、以及复数神经网络在信号处理应用相关的高相关性论文，全部发表于2026年4月5日至5月5日期间。</p>
-            <div style="margin-top: 15px;">
-                <span class="tag">贝叶斯CVNN</span>
-                <span class="tag">波束成形</span>
-                <span class="tag">复数SGD</span>
-                <span class="tag">PolSAR</span>
-                <span class="tag">雷达信号</span>
-                <span class="tag">语音增强</span>
+
+        <div class="summary">
+            <h2>📊 执行摘要</h2>
+            <p><strong>时间范围：</strong>2026年4月28日 - 5月5日（过去7天）</p>
+            <div class="warning-box">
+                <strong>⚠️ 过去7天内仅收录1篇新的CVNN核心论文</strong><br>
+                在 2026-04-28 至 2026-05-05 的 7 天窗口内，arXiv 仅收录了 <strong>1篇</strong> 直接关于复数神经网络（CVNN）的论文。以下为该论文及 <strong>4篇近期未被覆盖</strong> 的复数域深度学习相关研究，共5篇。
             </div>
+            <p><strong>今日亮点：</strong></p>
+            <ul>
+                <li><strong>Complex Domain BN</strong>：将批归一化扩展至Siegel磁盘等复数域，首次实现复数域神经网络BN层（5月1日）</li>
+                <li><strong>Complex-Valued MRI Generative</strong>：联合建模幅度与相位的脑MRI生成框架，合成数据AUROC 0.880超越真实基线（4月16日）</li>
+                <li><strong>CV-CAE for PolSAR</strong>：复数卷积自编码器直接处理全极化SAR数据，保持Pauli/Krogager/Cameron相干分解特性（2月6日）</li>
+                <li><strong>Circular Phase Ptychography</strong>：单位圆相位表示+测地损失，解决±π不连续问题，更好保留中高频相位内容（4月29日）</li>
+                <li><strong>Quantum Encoding of Complex SAR</strong>：系统评估5种复数SAR数据量子编码策略，揭示相位效用高度依赖架构设计（4月14日）</li>
+            </ul>
         </div>
-        
-        <div class="card">
-            <h2>📋 论文速览</h2>
-            <table>
-                <tr>
-                    <th>#</th>
-                    <th>论文标题</th>
-                    <th>arXiv ID</th>
-                    <th>日期</th>
-                    <th>核心贡献</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>BayesCVNNs: 复数不确定性估计</td>
-                    <td><a href="https://arxiv.org/abs/2604.19993">2604.19993</a></td>
-                    <td>04-21</td>
-                    <td>首次实现CVNN不确定性量化</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>多点协作反干扰波束合成</td>
-                    <td><a href="https://arxiv.org/abs/2604.23880">2604.23880</a></td>
-                    <td>04-26</td>
-                    <td>复数NN加速波束成形</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>复数SGD与方向性偏差</td>
-                    <td><a href="https://arxiv.org/abs/2604.23017">2604.23017</a></td>
-                    <td>04-24</td>
-                    <td>复数优化理论保证</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>DDF2Pol: PolSAR分类</td>
-                    <td><a href="https://arxiv.org/abs/2604.18853">2604.18853</a></td>
-                    <td>04-20</td>
-                    <td>双域复数CNN</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>SMCNet: 雷达材料分类</td>
-                    <td><a href="https://arxiv.org/abs/2604.06847">2604.06847</a></td>
-                    <td>04-08</td>
-                    <td>复数CNN处理IQ信号</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>DAT-CFTNet: 语音增强</td>
-                    <td><a href="https://arxiv.org/abs/2604.06744">2604.06744</a></td>
-                    <td>04-08</td>
-                    <td>复数网络+注意力机制</td>
-                </tr>
-            </table>
-        </div>
-        
-        <!-- Paper 1 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 1: Algorithm and Hardware Co-Design for Efficient Complex-Valued Uncertainty Estimation</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Zehuan Zhang, Mark Chen, He Li, Wayne Luk<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.19993">2604.19993</a> | 
-                <strong>日期:</strong> 2026-04-21 | 
-                <strong>会议:</strong> DAC '26<br>
-                <strong>代码:</strong> <a href="https://github.com/zehuanzhang/BayesCVNN.git">GitHub</a>
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>复数神经网络（CVNNs）在处理涉及复数域的任务中具有显著优势，广泛应用于信号处理、雷达、通信和量子计算等领域。然而，现有的CVNNs存在一个关键局限性：它们无法量化预测不确定性。在自动驾驶、医疗诊断和金融预测等高风险应用中，不确定性量化对于决策可靠性至关重要。贝叶斯神经网络（BNNs）通过dropout等技术在实数域实现了不确定性估计，但复数域的贝叶斯扩展一直未被探索。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>现有CVNNs虽然能够处理复数输入和参数，但缺乏对预测置信度的度量能力。此外，复数值的实部和虚部双分量特性显著扩展了设计空间，使得手动设计最优网络架构变得困难。作者旨在解决两个问题：(1) 为CVNNs引入不确定性量化能力；(2) 通过自动化搜索找到实部和虚部的最优配置，并设计高效的FPGA硬件加速器。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>BayesCVNNs</strong>: 首次提出基于dropout的贝叶斯复数神经网络，通过模度化设计实现不确定性量化</li>
-                <li><strong>自动化架构搜索</strong>: 针对复数值的实部和虚部双分量特性，引入基于层混合和部分混合的自动化搜索方法</li>
-                <li><strong>FPGA硬件加速器</strong>: 提出定制化FPGA加速器框架，利用优化的构建块模块实现高效部署</li>
-                <li><strong>算法-硬件协同设计</strong>: 联合优化算法性能和硬件成本，实现最佳配置自动识别</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>自动化搜索找到的配置在性能和硬件成本方面均优于手动设计的模型。FPGA加速器在不同模型上实现约 <span class="highlight">4.5倍和13倍</span> 的速度提升，功耗不到GPU实现的 <span class="highlight">10%</span>，在算法和硬件两个方面均优于现有工作。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>首次为CVNNs提供不确定性量化能力，扩展了应用范围至高风险决策场景</li>
-                <li>自动化搜索消除了手动设计复数网络架构的繁琐过程</li>
-                <li>FPGA加速器实现了高性能与低功耗的完美结合，适用于边缘计算部署</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>论文未详细讨论BayesCVNNs在更大规模数据集和更复杂任务上的表现；FPGA实现的具体资源利用率未详细披露；复数dropout的理论性质可进一步深入研究；未来可探索BayesCVNNs在雷达、通信等其他应用域的扩展。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>这篇论文是复数神经网络领域的重要突破，首次将贝叶斯不确定性量化引入CVNNs，并提出了完整的算法-硬件协同设计流程。通过自动化架构搜索和FPGA加速器设计，该工作在性能和效率方面均取得了显著提升，为CVNNs在实际应用中的部署提供了可行路径。</p>
-        </div>
-        
-        <!-- Paper 2 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 2: Coordinated Multipoint Anti-jamming Beam Pattern Synthesis</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Zilong Wang, Cheng Zhang, Zhilei Zhang, Yaxuan Hu, Wen Wang, Yongming Huang<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.23880">2604.23880</a> | 
-                <strong>日期:</strong> 2026-04-26 | 
-                <strong>类别:</strong> eess.SP
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>协作多点（CoMP）波束成形在5G/6G通信系统中具有重要应用，但传统的无蜂窝反干扰波束成形面临三大挑战：高计算复杂度导致实时性不足、自适应能力差、可扩展性有限。深度展开（Deep Unfolding）作为连接优化算法和神经网络的桥梁，为降低迭代算法复杂度提供了新思路。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>现有波束成形方法在复杂度和性能之间存在权衡：传统优化方法精度高但计算昂贵，纯数据驱动方法适应性强但泛化性能有限。作者希望结合两者的优势，利用深度展开策略将迭代算法中的关键参数转化为可训练参数，并通过复数神经网络实现快速在线推理。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>DUCoMP-BPS框架</strong>: 深度展开支持的协作多点波束模式综合方案</li>
-                <li><strong>分布式架构</strong>: AP独立确定模拟波束成形，CPU执行协作数字波束成形，仅需单次AP-CPU交互</li>
-                <li><strong>复数神经网络加速</strong>: 将模拟波束成形中的代价高昂的步长搜索转化为可训练参数</li>
-                <li><strong>ARM-FPGA异构平台验证</strong>: 实现算法-硬件协同验证和软硬件解耦</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>DUCoMP-BPS的复杂度随AP数量 <span class="highlight">线性增长</span>。单AP模拟波束成形运行时间比传统优化方法减少约 <span class="highlight">67%</span>。在零点形成性能上优于纯数据驱动方法，消声室实验中验证了实际硬件缺陷下的鲁棒波束成形性能。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>计算复杂度显著降低，适合大规模AP部署</li>
-                <li>保留了优化方法的收敛保证和数据驱动方法的适应性</li>
-                <li>真实硬件验证证明了实际部署的可行性</li>
-                <li>复数神经网络在射频信号处理中的有效应用</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>实验主要基于仿真和消声室环境，真实复杂电磁环境下的性能有待验证；论文未详细讨论不同调制方式和信道条件下的泛化能力；未来可探索在毫米波和太赫兹频段的扩展应用。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>这篇论文展示了复数神经网络在5G/6G通信波束成形中的成功应用。通过深度展开和复数神经网络加速，DUCoMP-BPS在降低计算复杂度的同时保持了优异的抗干扰性能，并通过真实硬件验证证明了实际部署潜力，为AI驱动的无线通信系统设计提供了重要参考。</p>
-        </div>
-        
-        <!-- Paper 3 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 3: Complex SGD and Directional Bias in Reproducing Kernel Hilbert Spaces</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Natanael Alpay, Emeric Battaglia<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.23017">2604.23017</a> | 
-                <strong>日期:</strong> 2026-04-24 | 
-                <strong>类别:</strong> cs.LG, math.CV, math.NA
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>随机梯度下降（SGD）是大规模凸优化问题中最流行的迭代方法之一。复数神经网络的目标函数需要在复数域上进行优化，这要求对传统的实数SGD进行扩展。虽然已有研究提出了复数SGD/GD的变体，但这些方法的收敛性保证通常依赖于解析性约束，限制了其适用范围。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>现有复数SGD/GD方法缺乏在不依赖解析性假设情况下的严格收敛性保证。作者旨在填补这一理论空白，提出一种适用于复数参数的SGD变体，并在与实数设置平行的假设条件下建立收敛性理论。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>复数SGD变体</strong>: 提出允许复数参数的SGD新版本，使用新定义的"梯度"概念</li>
-                <li><strong>收敛性保证</strong>: 在与实数设置平行的假设下提供严格的收敛性证明</li>
-                <li><strong>核回归验证</strong>: 确认方向性偏差结果从实数域到复数域的扩展</li>
-                <li><strong>复数再生核希尔伯特空间</strong>: 在复数RKHS中验证方法的有效性</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>在核回归问题上的实证结果验证了复数SGD的有效性。成功从Fock空间和Hardy空间中分别恢复超振荡函数和Blaschke积，这些函数作为特定损失函数选择下的最优函数。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>提供了不依赖解析性约束的复数SGD收敛性理论，扩展了适用范围</li>
-                <li>方向性偏差结果的复数域扩展为复数神经网络训练提供了理论洞察</li>
-                <li>再生核希尔伯特空间中的验证为复数学习理论提供了新的数学工具</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>实验主要集中在核回归问题，在深度复数神经网络上的验证有限；大规模实际应用中的收敛速度和行为有待进一步研究；复杂损失 landscape 下的收敛性质可深入探讨。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>这篇论文从理论角度推进了复数神经网络优化的理解，为复数SGD提供了严格的收敛性保证，并建立了实数域和复数域优化理论之间的重要联系。虽然实验规模相对有限，但其理论贡献为复数神经网络训练的可靠性提供了坚实基础。</p>
-        </div>
-        
-        <!-- Paper 4 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 4: DDF2Pol: A Dual-Domain Feature Fusion Network for PolSAR Image Classification</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Mohammed Q. Alkhatib<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.18853">2604.18853</a> | 
-                <strong>日期:</strong> 2026-04-20 | 
-                <strong>期刊:</strong> Pattern Recognition Letters<br>
-                <strong>代码:</strong> <a href="https://github.com/mqalkhatib/DDF2Pol">GitHub</a>
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>极化合成孔径雷达（PolSAR）图像分类是遥感领域的重要任务，PolSAR数据包含丰富的极化信息，本质上以复数矩阵形式表示。传统实数CNN在处理PolSAR数据时需要将复数信息转换为实数特征，可能导致极化信息的损失。复数CNN能够直接处理复数输入，保留幅度和相位信息。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>现有PolSAR分类方法通常只使用实数特征或复数特征中的一种，未能充分利用两者的互补性。作者希望设计一种轻量级网络，同时利用实数域的空间特征和复数域的极化特征，实现高效准确的PolSAR图像分类。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>双域并行特征提取</strong>: 设计两个并行流，一个实值流和一个复值流，分别捕获空间和极化信息</li>
-                <li><strong>深度可分离卷积</strong>: 用于空间特征增强，降低参数量</li>
-                <li><strong>坐标注意力机制</strong>: 聚焦于最信息丰富的区域，提升特征表示能力</li>
-                <li><strong>轻量级设计</strong>: 仅91,371个参数，适合资源受限环境</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>Flevoland数据集总体精度: <span class="highlight">98.16%</span>。San Francisco数据集总体精度: <span class="highlight">96.12%</span>。在参数量远低于对比模型的情况下，性能优于多个SOTA实数和复数模型，在训练数据有限的情况下仍保持鲁棒性能。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>双域特征融合充分利用了PolSAR数据的实数空间和复数极化信息</li>
-                <li>极低的参数量（&lt;100K）使模型适用于边缘部署</li>
-                <li>在多个基准数据集上超越SOTA方法，代码开源便于复现</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>仅在两个基准数据集上验证，更多场景的泛化能力有待测试；双域融合的具体机制可进一步深入研究；未来可探索在语义分割和目标检测等更复杂任务中的应用。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>DDF2Pol通过创新的双域特征融合设计，在保持极低参数量的同时实现了优异的PolSAR分类性能。这项工作展示了复数CNN在遥感图像处理中的独特优势，为轻量级PolSAR分析提供了实用解决方案。</p>
-        </div>
-        
-        <!-- Paper 5 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 5: SMCNet: Supervised Surface Material Classification Using mmWave Radar IQ Signals and Complex-valued CNNs</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Stefan Hägele, Fabian Seguel, Driton Salihu, Adam Misik, Eckehard Steinbach<br>
-                <strong>机构:</strong> Technical University of Munich (TUM)<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.06847">2604.06847</a> | 
-                <strong>日期:</strong> 2026-04-08 | 
-                <strong>会议:</strong> ICASSP 2025
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>室内机器人感知和室内数字孪生需要准确理解表面材料属性。常用传感器（如摄像头、激光雷达）在捕获详细表面材料特征方面存在局限性。毫米波雷达通过分析反射的射频信号，可以提取有关反射材料及其组成的信息。雷达IQ信号天然以复数形式表示，为复数CNN的应用提供了理想场景。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>现有基于雷达的材料估计方法通常依赖于固定感知距离和受约束的设置，限制了实际应用。作者希望开发一种能够在多个感知距离下工作的表面材料分类方法，利用复数CNN直接处理雷达IQ信号，实现更高的分类精度和更好的泛化能力。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>mmWave MIMO FMCW雷达</strong>: 使用毫米波多输入多输出调频连续波雷达采集表面反射信号</li>
-                <li><strong>复数CNN架构</strong>: 直接处理复数雷达IQ信号输入，保留幅度和相位信息</li>
-                <li><strong>多距离训练策略</strong>: 在三个不同距离上训练，测试时包括两个未见距离</li>
-                <li><strong>Range FFT预处理</strong>: 改善未知距离上的泛化能力</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>测试集总体精度: <span class="highlight">99.12% - 99.53%</span>。Range FFT预处理将未知距离上的精度从 <span class="highlight">25.25% 提升至 58.81%</span>（无需重新训练）。多距离训练策略显著提升了模型的泛化能力，复数CNN直接处理IQ信号优于实数化处理方法。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>极高的分类精度（&gt;99%），满足实际应用需求</li>
-                <li>多距离训练和测试验证了方法的泛化能力</li>
-                <li>复数CNN充分利用了雷达IQ信号的复数特性</li>
-                <li>为室内机器人和数字孪生应用提供了可靠的材料感知方案</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>实验材料种类有限，更广泛的材料库有待测试；实际室内环境中的多径效应和干扰未充分考虑；未来可探索与视觉传感器的数据融合，进一步提升感知鲁棒性。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>SMCNet展示了复数CNN在毫米波雷达信号处理中的卓越性能。通过直接处理复数IQ信号，该方法在表面材料分类任务上实现了接近完美的精度，并通过多距离训练和Range FFT预处理展示了良好的泛化能力，为室内环境感知提供了新的技术路径。</p>
-        </div>
-        
-        <!-- Paper 6 -->
-        <div class="paper-section">
-            <div class="paper-title">论文 6: DAT-CFTNet: Speech Enhancement for Cochlear Implant Recipients</div>
-            <div class="paper-meta">
-                <strong>作者:</strong> Nursadul Mamun, John H.L. Hansen<br>
-                <strong>机构:</strong> University of Texas at Dallas (UTD)<br>
-                <strong>arXiv:</strong> <a href="https://arxiv.org/abs/2604.06744">2604.06744</a> | 
-                <strong>日期:</strong> 2026-04-08 | 
-                <strong>会议:</strong> ICASSP 2026
-            </div>
-            
-            <div class="section-title">2) 研究背景</div>
-            <p>人工耳蜗（CI）植入者在噪声环境下的语音理解能力严重受限，传统语音增强方法虽然能够抑制噪声，但常常引入音乐噪声等伪影，影响CI用户的听感体验。复数频谱域处理在语音增强中具有优势，因为它可以同时建模幅度和相位信息。</p>
-            
-            <div class="section-title">3) 研究动机</div>
-            <p>人类听觉系统能够选择性关注语音元素并动态调整注意力。作者希望将注意力机制引入复数语音增强网络，通过双路径结构同时优化局部和全局上下文信息处理。特别针对CI植入者在时频域听力恢复受限的问题，需要更精确的语音-噪声区分能力。</p>
-            
-            <div class="section-title">4) 核心技术点</div>
-            <ul>
-                <li><strong>双路径注意力RNN (DAT-RNN)</strong>: 在瓶颈层引入双路径注意力模块，模拟人类听觉系统的选择性关注机制</li>
-                <li><strong>复数频率变换网络 (CFTNet)</strong>: 基于复数运算的频谱变换网络，保留相位信息</li>
-                <li><strong>DAT-CFTNet融合</strong>: 将DAT-RNN与改进的CFTNet结合，形成完整的语音增强系统</li>
-                <li><strong>时频区域精确区分</strong>: 注意力机制实现语音和噪声在时频区域的精确区分</li>
-            </ul>
-            
-            <div class="section-title">5) 实验结果</div>
-            <p>在语音可懂度和质量方面一致优于现有模型（CFTNet和DCCRN）。在CI植入者语音可懂度增强方面表现优异，有效抑制非平稳噪声，避免传统方法中的音乐伪影，在CI听众研究的噪声环境中展示了&gt;10%的时频听力恢复改善。</p>
-            
-            <div class="section-title">6) 收益点</div>
-            <ul>
-                <li>注意力机制显著提升了复数语音增强网络的性能</li>
-                <li>对CI植入者的特殊需求进行了针对性优化</li>
-                <li>避免了传统语音增强方法中的音乐伪影问题</li>
-                <li>双路径结构同时捕获局部和全局上下文信息</li>
-            </ul>
-            
-            <div class="section-title">7) 局限性/未来工作</div>
-            <p>实验主要基于特定CI处理策略，不同CI设备参数的泛化有待验证；极端噪声条件下的性能未充分评估；实时处理能力在嵌入式CI处理器上的可行性需要进一步验证；未来可探索与CI电刺激策略的联合优化。</p>
-            
-            <div class="section-title">8) 总结</div>
-            <p>DAT-CFTNet通过将双路径注意力机制与复数频率变换网络相结合，在语音增强任务中取得了显著进展，特别是对于人工耳蜗植入者这一特殊用户群体。这项工作展示了复数神经网络在语音信号处理中的巨大潜力，并为辅助听力技术提供了新的技术方向。</p>
-        </div>
-        
-        <!-- Summary -->
-        <div class="summary-box">
-            <h2>📈 趋势分析与总结</h2>
-            
-            <h3>主要趋势</h3>
-            <div class="trend-grid">
-                <div class="trend-card">
-                    <strong>1. CVNNs + 不确定性量化</strong><br>
-                    贝叶斯方法首次引入复数网络，扩展了高风险应用中的适用性
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Batch Normalization for Neural Networks on Complex Domains</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2605.00467">arXiv:2605.00467</a> | 
+                    🏛️ Xuan Son Nguyen, Nistor Grozavu | 
+                    📅 2026-05-01 | cs.LG
                 </div>
-                <div class="trend-card">
-                    <strong>2. 信号处理应用爆发</strong><br>
-                    雷达、通信、语音等领域大量采用复数CNN/RNN
-                </div>
-                <div class="trend-card">
-                    <strong>3. 轻量化设计</strong><br>
-                    多个工作强调低参数量，适合边缘部署
-                </div>
-                <div class="trend-card">
-                    <strong>4. 理论进展</strong><br>
-                    复数SGD收敛性理论为训练提供数学保证
-                </div>
-                <div class="trend-card">
-                    <strong>5. 硬件协同</strong><br>
-                    FPGA加速和算法-硬件协同成为实用化关键
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">NEW</span>
+                    <span class="tag">复数域批归一化</span>
+                    <span class="tag">Siegel空间</span>
+                    <span class="tag">Riemannian NN</span>
+                    <span class="tag">Kobayashi伪距</span>
                 </div>
             </div>
-            
-            <h3 style="margin-top: 20px;">技术热点分布</h3>
-            <table style="background: rgba(255,255,255,0.1);">
-                <tr>
-                    <th>应用领域</th>
-                    <th>代表论文</th>
-                    <th>关键技术</th>
-                </tr>
-                <tr>
-                    <td>无线通信</td>
-                    <td>DUCoMP-BPS</td>
-                    <td>复数NN + 深度展开</td>
-                </tr>
-                <tr>
-                    <td>雷达感知</td>
-                    <td>SMCNet</td>
-                    <td>复数CNN + IQ信号处理</td>
-                </tr>
-                <tr>
-                    <td>语音增强</td>
-                    <td>DAT-CFTNet</td>
-                    <td>复数FTN + 注意力机制</td>
-                </tr>
-                <tr>
-                    <td>遥感图像</td>
-                    <td>DDF2Pol</td>
-                    <td>双域复数CNN</td>
-                </tr>
-                <tr>
-                    <td>硬件加速</td>
-                    <td>BayesCVNN</td>
-                    <td>贝叶斯CVNN + FPGA</td>
-                </tr>
-                <tr>
-                    <td>优化理论</td>
-                    <td>Complex SGD</td>
-                    <td>复数SGD收敛性</td>
-                </tr>
-            </table>
-            
-            <h3 style="margin-top: 20px;">未来方向</h3>
-            <p>1. <strong>复数Transformer</strong>: 目前未见专门复数Transformer架构的工作，这是一个重要空白<br>
-            2. <strong>大规模预训练</strong>: 复数域的基础模型和大规模预训练策略有待探索<br>
-            3. <strong>多模态融合</strong>: 复数网络与其他模态的融合方法<br>
-            4. <strong>量子-经典混合</strong>: 复数网络在量子计算接口处的应用<br>
-            5. <strong>自适应复数运算</strong>: 动态调整实部和虚部处理策略的自适应机制</p>
+
+            <div class="section-title">背景</div>
+            <p>复数域（复向量空间中的开子集）在信号处理等领域有广泛应用，但在深度学习社区未获足够关注。Siegel空间作为非紧致型对称空间，同时推广了双曲空间和SPD空间，具有强大的几何表示能力。然而，现有复数域神经网络框架缺乏批归一化（BN）这一关键组件，严重限制了深层网络的训练稳定性和性能。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）Riemannian神经网络的成功依赖于基本构建块的原理性Riemannian类比，而BN层已被证明能增强训练稳定性并提升精度；（2）现有Riemannian BN工作多聚焦于双曲空间、SPD空间等成熟流形，对复数域（尤其是Siegel磁盘和复单位球）研究不足；（3）Kobayashi伪距具有双全纯映射不变性，符合几何深度学习中的几何稳定性原则，但尚未被用于构建BN层。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>通用复数域BN层：</strong>提出适用于一般复数域的BN层，该层同时兼容广泛使用的Riemannian流形，并与现有Riemannian BN层有密切联系</li>
+                <li><strong>Siegel磁盘域实现：</strong>推导Siegel磁盘域上BN层的实际实现所需的关键组件，包括基于Kobayashi伪距的中心化和缩放操作</li>
+                <li><strong>复单位球扩展：</strong>将类似推导应用于复单位球模型——该模型作为双曲几何的复类比，在机器学习中的应用远少于实Poincaré球模型</li>
+                <li><strong>Riemannian-复数统一框架：</strong>展示所提BN层与现有Riemannian BN层之间的数学联系，建立统一的理论框架</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">3个任务</div>
+                    <div class="metric-label">验证领域</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">系统性</div>
+                    <div class="metric-label">性能提升</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Siegel磁盘</div>
+                    <div class="metric-label">首次BN实现</div>
+                </div>
+            </div>
+            <p>实验涵盖雷达杂波分类、节点分类和动作识别三个任务。结果表明所提方法相对于现有方法在所有任务上均实现系统性改进，验证了复数域BN层的通用有效性。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将BN层扩展至Siegel磁盘和复单位球等未充分研究的复数域，填补了CVNN基础组件的重要空白；（2）Kobayashi伪距的不变性为复数域神经网络提供了几何稳定性保证；（3）统一的Riemannian-复数框架使研究者能在更广泛的流形上构建深层网络；（4）实验覆盖分类任务多样性，证明方法具备跨领域泛化能力。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）论文未报告与实值BN层的直接对比实验，性能增益的量化程度有待更详细分析；（2）Siegel磁盘域的计算复杂度高于简单流形，大规模应用时的效率需进一步评估；（3）更复杂的复数域（如多圆盘、矩阵域）的BN扩展尚未探索；（4）复数激活函数与复数BN的联合优化策略值得研究。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作标志着CVNN从"能用"走向"好用"的重要一步。批归一化作为现代深度学习的基石组件，其在复数域的实现为构建深层、稳定的CVNN架构扫清了一大障碍。Siegel空间和复单位球的引入不仅拓展了CVNN的数学疆域，也为处理具有丰富几何结构的复数数据（如协方差矩阵、方向性信号）提供了新工具。</p>
         </div>
-        
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Generative Modeling of Complex-Valued Brain MRI Data</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.14800">arXiv:2604.14800</a> | 
+                    🏛️ Marco Schlimbach, Moritz Rempe, Jessica Mnischek, Lukas T. Rotkopf, Jens Weingarten, Jens Kleesiek, Kevin Kröninger | 
+                    📅 2026-04-16 | eess.IV, cs.CV
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag">复杂脑MRI生成</span>
+                    <span class="tag">条件VAE</span>
+                    <span class="tag">Flow Matching</span>
+                    <span class="tag">相位一致性</span>
+                    <span class="tag">合成数据</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>标准MRI重建流程丢弃了采集过程中捕获的相位信息，尽管有证据表明相位编码了与肿瘤诊断相关的组织特性。现有机器学习方法继承了这一局限性，仅对重建后的幅度图像进行操作。在肿瘤诊断中，相位对局部磁化率变化敏感，可揭示出血和铁沉积等病理特征，但这些信息在标准处理中被系统性丢弃。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）相位信息对脱氧血红蛋白、铁等顺磁性物质和钙等逆磁性物质敏感，脑肿瘤通过肿瘤内微出血和铁沉积改变这些磁性特性；（2）现有MRI生成模型仅合成幅度图像，或单独处理相位而未能联合建模幅度-相位耦合关系；（3）病理标注的MRI数据稀缺，合成数据生成是解决数据瓶颈的有前景途径。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>两阶段生成框架：</strong>序列条件化的条件变分自编码器（cVAE）将复数MRI扫描压缩为紧凑隐表示，同时保持相位一致性；Flow Matching模型在隐空间中学习生成</li>
+                <li><strong>复数数据双通道表示：</strong>将每个复数MRI patch表示为(2×96×96)张量，分别编码实部和虚部，避免相位从−π到+π跳跃的不连续性</li>
+                <li><strong>阶段化条件生成：</strong>Stage 1仅基于采集序列条件生成真实脑解剖结构；Stage 2微调以额外基于病理标签（正常/异常）条件生成</li>
+                <li><strong>病理引导patch提取：</strong>异常体积在标注边界框附近随机偏移提取patch，确保标注区域以不同位置出现，同时提取非标注区域作为正常样本</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">0.997+</div>
+                    <div class="metric-label">相位一致性</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0.50-0.66</div>
+                    <div class="metric-label">真实vs合成AUROC</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0.880</div>
+                    <div class="metric-label">合成数据分类AUROC</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0.842</div>
+                    <div class="metric-label">真实数据基线AUROC</div>
+                </div>
+            </div>
+            <p>自编码器保持相位一致性高于0.997；真实vs合成分类的低AUROC表明生成样本几乎无法与真实数据区分；完全基于合成数据训练的下游分类器AUROC达0.880，超越真实数据基线0.842；优势在不同机构活检确认标签的独立外部测试集上依然保持。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次提出联合建模脑MRI幅度和相位的生成框架，建立完整MRI信息在诊断应用中的使用基础；（2）合成数据不仅解决标注数据稀缺问题，更揭示了幅度和相位如何联合编码病理特征；（3）cVAE+Flow Matching的两阶段设计既保持复数域物理一致性，又实现高质量条件生成；（4）跨机构泛化验证表明方法具备临床转化潜力。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）当前框架将复数数据分解为实部/虚部双通道，未使用原生复数运算，可能损失幅度-相位耦合信息；（2）生成质量评估依赖于下游分类器性能，更全面的图像质量指标（如FID、SSIM）有待补充；（3）模型目前针对fastMRI的特定序列优化，更多采集序列（如DWI、SWI）的泛化需验证；（4）3D体积级生成而非2D patch生成是实现完整临床工作流的下一步。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作是医学成像中复数数据处理的里程碑。通过证明合成复数MRI数据在下游诊断任务中可超越真实数据性能，作者不仅为数据稀缺问题提供了解决方案，更揭示了相位信息中蕴含的巨大诊断价值。未来若能结合原生复数神经网络处理复数k-space数据，有望进一步释放完整MRI信息的临床潜力。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Exploring Polarimetric Properties Preservation during Reconstruction of PolSAR images using Complex-valued Convolutional Neural Networks</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2602.07094">arXiv:2602.07094</a> | 
+                    🏛️ Authors (Accepted with minor revisions at IET Radar, Sonar & Navigation) | 
+                    📅 2026-02-06 | eess.IV, cs.CV
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">CV-CAE</span>
+                    <span class="tag">PolSAR</span>
+                    <span class="tag">极化保持</span>
+                    <span class="tag">物理一致性</span>
+                    <span class="tag">相干分解</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>极化合成孔径雷达（PolSAR）数据具有固有的复数值特性，需要能够直接处理复数表示的专业算法。然而，这一特性在深度学习社区中仍被充分探索，许多研究选择将复数信号转换到实数域后再应用传统的实值模型。这种转换破坏了极化散射矩阵的代数结构，导致物理特性损失。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）PolSAR数据的复数值散射矩阵编码了目标的全极化散射特性，实值转换丢失相位相干信息；（2）现有PolSAR深度学习研究多聚焦分类或检测，对复数域压缩重建（保持物理特性的前提下）关注不足；（3）Pauli分解、Krogager分解、Cameron分解等相干分解以及H-α非相干分解是PolSAR分析的核心工具，重建方法需保持这些分解的有效性。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>复数卷积自编码器（CV-CAE）：</strong>首次将复数卷积自编码器应用于全极化SAR数据压缩重建，网络权重和激活均为复数值</li>
+                <li><strong>物理特性保持验证：</strong>通过Pauli、Krogager、Cameron相干分解以及H-α非相干分解，系统验证复数重建是否保持原始数据的极化物理特性</li>
+                <li><strong>复数域端到端处理：</strong>输入、隐藏表示和输出均保持在复数域，避免实值分解带来的信息损失和维度膨胀</li>
+                <li><strong>与实值网络对比：</strong>量化展示复数神经网络相对于其实值对应版本在极化特性保持方面的优势</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">全极化</div>
+                    <div class="metric-label">数据重建</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">4种分解</div>
+                    <div class="metric-label">物理验证</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">CVNN > RVNN</div>
+                    <div class="metric-label">极化保持</div>
+                </div>
+            </div>
+            <p>复数卷积自编码器能有效压缩和重建全极化SAR数据，同时保持基本物理特性；Pauli、Krogager、Cameron和H-α分解验证表明复数网络在重建精度与物理一致性之间取得优异平衡；与实值对应版本相比，复数网络在保持极化散射特性方面展现出明确优势。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次证明CV-CAE可直接处理全极化SAR数据并完成压缩重建，为PolSAR数据降维提供新途径；（2）通过4种标准极化分解验证物理一致性，建立了PolSAR深度学习模型的物理可解释性评估范式；（3）复数网络优于实值网络的实验证据为CVNN在遥感领域的推广提供了有力支撑；（4）为开发鲁棒的、物理可解释的复数生成模型用于SAR数据处理开辟道路。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）实验数据集种类有限，更多地形和传感器（X波段、L波段）的泛化需验证；（2）未探索更先进的复数架构（如复数Transformer、复数GAN）在PolSAR重建中的潜力；（3）压缩率与重建质量的权衡分析不够充分，最优压缩策略有待研究；（4）实时处理大规模PolSAR数据的计算效率未评估。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作为CVNN在遥感信号处理中的应用提供了坚实的实验证据。通过直接在全极化SAR数据的复数域中操作，CV-CAE不仅避免了实值转换的信息损失，更保持了关键的物理散射特性。这提示我们：对于本质上复数的物理信号（雷达、通信、光学），复数神经网络不是"锦上添花"，而是保持物理一致性的"必需之选"。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">4</span>
+                <div class="paper-title">Circular Phase Representation and Geometry-Aware Optimization for Ptychographic Image Reconstruction</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.26664">arXiv:2604.26664</a> | 
+                    🏛️ Carson Yu Liu, Jun Cheng, Chien-Chun Chen, Steve F. Shu | 
+                    📅 2026-04-29 | eess.IV, cs.CV, physics.optics
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag">Ptychography</span>
+                    <span class="tag">圆形相位表示</span>
+                    <span class="tag">测地损失</span>
+                    <span class="tag">复数波场重建</span>
+                    <span class="tag">物理一致性</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>Ptychography（叠层成像）是一种无透镜计算成像技术，通过扫描重叠的探针照明区域并从衍射图案中重建物体的复数透射函数（振幅+相位）。传统迭代重建方法精确但计算昂贵，限制了高通量和实时应用。近期深度学习方法提升了速度，但通常将相位预测为欧几里得标量，忽略其2π周期性，导致包裹伪影、±π处不连续以及损失函数与信号几何不匹配。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）相位本质上是模2π的圆形变量，欧几里得回归在±π边界处产生梯度爆炸和物理不一致的预测；（2）现有深度学习方法在振幅重建上取得进展，但相位重建质量仍是瓶颈；（3）Ptychographic数据包含丰富的中高频相位信息，需要损失函数和网络架构共同设计以有效保留这些细节。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>单位圆相位表示：</strong>使用余弦和正弦分量在单元圆上建模相位，从根本上避免2π包裹和±π不连续</li>
+                <li><strong>可微分测地损失：</strong>用测地距离度量相位误差，避免分支切割不连续并提供有界梯度，使优化更稳定</li>
+                <li><strong>三解码器并行架构：</strong>网络包含振幅、余弦和正弦三个并行解码器分支，分别预测复数波场的三个分量</li>
+                <li><strong>圆形一致性复合损失：</strong>组合圆形一致性损失和结构保真损失，确保重建同时满足相位周期性和空间结构准确性</li>
+                <li><strong>饱和感知双增益输入缩放：</strong>根据输入动态范围自适应调整增益，防止强信号区域饱和和弱信号区域信噪比不足</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">一致改进</div>
+                    <div class="metric-label">振幅+相位</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">更好</div>
+                    <div class="metric-label">中高频相位保留</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">大幅加速</div>
+                    <div class="metric-label">相对迭代求解器</div>
+                </div>
+            </div>
+            <p>在合成和实验数据集上的实验表明，所提方法在振幅和相位重建上均一致优于现有深度学习方法；频域分析进一步显示对中高频相位内容的更好保留；重建速度大幅超越迭代求解器，同时保持物理一致性。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）圆形相位表示+测地损失的组合为所有涉及周期性相位变量的深度学习方法提供了通用设计范式；（2）三解码器架构明确处理复数波场的三个自由度（振幅+相位双分量），为复数成像任务的网络设计提供参考；（3）中高频相位保留能力对材料科学和生物医学中的精细结构重建至关重要；（4）物理一致的快速重建为实时Ptychography（如同步辐射光束线诊断）开辟道路。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）当前方法将相位分解为余弦/正弦两个实值通道，未探索原生复数卷积层是否能进一步提升性能；（2）实验主要验证于二维Ptychography，三维层析Ptychography的扩展有待探索；（3）探针函数未知时的盲重建场景未测试；（4）更复杂的样本（如晶体缺陷、生物细胞器）上的性能需进一步验证。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作展示了如何将信号几何知识嵌入深度学习架构设计中。通过尊重相位的圆形本质（单位圆表示+测地损失），作者解决了相位回归中的经典难题。虽然当前实现使用实值网络处理分解后的分量，但其设计理念与CVNN的精神高度一致——即充分利用复数信号的内在结构而非强行将其塞入实值框架。未来原生复数层的引入有望在此基础上进一步释放潜力。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">5</span>
+                <div class="paper-title">Magnitude Is All You Need? Rethinking Phase in Quantum Encoding of Complex SAR Data</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.14229">arXiv:2604.14229</a> | 
+                    🏛️ Sakthi Prabhu Gunasekar, Prasanna Kumar R | 
+                    📅 2026-04-14 | quant-ph, cs.AI, cs.LG, eess.IV | IEEE QCE 2026 Under Review
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag">量子机器学习</span>
+                    <span class="tag">复数SAR数据</span>
+                    <span class="tag">相位编码</span>
+                    <span class="tag">编码-架构协同设计</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>合成孔径雷达（SAR）数据本质上是复数值的，而量子机器学习（QML）模型自然在复希尔伯特空间中操作。这种表面上的对齐暗示：将幅度和相位信息同时编码到量子态中应该能改善SAR自动目标识别（ATR）性能。然而，这一假设从未被系统验证。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）QML社区通常默认复数数据应在量子编码中充分利用其复数结构，但混合量子-经典架构中的经典组件可能补偿缺失的相位信息；（2）现有QML研究缺乏对复数数据编码策略的系统比较，尤其是在遥感这一复数数据密集的领域；（3）NISQ时代量子比特资源有限，不必要的相位编码可能浪费宝贵的量子资源而不带来性能收益。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>五种编码策略统一框架：</strong>系统比较幅度-only、联合复数、I/Q-based、预处理相位和纯量子五种编码策略</li>
+                <li><strong>混合vs纯量子对比实验：</strong>在混合量子-经典架构和纯量子架构（184-224可训练参数，无经典组件）两种设置下分别评估</li>
+                <li><strong>MSTAR基准验证：</strong>在标准SAR ATR基准数据集上进行3类和8类任务的双重验证</li>
+                <li><strong>编码-架构协同设计分析：</strong>揭示相位信息的效用并非数据固有属性，而是高度依赖于模型架构设计</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">99.57%</div>
+                    <div class="metric-label">幅度-only 3类准确率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">71.19%</div>
+                    <div class="metric-label">幅度-only 8类准确率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">~0%</div>
+                    <div class="metric-label">相位策略增益</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">+21.65%</div>
+                    <div class="metric-label">纯量子架构相位提升</div>
+                </div>
+            </div>
+            <p>混合架构中，幅度-only编码一致优于所有复数策略；纯量子架构中，相位信息变得至关重要，贡献高达21.65%的准确率提升。这表明经典组件能补偿缺失的相位信息，而纯量子模型需要相位来构建判别性表示。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次系统量化复数SAR数据在不同QML架构中的相位效用，为NISQ时代复数数据编码提供实用设计指南；（2）"幅度足够"的反直觉发现挑战了QML社区对复数数据编码的默认假设；（3）编码-架构协同设计的理念可推广到经典CVNN领域：实值网络何时足以处理复数数据，何时必须使用CVNN；（4）纯量子架构的小参数量（184-224）展示了量子模型在特定场景下的参数效率优势。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）实验限于MSTAR数据集，更多SAR传感器（PolSAR、InSAR）和更复杂场景（城市、海洋）有待验证；（2）未测试变分电路深度和纠缠模式对相位编码效果的影响；（3）理论分析层面，为什么经典组件能补偿相位信息的机制尚未完全阐明；（4）量子噪声和退相干对复数编码策略鲁棒性的影响未评估。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作为复数数据在ML系统中的处理方式提供了深刻洞见。其核心发现——相位效用取决于编码与架构的协同设计——对CVNN研究具有重要启发：并非所有复数数据任务都需要复数权重网络，关键在于识别哪些场景下复数表示是必要的，哪些场景下实值近似足够。这种"有的放矢"的方法有助于在不同应用中做出明智的CVNN vs RVNN选择。</p>
+        </div>
+
+        <div class="summary">
+            <h2>📈 趋势分析</h2>
+            <ul>
+                <li><strong>CVNN 基础组件补全加速：</strong>2605.00467 将批归一化扩展至复数域，标志着CVNN正从"原型验证"走向"生产就绪"，基础构建块的持续完善是这一转变的关键</li>
+                <li><strong>复数数据生成模型兴起：</strong>2604.14800 展示了复数生成模型在医学成像中的潜力，合成数据不仅能缓解稀缺性，更能挖掘相位中隐藏的病理信息</li>
+                <li><strong>物理一致性成为核心诉求：</strong>2602.07094 和 2604.26664 分别从极化保持和圆形相位几何的角度强调：处理物理信号时，数据结构的知识应嵌入模型设计，而非事后补救</li>
+                <li><strong>复数表示的必要性再审视：</strong>2604.14229 揭示了复数数据编码策略的架构依赖性，提醒CVNN研究者：复数权重并非银弹，关键在于匹配数据结构与模型能力</li>
+                <li><strong>跨领域迁移价值凸显：</strong>从量子编码（QML）到流形几何（Riemannian NN）再到极化遥感（PolSAR），复数域的统一数学框架正在不同领域间建立深层联系</li>
+            </ul>
+        </div>
+
         <footer>
-            <p>报告生成时间: 2026-05-05 04:00 AM (Asia/Shanghai)</p>
-            <p>分析师: Jarvis 🔧 | 数据来源: arXiv</p>
-            <p><a href="https://kk623.github.io/blog/" style="color: var(--accent-color);">← 返回主页</a></p>
+            <p>Jarvis CVNN Research Daily | 自动生成的文献调研报告</p>
+            <p>数据源：arXiv.org | 生成时间：2026-05-05 04:04 AM CST</p>
         </footer>
     </div>
 </body>
