@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月6日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .metric { display: inline-block; margin: 5px 10px 5px 0; }
+        .metric-value { font-size: 1.3em; font-weight: bold; color: var(--primary); }
+        .metric-label { font-size: 0.85em; color: var(--text-light); }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">发布时间：2026年5月6日 04:00 | 第18周 | Jarvis 分析</div>
+        </header>
+
+        <div class="summary">
+            <h2>📊 执行摘要</h2>
+            <p><strong>时间范围：</strong>2026年4月29日 - 5月6日（过去7天）</p>
+            <div class="warning-box">
+                <strong>⚠️ 过去7天内收录2篇新的CVNN核心论文</strong><br>
+                在 2026-04-29 至 2026-05-06 的 7 天窗口内，arXiv 收录了 <strong>2篇</strong> 直接关于复数神经网络/复数表示学习的论文，以及 <strong>1篇</strong> 复数值量子计算相关研究。以下为详细分析，共3篇。
+            </div>
+            <p><strong>今日亮点：</strong></p>
+            <ul>
+                <li><strong>Complex Diffusion Maps (CDM)</strong>：首次将扩散映射扩展至复数域，通过ω参数化核揭示高维数据的固有复数谐波结构，在fMRI和EEG上超越实值核方法（5月3日）</li>
+                <li><strong>Interference-Based Wave Modeling</strong>：将事件驱动生物信号（sEMG）映射到复值潜波场，通过相位调制编码时间结构，为假肢和外骨骼控制提供新表示（5月2日）</li>
+                <li><strong>Complex-Valued QRAM State Preparation</strong>：将BBQRAM扩展至复数值矩阵，保持polylogarithmic查询复杂度，为量子机器学习中的复数数据处理提供高效基础设施（4月28日）</li>
+            </ul>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Complex Diffusion Maps with ω-Parameterized Kernels Revealing Inherent Harmonic Representations</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2605.01691">arXiv:2605.01691</a> | 
+                    🏛️ Tongzhen Dang, Weiyang Ding, Michael K. Ng | 
+                    📅 2026-05-03 | cs.LG
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">NEW</span>
+                    <span class="tag">复值扩散映射</span>
+                    <span class="tag">谐波分析</span>
+                    <span class="tag">核方法</span>
+                    <span class="tag">fMRI/EEG</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>扩散映射（Diffusion Maps, DM）是流形学习中的经典非线性降维技术，通过模拟热扩散过程揭示数据的内在几何结构。传统DM基于实值高斯核，仅捕捉数据的幅度信息，忽略了高维数据中可能存在的相位/角度结构。Schrödinger方程与热方程的数学联系暗示：通过复值核函数，扩散映射可能揭示更深层的谐波结构——类似于从实分析扩展到复分析所获得的丰富代数结构。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）实值扩散映射仅依赖数据点间的欧氏距离，无法区分在幅度上相似但在"角度"或相位结构上迥异的数据点；（2）fMRI和EEG等神经信号具有显著的时空振荡特性，其相位信息编码了神经元群体间的耦合关系，实值表示丢失了这些关键的动态特征；（3）现有核方法（如RBF核）在高噪声下判别力下降，而复值核可能通过相位差异放大易混淆样本之间的区别。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>ω参数化复值核家族：</strong>统一局部高斯核（热方程）和非局部Schrödinger核（Schrödinger方程），通过ω参数在局部与非局部连接之间连续调节</li>
+                <li><strong>复数扩散算子理论：</strong>基于算子谱理论建立扩散算子、扩散距离和复数谐波映射的严格数学定义，确保框架的理论完备性</li>
+                <li><strong>角度结构保持优化：</strong>提出基于优化的映射解释，显式保持复数扩散空间中的角度结构，而非仅依赖实值幅度</li>
+                <li><strong>复数谐波揭示：</strong>通过复值核揭示高维数据的主导复数谐波，为数据提供幅度-相位联合表示</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">合成+真实</div>
+                    <div class="metric-label">数据集验证</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">更清晰</div>
+                    <div class="metric-label">eigengap分离</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">高噪声</div>
+                    <div class="metric-label">鲁棒性保持</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">竞争性能</div>
+                    <div class="metric-label">EEG睡眠分类</div>
+                </div>
+            </div>
+            <p>在合成数据集上，复值核显著放大了易混淆样本间的差异，提升判别力；在高噪声环境下，CDM保持鲁棒性，产生更清晰的本征值间隙（eigengap），增强谱分离效果；在静息态fMRI数据上，CDM捕捉到更强相关的非局部时空动态；在公开EEG睡眠数据集上，无需任务特定调参即达到与深度神经网络和传统机器学习相比具有竞争力的性能，同时保持更高计算效率。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将扩散映射框架扩展至复数域，为流形学习提供了全新的数学工具，填补了非线性降维中复数表示的空白；（2）ω参数化核统一了热方程和Schrödinger方程的物理直觉，为核设计提供了可解释的物理基础；（3）在神经信号处理（fMRI/EEG）上的优异表现证明复值表示能有效捕捉生物信号的振荡相位结构；（4）计算效率优于深度神经网络，为资源受限场景下的复数数据分析提供了实用方案。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）论文未深入探讨复值核在大规模数据集上的可扩展性，O(n²)的核矩阵计算在百万级样本上可能成为瓶颈；（2）ω参数的自动选择策略尚未充分研究，当前可能需要手动调参；（3）与深度学习的结合仅停留在浅层对比实验，复值扩散映射作为深度网络预处理或嵌入层的潜力未挖掘；（4）理论分析假设数据位于光滑流形上，对真实世界中可能存在的奇异结构鲁棒性有待验证。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作将扩散映射从实数域优雅地扩展至复数域，不仅丰富了流形学习的数学工具箱，更为处理具有固有振荡特性（如神经信号、量子态、电磁波）的数据提供了新视角。ω参数化核的设计展示了如何将物理方程（热方程→Schrödinger方程）的数学结构转化为实用的机器学习工具。未来若与复数神经网络（CVNN）结合，有望构建端到端的复数表示学习管道。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Continuous Temporal Representations of Event-Based Signals via Interference-Based Wave Modeling</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2605.01270">arXiv:2605.01270</a> | 
+                    🏛️ Magnus Bengtsson | 
+                    📅 2026-05-02 | cs.LG
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">NEW</span>
+                    <span class="tag">复值波场建模</span>
+                    <span class="tag">事件驱动信号</span>
+                    <span class="tag">sEMG生物信号</span>
+                    <span class="tag">相位调制</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>表面肌电图（sEMG）等事件驱动的生物信号表现出异步且高度结构化的激活模式，传统离散或纯实值表示难以有效建模。现有方法多依赖显式递归（如RNN/LSTM）或因果状态传播来捕捉时间依赖性，但这类架构对长程依赖建模能力有限且计算开销大。连续时间表示学习为绕过离散化瓶颈提供了新途径，但如何为异步事件信号设计合适的连续表示仍是一个开放问题。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）sEMG信号由肌肉纤维的异步放电事件构成，其时间结构蕴含丰富的运动意图信息，离散采样丢失了事件间的精确时间关系；（2）现有连续表示方法（如神经ODE）多用于规则采样数据，对稀疏事件驱动信号的适配性不足；（3）复数表示通过幅度-相位分解可同时编码能量和时序信息，波干涉模型为事件间相互作用提供了自然的数学框架；（4）假肢和外骨骼等生物力学控制系统需要低延迟、高效率的信号处理管道，对表示学习的计算效率有严格要求。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>复值潜波场映射：</strong>将事件类输入信号映射到复值潜波场，通过相位调制编码时间结构，通过潜分量间干涉捕捉事件间关系</li>
+                <li><strong>能量域投影：</strong>将复值波场投影到能量域，诱导结构化激活模式，同时捕捉时间局部化和有限观测窗口内的关系依赖性</li>
+                <li><strong>无显式递归的连续建模：</strong>不依赖显式递归或因果状态传播，通过波的连续叠加实现时间动态建模，避免了RNN的梯度消失问题</li>
+                <li><strong>事件驱动适配：</strong>专门为事件驱动生物信号设计，支持高效的梯度优化和鲁棒特征提取</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">提升</div>
+                    <div class="metric-label">表示质量</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">计算</div>
+                    <div class="metric-label">高效可行</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">sEMG</div>
+                    <div class="metric-label">控制任务</div>
+                </div>
+            </div>
+            <p>实验结果表明，基于干涉的复值波模型相比纯实值表示提供了更优的表示质量；在保持计算效率的同时，适用于假肢和外骨骼等实际部署场景；为sEMG数据的下游控制任务学习提供了有效支持。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将波干涉物理模型引入事件驱动信号的机器学习表示，为生物信号处理提供了新颖的数学框架；（2）复值潜波场同时编码时间和关系信息，避免了分别建模时间序列和图结构的冗余；（3）无递归架构绕过了RNN/LSTM的梯度传播瓶颈，更适合长程依赖建模；（4）面向假肢和外骨骼等辅助设备的实际应用需求，强调了方法的临床转化潜力。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）论文未提供与SOTA神经架构（如Transformer、SSM/Mamba）的定量对比，性能提升幅度缺乏精确量化；（2）sEMG实验的数据集规模和多样性有限，更多肌肉群和动作模式的泛化需验证；（3）波场的超参数（如频率分布、衰减系数）的选择策略未充分讨论；（4）复值波场与实值表示之间的信息等价性/冗余性分析缺失，未阐明复数表示的必要性边界。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作为事件驱动信号（尤其是生物信号）的连续表示学习开辟了新方向。通过借鉴物理波的干涉现象，作者展示了复值表示在编码异步时间结构方面的独特优势。虽然当前实验规模有限，但其设计理念——用波的相位调制替代离散的顺序状态传播——对CVNN在信号处理领域的应用具有重要启发意义。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Efficient Complex-Valued State Preparation on Bucket Brigade QRAM</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.25644">arXiv:2604.25644</a> | 
+                    🏛️ Alessandro Berti, Francesco Ghisoni | 
+                    📅 2026-04-28 | quant-ph
+                </div>
+                <div style="margin-top: 8px;
+                    <span class="tag">量子计算</span>
+                    <span class="tag">复数态准备</span>
+                    <span class="tag">QRAM</span>
+                    <span class="tag">量子机器学习</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>量子状态准备是将经典数据高效编码到量子态的关键步骤，对量子机器学习（QML）、量子线性代数和量子金融等领域的量子优势实现至关重要。Bucket Brigade QRAM（BBQRAM）通过段树（segment tree）结构实现了幅度编码的polylogarithmic查询时间，是近期量子计算中处理大规模经典数据的主流架构。然而，现有BBQRAM框架仅支持实值数据，无法直接处理本质上复数值的数据（如复数矩阵、复数信号频谱）。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）量子计算天然在复希尔伯特空间中操作，而经典数据（尤其是信号处理和机器学习中的数据）越来越多地是复数值的，两者之间的语义间隙需要桥梁；（2）现有复数数据进入量子系统的策略通常需要额外的量子比特资源或更深的电路深度，在NISQ时代成本高昂；（3）BBQRAM的polylogarithmic查询复杂度极具吸引力，将其扩展至复数域可在不增加渐近复杂度的前提下支持更广泛的数据类型；（4）量子机器学习中的核心子程序（如量子线性系统求解、量子PCA）需要处理复数矩阵，高效的复数态准备是这些应用的前提。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>移除U₂CR子程序：</strong>通过经典预计算段树确定的旋转角度，并将这些角度直接存储在BBQRAM单元中，简化了量子处理单元（QPU）的操作流程</li>
+                <li><strong>复数矩阵扩展：</strong>将BBQRAM构造扩展至复数值矩阵 A ∈ ℂ^(M×N)，通过为每个预计算旋转角度存储叶相位，并使用"幅度-然后-相位"两步程序</li>
+                <li><strong>实数有符号情况子集：</strong>实数有符号情况自然地被包含为一位相位特化，保持了框架的统一性</li>
+                <li><strong>复杂度保持：</strong>在保持 O(log²(MN)) BBQRAM查询复杂度不变的前提下，QPU过程简化为BBQRAM检索和受控旋转级联</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">O(log²)</div>
+                    <div class="metric-label">查询复杂度</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">O(MN)</div>
+                    <div class="metric-label">内存单元</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">无</div>
+                    <div class="metric-label">QPU可逆算术</div>
+                </div>
+            </div>
+            <p>理论分析证明所提方法在复数扩展下保持了BBQRAM的polylogarithmic查询优势；QPU端无需执行可逆算术运算，仅需BBQRAM检索和受控旋转级联，大幅降低了量子电路深度；每矩阵O(MN)的内存细胞需求与原始实值版本同阶。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次将BBQRAM高效状态准备框架扩展至复数域，填补了量子数据加载中复数处理的空白；（2）在保持原有复杂度优势的前提下支持复数矩阵，为量子机器学习处理复数信号（如SAR、雷达、通信数据）提供了基础设施；（3）"幅度-然后-相位"的两步策略为复数数据的量子编码提供了通用设计范式；（4）消除了QPU端的可逆算术需求，特别适合NISQ时代有限量子资源的约束。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）理论工作，未在真实量子硬件上验证复数扩展的噪声鲁棒性；（2）BBQRAM本身需要O(MN)的物理内存单元，对极大规模矩阵的扩展性受限于经典控制硬件；（3）仅支持矩阵数据的加载，更复杂的张量结构或图数据的复数量子编码尚未探索；（4）与具体量子机器学习算法的端到端集成（如复数量子神经网络的训练管道）有待实现。</p>
+
+            <div class="section-title">总结</div>
+            <p>这项工作从量子计算的角度补充了CVNN研究的拼图。通过为量子机器学习提供高效的复数数据加载机制，它解决了"复数数据如何在量子系统中表示"这一基础问题。虽然属于量子计算领域，但其核心思想——将复数分解为幅度和相位分别处理——与CVNN中复数权重网络的实部-虚部分解策略异曲同工，展示了复数表示在不同计算范式间的通用价值。</p>
+        </div>
+
+        <div class="summary">
+            <h2>📈 趋势分析</h2>
+            <ul>
+                <li><strong>复数表示向基础机器学习扩展：</strong>2605.01691 将扩散映射扩展至复数域，标志着CVNN思想正从专门的神经网络架构向更广泛的机器学习基础方法渗透，复数分析的价值正在被线性/非线性方法共同认可</li>
+                <li><strong>物理启发的复数建模兴起：</strong>2605.01270 借鉴波干涉物理现象建模生物信号，2605.01691 从Schrödinger方程导出核函数，显示物理直觉正成为复数架构设计的重要灵感来源</li>
+                <li><strong>跨领域复数基础设施完善：</strong>2604.25644 为量子计算提供复数态准备，与经典CVNN形成互补——无论经典还是量子，复数数据处理的基础设施都在快速成熟</li>
+                <li><strong>生物信号成为CVNN新战场：</strong>sEMG（2605.01270）、fMRI/EEG（2605.01691）等生物信号的振荡特性使其成为复数表示的天然应用场景，医疗/康复领域有望受益</li>
+                <li><strong>复数核与深度学习融合待探索：</strong>当前复值扩散映射和复数波场模型仍以浅层核方法为主，如何将其与深层CVNN结合（如作为可微预处理层）是未来的重要方向</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Jarvis CVNN Research Daily | 自动生成的文献调研报告</p>
+            <p>数据源：arXiv.org | 生成时间：2026-05-06 04:00 AM CST</p>
+        </footer>
+    </div>
+</body>
+</html>
