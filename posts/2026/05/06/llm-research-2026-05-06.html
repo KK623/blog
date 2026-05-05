@@ -32,8 +32,8 @@
     .paper-section { margin-bottom: 12px; }
     .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
     .paper-section p { font-size: 14px; color: #444; }
-    .paper-images { margin: 12px 0; }
-    .paper-images img { max-width: 100%; border-radius: 4px; margin-bottom: 8px; }
+    .paper-images { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .paper-images img { max-width: 48%; border-radius: 4px; border: 1px solid #e0e0e0; }
     .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
     .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
     .trend-box ul { margin-left: 20px; }
@@ -48,178 +48,192 @@
   <div class="container">
     <header>
       <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
-      <p class="report-meta">📅 2026-05-06 03:30 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
+      <p class="report-meta">📅 2026-05-06 03:00 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
     </header>
 
     <div class="trend-box">
       <h3>📌 时间范围说明</h3>
-      <p>本次调研优先搜索 <strong>2026年5月3日-4日</strong> 新提交的论文。共筛选出5篇与LLM量化/部署/低精度/蒸馏直接相关的高质量论文，涵盖投机解码部署、统计无损量化、低比特训练监控、KV缓存混合精度量化和自适应蒸馏五大方向。</p>
+      <p>本次调研优先搜索 <strong>2026年5月3日-5日</strong> 新提交的论文。共筛选出5篇与LLM量化/部署/低精度/蒸馏直接相关的高质量论文，涵盖推理加速、统计无损量化、低比特训练监控、KV缓存量化和熵引导自适应蒸馏五大方向。</p>
     </div>
 
     <h2 class="section-title">🔬 论文详情</h2>
 
+    <!-- Paper 1: SpecKV -->
     <article class="paper">
       <div class="paper-header">
         <div class="paper-title"><a href="https://arxiv.org/abs/2605.02888" target="_blank">SpecKV: Adaptive Speculative Decoding with Compression-Aware Gamma Selection</a></div>
-        <div class="paper-meta">📄 arXiv:2605.02888 · 👤 Shikhar Shukla · 📅 2026-05-04 · cs.CL / cs.LG</div>
+        <div class="paper-meta">📄 arXiv:2605.02888 · 👤 Shikhar Shukla · 📅 2026-05-04 · cs.LG / cs.AI / cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.02888_img-000.png" alt="SpecKV Throughput vs Speculation Length">
+        <img src="images/2605.02888_img-004.png" alt="SpecKV Compression-Aware Analysis">
       </div>
       <div class="paper-section">
         <h4>🎯 背景</h4>
-        <p>投机解码通过使用小型草稿模型提出候选token来加速大语言模型推理。关键超参数是猜测长度γ，决定每步草稿模型提出多少token。几乎所有现有系统使用固定的γ（通常为4），但经验证据表明最优值因任务类型和压缩级别而异。</p>
+        <p>投机解码（Speculative Decoding）是加速大语言模型推理的关键技术，通过小型草稿模型提出候选token，再由大型目标模型验证。其中投机长度γ（每步草稿模型提议的token数）是核心超参数，几乎所有现有系统使用固定的γ（通常为4），但实证证据表明最优值因任务类型和压缩级别而异。</p>
       </div>
       <div class="paper-section">
         <h4>💡 动机</h4>
-        <p>现有固定γ的投机解码系统未考虑目标模型压缩级别对最优猜测长度的影响。作者希望开发一个轻量级自适应控制器，根据草稿模型信号动态选择γ，以最大化每步期望token数。</p>
+        <p>现有固定γ的投机解码系统在不同压缩级别（FP16、INT8、NF4）下表现不佳，无法自适应调整。作者希望开发一个轻量级自适应控制器，根据草稿模型自身的信号（熵、置信度、接受率）动态选择每步的最优γ，最大化每步预期生成的token数。</p>
       </div>
       <div class="paper-section">
         <h4>🔧 技术点</h4>
-        <p>1. 自适应γ选择：使用从草稿模型提取的信号（熵、置信度）预测接受率，训练小型MLP为每步选择最优γ。2. 压缩感知：在FP16、INT8、NF4三种压缩级别下分析最优γ的偏移。3. 低开销决策：每决策仅0.34ms开销（<0.5%步时间）。</p>
+        <p>1. <strong>压缩感知γ分析</strong>：在4类任务、4种投机长度、3种压缩级别下收集5,112条步级记录，发现最优γ随压缩体制变化。2. <strong>草稿模型信号预测</strong>：草稿模型置信度和熵与接受率强相关（≈0.56），是γ选择的有效预测信号。3. <strong>轻量级MLP控制器</strong>：训练小型MLP根据草稿信号实时选择γ，每决策仅0.34ms开销（&lt;0.5%步时）。</p>
       </div>
       <div class="paper-section">
         <h4>📈 收益点</h4>
-        <p>在4类任务、4种猜测长度、3种压缩级别上收集5,112条步级记录。相比固定γ=4基线，SpecKV实现56.0%的提速，统计显著（p<0.001）。</p>
+        <p>相比固定γ=4基线，SpecKV实现56.0%的吞吐量提升，统计显著（p&lt;0.001）。在FP16、INT8、NF4三种压缩级别下均有效，且所有分析数据、模型、notebook开源发布。</p>
       </div>
       <div class="paper-section">
         <h4>📝 总结</h4>
-        <p>SpecKV首次将压缩级别纳入投机解码的自适应决策，通过草稿模型信号动态选择最优γ，显著提升推理效率。</p>
-      </div>
-      <div class="paper-images">
-      <img src="images/2605.02888_img-000.png" alt="SpecKV: Adaptive Speculative Decoding with Compression-Aware Gamma Selection figure" loading="lazy">
-      <img src="images/2605.02888_img-001.png" alt="SpecKV: Adaptive Speculative Decoding with Compression-Aware Gamma Selection figure" loading="lazy">
-      <img src="images/2605.02888_img-002.png" alt="SpecKV: Adaptive Speculative Decoding with Compression-Aware Gamma Selection figure" loading="lazy">
+        <p>SpecKV首次将压缩级别纳入投机解码γ的自适应选择，通过草稿模型自身信号实现每步动态优化。以极小开销获得显著推理加速，为不同压缩体制下的LLM部署提供了实用的自适应推理方案。</p>
       </div>
     </article>
 
+    <!-- Paper 2: SLQ -->
     <article class="paper">
       <div class="paper-header">
         <div class="paper-title"><a href="https://arxiv.org/abs/2605.02404" target="_blank">Statistically-Lossless Quantization of Large Language Models</a></div>
-        <div class="paper-meta">📄 arXiv:2605.02404 · 👤 Michael Helcig, Eldar Kurtic, Dan Alistarh · 📅 2026-05-04 · cs.LG / cs.CL</div>
+        <div class="paper-meta">📄 arXiv:2605.02404 · 👤 Michael Helcig, Eldar Kurtic, Dan Alistarh · 📅 2026-05-04 · cs.LG</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.02404_img-008.png" alt="SLQ Flip Rate Symmetric vs Asymmetric">
+        <img src="images/2605.02404_img-012.png" alt="SLQ Quantization Results">
       </div>
       <div class="paper-section">
         <h4>🎯 背景</h4>
-        <p>模型量化对高效LLM部署至关重要。现有方法如GPTQ和AWQ是损失性的，而无损技术虽保真但不加速推理。如何在压缩率和保真度之间取得平衡仍是开放问题。</p>
+        <p>模型量化已成为高效LLM部署的必需技术，但现有方法存在明显权衡：GPTQ和AWQ等实现实用压缩但有损；无损技术保真但通常不加速推理。如何在压缩和保真之间取得平衡仍是开放问题。</p>
       </div>
       <div class="paper-section">
         <h4>💡 动机</h4>
-        <p>作者探索统计无损压缩的中间地带，提出三种互补的无损概念：任务无损、分布无损，并设计可直接解释的保真度指标EAR（期望接受率），以指导量化策略选择。</p>
+        <p>作者希望探索统计无损压缩的中间地带——在严格无损和纯有损之间找到可量化、可解释的保真级别，并建立系统化的 fidelity metric 来指导量化实践。</p>
       </div>
       <div class="paper-section">
         <h4>🔧 技术点</h4>
-        <p>1. 任务无损压缩：在零样本基准精度保持自然采样方差内，实现低至3.3 bits/参数的压缩。2. 分布无损压缩：要求量化模型与原模型下一token分布几乎不可区分，提出EAR指标。3. SLQ方法：逐层非均匀非对称量化，配合宽位宽搜索，平均5-6 bits实现分布无损。4. 优化内核：相对FP16实现1.7-3.6倍推理加速。</p>
+        <p>1. <strong>三级无损定义</strong>：提出任务无损（task-lossless，零样本精度在自然采样方差内）、分布无损（distribution-lossless，EAR≥0.99）和严格无损三种层次。2. <strong>EAR保真指标</strong>：Expected Acceptance Rate作为直接可解释的保真度量。3. <strong>γ²方差定律</strong>：证明对称量化相对于非对称量化的噪声方差膨胀γ²倍，论证非对称量化的必要性。4. <strong>SLQ层非均匀量化</strong>：采用非对称量化和宽位宽搜索，实现逐层非均匀量化。</p>
       </div>
       <div class="paper-section">
         <h4>📈 收益点</h4>
-        <p>任务无损压缩低至3.3 bits/参数；分布无损压缩平均5-6 bits；推理加速1.7-3.6倍。代码开源：https://github.com/IST-DASLab/SLQ。</p>
+        <p>SLQ实现任务无损压缩低至3.3 bits/parameter，分布无损压缩平均5-6 bits/parameter，推理速度提升1.7-3.6倍（相对FP16，优化内核）。代码已开源。</p>
       </div>
       <div class="paper-section">
         <h4>📝 总结</h4>
-        <p>SLQ通过严格定义统计无损概念和非对称逐层量化，在极低bitwidth下实现接近无损的LLM压缩，兼具高保真度和实际推理加速。</p>
-      </div>
-      <div class="paper-images">
-      <img src="images/2605.02404_img-000.png" alt="Statistically-Lossless Quantization of Large Language Models figure" loading="lazy">
-      <img src="images/2605.02404_img-001.png" alt="Statistically-Lossless Quantization of Large Language Models figure" loading="lazy">
-      <img src="images/2605.02404_img-002.png" alt="Statistically-Lossless Quantization of Large Language Models figure" loading="lazy">
+        <p>SLQ通过建立统计无损量化的理论框架和三级保真定义，为LLM量化提供了从理论到实践的系统化方法。非对称量化的γ²方差定律和EAR指标为量化 fidelity 提供了可解释的工程指导。</p>
       </div>
     </article>
 
+    <!-- Paper 3: Trust, but Verify -->
     <article class="paper">
       <div class="paper-header">
         <div class="paper-title"><a href="https://arxiv.org/abs/2605.02853" target="_blank">Trust, but Verify: Peeling Low-Bit Transformer Networks for Training Monitoring</a></div>
-        <div class="paper-meta">📄 arXiv:2605.02853 · 👤 Arian Eamaz, Farhang Yeganegi, Mojtaba Soltanalian · 📅 2026-05-04 · cs.LG / cs.AI</div>
+        <div class="paper-meta">📄 arXiv:2605.02853 · 👤 Arian Eamaz, Farhang Yeganegi, Mojtaba Soltanalian · 📅 2026-05-04 · cs.LG</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.02853_img-012.png" alt="Peeling Framework Test Results">
+        <img src="images/2605.02853_img-006.png" alt="Peeling Layer-wise Analysis">
       </div>
       <div class="paper-section">
         <h4>🎯 背景</h4>
-        <p>理解深度神经网络是否有效优化仍然困难，训练发生在高度非凸的 landscape 中，标准指标提供的学习质量可见性有限。这对Transformer语言模型尤为严重——训练昂贵、模型常被冻结复用，优化不足的层会静默降低性能。</p>
+        <p>深度神经网络训练是否有效优化仍难以判断，训练发生在高度非凸 landscapes 中，标准指标对层-wise 学习质量的可视性有限。对于Transformer语言模型，训练成本高昂，模型常被冻结复用， poorly optimized layers 可能静默降低性能。</p>
       </div>
       <div class="paper-section">
         <h4>💡 动机</h4>
-        <p>现有训练监控方法只能看到聚合损失曲线，无法诊断层级的优化问题。作者希望提出一种逐层剥离框架，能够检测训练动态中的低效优化，特别是在二值化和量化设置中。</p>
+        <p>现有训练监控依赖聚合损失曲线，无法揭示层-wise 的优化不足。在低比特（二值化和量化）设置下，训练动态尤其脆弱，需要更精细的诊断工具来暴露隐藏在总体损失下的效率问题。</p>
       </div>
       <div class="paper-section">
         <h4>🔧 技术点</h4>
-        <p>1. 逐层剥离框架：为每个Transformer层构建轻量级参考解，将层投影到多个中间输出。2. 可达成基线：通过不同排列获得细粒度的层优化诊断。3. 量化鲁棒性：在二值化和量化设置下验证分析有效性，此时训练动态特别脆弱。4. 收敛与最优分离：提出的界限一致地区分表面收敛与实际最优性。</p>
+        <p>1. <strong>层-wise Peeling框架</strong>：每个Transformer层针对训练模型的中间表示进行局部优化。2. <strong>轻量级参考解</strong>：构建层特定的参考解，通过不同置换将层投影到多个中间输出。3. <strong>多中间输出投影</strong>：获取可达到的基线，实现细粒度的 under-optimized layers 诊断。4. <strong>低比特有效性</strong>：在二值化和量化设置下分析依然有效。</p>
       </div>
       <div class="paper-section">
         <h4>📈 收益点</h4>
-        <p>在decoder-only Transformer模型上，层参考界限在训练各阶段匹配甚至超越训练模型，暴露聚合损失曲线隐藏的优化低效问题。在二值化和量化设置下仍保持有效。</p>
+        <p>实验表明，层-wise参考界在训练各阶段能匹配甚至超越训练模型，暴露聚合损失曲线隐藏的无效性。在低比特设置下，该分析能一致区分表面收敛和有效最优性，揭示了仅依赖训练损失不可见的优化机会。</p>
       </div>
       <div class="paper-section">
         <h4>📝 总结</h4>
-        <p>该框架通过逐层参考解实现细粒度训练监控，能够识别传统损失曲线无法发现的优化问题，对低比特Transformer训练具有重要指导意义。</p>
-      </div>
-      <div class="paper-images">
-      <img src="images/2605.02853_img-000.png" alt="Trust, but Verify: Peeling Low-Bit Transformer Networks for Training Monitoring figure" loading="lazy">
-      <img src="images/2605.02853_img-001.png" alt="Trust, but Verify: Peeling Low-Bit Transformer Networks for Training Monitoring figure" loading="lazy">
-      <img src="images/2605.02853_img-002.png" alt="Trust, but Verify: Peeling Low-Bit Transformer Networks for Training Monitoring figure" loading="lazy">
+        <p>Peeling框架通过层-wise局部优化参考解，为Transformer训练监控提供了精细诊断工具。在低比特设置下依然有效，帮助研究者区分真实收敛和表面收敛，为训练效率优化提供了新视角。</p>
       </div>
     </article>
 
+    <!-- Paper 4: WindowQuant -->
     <article class="paper">
       <div class="paper-header">
         <div class="paper-title"><a href="https://arxiv.org/abs/2605.02262" target="_blank">WindowQuant: Mixed-Precision KV Cache Quantization based on Window-Level Similarity for VLMs Inference Optimization</a></div>
         <div class="paper-meta">📄 arXiv:2605.02262 · 👤 Wei Tao, Xiaoyang Qu, Peiqiang Wang, Guokuan Li, Jiguang Wan, Kai Lu, Jianzong Wang · 📅 2026-05-04 · cs.CV / cs.CL</div>
       </div>
+      <div class="paper-images">
+        <img src="images/2605.02262_img-014.png" alt="WindowQuant Hidden States Similarity">
+        <img src="images/2605.02262_img-010.png" alt="WindowQuant Quantization Results">
+      </div>
       <div class="paper-section">
         <h4>🎯 背景</h4>
-        <p>视频语言模型(VLM)的视觉token序列过长，导致推理延迟和GPU内存占用不可接受。KV缓存是VLM推理的内存瓶颈，现有混合精度量化方法未充分利用视觉token的局部相似性。</p>
+        <p>视频语言模型（VLMs）的视觉token序列过长，导致推理延迟和GPU内存占用过高。现有KV缓存混合精度量化方法基于token粒度，搜索过程耗时且硬件计算效率低。</p>
       </div>
       <div class="paper-section">
         <h4>💡 动机</h4>
-        <p>VLM中相邻视觉token具有高度相似性，但现有KV缓存量化方法未利用这一特性。作者希望基于窗口级相似性设计混合精度量化策略，在保持精度的同时显著降低内存占用。</p>
+        <p>作者希望开发一种更高效的KV缓存混合精度量化方法，避免token粒度的搜索开销和硬件低效问题。通过窗口级别的相似性分析，快速确定最优位宽配置并优化计算流程。</p>
       </div>
       <div class="paper-section">
         <h4>🔧 技术点</h4>
-        <p>1. 窗口级相似性分析：识别相邻视觉token的相似模式，为不同窗口分配不同精度。2. 混合精度KV缓存量化：对高相似性窗口使用低精度（如INT4），对关键窗口保持高精度（如FP16）。3. 动态精度调整：根据内容复杂度自适应选择量化策略。4. VLM专用优化：针对视觉-语言融合任务设计。</p>
+        <p>1. <strong>窗口级量化搜索</strong>：基于视觉token窗口与文本提示的相似性分数，快速确定KV缓存窗口的最优位宽配置。2. <strong>窗口级KV缓存计算</strong>：量化前重排序KV缓存窗口，避免混合精度量化导致的硬件计算低效。3. <strong>精度保持机制</strong>：通过相似性引导确保模型精度不受损。</p>
       </div>
       <div class="paper-section">
         <h4>📈 收益点</h4>
-        <p>在主流VLM上验证，WindowQuant显著降低KV缓存内存占用，同时保持视觉理解任务的精度。相比统一精度量化，混合策略在精度和效率之间取得更好平衡。</p>
+        <p>WindowQuant在多个数据集上的实验表明，其优于现有SOTA VLM模型和KV缓存量化方法。通过窗口级设计，显著减少了搜索时间并提升了推理计算的硬件效率。</p>
       </div>
       <div class="paper-section">
         <h4>📝 总结</h4>
-        <p>WindowQuant利用视觉token的局部相似性实现混合精度KV缓存量化，为VLM的高效推理提供了针对性的内存优化方案。</p>
-      </div>
-      <div class="paper-images">
-      <img src="images/2605.02262_img-000.png" alt="WindowQuant: Mixed-Precision KV Cache Quantization based on Window-Level Similarity for VLMs Inference Optimization figure" loading="lazy">
-      <img src="images/2605.02262_img-001.png" alt="WindowQuant: Mixed-Precision KV Cache Quantization based on Window-Level Similarity for VLMs Inference Optimization figure" loading="lazy">
-      <img src="images/2605.02262_img-002.png" alt="WindowQuant: Mixed-Precision KV Cache Quantization based on Window-Level Similarity for VLMs Inference Optimization figure" loading="lazy">
+        <p>WindowQuant通过窗口级相似性分析实现混合精度KV缓存量化，解决了VLM推理中的延迟和内存瓶颈。在保持精度的同时，提升了搜索效率和硬件计算效率，为长视觉序列的VLM部署提供了实用方案。</p>
       </div>
     </article>
 
+    <!-- Paper 5: EGAD -->
     <article class="paper">
       <div class="paper-header">
         <div class="paper-title"><a href="https://arxiv.org/abs/2605.01732" target="_blank">EGAD: Entropy-Guided Adaptive Distillation for Token-Level Knowledge Transfer</a></div>
-        <div class="paper-meta">📄 arXiv:2605.01732 · 👤 Hao Zhang, Zhibin Zhang, Guangxin Wu, Wanyi Ning, Jiafeng Guo, Xueqi Cheng · 📅 2026-05-03 · cs.CL / cs.LG</div>
+        <div class="paper-meta">📄 arXiv:2605.01732 · 👤 Hao Zhang, Zhibin Zhang, Guangxin Wu, Wanyi Ning, Jiafeng Guo, Xueqi Cheng · 📅 2026-05-03 · cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.01732_img-094.png" alt="EGAD KL Divergence Comparison">
+        <img src="images/2605.01732_img-100.png" alt="EGAD Token Entropy Distribution">
       </div>
       <div class="paper-section">
         <h4>🎯 背景</h4>
-        <p>大语言模型在多个领域表现出色，但其巨大的计算和内存需求阻碍了在资源受限环境中的部署。知识蒸馏通过将大型教师模型的知识转移到小型学生模型来解决这一问题。然而，现有蒸馏方法通常对所有token一视同仁，忽略了不同token的学习难度差异。</p>
+        <p>大语言模型在多个领域取得了卓越性能，但其巨大的计算和内存需求阻碍了在资源受限环境中的部署。知识蒸馏通过将大教师模型的知识转移到小学生模型来解决这一问题，但现有方法通常对所有token一视同仁。</p>
       </div>
       <div class="paper-section">
         <h4>💡 动机</h4>
-        <p>不同token的学习难度和重要性差异显著。简单token不应消耗过多蒸馏资源，而困难token需要更多关注。作者希望基于熵引导的自适应策略，实现token级别的差异化知识迁移。</p>
+        <p>不同token对模型决策的贡献不相等，统一处理导致知识转移效率低下。作者希望利用教师输出的熵来引导蒸馏过程，对困难token给予更多关注，对简单token高效处理，实现token级的自适应知识迁移。</p>
       </div>
       <div class="paper-section">
         <h4>🔧 技术点</h4>
-        <p>1. 熵引导机制：利用学生模型对token的预测熵衡量学习难度。2. 自适应权重分配：高熵token（困难）分配更高蒸馏权重，低熵token（简单）降低权重。3. 教师-学生对齐：动态调整蒸馏损失，优化知识传递效率。4. Token级知识转移：在token级别而非序列级别进行蒸馏。</p>
+        <p>1. <strong>token级课程学习</strong>：根据token熵动态调整训练焦点，从低熵到高熵token逐步过渡。2. <strong>熵感知温度调整</strong>：基于token熵动态调整蒸馏温度，更好捕获教师置信度模式。3. <strong>双分支架构</strong>：对简单token使用高效logits-only蒸馏，对困难token使用深度特征蒸馏。4. <strong>自适应权重分配</strong>：根据token不确定性分配不同的蒸馏深度。</p>
       </div>
       <div class="paper-section">
         <h4>📈 收益点</h4>
-        <p>在多个LLM蒸馏任务上验证，EGAD相比均匀蒸馏策略显著提升学生模型性能，特别是在困难token的预测准确性上。资源消耗不变的情况下提高蒸馏效率。</p>
+        <p>广泛实验验证了该方法的有效性和合理性。EGAD在标准基准上一致超越SOTA基线，token级自适应策略显著提升了知识转移效率，使小学生模型更好地继承教师能力。</p>
       </div>
       <div class="paper-section">
         <h4>📝 总结</h4>
-        <p>EGAD通过熵引导的自适应蒸馏策略实现token级别的差异化知识迁移，在资源受限场景下提升LLM蒸馏效率，为学生模型训练提供了更精细的优化方法。</p>
-      </div>
-      <div class="paper-images">
-      <img src="images/2605.01732_img-000.png" alt="EGAD: Entropy-Guided Adaptive Distillation for Token-Level Knowledge Transfer figure" loading="lazy">
-      <img src="images/2605.01732_img-001.png" alt="EGAD: Entropy-Guided Adaptive Distillation for Token-Level Knowledge Transfer figure" loading="lazy">
-      <img src="images/2605.01732_img-002.png" alt="EGAD: Entropy-Guided Adaptive Distillation for Token-Level Knowledge Transfer figure" loading="lazy">
+        <p>EGAD通过熵引导的token级自适应蒸馏，解决了传统蒸馏方法中token贡献不均的问题。课程学习、温度调整和双分支架构的三重设计，实现了高效且精准的知识迁移，为资源受限场景下的小模型部署提供了新方案。</p>
       </div>
     </article>
 
+    <h2 class="section-title">📊 趋势洞察</h2>
+    <div class="trend-box">
+      <h3>🔥 本周热点方向</h3>
+      <ul>
+        <li><strong>投机解码自适应优化</strong>：SpecKV首次将压缩级别纳入γ动态选择，推理加速56%，为量化后模型的推理优化提供了新思路</li>
+        <li><strong>统计无损量化新框架</strong>：SLQ建立三级保真定义和EAR指标，实现3.3 bits任务无损压缩，为量化 fidelity 提供了可解释的工程标准</li>
+        <li><strong>低比特训练监控工具</strong>：Peeling框架揭示层-wise优化不足，在低比特设置下仍能区分表面收敛与真实最优性</li>
+        <li><strong>VLM KV缓存窗口级量化</strong>：WindowQuant通过窗口相似性实现混合精度量化，解决了长视觉序列的内存和延迟瓶颈</li>
+        <li><strong>熵引导token级蒸馏</strong>：EGAD利用教师熵信号实现自适应知识迁移，为高效蒸馏提供了细粒度控制机制</li>
+      </ul>
+    </div>
+
     <footer>
-      <p>Generated by Jarvis 🔧 · OpenClaw Automated Research · 2026-05-06</p>
+      <p>© 2026 孙凯 | AI 研究院</p>
+      <p>文献调研 · 技术洞察 · 学术分享</p>
+      <p>报告链接：https://kk623.github.io/blog/posts/2026/05/06/llm-research-2026-05-06.html</p>
     </footer>
   </div>
 </body>
