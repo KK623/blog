@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-07</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .paper-images img { max-width: 48%; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-07 03:00 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月5日-6日</strong> 新提交的论文。共筛选出5篇与LLM量化/部署/低精度/蒸馏直接相关的高质量论文，涵盖KV缓存量化与多智能体部署、模型可见的KV量化校正、低秩稀疏预训练、策略蒸馏统一框架和SSD-backed KV缓存推理系统五大方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: QKVShare -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.03884" target="_blank">QKVShare: Quantized KV-Cache Handoff for Multi-Agent On-Device LLMs</a></div>
+        <div class="paper-meta">📄 arXiv:2605.03884 · 👤 Pratik Honavar, Tejpratap GVSL · 📅 2026-05-05 · cs.AI / cs.MA</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>多智能体LLM系统在边缘设备上的部署日益受到关注，但智能体之间传递上下文时面临严峻挑战。当前的选择要么是昂贵的重新预填充（re-prefill），要么是全精度KV缓存传输，两者在延迟和内存方面都代价高昂。边缘设备的资源限制使得高效的KV缓存共享成为关键需求。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有方法无法在量化后的KV缓存上实现高效的多智能体上下文传递。作者希望开发一个框架，使量化后的KV缓存能够在智能体之间快速切换，同时保持HuggingFace生态系统的兼容性，从而为边缘设备上的多智能体LLM应用提供实用的系统支持。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Token级混合精度分配</strong>：自适应地为不同token分配不同的量化精度，在深度传递和更高预算设置下效果最佳。2. <strong>自包含CacheCard表示</strong>：设计紧凑的缓存卡片格式，便于传输和注入。3. <strong>HuggingFace兼容的缓存注入路径</strong>：无缝集成到现有推理框架中。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在Llama-3.1-8B-Instruct上测试150个GSM8K问题，QKVShare在每种测试上下文下都降低了首token延迟（TTFT），从1K上下文的130.7ms vs 150.2ms到8K上下文的397.1ms vs 1029.7ms。相对于全重新预填充，延迟显著降低，证明了量化KV缓存在多智能体边缘部署中的可行性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>QKVShare首次实现了量化KV缓存的多智能体传递，通过混合精度分配和紧凑表示降低了边缘设备上的上下文切换成本。虽然需要更强的控制器消融和运行时比较，但该框架为on-device多智能体LLM系统提供了一个有前景的方向。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: HeadQ -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.03562" target="_blank">HeadQ: Model-Visible Distortion and Score-Space Correction for KV-Cache Quantization</a></div>
+        <div class="paper-meta">📄 arXiv:2605.03562 · 👤 Jorge L. Ruiz Williams · 📅 2026-05-05 · cs.LG</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>KV缓存量化是降低LLM推理内存占用的关键技术，但现有量化器通常优化存储空间的重建误差（MSE），而非模型实际可见的注意力分数误差。注意力机制通过logits读取keys、通过注意力权重读取values，因此原始key的MSE与最终注意力分布的KL散度之间可能存在显著差距。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者发现Fisher/score-space误差比原始key MSE更能预测注意力KL散度，存储空间MSE的替代方案在模型可见坐标下不成立。因此提出应在模型可见的坐标系中测量和校正KV缓存量化误差，而非仅仅优化存储表示。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Score-space key量化（HeadQ）</strong>：在校准学习得到的query基中存储低秩残差副码，作为加性logit校正应用于keys。2. <strong>A²加权value失真代理</strong>：针对values提出固定注意力读出下的加权token失真度量。3. <strong>多模型验证</strong>：在六个模型上验证Fisher/score-space误差与注意力KL的相关性优于原始key MSE。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在仅量化keys的WikiText-103解码实验中，HeadQ消除了最强2-bit量化行上约84%-94%的超额困惑度。在完整的KV 2-bit组合中，HeadQ加上A² value策略改进了所有六个模型。Pythia检查点定位主要异常到小模型的低熵路由翻转边界。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>HeadQ提出了KV缓存量化的根本性重新思考：从存储空间重建转向模型可见的score-space校正。通过低秩残差校正和注意力加权失真度量，在2-bit极端量化下实现了显著的困惑度改善，为超低比特KV缓存量化提供了新的理论基础。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: ELAS -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.03667" target="_blank">ELAS: Efficient Pre-Training of Low-Rank Large Language Models via 2:4 Activation Sparsity</a></div>
+        <div class="paper-meta">📄 arXiv:2605.03667 · 👤 Jiaxi Li, Lu Yin, Li Shen et al. · 📅 2026-05-05 · cs.LG / cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.03667_img-001.png" alt="ELAS Architecture and Results">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM的训练计算需求巨大，低秩训练通过减少参数数量来降低内存使用，但现有方法往往让激活矩阵保持全秩，在大batch训练时激活内存成为主导开销。NVIDIA GPU的2:4结构化稀疏格式支持为权重和激活稀疏化提供了硬件加速机会，但直接对权重应用稀疏化常导致性能下降。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者观察到现有低秩方法在大batch训练时的激活内存瓶颈，以及权重稀疏化的性能损失问题。因此希望找到一种方法，能够在保持模型性能的同时利用2:4结构化稀疏性来降低激活内存和加速训练推理。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>Squared ReLU激活函数</strong>：在前馈网络中使用平方ReLU，产生天然稀疏的激活输出。2. <strong>2:4结构化激活稀疏性</strong>：在平方ReLU后对激活应用2:4稀疏模式，直接利用NVIDIA GPU的稀疏张量核心支持。3. <strong>低秩模型集成</strong>：将激活稀疏性与低秩训练框架结合，同时降低权重和激活的内存占用。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在60M到1B参数的LLaMA模型上进行预训练实验，ELAS在应用2:4激活稀疏性后保持了性能且退化极小，同时实现了训练和推理加速。特别是在大batch size下，激活内存开销显著降低，为大模型的高效预训练提供了可行路径。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>ELAS通过 squared ReLU 诱导的激活稀疏性，巧妙地绕过了权重稀疏化的性能问题，转而利用2:4结构化稀疏性压缩激活内存。这种方法在低秩预训练框架中实现了内存-性能的良好平衡，为大模型的高效预训练提供了新的硬件协同设计方案。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: Uni-OPD -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.03677" target="_blank">Uni-OPD: Unifying On-Policy Distillation with a Dual-Perspective Recipe</a></div>
+        <div class="paper-meta">📄 arXiv:2605.03677 · 👤 Wenjin Hou, Shangpin Peng, Weinong Wang et al. · 📅 2026-05-05 · cs.CL / cs.AI / cs.LG</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.03677_img-001.png" alt="Uni-OPD Framework Overview">
+        <img src="images/2605.03677_img-002.png" alt="Uni-OPD Results">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>On-policy蒸馏（OPD）是将专家模型能力整合到单个学生模型的有效后训练范式，已在LLM和MLLM中取得实证成功。然而，OPD在何种条件下能产生可靠提升仍缺乏系统理解，学生和教师两个视角的优化问题尚未被统一分析。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者识别出限制有效OPD的两个根本瓶颈：学生生成的信息状态探索不足，以及教师对学生rollout的监督不可靠。需要一个统一的框架，从学生和教师双视角同时解决这两个问题，使OPD在多样化设置下都能可靠工作。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>学生视角：数据平衡策略</strong>：采用两种数据平衡策略促进学生生成状态中的信息性探索。2. <strong>教师视角：结果引导的边界校准</strong>：提出聚合token级指导必须与结果奖励保持顺序一致，开发结果引导的边界校准机制恢复正确与错误轨迹间的顺序一致性。3. <strong>跨模态泛化</strong>：统一框架适用于LLM和MLLM的单教师、多教师、强到弱和跨模态蒸馏。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在5个领域、16个基准上的广泛实验验证了Uni-OPD的有效性和通用性，覆盖单教师和多教师蒸馏、强到弱蒸馏和跨模态蒸馏等多样化设置。结果提供了关于可靠OPD的实用洞察。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Uni-OPD从双视角统一了on-policy蒸馏的理论和实践，通过学生侧的数据平衡探索和教师侧的顺序一致性校准，解决了OPD的核心瓶颈。该框架在LLM和MLLM的多种蒸馏设置中展现了可靠性和通用性，为模型压缩和知识迁移提供了系统性的方法论。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: Tutti -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.03375" target="_blank">Tutti: Making SSD-Backed KV Cache Practical for Long-Context LLM Serving</a></div>
+        <div class="paper-meta">📄 arXiv:2605.03375 · 👤 Shi Qiu, Yifan Hu, Xintao Wang et al. · 📅 2026-05-05 · cs.OS / cs.DC / cs.AI</div>
+      </div>
+      <div class="paper-images">
+        <img src="images/2605.03375_img-001.png" alt="Tutti Architecture">
+        <img src="images/2605.03375_img-002.png" alt="Tutti Performance">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM serving中的prefix缓存通过重用KV缓存避免冗余计算，但随着上下文窗口增长，KV缓存足迹远超GPU HBM和CPU DRAM容量，迫使将其卸载到NVMe SSD。然而，从SSD恢复KV缓存面临严重的I/O性能问题， fragmented GPU内存布局导致大量微小随机I/O，即使使用GPU Direct Storage（GDS）也因CPU介入而成为瓶颈。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>现有SSD-backed KV缓存方案受限于CPU中心的I/O路径，CPU需要为每个I/O发起请求，导致GPU频繁stall。作者希望消除CPU在HBM和SSD之间关键数据路径和I/O控制路径上的介入，实现真正的GPU-direct存储访问，从而饱和NVMe SSD带宽。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>GPU-centric KV缓存对象存储</strong>：CPU仅负责每层异步加载I/O内核到GPU一次。2. <strong>GPU io_uring</strong>：重构GPU存储栈，引入GPU原生的异步I/O支持，实现GPU-direct object I/O。3. <strong>Slack-aware I/O调度</strong>：避免GPU资源争用，优化I/O与计算的交错执行。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>已集成到vLLM中，与最先进的GDS-enabled SSD-backed LMCache相比，Tutti在严格SLO约束下减少TTFT 78.3%， achievable request rate提升2倍，serving成本降低27%。Tutti实现了接近DRAM-backed LMCache的推理性能，同时提供几乎无限的容量扩展。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Tutti通过将KV缓存I/O路径完全迁移到GPU侧，消除了CPU瓶颈，使得SSD-backed KV缓存首次达到与DRAM-backed方案相当的推理性能。这一设计为超长上下文LLM serving提供了经济高效的容量扩展路径，有望显著降低大规模推理服务的成本。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势洞察</h2>
+    <div class="trend-box">
+      <h3>🔍 本周关键趋势</h3>
+      <ul>
+        <li><strong>KV缓存量化进入精细化时代</strong>：HeadQ提出从存储MSE转向模型可见的score-space校正，QKVShare探索多智能体间的量化KV传递，两者共同推动KV缓存量化从"能压缩"走向"压缩得好"。</li>
+        <li><strong>硬件-软件协同设计深化</strong>：ELAS利用NVIDIA 2:4稀疏张量核心降低激活内存，Tutti重构GPU存储栈实现GPU-direct SSD访问，表明LLM系统优化正深入到硬件抽象层。</li>
+        <li><strong>蒸馏理论开始系统化</strong>：Uni-OPD从学生和教师双视角统一on-policy蒸馏框架，填补了蒸馏方法在何种条件下可靠工作的理论空白，标志着蒸馏从经验技巧走向工程科学。</li>
+        <li><strong>边缘部署与数据中心 serving 并进</strong>：QKVShare面向多智能体边缘设备，Tutti面向长上下文数据中心serving，显示LLM部署优化正在覆盖从端侧到云端的完整 spectrum。</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© 2026 K's AI Research · 文献调研 · 技术洞察</p>
+      <p>Generated by Jarvis 🔧 · OpenClaw Agent</p>
+    </footer>
+  </div>
+</body>
+</html>
