@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月7日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .trends {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #a7f3d0;
+        }
+        .trends h2 { color: #065f46; margin-bottom: 15px; }
+        .trends ol { padding-left: 20px; }
+        .trends li { margin-bottom: 10px; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            .paper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">
+                报告日期: 2026年5月7日 04:30 | 调研周期: 2026.5.1 - 2026.5.7 | 分析师: Jarvis
+            </div>
+        </header>
+
+        <div class="summary">
+            <h3>📋 概要</h3>
+            <p><strong>今日无符合时间要求（2026年5月7日发布）的新CVNN论文。</strong></p>
+            <p style="margin-top:10px">本次调研覆盖arXiv上发布的<strong>复数神经网络（CVNN）</strong>、<strong>复数卷积神经网络</strong>以及复数神经网络在<strong>波束成形、不确定性估计、优化算法</strong>等领域的前沿研究。补充了<strong>3篇近期未覆盖的高质量相关论文</strong>（4月21日-4月26日发布），涵盖算法-硬件协同设计、复值SGD优化以及AI加速的波束成形实现。</p>
+            <div style="margin-top: 15px;">
+                <span class="tag">CVNN</span>
+                <span class="tag">Complex-valued CNN</span>
+                <span class="tag">Bayesian CVNN</span>
+                <span class="tag">FPGA Accelerator</span>
+                <span class="tag">Beamforming</span>
+                <span class="tag">Complex SGD</span>
+                <span class="tag highlight">Uncertainty Quantification</span>
+            </div>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Coordinated Multipoint Anti-jamming Beam Pattern Synthesis: From AI Accelerated Algorithm to Hardware Implementation</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Zilong Wang, Cheng Zhang, Zhilei Zhang, Yaxuan Hu, Wen Wang, Yongming Huang<br>
+                    <strong>机构:</strong> 东南大学 移动通信国家重点实验室<br>
+                    <strong>发表:</strong> 2026年4月26日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.23880" target="_blank">arXiv:2604.23880</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>无蜂窝大规模MIMO（Cell-free Massive MIMO）系统通过分布式接入点（AP）协同服务用户，显著提升了频谱效率和覆盖范围。然而，这种分布式架构面临恶意干扰攻击的严重威胁，传统抗干扰波束成形算法存在计算复杂度高、适应性差、可扩展性受限等问题。同时，AP与中央处理单元（CPU）之间的前传链路开销也成为制约系统性能的关键瓶颈。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>现有抗干扰波束成形方案通常采用集中式优化算法，需要多次迭代和全局信息交互，难以满足实时性要求。如何设计一种低复杂度、高适应性的分布式抗干扰波束成形方案？如何利用深度学习技术降低优化复杂度，同时保证硬件可部署性？复值神经网络能否在波束成形问题中发挥优势？</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>DUCoMP-BPS</strong>（Deep Unfolding-supported Coordinated Multipoint Beam Pattern Synthesis）方案，核心技术包括：</p>
+            <ul>
+                <li><strong>深度展开策略（Deep Unfolding）</strong>：将模拟波束成形中的代价高昂步长搜索转化为可训练参数，显著降低在线推理复杂度</li>
+                <li><strong>复值神经网络（Complex-valued Neural Network）</strong>：离线训练的复值网络实现快速自适应在线推理，充分利用无线信道的复数特性</li>
+                <li><strong>分层协作架构</strong>：AP独立基于局部角度信息确定模拟波束成形，CPU仅需单次AP-CPU交互完成协作数字波束成形</li>
+                <li><strong>ARM-FPGA异构硬件验证</strong>：在异构平台上完成算法-硬件协同验证，实现高效并行和低延迟执行</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>复杂度随AP数量<strong>线性增长</strong>，具有良好的可扩展性</li>
+                <li>单AP模拟波束成形运行时间相比传统优化<strong>降低约67%</strong></li>
+                <li>零陷性能显著优于纯数据驱动方法</li>
+                <li>消声室实测验证了对实际硬件缺陷的鲁棒性</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>计算效率大幅提升</strong>：67%的运行时间降低 | ✅ <strong>前传开销最小化</strong>：单次AP-CPU交互 | ✅ <strong>硬件可行性验证</strong>：FPGA平台实际部署 | ✅ <strong>鲁棒性</strong>：实际硬件缺陷下的稳定性能 | ✅ <strong>复值处理优势</strong>：充分利用无线信号的复数表示</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在固定链长n=4场景下验证；对快速时变信道的适应性需要进一步测试；大规模AP集群（>100）的性能有待验证；与其他深度学习波束成形方法的全面比较尚不充分。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>DUCoMP-BPS展示了复值神经网络在无线通信波束成形中的实际应用价值。通过深度展开将优化问题转化为可学习参数，结合复值网络的快速推理能力，在保证抗干扰性能的同时实现了显著的复杂度降低。该工作在ARM-FPGA异构平台上的硬件验证为实际部署提供了有力支撑，代表了CVNN从算法创新到工程实现的重要进步。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Complex SGD and Directional Bias in Reproducing Kernel Hilbert Spaces</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Natanael Alpay, Emeric Battaglia<br>
+                    <strong>机构:</strong> Ben-Gurion University of the Negev, Israel<br>
+                    <strong>发表:</strong> 2026年4月24日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.23017" target="_blank">arXiv:2604.23017</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>随机梯度下降（SGD）是大规模凸优化问题的核心算法，以其简单实现和良好可扩展性广受欢迎。复值神经网络（CVNN）等涉及复数参数的目标函数，需要定义适用于复数参数的"梯度"变体。现有复数SGD/GD方法虽已提出，但缺乏在放宽解析性约束条件下的收敛性保证。方向偏差（Directional Bias）是理解优化算法行为的重要概念，但在复值设置中的理论分析尚不充分。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>复值神经网络的训练需要可靠的优化算法。现有复数SGD变体缺乏严格的收敛理论支撑，这限制了对其行为的深入理解和实际应用的可靠性。如何建立复数SGD的收敛性保证？复值核回归问题中的方向偏差行为是否与实值情况一致？这些理论问题对CVNN的训练稳定性和泛化性能具有直接影响。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>复数SGD变体</strong>，核心技术贡献包括：</p>
+            <ul>
+                <li><strong>复数参数SGD</strong>：在复再生核希尔伯特空间（RKHS）中定义适用于复数参数的SGD更新规则，无需解析性约束</li>
+                <li><strong>收敛性证明</strong>：在平行于实值设置的假设下，提供复数SGD的收敛性保证，结果同时适用于GD</li>
+                <li><strong>方向偏差分析</strong>：证明在相同假设集下，核回归问题的方向偏差结果从实值设置扩展到复值设置</li>
+                <li><strong>Fock空间与Hardy空间应用</strong>：展示在特定损失函数下，可恢复超振荡函数和Blaschke积作为最优函数</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>在复值核回归问题上验证了复数SGD的有效性</li>
+                <li>成功从<strong>Fock空间</strong>恢复超振荡函数</li>
+                <li>成功从<strong>Hardy空间</strong>恢复Blaschke积</li>
+                <li>理论收敛保证与实验结果一致</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>理论基础</strong>：首次提供复数SGD的收敛性保证 | ✅ <strong>无解析性约束</strong>：放宽了现有方法的限制条件 | ✅ <strong>方向偏差扩展</strong>：理论结果从实值推广到复值 | ✅ <strong>实用验证</strong>：在核回归问题上展示了实际效果 | ✅ <strong>函数恢复能力</strong>：可恢复超振荡等复杂函数</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在核回归问题上验证，未在深层CVNN上测试；对非凸目标函数的收敛性分析尚未开展；大规模数据集上的计算效率需要评估；与其他复数优化方法（如复数Adam）的比较有待完成。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>这项工作为复值神经网络的优化算法提供了重要的理论基础。通过建立复数SGD的收敛性保证并将方向偏差分析扩展到复值设置，填补了CVNN训练理论的关键空白。实验验证了理论预测的正确性，展示了复数SGD在函数恢复任务中的有效性，为CVNN的可靠训练提供了理论支撑。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Algorithm and Hardware Co-Design for Efficient Complex-Valued Uncertainty Estimation</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Zehuan Zhang, Mark Chen, He Li, Wayne Luk<br>
+                    <strong>机构:</strong> Imperial College London (帝国理工学院)<br>
+                    <strong>发表:</strong> 2026年4月21日 | 会议: 63rd ACM/IEEE DAC 2026<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2604.19993" target="_blank">arXiv:2604.19993</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>复值神经网络（CVNN）在处理涉及复数表示的任务中具有显著优势，如雷达信号处理、磁共振成像（MRI）和无线通信。然而，现有CVNN无法量化预测不确定性，这在安全关键应用中至关重要。贝叶斯神经网络通过Dropout近似实现不确定性量化，但尚未扩展到复值领域。此外，CVNN的部署面临计算效率挑战，特别是在资源受限的边缘设备上。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>如何为复值应用实现不确定性量化？复值网络的双部件特性（实部和虚部）如何影响网络配置？如何自动化搜索最优的复值网络架构？如何高效地在FPGA上部署贝叶斯CVNN？这些问题涉及算法创新和硬件优化两个层面，需要协同设计方法来解决。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>BayesCVNN</strong>及配套硬件框架，核心技术包括：</p>
+            <ul>
+                <li><strong>贝叶斯复值神经网络（BayesCVNN）</strong>：首次将Dropout贝叶斯方法扩展到复值神经网络，实现不确定性量化</li>
+                <li><strong>自动化架构搜索</strong>：针对复值网络的双部件特性，引入层混合和部件混合的新型配置，自动搜索最优的实部/虚部组件配置</li>
+                <li><strong>FPGA加速器生成框架</strong>：自动生成定制的FPGA加速器，利用优化的构建模块集</li>
+                <li><strong>模块化设计</strong>：高度模块化，便于硬件实现和扩展</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>自动搜索找到的配置优于人工设计模型：<strong>更高性能、更低硬件成本</strong></li>
+                <li>FPGA加速器相比GPU实现：<strong>4.5x-13x加速</strong>，功耗降低<strong>90%</strong>以上</li>
+                <li>在算法和硬件两个方面均优于现有工作</li>
+                <li>代码已开源：<a href="https://github.com/zehuanzhang/BayesCVNN" target="_blank">github.com/zehuanzhang/BayesCVNN</a></li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>首创性</strong>：首次实现CVNN的不确定性量化 | ✅ <strong>算法-硬件协同</strong>：端到端优化 | ✅ <strong>高效部署</strong>：FPGA加速4.5x-13x | ✅ <strong>极低功耗</strong>：不到GPU 10%的功耗 | ✅ <strong>自动化设计</strong>：自动搜索最优架构 | ✅ <strong>开源</strong>：促进社区发展</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在特定CVNN模型上验证，未覆盖所有复值架构类型；对更大规模网络的FPGA资源需求有待分析；在实时应用中的延迟特性需要进一步评估；与其他不确定性量化方法（如集成方法）的全面比较尚不充分。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>BayesCVNN是复值神经网络领域的重要突破，首次将贝叶斯不确定性量化引入CVNN。通过算法-硬件协同设计，实现了高性能、低功耗的FPGA部署方案。自动化架构搜索充分利用了复值网络的双部件特性，找到了优于人工设计的配置。这项工作为CVNN在安全关键应用中的可靠部署奠定了基础，代表了CVNN从理论研究走向实际应用的关键一步。</p>
+        </div>
+
+        <div class="trends">
+            <h2>📈 近期研究趋势（2026年4月下旬-5月初）</h2>
+            <ol>
+                <li><strong>算法-硬件协同设计成为主流</strong>：BayesCVNN和DUCoMP-BPS均展示了从算法到FPGA的完整流程，CVNN研究正从纯算法创新走向工程落地</li>
+                <li><strong>不确定性量化受到关注</strong>：BayesCVNN首次将贝叶斯方法引入复值网络，为雷达、通信等安全关键应用提供可靠性保障</li>
+                <li><strong>复值优化理论逐步完善</strong>：Complex SGD的收敛性证明填补了CVNN训练理论的关键空白，为大规模复值模型训练提供理论基础</li>
+                <li><strong>无线通信应用持续拓展</strong>：从波束成形到抗干扰，CVNN在5G/6G通信系统中的应用场景不断丰富</li>
+                <li><strong>自动化架构搜索兴起</strong>：针对复值网络双部件特性的自动搜索方法，代表了CVNN架构设计的新方向</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>🔬 CVNN Research Daily | 由 Jarvis 自动生成 | 发布时间: 2026-05-07 04:30 (Asia/Shanghai)</p>
+            <p style="margin-top:10px"><a href="https://kk623.github.io">← 返回主页</a></p>
+        </footer>
+    </div>
+</body>
+</html>
