@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月8日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .trends {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #a7f3d0;
+        }
+        .trends h2 { color: #065f46; margin-bottom: 15px; }
+        .trends ol { padding-left: 20px; }
+        .trends li { margin-bottom: 10px; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            .paper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">
+                报告日期: 2026年5月8日 04:30 | 调研周期: 2026.5.1 - 2026.5.8 | 分析师: Jarvis
+            </div>
+        </header>
+
+        <div class="summary">
+            <h3>📋 概要</h3>
+            <p><strong>今日无符合时间要求（2026年5月8日发布）的新CVNN论文。</strong>arXiv新论文通常在美东时间晚间发布，当前北京时间5月8日04:30尚未更新。</p>
+            <p style="margin-top:10px">本次调研覆盖arXiv上发布的<strong>复数神经网络（CVNN）</strong>、<strong>复值信号处理</strong>以及复值神经网络在<strong>无线通信、音频处理</strong>等领域的前沿研究。补充了<strong>2篇5月7日发布的复值相关高质量论文</strong>，涵盖射频信号识别中的复值表示学习和音乐音频检索中的复值相量表示。</p>
+            <div style="margin-top: 15px;">
+                <span class="tag">CVNN</span>
+                <span class="tag">Complex-valued</span>
+                <span class="tag">I/Q Signals</span>
+                <span class="tag">Self-Supervised Learning</span>
+                <span class="tag">Audio Retrieval</span>
+                <span class="tag">Phase-equivariant</span>
+                <span class="tag highlight">RF Signal Processing</span>
+            </div>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">SEI-SHIELD: Robust Specific Emitter Identification Under Label Noise Via Self-Supervised Filtering and Iterative Rescue</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Ruixiang Zhang, Zinan Zhou, Yezhuo Zhang, Guangyu Li, Xuanpeng Li<br>
+                    <strong>机构:</strong> 信息未完全公开<br>
+                    <strong>发表:</strong> 2026年5月7日<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2605.04721" target="_blank">arXiv:2605.04721</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>特定发射器识别（SEI）为无线通信和物联网系统提供物理层设备认证。虽然深度学习显著提升了SEI性能，但在非合作环境中，标签噪声严重降低系统可靠性。标签噪声来源于信道引起的歧义、标注错误以及智能干扰器故意注入的误导信号。现有SEI方法尝试缓解标签噪声，但它们根本上依赖于受污染的有监督信号来指导样本选择，不可避免地导致确认偏差和次优特征空间。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>如何在不依赖有标签数据的情况下，从复值I/Q信号中提取鲁棒的、与标签无关的特征表示？现有的基于监督信号的噪声过滤方法存在确认偏差问题，需要一种完全自监督的方法来处理标签噪声。此外，在过滤过程中被错误丢弃的困难样本如何被挽救？这些问题对于提升非合作环境下射频信号识别的可靠性至关重要。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>SEI-SHIELD</strong>框架，核心技术包括：</p>
+            <ul>
+                <li><strong>动量对比自监督预训练（MoCo with RF-tailored augmentations）</strong>：直接从复值I/Q信号中提取固有的、与标签无关的鲁棒表示</li>
+                <li><strong>复值信号处理</strong>：充分利用射频信号的复数I/Q表示特性，保留幅度和相位信息</li>
+                <li><strong>KNN-based噪声过滤</strong>：通过学习特征空间中的邻域标签一致性分析来识别被污染样本</li>
+                <li><strong>迭代挽救机制</strong>：利用预测置信度和原型余弦相似度逐步恢复被错误丢弃的正确标记困难样本</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>在POWDER和ORACLE数据集上验证</li>
+                <li>在各种噪声率下达到<strong>最先进（SOTA）准确率</strong></li>
+                <li>显著优于现有噪声鲁棒范式，包括高级正则化技术和样本选择框架</li>
+                <li>自监督预训练提取的复值特征对标签噪声具有天然鲁棒性</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>标签无关</strong>：自监督预训练不依赖可能受污染的标签 | ✅ <strong>噪声鲁棒</strong>：在各种噪声率下达到SOTA | ✅ <strong>复值处理</strong>：充分利用I/Q信号的复数特性 | ✅ <strong>迭代优化</strong>：逐步挽救被错误过滤的困难样本 | ✅ <strong>工程价值</strong>：适用于非合作环境的射频设备认证</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在SEI任务上验证，未在其他复值信号处理任务上测试；MoCo预训练的计算成本较高；对极端高噪声率（>80%）的性能有待评估；与其他自监督方法（如SimCLR、BYOL）的全面比较尚不充分。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>SEI-SHIELD展示了自监督学习与复值信号处理结合的强大潜力。通过动量对比预训练从复值I/Q信号中提取标签无关的鲁棒特征，再结合迭代噪声过滤和挽救机制，在非合作环境下实现了SOTA的射频设备识别性能。这项工作为复值神经网络在安全关键应用中的鲁棒部署提供了有价值的参考。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">PHALAR: Phasors for Learned Musical Audio Representations</div>
+                <div class="paper-meta">
+                    <strong>作者:</strong> Davide Marincione, Michele Mancusi, Giorgio Strano, Luca Cerovaz, Donato Crisostomi, Roberto Ribuoli, Emanuele Rodolà<br>
+                    <strong>机构:</strong> Sapienza University of Rome (罗马大学)<br>
+                    <strong>发表:</strong> 2026年5月7日 (v2更新)<br>
+                    <strong>链接:</strong> <a href="https://arxiv.org/abs/2605.03929" target="_blank">arXiv:2605.03929</a>
+                </div>
+            </div>
+
+            <div class="section-title">2. 研究背景</div>
+            <p>音轨检索（Stem Retrieval）是将缺失的音轨匹配到给定音频子混音的任务，是音乐信息检索领域的关键挑战。现有模型通常丢弃时间信息，限制了检索性能。音乐信号本质上是复值的（包含幅度和相位），但现有方法往往忽视了相位信息的重要性。如何有效利用复值表示来捕获音乐中的时间结构和相位关系是一个重要问题。</p>
+
+            <div class="section-title">3. 研究动机</div>
+            <p>现有音频检索模型参数多、训练慢、且丢弃了关键的相位信息。能否设计一个轻量级框架，利用复值相量表示（phasor representation）同时捕获音高和相位的等变特性？如何在学习表示中强制执行音高等变和相位等变偏置？这些问题对于提升音乐音频检索的性能和效率至关重要。</p>
+
+            <div class="section-title">4. 核心技术点</div>
+            <p>提出<strong>PHALAR</strong>框架，核心技术包括：</p>
+            <ul>
+                <li><strong>学习谱池化层（Learned Spectral Pooling）</strong>：自适应地处理频谱信息，保留关键的音乐特征</li>
+                <li><strong>复值头部网络（Complex-valued Head）</strong>：输出复值相量表示，强制执行音高等变和相位等变偏置</li>
+                <li><strong>对比学习框架</strong>：利用音轨-子混音对进行对比训练，学习鲁棒的音乐表示</li>
+                <li><strong>轻量级设计</strong>：相比现有方法参数减少50%以上，训练速度提升7倍</li>
+            </ul>
+
+            <div class="section-title">5. 实验结果</div>
+            <ul>
+                <li>相对准确率提升高达<strong>约70%</strong></li>
+                <li>参数需求不到现有方法的<strong>50%</strong></li>
+                <li>训练速度提升<strong>7倍</strong></li>
+                <li>在MoisesDB、Slakh和ChocoChorales数据集上建立新的SOTA</li>
+                <li>与人类一致性判断的相关性显著高于语义基线</li>
+                <li>零样本节拍跟踪和线性和弦探测验证了表示的通用性</li>
+            </ul>
+
+            <div class="section-title">6. 收益点</div>
+            <p>✅ <strong>性能大幅提升</strong>：70%相对准确率提升 | ✅ <strong>参数高效</strong>：<50%参数 | ✅ <strong>训练快速</strong>：7x加速 | ✅ <strong>复值优势</strong>：相量表示捕获音高和相位等变性 | ✅ <strong>人类对齐</strong>：与人类判断高度相关 | ✅ <strong>通用表示</strong>：超越检索任务的鲁棒音乐结构</p>
+
+            <div class="section-title">7. 局限性/未来工作</div>
+            <p>仅在英文标注数据集上验证；对非西方音乐风格的适应性有待测试；复值头部的理论分析（如等变性的严格证明）可以进一步深化；在实时音频处理中的延迟特性需要评估。</p>
+
+            <div class="section-title">8. 总结</div>
+            <p>PHALAR是复值神经网络在音乐信息检索中的成功应用。通过复值相量表示强制执行音高和相位等变性，PHALAR在大幅减少参数和训练时间的同时实现了显著的性能提升。这项工作展示了复值表示在处理具有内在相位结构的数据时的独特优势，为CVNN在多媒体处理领域的应用拓展了新的方向。</p>
+        </div>
+
+        <div class="trends">
+            <h2>📈 近期研究趋势（2026年4月下旬-5月初）</h2>
+            <ol>
+                <li><strong>复值表示在安全关键应用中的价值凸显</strong>：SEI-SHIELD展示了复值I/Q信号在物理层认证中的重要性，为通信安全提供了新的技术路径</li>
+                <li><strong>复值等变性在音乐处理中发挥关键作用</strong>：PHALAR通过音高和相位等变偏置显著提升了音频检索性能，验证了复值表示在多媒体领域的潜力</li>
+                <li><strong>自监督学习与复值处理结合成为新方向</strong>：SEI-SHIELD的MoCo预训练表明，自监督方法可以从复值数据中提取鲁棒的标签无关特征</li>
+                <li><strong>轻量级复值模型受到关注</strong>：PHALAR展示了CVNN可以在参数大幅减少的情况下实现SOTA性能，有利于边缘部署</li>
+                <li><strong>跨领域应用持续拓展</strong>：从无线通信到音乐处理，CVNN的应用场景不断丰富，展现了其作为通用复值数据处理工具的潜力</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>🔬 CVNN Research Daily | 由 Jarvis 自动生成 | 发布时间: 2026-05-08 04:30 (Asia/Shanghai)</p>
+            <p style="margin-top:10px"><a href="https://kk623.github.io">← 返回主页</a></p>
+        </footer>
+    </div>
+</body>
+</html>
