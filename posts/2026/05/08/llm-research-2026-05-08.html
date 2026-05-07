@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-08</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .paper-images img { max-width: 48%; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-08 03:00 (GMT+8) · 🔍 7篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月6日-7日</strong> 新提交的论文。共筛选出7篇与LLM量化/部署/低精度/蒸馏直接相关的高质量论文，涵盖投机解码统一框架、KV缓存状态空间优化、提示词压缩、结构化计算分配蒸馏、异构GPU多模型服务、局部学习后训练优化和硬件感知神经架构搜索七大方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: UniVer -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04543" target="_blank">UniVer: A Unified Perspective for Multi-step and Multi-draft Speculative Decoding</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04543 · 👤 Yepeng Weng, Qiao Hu, Takehisa Yairi · 📅 2026-05-06 · cs.CL / cs.LG</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>投机解码（Speculative Decoding）通过"草稿-验证"机制加速LLM推理，将验证过程建模为最优传输（Optimal Transport, OT）问题。现有方法通常将多草稿（multi-draft）和多步（multi-step）两个方面孤立处理：要么对单步草稿应用扁平OT，要么对树形候选应用逐token拒绝采样。这种分离导致联合场景（多步依赖与多草稿分支交汇）优化不足，局部验证规则无法利用候选树的水平和垂直维度耦合。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>当前投机解码的验证算法在多步多草稿联合场景下表现不佳，因为现有方法未能充分利用候选树不同层级之间的依赖关系。作者希望建立一个统一视角，将树形验证建模为条件OT问题，从而同时优化水平和垂直维度的候选选择，提升接受长度和推理效率。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>统一条件OT视角</strong>：将树形验证重新建模为条件最优传输问题，垂直依赖通过前缀接受概率抽象化。2. <strong>动态缩放因子</strong>：前缀接受概率作为动态缩放因子，主动引导水平草稿选择。3. <strong>UniVer验证算法</strong>：通过在局部OT计划在前缀约束下组合，联合优化跨树层级的验证过程。4. <strong>理论保证</strong>：证明UniVer保持无损性，并在条件框架下达到最优接受率。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在不同任务和模型上的大量实验表明，UniVer将接受长度提升了4.2%至8.5%（相比标准递归无放回拒绝采样），同时保持与目标模型的精确分布对齐。该方法无需修改目标模型，可直接应用于现有投机解码框架。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>UniVer首次为投机解码的多步多草稿联合场景提供了统一理论框架，通过条件OT和动态前缀缩放实现了最优接受率。这一工作将推动投机解码从启发式方法走向理论最优，对LLM推理加速具有重要实践意义。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: RetentiveKV -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04075" target="_blank">RetentiveKV: State-Space Memory for Uncertainty-Aware Multimodal KV Cache Eviction</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04075 · 👤 Sihao Liu, YuFan Xiong, Zhonghua Jiang, Zhaode Wang, chengfei lv Shengyu Zhang · 📅 2026-05-07 · cs.LG / cs.AI / cs.CL</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>多模态大语言模型（MLLMs）在处理长视觉上下文时，视觉KV缓存的急剧膨胀带来了严重的计算效率和内存消耗挑战。现有KV缓存压缩方法通常基于"重要性持久性"假设来剪枝token，即高注意力分数的token应被保留。然而，这一假设在多模态场景中存在根本性缺陷。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>作者发现视觉token存在"延迟重要性"现象：初始阶段注意力分数较低，但在后续解码中变得至关重要，导致过早驱逐。同时，离散剪枝破坏了视觉线索固有的空间连续性。因此需要一种能够动态评估信息潜力并支持连续记忆演化的KV缓存管理机制。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>熵驱动状态空间模型</strong>：利用信息熵量化低注意力token的信息潜力。2. <strong>连续记忆演化</strong>：将待驱逐的token通过熵引导的状态转移整合到连续状态空间中，而非直接丢弃。3. <strong>动态重激活机制</strong>：当后续解码中出现语义相关性时，连续状态空间中的token可被动态重激活。4. <strong>不确定性感知驱逐</strong>：基于信息熵的方差进行驱逐决策，避免过早移除潜在重要token。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在多模态基准测试上的广泛实验表明，RetentiveKV实现了<strong>5.0倍KV缓存压缩</strong>和<strong>1.5倍解码加速</strong>，同时保持生成质量。这一成果显著优于现有基于重要性的剪枝方法，为多模态LLM的高效推理提供了关键技术支持。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>RetentiveKV通过状态空间模型将KV缓存管理从"离散上下文截断"转变为"连续记忆演化"，有效解决了多模态场景中的延迟重要性和空间连续性问题。5倍压缩和1.5倍加速的显著收益，使其成为MLLM部署优化的重要进展。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: Telegraph English -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04426" target="_blank">Telegraph English: Semantic Prompt Compression via Structured Symbolic Rewriting</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04426 · 👤 Mikhail L. Arbuzov, Sisong Bei, Ziwei Dong, Dmitri Kalaev, Alexey A. Shvets · 📅 2026-05-06 · cs.CL</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>长上下文LLM应用（如RAG、文档问答）中，提示词长度直接影响推理成本和延迟。现有提示词压缩方法（如LLMLingua-2）主要基于token删除策略，训练分类器以固定比例删除低重要性token。这类方法丢失了语义结构，在极限压缩比下性能下降明显。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>token删除方法在压缩过程中破坏了输入的语义结构和关系信息。作者提出一种全新的语义重写范式：将自然语言转换为符号丰富、形式结构化的方言，通过保留关系结构而非逐字内容来实现压缩，使压缩表示同时成为语义索引。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>原子事实行分解</strong>：将输入分解为独立的事实行。2. <strong>逻辑符号替换</strong>：用约40个逻辑和关系符号替代冗长短语。3. <strong>自适应压缩比</strong>：根据每篇文档的信息密度动态调整压缩比，而非固定比例。4. <strong>语义索引双重功能</strong>：压缩后的表示同时是语义分块索引，每行是独立可寻址的事实。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在LongBench-v2的4,081个问答对上评估，约50% token缩减时，TE在GPT-4.1上保留99.1%关键事实准确率，在每个模型和任务上都优于匹配压缩比下的LLMLingua-2。在较小模型上差距更大——精细任务上高达11个百分点，表明显式关系结构能补偿有限模型容量。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Telegraph English代表了提示词压缩的新范式：从token删除到语义重写。通过结构化符号表示和自适应压缩，在保持高准确率的同时实现显著token缩减，对长上下文LLM应用的成本优化具有直接实践价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: Budgeted LoRA -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04341" target="_blank">Budgeted LoRA: Distillation as Structured Compute Allocation for Efficient Inference</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04341 · 👤 Mohammed Sabry, Anya Belz · 📅 2026-05-05 · cs.LG / cs.AI / cs.CL</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大语言模型蒸馏旨在产生更小、更快的学生模型。现有参数高效蒸馏方法（如LoRA）虽然降低了适配成本，但保持密集骨干网络不变，无法在推理时实现有意义的加速。如何在蒸馏过程中同时优化训练成本和推理效率是核心挑战。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>标准LoRA仅减少适配参数，不改变基础模型结构，因此推理加速有限。作者将模型压缩重新框架化为结构化计算分配问题：在全局计算预算约束下，动态决定在哪些模块保留密集计算、哪些模块切换为低秩路径，实现推理效率的实质性提升。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>全局计算预算</strong>：设定最终保留的密集计算比例目标（如50%、30%）。2. <strong>模块级密集保留系数</strong>：为不同模块分配不同的密集/低秩混合比例。3. <strong>自适应低秩分配</strong>：根据模块重要性动态调整低秩维度。4. <strong>后训练压缩</strong>：选择性移除、近似或保留密集组件的三阶段压缩策略。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>Budgeted LoRA在适中预算下匹配标准LoRA困惑度，实现1.74倍压缩模块加速；在激进预算下达到4.05倍加速，仅有适度困惑度退化。在函数式上下文学习探测任务上保留更高准确率。单一预算旋钮控制整个学生模型族，便于根据部署约束灵活选择。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Budgeted LoRA首次将蒸馏明确建模为结构化计算分配问题，通过模块级混合和低秩路径实现了可观的推理加速。该框架为资源受限场景下的LLM部署提供了新的蒸馏范式，尤其在边缘设备部署中具有应用潜力。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: Coral -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04357" target="_blank">Coral: Cost-Efficient Multi-LLM Serving over Heterogeneous Cloud GPUs</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04357 · 👤 Yixuan Mei, Zikun Li, Zixuan Chen, Shiqi Pan, Mengdi Wu, Xupeng Miao, Zhihao Jia, K. V. Rashmi · 📅 2026-05-05 · cs.DC / cs.AI / cs.CL / cs.LG</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM使用日益碎片化，没有单一模型主导所有场景。云提供商提供大量中档和旧代GPU，这些硬件具有更好的可用性和comparable性价比。然而，现有服务系统未能有效利用异构资源来并发服务多个LLM，导致资源浪费和成本过高。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>当前多LLM服务通常假设同构GPU环境，忽略了中低档GPU的成本效益。作者希望设计一个能够联合优化资源分配和每个模型副本服务策略的自适应系统，在异构硬件上实现成本最优的多LLM并发服务。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>异构感知联合优化</strong>：同时优化所有模型的资源分配和副本服务策略。2. <strong>无损两阶段分解</strong>：保留联合最优性的同时，将在线求解时间从小时级缩短到秒级。3. <strong>自适应重配置</strong>：快速适应吞吐量需求变化和资源可用性波动。4. <strong>多模型跨GPU调度</strong>：在20种不同GPU配置间智能分配6个模型的工作负载。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在6个模型和20种GPU配置上的评估显示，Coral相比最佳基线降低服务成本高达2.79倍，在资源稀缺情况下提供高达2.39倍的goodput提升。这一成果证明异构GPU可以高效支持生产级多LLM服务，显著降低云部署成本。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Coral是首个针对异构云GPU的多LLM服务优化系统，通过联合资源分配和无损分解实现了显著的成本降低。在LLM服务日益碎片化和成本敏感的背景下，该系统具有重要的实际部署价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 6: LoPT -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04913" target="_blank">Rethinking Local Learning: A Cheaper and Faster Recipe for LLM Post-Training (LoPT)</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04913 · 👤 Hengyu Shi, Tianyang Han, Peizhe Wang, Zhiling Wang, Xu Yang, Junhao Su · 📅 2026-05-06 · cs.CL / cs.LG</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>LLM后训练通常通过完整模型深度传播任务梯度。这种端到端结构虽然简单通用，但将任务适配与全深度激活存储、长距离反向依赖以及对预训练表示的直接任务梯度访问耦合在一起。当后训练监督远窄于预训练时，这种全深度反向耦合可能过于昂贵和侵入性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>完整反向传播在后训练阶段可能是不必要的开销。作者提出将梯度传播深度作为显式设计选择，通过在transformer中点设置单一梯度边界，使后半块从任务目标学习，前半块通过轻量级特征重建目标更新，从而缩短任务反向路径并限制窄任务梯度对早期层表示的直接干扰。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>局部学习后训练（LoPT）</strong>：在transformer中点设置梯度边界，将模型分为任务学习区和表示保持区。2. <strong>轻量级特征重建目标</strong>：前半块通过特征重建而非任务梯度更新，保持有用表示和接口兼容性。3. <strong>显式梯度深度控制</strong>：将梯度传播深度作为可调节超参数。4. <strong>预训练能力保持</strong>：通过隔离任务梯度对早期层的直接影响，更好保留预训练泛化能力。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>大量实验表明，LoPT以更低的内存成本、更高的训练效率和更好的预训练能力保持，实现了与完整反向传播相当的有竞争力性能。代码已开源：https://github.com/HumyuShi/LoPT</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>LoPT挑战了LLM后训练必须端到端反向传播的传统假设，通过局部学习策略实现了成本更低、速度更快且干扰更小的后训练。这一方法对资源受限场景下的LLM微调和领域适配具有重要实践价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 7: TSCG -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.04107" target="_blank">TSCG: Deterministic Tool-Schema Compilation for Agentic LLM Deployments</a></div>
+        <div class="paper-meta">📄 arXiv:2605.04107 · 👤 Furkan Sakizli · 📅 2026-05-04 · cs.SE / cs.AI / cs.CL</div>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>生产级Agent框架（OpenAI Function Calling、Anthropic Tool Use、MCP）将工具schema以JSON格式传输，该格式专为机器解析设计，而非语言模型理解。对于小模型（4B-14B），这种协议错配在生产级catalog规模下导致了大多数工具使用失败。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>JSON schema对LLM不友好，导致小模型在工具调用任务上表现极差。现有解决方案需要模型访问、微调或运行时搜索，部署成本高。作者希望开发一个确定性编译器，在API边界处将JSON schema转换为token高效的结构化文本，无需模型访问或微调。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>八组合算子编译</strong>：设计八种可组合算子，实现schema的结构化转换。2. <strong>形式化压缩下界</strong>：在良构schema上保证≥51%的压缩率。3. <strong>零依赖实现</strong>：1,200行TypeScript零依赖包，易于集成。4. <strong>表示变化主导机制</strong>：格式变化（R²=0.88→0.03）而非单纯压缩是性能提升的主因。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在TSCG-Agentic-Bench（约19,000次调用，12个模型，5个场景）上，TSCG将Phi-4 14B在20个工具上的准确率从0%恢复到84.4%（50个工具上90.3%），在BFCL上实现108-181%的准确率保留比。在重生产MCP schema上保持+5.0pp优势，同时实现52-57%的token节省。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>TSCG通过schema编译解决了小模型工具调用的核心瓶颈，无需模型访问或微调即可实现显著准确率提升。该工具为Agentic LLM的生产部署提供了轻量级且高效的解决方案，降低了小模型在复杂工具场景中的使用门槛。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势洞察</h2>
+    <div class="trend-box">
+      <h3>本周关键词</h3>
+      <ul>
+        <li><strong>投机解码</strong>：UniVer推动理论最优验证算法</li>
+        <li><strong>KV缓存优化</strong>：RetentiveKV引入状态空间模型新范式</li>
+        <li><strong>提示压缩</strong>：Telegraph English的语义重写创新</li>
+        <li><strong>推理效率</strong>：Budgeted LoRA结构化计算分配</li>
+        <li><strong>服务系统</strong>：Coral异构GPU成本优化</li>
+        <li><strong>后训练效率</strong>：LoPT局部学习降低成本</li>
+        <li><strong>部署工具</strong>：TSCG解决小模型工具调用瓶颈</li>
+      </ul>
+    </div>
+
+    <div class="trend-box">
+      <h3>技术方向分布</h3>
+      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <tr style="background:#f5f5f5;">
+          <th style="padding:8px; text-align:left; border:1px solid #ddd;">方向</th>
+          <th style="padding:8px; text-align:center; border:1px solid #ddd;">论文数</th>
+          <th style="padding:8px; text-align:left; border:1px solid #ddd;">代表工作</th>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">推理加速</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">2</td>
+          <td style="padding:8px; border:1px solid #ddd;">UniVer, RetentiveKV</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">部署优化</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">3</td>
+          <td style="padding:8px; border:1px solid #ddd;">Coral, TSCG, Telegraph English</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">蒸馏/压缩</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">1</td>
+          <td style="padding:8px; border:1px solid #ddd;">Budgeted LoRA</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">训练效率</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">1</td>
+          <td style="padding:8px; border:1px solid #ddd;">LoPT</td>
+        </tr>
+      </table>
+    </div>
+
+    <footer>
+      <p>报告生成时间：2026-05-08 03:00 (GMT+8) · 分析师：Jarvis 🔧</p>
+      <p>数据来源：arXiv.org · 生成工具：OpenClaw</p>
+    </footer>
+  </div>
+</body>
+</html>
