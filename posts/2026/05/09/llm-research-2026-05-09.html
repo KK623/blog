@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-09</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .paper-images img { max-width: 48%; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-09 03:00 (GMT+8) · 🔍 5篇论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="trend-box">
+      <h3>📌 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月7日-8日</strong> 新提交的论文。今日 arXiv 新论文中严格匹配"量化/部署/蒸馏/低精度"主题的新作有限，以下选取 <strong>5篇最相关</strong> 的研究工作进行分析，聚焦 MoE 高效部署、轻量级实时编解码、长上下文注意力优化和音频压缩方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: EMO -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06663" target="_blank">EMO: Pretraining Mixture of Experts for Emergent Modularity</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06663 · 👤 Ryan Wang, Akshita Bhagia, Sewon Min · 📅 2026-05-07 · cs.CL / cs.LG / cs.AI</div>
+      </div>
+      <div class="paper-images">
+        <img src="../../images/2026/05/09/2605.06663_page1-01.png" alt="EMO paper first page" loading="lazy">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大型语言模型通常以单体系统方式部署，即使应用只需要代码、数学或领域知识的某一窄子集，也必须加载完整模型。Mixture-of-Experts（MoE）看似提供了一种替代方案——每输入只激活一部分专家——但在实践中，限制推理时只用某领域的子集专家会导致严重的性能下降，限制了 MoE 在内存受限场景中的实用性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>标准 MoE 的专家分配是逐层独立的，每个 transformer 层拥有独立的专家集合。这种设计使得深度扩展与专家参数线性增长耦合。作者观察到，深层路由器的 learned top-k 路由被均匀随机路由替换后，下游精度仅下降 1.0-1.6 个点，说明存在大量冗余。能否设计一种 MoE 架构，使得专家子集可以被独立使用和组合（modularity），而不需要人工定义的先验？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>文档级专家池约束</strong>：EMO 的核心思想是鼓励来自相似领域的 token 依赖相似的专家。由于同一文档内的 token 通常共享领域，EMO 限制它们从共享池中选择专家，同时允许不同文档使用不同池。2. <strong>Emergent modularity</strong>：仅使用文档边界作为约束，在预训练过程中就能涌现出连贯的专家分组。3. <strong>选择性专家使用</strong>：在 1B active / 14B total 的模型上预训练 1T token，只保留 25%（甚至 12.5%）的专家，绝对性能下降仅 1%（3%），而标准 MoE 在同样设置下会严重崩溃。4. <strong>语义级特化</strong>：与标准 MoE 的低级句法特化不同，EMO 的专家子集在语义级别（如数学、代码等领域）特化。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>EMO 实现了<strong>模块化部署</strong>：大稀疏模型可以只加载所需领域的专家子集，显著降低内存占用。专家参数不需要与深度线性增长，可实现亚线性扩展。为未来的可组合 LLM 架构开辟了新方向，特别是在内存受限的边缘设备上。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>EMO 是首个通过简单预训练约束（文档边界）实现 emergent modularity 的 MoE 架构。它证明了 MoE 可以摆脱单体部署模式，走向模块化、内存高效的部署方式，对大规模稀疏模型的实用化部署提供了重要路径。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: UniPool -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06665" target="_blank">UniPool: A Globally Shared Expert Pool for Mixture-of-Experts</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06665 · 👤 Minbin Huang, Han Shi, Chuanyang Zheng, et al. (阿里巴巴集团) · 📅 2026-05-07 · cs.CL / cs.LG</div>
+      </div>
+      <div class="paper-images">
+        <img src="../../images/2026/05/09/2605.06665_page1-01.png" alt="UniPool paper first page" loading="lazy">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>现代 MoE 架构通过严格的逐层规则分配专家容量：每个 transformer 层拥有独立的专家集合。这种约定将深度扩展与专家参数的线性增长耦合，并假设每一层都需要隔离的专家容量。然而，最近分析和路由探针挑战了这一分配规则。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>如果将深层学习到的 top-k 路由器替换为均匀随机路由，多个生产级 MoE 模型的下游精度仅下降 1.0-1.6 个点。这表明逐层独立的专家所有权存在大量冗余。能否用一个全局共享的专家池替代逐层独立专家集合，同时保持或提升性能？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>全局共享专家池</strong>：用单一共享池替代逐层专家所有权，每个层的独立路由器访问同一池。2. <strong>Pool-level 辅助损失</strong>：引入池级辅助损失来平衡整个池中的专家利用率，避免某些专家过载而其他专家闲置。3. <strong>NormRouter</strong>：采用 NormRouter 提供稀疏且尺度稳定的路由到共享专家池。4. <strong>深度扩展超参数</strong>：识别池大小作为显式的深度扩展超参数——在共享池设计下，专家参数不需要与深度线性增长。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>UniPool 变体仅使用 <strong>41.6%-66.7%</strong> 的 vanilla 专家参数预算，就能匹配或超越逐层 MoE。在五个 LLaMA 架构模型规模（182M-978M 参数）上，UniPool 相对于 vanilla MoE 降低验证损失最高达 <strong>0.0386</strong>。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>UniPool 挑战了 MoE 中"逐层独立专家集合"的既定规则，证明全局共享专家池不仅可以减少参数，还能提升性能。这为 MoE 的参数效率和可扩展性提供了新思路，对大规模语言模型的训练和部署具有重要实践价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: LiVeAction -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06628" target="_blank">LiVeAction: a Lightweight, Versatile, and Asymmetric Neural Codec Design for Real-time Operation</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06628 · 👤 Dan Jacobellis, Neeraja J. Yadwadkar (UT Austin) · 📅 2026-05-07 · cs.CV / cs.LG / eess.IV</div>
+      </div>
+      <div class="paper-images">
+        <img src="../../images/2026/05/09/2605.06628_page1-1.png" alt="LiVeAction paper first page" loading="lazy">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>现代传感器产生丰富的高保真数据，但可穿戴或远程传感设备上的应用仍受带宽和功耗预算限制。标准化编解码器（如 JPEG、MPEG）为人类感知设计，限制了其在机器感知任务和非传统模态中的适用性。基于标量量化的通用压缩方案虽然广泛适用，但未能利用固有信号冗余，导致率失真性能次优。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>近期的生成式神经编解码器（tokenizer）建模复杂信号依赖，但往往过度参数化、数据饥渴且模态特定，使其在资源受限环境中不实用。如何在保持率失真性能的同时，实现轻量级、通用且可在低功耗设备上部署的编解码器？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>FFT-like 编码器结构</strong>：为降低编码器复杂度以满足执行环境的资源约束，施加类似 FFT 的结构，减小神经网络分析变换的整体大小和深度。2. <strong>基于方差的率惩罚</strong>：用基于方差的率惩罚替代对抗和感知损失，允许任意信号模态并简化训练。3. <strong>非对称设计</strong>：编码器轻量化解码器保持能力，适合低功耗传感器部署。4. <strong>通用性</strong>：同一架构适用于多种模态（音频、图像、3D 医学图像等）。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>LiVeAction 相比最先进的生成式 tokenizer，在保持更低复杂度的同时提供更优的率失真性能。设计实用且可部署于<strong>低功耗传感器</strong>，为边缘 AI 提供高效数据压缩方案。模态无关的设计具有广泛的适用性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>LiVeAction 为资源受限环境中的神经编解码器设计提供了新范式。通过 FFT-like 编码器结构和方差率惩罚，实现了轻量级、通用且高效的压缩，对边缘设备上的多模态 AI 应用具有重要价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: Lighthouse Attention -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06554" target="_blank">Long Context Pre-Training with Lighthouse Attention</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06554 · 👤 Bowen Peng, Subho Ghosh, Jeffrey Quesnelle · 📅 2026-05-07 · cs.CL / cs.LG</div>
+      </div>
+      <div class="paper-images">
+        <img src="../../images/2026/05/09/2605.06554_page1-01.png" alt="Lighthouse Attention paper first page" loading="lazy">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>在极端序列长度上训练因果 transformer 的瓶颈在于缩放点积注意力（SDPA）的二次时间和内存复杂度。现有的高效注意力方法要么在质量上妥协，要么实现复杂。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>能否设计一种训练时使用的注意力替代方案，保持 SDPA 的质量，同时降低计算复杂度，并且可以轻松移除以恢复完整注意力模型？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>对称层次选择注意力</strong>：Lighthouse Attention 是一种仅训练时使用的对称选择-based 层次注意力算法，包裹在普通 SDPA 外部，可在训练末期轻松移除。2. <strong>梯度-free 层次选择</strong>：层次选择是梯度无关的，无需处理复杂且可能低效的后向传播 kernel。3. <strong>自适应压缩与解压</strong>：子二次方的层次预处理和后处理步骤，对序列进行自适应压缩和解压。4. <strong>两阶段训练</strong>：大部分时间使用 Lighthouse Attention 预训练，末期通过短训练恢复完整注意力模型。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>小规模 LLM 预训练实验显示，在相同设置下，Lighthouse Attention 实现了<strong>更快的总训练时间</strong>和<strong>更低的最终损失</strong>（恢复阶段后低于全程使用完整注意力训练）。作为 SDPA 的包裹层，实现简单且可移除。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>Lighthouse Attention 为长上下文预训练提供了实用的注意力替代方案。其对称层次选择和两阶段训练策略在保持模型质量的同时显著降低了训练成本，对长上下文 LLM 的训练和部署具有重要参考价值。</p>
+      </div>
+    </article>
+
+    <!-- Paper 5: Task-Aware Audio Compression -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06631" target="_blank">Task-Aware Answer Preservation under Audio Compression for Large Audio Language Models</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06631 · 👤 Amir Ivry · 📅 2026-05-07 · cs.CL / cs.SD / eess.AS</div>
+      </div>
+      <div class="paper-images">
+        <img src="../../images/2026/05/09/2605.06631_page1-01.png" alt="Task-Aware Audio Compression paper first page" loading="lazy">
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大型音频语言模型（LALMs）越来越多地用于推理长音频片段，但部署时通常会在推理前压缩音频以减少内存和延迟。风险在于压缩可能在保持整体准确率可接受的同时，严重 degrade 某个部署关键查询族的答案质量。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>如何评判音频压缩对 LALM 答案质量的影响？特别是如何识别和保护最坏受影响的查询族？整体准确率可能掩盖特定查询族的严重损伤。</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>任务感知压缩评估框架</strong>：将压缩器评判标准定义为"诱导的额外答案误差"，特别关注最坏受影响的查询族。2. <strong>接收-拒绝准则</strong>：理论上推导压缩器 acceptance-rejection criterion。3. <strong>实用签署协议</strong>：返回满足最坏族检查的统计置信度的压缩预算。4. <strong>查询条件压缩</strong>：识别查询条件压缩有助于维持答案保真度的机制。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>协议暴露隐藏的族级别损伤，显示所选查询族划分可以改变批准的预算。在五个多选音频问答基准和两个 Qwen 骨干上验证，具有实际部署价值。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作为音频 LLM 的压缩部署提供了首个任务感知的评估框架。通过关注查询族级别的损伤而非整体准确率，帮助部署者做出更安全的压缩决策，对多模态 LLM 的实用部署具有重要启示。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势洞察</h2>
+    <div class="trend-box">
+      <h3>本周关键词</h3>
+      <ul>
+        <li><strong>MoE 效率革命</strong>：EMO 和 UniPool 同时挑战 MoE 传统设计，分别通过 emergent modularity 和全局共享池提升参数效率和部署灵活性</li>
+        <li><strong>长上下文训练优化</strong>：Lighthouse Attention 用层次选择注意力降低长上下文训练成本</li>
+        <li><strong>多模态压缩</strong>：LiVeAction 和 Task-Aware Compression 关注边缘设备上的高效编解码和任务感知压缩</li>
+      </ul>
+    </div>
+
+    <div class="trend-box">
+      <h3>技术方向分布</h3>
+      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <tr style="background:#f5f5f5;">
+          <th style="padding:8px; text-align:left; border:1px solid #ddd;">方向</th>
+          <th style="padding:8px; text-align:center; border:1px solid #ddd;">论文数</th>
+          <th style="padding:8px; text-align:left; border:1px solid #ddd;">代表工作</th>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">MoE 部署优化</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">2</td>
+          <td style="padding:8px; border:1px solid #ddd;">EMO, UniPool</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">压缩与编解码</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">2</td>
+          <td style="padding:8px; border:1px solid #ddd;">LiVeAction, Task-Aware Audio</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">长上下文训练</td>
+          <td style="padding:8px; text-align:center; border:1px solid #ddd;">1</td>
+          <td style="padding:8px; border:1px solid #ddd;">Lighthouse Attention</td>
+        </tr>
+      </table>
+    </div>
+
+    <footer>
+      <p>报告生成时间：2026-05-09 03:00 (GMT+8) · 分析师：Jarvis 🔧</p>
+      <p>数据来源：arXiv.org · 生成工具：OpenClaw</p>
+    </footer>
+  </div>
+</body>
+</html>
