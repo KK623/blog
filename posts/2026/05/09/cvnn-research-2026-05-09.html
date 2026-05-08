@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVNN 复数神经网络文献调研报告 - 2026年5月9日</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        header .meta { opacity: 0.9; font-size: 0.9em; }
+        .summary {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .paper-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .paper-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .paper-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .paper-meta {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        .paper-meta a { color: var(--primary); text-decoration: none; }
+        .paper-meta a:hover { text-decoration: underline; }
+        .section-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+            font-size: 1.05em;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
+        }
+        .tag.highlight {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .metric { display: inline-block; margin: 5px 10px 5px 0; }
+        .metric-value { font-size: 1.3em; font-weight: bold; color: var(--primary); }
+        .metric-label { font-size: 0.85em; color: var(--text-light); }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CVNN 复数神经网络文献调研报告</h1>
+            <div class="meta">发布时间：2026年5月9日 04:00 | 第19周 | Jarvis 分析</div>
+        </header>
+
+        <div class="summary">
+            <h2>📊 执行摘要</h2>
+            <p><strong>时间范围：</strong>2026年4月9日 - 5月9日（过去30天）</p>
+            <div class="warning-box">
+                <strong>⚠️ 今日无符合时间要求的新论文</strong><br>
+                在 2026-05-08 至 2026-05-09 的 24 小时时间窗口内，arXiv 未收录新的 CVNN（复数神经网络）相关论文。以下为过去30天内 <strong>未被此前报告覆盖</strong> 的 CVNN 研究进展，共3篇。
+            </div>
+            <p><strong>今日亮点：</strong></p>
+            <ul>
+                <li><strong>Complex Diffusion Maps</strong>：首次提出复数扩散映射框架，ω-参数化复值核统一局部与非局部连接，IEEE TPAMI投稿中（5月3日）</li>
+                <li><strong>Magnitude Is All You Need?</strong>：反直觉发现——混合量子模型中仅幅度编码优于复数编码，纯量子模型中相位至关重要（4月14日/5月4日更新）</li>
+                <li><strong>Complex-Valued GNNs</strong>：复数GNN实现全局基不变分布式控制，解决GPS/compass-denied环境中的坐标系不一致难题（4月3日）</li>
+            </ul>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">1</span>
+                <div class="paper-title">Complex Diffusion Maps with ω-Parameterized Kernels Revealing Inherent Harmonic Representations</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2605.01691">arXiv:2605.01691</a> | 
+                    🏛️ Tongzhen Dang, Weiyang Ding, Michael K. Ng | 
+                    📅 2026-05-03 | Submitted to IEEE TPAMI
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">复数扩散映射</span>
+                    <span class="tag">流形学习</span>
+                    <span class="tag">ω-参数化核</span>
+                    <span class="tag">谐波分析</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>扩散映射是流形学习和非线性降维的经典技术，通过相似性核函数构建马尔可夫链，利用特征向量揭示数据内在几何结构。传统方法基于实值高斯核（热方程相关），近年非局部Schrödinger核展示了捕捉非局部连接的能力，但缺乏统一框架平衡局部与非局部信息。复数谐波分析在信号处理和量子力学中广泛应用，但在机器学习扩散映射框架中的系统性研究尚属空白。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）实值核局限——高斯核仅捕捉局部连接，Schrödinger核虽能捕捉非局部连接但缺乏统一框架；（2）复数域未开发潜力——复数表示天然包含幅度和相位，相位信息对于区分易混淆样本具有独特判别能力；（3）谐波表示提取需求——高维数据中固有复数谐波结构无法通过实值方法有效揭示；（4）计算效率——相比深度神经网络，扩散映射方法具有更高计算效率和可解释性。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>ω-参数化复值核函数族：</strong>将局部高斯核与非局部Schrödinger核融合为连续谱，通过调节ω参数实现局部与非局部连接的灵活权衡</li>
+                <li><strong>算子谱理论基础：</strong>建立完整理论框架，定义扩散算子、扩散距离和复数谐波映射，证明其良定性</li>
+                <li><strong>优化视角映射解释：</strong>在复数扩散空间中保持角结构（angular structure），而非仅依赖实值幅度信息</li>
+                <li><strong>复值核判别性放大效应：</strong>通过相位差异放大易混淆样本之间的区别，显著提升判别能力</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">优于实值</div>
+                    <div class="metric-label">线性与非线性核方法</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">高噪声稳健</div>
+                    <div class="metric-label">清晰本征间隙</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">fMRI/EEG</div>
+                    <div class="metric-label">神经影像验证</div>
+                </div>
+            </div>
+            <p>复值核在合成和真实数据集上均优于实值核方法；高噪声环境下产生更清晰本征间隙；fMRI数据捕捉更强相关的非局部时空动态；EEG睡眠数据集无需任务特定调参即达有竞争力性能；保持高计算效率。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次提出复数扩散映射框架，将复数分析系统性地引入非线性降维领域；（2）ω-参数化统一局部与非局部核方法，为核选择提供连续调节机制；（3）复值核相位判别能力为处理易混淆数据提供新工具；（4）神经影像数据验证展示生物医学信号处理应用潜力；（5）相比深度学习的高计算效率适合资源受限场景。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）理论分析假设数据位于光滑流形上，复杂拓扑或不规则采样分布的理论保证有待扩展；（2）ω参数的选择目前依赖经验或交叉验证，自适应选择策略有待开发；（3）大规模数据集（百万级样本）上的计算复杂度需要进一步优化；（4）仅在fMRI和EEG上验证，其他模态（MEG、ECoG）有待探索；（5）代码目前未公开，复现性受限（承诺接收后公开）。</p>
+
+            <div class="section-title">总结</div>
+            <p>Complex Diffusion Maps是复数分析方法在流形学习领域的开创性拓展。通过ω-参数化复值核统一局部与非局部连接，并基于算子谱理论建立完整数学框架，作者揭示了复数谐波表示的提取能力，证明了复值核在判别性、抗噪性和计算效率方面的综合优势。这项工作为CVNN研究者提供了重要启示：复数表示的优势不仅体现在深度网络中，在传统核方法和谱方法中同样具有显著价值。未来CDM有望推广到图神经网络、时序分析和量子机器学习等更广泛领域。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">2</span>
+                <div class="paper-title">Magnitude Is All You Need? Rethinking Phase in Quantum Encoding of Complex SAR Data</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.14229">arXiv:2604.14229</a> | 
+                    🏛️ Sakthi Prabhu Gunasekar, Prasanna Kumar Rangarajan | 
+                    📅 v1: 2026-04-14; v2: 2026-05-04 | IEEE Quantum Week / QCE 2026
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">量子机器学习</span>
+                    <span class="tag">SAR目标识别</span>
+                    <span class="tag">复数编码</span>
+                    <span class="tag">MSTAR</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>合成孔径雷达（SAR）数据本质上是复数值的，包含幅度和相位信息，广泛应用于遥感、目标识别和地形测绘。量子机器学习（QML）模型在复数希尔伯特空间中运行，与SAR数据的复数特性在数学上天然契合。直观上认为同时使用幅度和相位信息进行量子编码应该能提升SAR图像的自动目标识别（ATR）性能。已有研究探索了多种量子编码策略，但缺乏在统一实验设置下对幅度-only与幅度-相位联合编码的系统比较。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）相位信息的价值被高估？现有假设认为复数数据的相位包含关键判别信息，但这一假设在混合量子-经典架构中是否成立尚未验证；（2）编码策略缺乏统一比较——不同研究使用不同数据集划分、模型架构和评估指标，难以公平比较；（3）纯量子与混合架构的差异——纯量子模型与混合量子-经典模型对相位信息的依赖程度可能截然不同；（4）为SAR数据的量子编码提供实证指导，帮助研究者在NISQ时代做出合理编码选择。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>五种编码策略系统对比：</strong>在统一实验框架下比较仅幅度编码、联合幅度-相位编码、I/Q正交编码、预处理相位编码、纯量子架构</li>
+                <li><strong>MSTAR基准评估：</strong>在标准MSTAR SAR目标识别数据集上评估3类和8类分类任务</li>
+                <li><strong>混合与纯量子架构分离分析：</strong>系统分析相位信息在两种架构中的不同作用，揭示架构类型对相位价值的关键影响</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">99.57%</div>
+                    <div class="metric-label">3类任务(幅度-only)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">71.19%</div>
+                    <div class="metric-label">8类任务(幅度-only)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">+21.65pp</div>
+                    <div class="metric-label">纯量子模型相位增益</div>
+                </div>
+            </div>
+            <p>混合模型中仅幅度编码优于复数编码方案；添加相位信息几乎没有提升甚至降低性能；纯量子模型（184-224参数）中相位信息至关重要，准确率提升高达21.65个百分点；相位价值取决于处理架构设计。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次系统量化了相位信息在混合与纯量子模型中的不同价值，打破"复数数据必须同时使用幅度相位"的固有认知；（2）为NISQ时代的SAR数据量子编码提供实践指导：混合模型可用简化编码降低量子资源需求；（3）揭示经典神经网络层对相位信息的"补偿效应"，深化对混合量子-经典系统内部机制的理解；（4）统一实验设置和MSTAR基准评估确保结果的可靠性和可比较性。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）实验仅在MSTAR数据集上进行，其他SAR数据集（OpenSARShip、FUSAR）上的泛化性有待验证；（2）当前量子编码使用相对简单的振幅编码策略，更复杂编码方式的影响未探索；（3）8类任务准确率（71.19%）仍有提升空间，更深层量子电路或错误缓解技术的整合效果未知；（4）未与经典深度学习（CNN、ResNet）在相同数据集上的性能进行对比；（5）极端情况（如相位完全随机化）下的性能边界未测试。</p>
+
+            <div class="section-title">总结</div>
+            <p>这篇论文以反直觉的实验结果挑战了复数数据处理的常规智慧。研究表明，在混合量子-经典模型中，仅幅度编码即可达到优异性能，经典NN层能够有效补偿缺失的相位信息；而在纯量子模型中，相位信息则至关重要。这一"架构决定相位价值"的发现具有广泛启示：CVNN和量子ML研究者在设计复数数据处理流程时，应当联合考虑数据表示和架构特性，而非孤立地优化编码策略。这项工作为复数SAR数据的量子处理提供了务实的工程指导。</p>
+        </div>
+
+        <div class="paper">
+            <div class="paper-header">
+                <span class="paper-number">3</span>
+                <div class="paper-title">Complex-Valued GNNs for Distributed Basis-Invariant Control of Planar Systems</div>
+                <div class="paper-meta">
+                    📄 <a href="https://arxiv.org/abs/2604.02615">arXiv:2604.02615</a> | 
+                    🏛️ Samuel Honor, Mohamed Abdelnaby, Kevin Leahy | 
+                    📅 2026-04-03 | CDC 2026
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="tag highlight">复数GNN</span>
+                    <span class="tag">基不变控制</span>
+                    <span class="tag">分布式控制</span>
+                    <span class="tag">多智能体系统</span>
+                </div>
+            </div>
+
+            <div class="section-title">背景</div>
+            <p>图神经网络（GNNs）因其分布式部署能力，在网络化动态系统的学习控制中得到广泛应用。然而，现有分布式GNN架构隐含关键假设：所有节点在兼容的坐标基下收集几何观测。这一假设在GPS受限和罗盘受限环境中不成立，因为每个节点可能使用独立的局部坐标系。在平面（2D）系统中，坐标基的选择自由度表现为旋转差异，传统实值GNN无法自然处理这种基不一致性。</p>
+
+            <div class="section-title">动机</div>
+            <p>（1）基不一致性的现实挑战——GPS-denied和compass-denied环境中，多智能体系统分布式控制面临局部坐标系不一致的根本难题；（2）复数表示的天然适配性——二维平面中的旋转可以用单位复数乘法优雅表示，复数域为处理基变换提供紧凑数学工具；（3）现有实值GNN的基依赖缺陷——实值GNN在基不一致情况下性能显著退化，且需要额外通信开销来对齐坐标系；（4）基不变性的理论需求——基不变控制律能够在不增加通信负担的情况下保证全局一致性。</p>
+
+            <div class="section-title">技术点</div>
+            <p><strong>核心创新：</strong></p>
+            <ul>
+                <li><strong>复数域几何特征表示：</strong>将2D几何特征和基之间的变换统一表示为复数，利用单位复数乘法描述平面旋转，避免实值表示中2×2旋转矩阵的参数冗余</li>
+                <li><strong>相位等变激活函数：</strong>在GNN每一层中使用复数值线性层配合相位等变（phase-equivariant）激活函数</li>
+                <li><strong>全局基不变性保证：</strong>证明所提出的复值GNN架构具有全局基不变性——无论各节点如何选择局部坐标系，从全局视角看控制策略输出保持一致</li>
+                <li><strong>分布式部署能力：</strong>每个节点仅需要局部信息和邻居通信，无需全局坐标对齐或额外的基变换通信</li>
+            </ul>
+
+            <div class="section-title">实验结果</div>
+            <div class="highlight-box">
+                <div class="metric">
+                    <div class="metric-value">更高</div>
+                    <div class="metric-label">数据效率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">更优</div>
+                    <div class="metric-label">跟踪性能</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">更强</div>
+                    <div class="metric-label">泛化能力</div>
+                </div>
+            </div>
+            <p>相比实值基线，复值GNN在模仿学习群集任务中展现更高数据效率；轨迹跟踪任务中实现更优跟踪精度和稳定性；对未见过的初始配置和群集规模展现更强泛化能力；基不一致场景下实值基线性能显著下降而复值GNN保持稳定。</p>
+
+            <div class="section-title">收益点</div>
+            <p>（1）首次提出全局基不变的复值GNN架构，从根本上解决分布式多智能体系统中局部坐标系不一致的核心难题；（2）复数表示的紧凑性——用单位复数代替2×2旋转矩阵，减少参数量并保持数学优雅性；（3）不增加通信开销——在保持分布式部署能力的同时实现基不变性，无需额外坐标对齐通信；（4）在模仿学习群集任务上的验证展示了该架构在多机器人协同、无人机编队等领域的应用潜力。</p>
+
+            <div class="section-title">局限性 / 未来工作</div>
+            <p>（1）当前工作仅针对平面（2D）系统，三维空间中的基不变控制需要扩展为四元数或SE(3)上的等变设计；（2）相位等变激活函数的选择目前较为有限，更丰富的复数激活函数族有待探索；（3）实验仅在模仿学习框架下进行，强化学习和模型预测控制等其他学习范式中的基不变性有待验证；（4）节点间通信拓扑假设为固定图，动态/时变拓扑下的基不变性保证需要进一步理论分析；（5）未与基于共识算法或分布式状态估计的传统控制方法进行性能对比。</p>
+
+            <div class="section-title">总结</div>
+            <p>这篇论文将复数分析引入分布式GNN控制，通过复数值线性层和相位等变激活函数的巧妙组合，实现了全局基不变性。这一设计不仅保持了GNN分布式部署的核心优势，还从根本上消除了对全局坐标系对齐的依赖。对于CVNN领域而言，这项工作展示了复数表示在几何控制和多智能体系统中的独特价值——复数不仅是信号的表示工具，更是处理几何对称性的强大数学语言。未来，将这一框架扩展到3D空间、强化学习场景和动态拓扑，将为CVNN在机器人学和自主系统中的应用开辟广阔空间。</p>
+        </div>
+
+        <div class="summary">
+            <h2>📈 趋势分析</h2>
+            <ul>
+                <li><strong>复数方法从深度学习向经典方法回流：</strong>Complex Diffusion Maps表明复数表示的优势不仅属于深度神经网络，在传统的核方法和谱方法中同样能显著提升性能</li>
+                <li><strong>反直觉发现挑战固有认知：</strong>Magnitude Is All You Need研究表明在混合量子-经典架构中，仅幅度编码反而优于复数编码，经典组件能够补偿相位信息的缺失。这提醒CVNN研究者：复数表示的价值是架构依赖的，不能一概而论</li>
+                <li><strong>复数表示成为几何不变性的自然语言：</strong>Complex-Valued GNNs展示了复数在描述2D旋转和实现基不变性方面的数学优雅性，为分布式多智能体控制提供了新的设计范式</li>
+                <li><strong>跨领域融合加速：</strong>CVNN正快速渗透到量子机器学习（SAR量子编码）、扩散映射/流形学习（复数谐波分析）、以及分布式机器人控制（复数GNN）等多元领域</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Jarvis CVNN Research Daily | 自动生成的文献调研报告</p>
+            <p>数据源：arXiv.org | 生成时间：2026-05-09 04:00 AM CST</p>
+        </footer>
+    </div>
+</body>
+</html>
