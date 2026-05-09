@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN 复数神经网络文献调研 - 2026-05-10</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --accent: #ec4899;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    header .meta {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+    .paper {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--primary);
+    }
+    .paper h2 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .paper .authors {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .paper .section {
+      margin: 1rem 0;
+    }
+    .paper .section h3 {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .paper .section p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+    }
+    .summary {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .summary h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .container { padding: 1rem; }
+      header h1 { font-size: 1.4rem; }
+      .paper { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔬 CVNN 复数神经网络文献调研</h1>
+      <p class="meta">调研日期：2026-05-10 | 过去30天 | 8篇论文</p>
+      <p class="meta">分析师：Jarvis | 发布于：2026-05-10 04:00 AM (Asia/Shanghai)</p>
+    </header>
+
+    <div class="summary">
+      <h2>📋 论文概览</h2>
+      <p><strong>时间范围：</strong>2026-04-10 至 2026-05-10（过去30天）</p>
+      <p><strong>调研主题：</strong>复数神经网络（CVNN）、复数Transformer、复数神经网络在信号处理应用</p>
+      <p><strong>技术分布：</strong>信号处理应用 6篇（75%）、理论与优化 2篇（25%）、硬件加速 2篇（25%）、量子计算交叉 1篇（12.5%）</p>
+    </div>
+
+    <!-- Paper 1 -->
+    <div class="paper">
+      <h2>1. SEI-SHIELD: Robust Specific Emitter Identification Under Label Noise Via Self-Supervised Filtering and Iterative Rescue</h2>
+      <p class="authors">Ruixiang Zhang, Zinan Zhou, Yezhuo Zhang, Guangyu Li, Xuanpeng Li | 2026-05-06 | eess.SP</p>
+      <span class="badge">复数I/Q信号处理</span>
+      <span class="badge">自监督学习</span>
+      <span class="badge">噪声鲁棒性</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>特定发射器识别（SEI）为无线通信和物联网（IoT）系统提供物理层设备认证。深度学习（DL）显著提升了SEI性能，但在非合作环境中，标签噪声严重降低了系统可靠性。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>采用动量对比（MoCo）结合RF定制的增强，直接从复数I/Q信号中提取本质上鲁棒的、标签无关的表示。KNN噪声过滤通过学习特征空间中的邻域标签一致性分析来识别被腐蚀的样本。迭代救援机制使用预测置信度和原型余弦相似度逐步恢复正确标记的困难样本。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>在POWDER和ORACLE数据集上达到SOTA精度，在各种噪声率下大幅优于现有噪声鲁棒范式，包括高级正则化技术和样本选择框架。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次将自监督对比学习与迭代样本选择相结合用于SEI任务。直接从复数I/Q信号学习，无需额外的特征工程。对标签噪声具有强鲁棒性，适用于非合作环境。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2605.04721" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 2 -->
+    <div class="paper">
+      <h2>2. Complex Diffusion Maps with ω-Parameterized Kernels Revealing Inherent Harmonic Representations</h2>
+      <p class="authors">Tongzhen Dang, Weiyang Ding, Michael K. Ng | 2026-05-03 | cs.LG | Submitted to IEEE TPAMI</p>
+      <span class="badge">复数扩散映射</span>
+      <span class="badge">核方法</span>
+      <span class="badge">表示学习</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>扩散映射（Diffusion Maps）是流形学习的重要方法，通过构建马尔可夫链来揭示数据的内在几何结构。然而，现有方法主要基于实值核函数，难以捕获数据中的复数谐波结构。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>提出ω参数化复数核函数，统一局部高斯核（热方程）和非局部薛定谔核（薛定谔方程），实现局部与非局部连接的灵活权衡。建立算子谱理论基础，定义扩散算子、扩散距离和复数谐波映射。优化解释旨在保持复数扩散空间中的角度结构。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>复数核放大易混淆样本间的差异，提升判别能力。在高噪声环境下保持鲁棒性，产生更清晰的本征间隙。静息态fMRI数据捕获更强相关的非局部时空动态。EEG睡眠数据集无需任务特定调参即达到竞争力性能。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次将复数域引入扩散映射框架。理论完备：算子谱理论保证数学严谨性。在神经科学数据上表现优异，计算效率优于深度学习方法。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2605.01691" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 3 -->
+    <div class="paper">
+      <h2>3. Coordinated Multipoint Anti-jamming Beam Pattern Synthesis: From AI Accelerated Algorithm to Hardware Implementation</h2>
+      <p class="authors">Zilong Wang, Cheng Zhang, Zhilei Zhang, Yaxuan Hu, Wen Wang, Yongming Huang | 2026-04-26 | eess.SP</p>
+      <span class="badge">深度展开</span>
+      <span class="badge">波束成形</span>
+      <span class="badge">FPGA硬件</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>无小区（Cell-Free）系统中的反干扰波束成形面临高复杂度、适应性差和可扩展性有限等问题。传统优化方法计算开销大，难以满足实时性要求。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>深度展开策略将模拟波束成形中昂贵的步长搜索转化为可训练参数，离线训练复数神经网络实现快速自适应的在线推理。分布式架构：接入点（AP）独立确定模拟波束成形，中央处理单元（CPU）执行协作数字波束成形。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>复杂度随AP数量线性扩展。单AP模拟波束成形运行时间相比传统优化降低约67%。在消声室测量中验证了对实际硬件缺陷的鲁棒性。纯数据驱动方法相比，具有更优的零陷性能。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次实现从AI加速算法到FPGA硬件的完整流程。计算效率显著提升（67%运行时间减少）。硬件-软件解耦实现高效并行和低延迟执行。实际部署潜力强，适用于5G/6G通信系统。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.23880" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 4 -->
+    <div class="paper">
+      <h2>4. Complex SGD and Directional Bias in Reproducing Kernel Hilbert Spaces</h2>
+      <p class="authors">Natanael Alpay, Emeric Battaglia | 2026-04-24 | cs.LG</p>
+      <span class="badge">优化理论</span>
+      <span class="badge">收敛保证</span>
+      <span class="badge">核方法</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>随机梯度下降（SGD）是大规模凸优化问题的主流方法。对于复数神经网络等目标函数，需要允许复数参数的更新规则，但现有复数SGD/GD方法的收敛保证通常要求解析性约束。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>提出复数SGD变体，允许复数参数，无需解析性约束。在与实数设置平行的假设下提供收敛保证。确认某些方向偏差结果从实数设置扩展到复数设置。在复数再生核希尔伯特空间中验证。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>从Fock空间和Hardy空间分别恢复超振荡函数和Blaschke积。实证结果验证了复数SGD在核回归问题中的有效性。理论结果同样适用于梯度下降（GD）。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次提供无解析性约束的复数SGD收敛保证。理论框架与实数设置平行，便于理解和应用。在函数恢复任务中展现了优异的优化性能。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.23017" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 5 -->
+    <div class="paper">
+      <h2>5. Maximum Likelihood Reconstruction for Multi-Look Digital Holography with Markov-Modeled Speckle Correlation</h2>
+      <p class="authors">Xi Chen, Arian Maleki, Shirin Jalali | 2026-04-22 | eess.IV | 罗格斯大学</p>
+      <span class="badge">数字全息</span>
+      <span class="badge">散斑相关</span>
+      <span class="badge">最大似然</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>多视采集是相干成像系统（如数字全息）中降低散斑噪声的常用策略。通常假设各视间的散斑实现统计独立，但硬件约束限制了测量多样性，导致视间相关性。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>一阶马尔可夫过程建模对视间依赖性进行精确建模。约束最大似然估计在复数多视测量存在相关散斑的情况下推导似然函数。投影梯度下降框架结合梯度更新与深度图像先验的隐式正则化。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>在强视间相关性下保持鲁棒性。性能接近理想的独立视场景。始终优于忽略相关性的方法。代码已开源：https://github.com/Computational-Imaging-RU/MLE-Holography-Markov</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次显式建模多视全息中的视间相关性。实际采集条件下的实用重建框架。鲁棒性：在强相关性下仍接近理想性能。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.20154" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 6 -->
+    <div class="paper">
+      <h2>6. Algorithm and Hardware Co-Design for Efficient Complex-Valued Uncertainty Estimation</h2>
+      <p class="authors">Zehuan Zhang, Mark Chen, He Li, Wayne Luk | 2026-04-21 | cs.AR | 帝国理工学院 | DAC '26</p>
+      <span class="badge">BayesCVNN</span>
+      <span class="badge">FPGA加速</span>
+      <span class="badge">不确定性量化</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>复数神经网络（CVNN）在处理涉及复数任务时具有显著优势，但现有CVNN无法量化预测不确定性。贝叶斯神经网络在实数域已广泛用于不确定性估计，但在复数域尚未实现。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>首次提出基于dropout的贝叶斯复数神经网络（BayesCVNN）。利用复数双部特性（实部和虚部），通过层混合和部分混合实现自动化搜索最优配置。定制化FPGA加速器框架，利用优化的构建块库。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>自动搜索找到的配置性能优于人工设计模型。FPGA加速器实现约4.5x和13x加速。功耗不到GPU实现的10%。在算法和硬件两个方面均优于现有工作。代码已开源：https://github.com/zehuanzhang/BayesCVNN.git</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次实现复数域的不确定性量化。模块化设计，广泛适用且硬件友好。显著的硬件加速（4.5x-13x）和能效提升（<10% GPU功耗）。自动化配置搜索降低了人工设计成本。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.19993" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 7 -->
+    <div class="paper">
+      <h2>7. DDF2Pol: A Dual-Domain Feature Fusion Network for PolSAR Image Classification</h2>
+      <p class="authors">Mohammed Q. Alkhatib | 2026-04-20 | cs.CV | Pattern Recognition Letters (已接受)</p>
+      <span class="badge">PolSAR分类</span>
+      <span class="badge">双域融合</span>
+      <span class="badge">轻量级</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>极化合成孔径雷达（PolSAR）图像分类是遥感领域的重要任务。PolSAR数据本质上是复数数据，包含丰富的极化信息。传统实值方法难以充分利用极化信息。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>双域并行特征提取：实值流和复数值流并行设计，分别捕获空间和极化信息。深度可分离卷积用于空间增强。坐标注意力机制聚焦于信息最丰富的区域。轻量级架构仅91,371个参数。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>Flevoland数据集：98.16%总体精度（OA）。San Francisco数据集：96.12% OA。优于多个SOTA实值和复数模型。在训练数据有限的情况下仍表现优异。代码已开源：https://github.com/mqalkhatib/DDF2Pol</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>双域设计充分利用PolSAR数据的实部和虚部信息。极低的参数量（91K），适合资源受限部署。在多个基准数据集上达到SOTA性能。对训练数据量不敏感，实用性强。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.18853" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 8 -->
+    <div class="paper">
+      <h2>8. Magnitude Is All You Need? Rethinking Phase in Quantum Encoding of Complex SAR Data</h2>
+      <p class="authors">Sakthi Prabhu Gunasekar, Prasanna Kumar Rangarajan | 2026-04-14 | eess.SP | IIT Madras | IEEE Quantum Week / QCE 2026</p>
+      <span class="badge">量子机器学习</span>
+      <span class="badge">SAR数据</span>
+      <span class="badge">相位编码</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>合成孔径雷达（SAR）数据本质上是复数数据，量子机器学习（QML）模型在复数希尔伯特空间中运行。这种相似性暗示使用量值和相位进行量子编码应该有助于SAR图像中的自动目标识别。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 核心技术</h3>
+        <p>五种编码策略比较：量值-only、联合量值-相位、I/Q编码、预处理相位编码、纯量子架构。MSTAR基准数据集上的统一实验设置。混合量子-经典与纯量子对比分析相位的价值。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>混合模型中量值-only编码优于相位包含编码：3类任务99.57%精度，8类任务71.19%精度。添加相位信息几乎无改善，有时降低性能。纯量子模型（184-224参数）中相位改善精度高达21.65个百分点。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次系统研究SAR数据量子编码中的相位价值。发现反直觉结果：混合模型中量值-only更优。为量子-经典混合架构设计提供重要指导。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.14229" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <div class="summary">
+      <h2>📊 研究趋势分析</h2>
+      <p><strong>信号处理应用主导：</strong>8篇论文中有6篇直接涉及信号处理（SEI、波束成形、全息、PolSAR、SAR量子编码）</p>
+      <p><strong>硬件协同设计兴起：</strong>BayesCVNN和DUCoMP-BPS均强调算法-硬件协同优化</p>
+      <p><strong>不确定性量化突破：</strong>BayesCVNN首次实现复数域的不确定性量化</p>
+      <p><strong>理论进展：</strong>复数SGD的收敛保证为CVNN优化提供了理论基础</p>
+      <p><strong>表示学习扩展：</strong>Complex Diffusion Maps将扩散映射推广到复数域</p>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--text-light);">
+      <p>© 2026 Jarvis AI Research | 文献调研报告</p>
+      <p>数据来源：arXiv.org | 自动生成于 2026-05-10</p>
+    </footer>
+  </div>
+</body>
+</html>
