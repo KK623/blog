@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVNN 复数神经网络文献调研 - 2026-05-11</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #64748b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --accent: #ec4899;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    header .meta {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+    .paper {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--primary);
+    }
+    .paper h2 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .paper .authors {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .paper .section {
+      margin: 1rem 0;
+    }
+    .paper .section h3 {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .paper .section p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .summary {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .summary h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+    .notice {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .notice p {
+      color: #92400e;
+      font-size: 0.95rem;
+    }
+    .trend {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--accent);
+    }
+    .trend h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .trend ul {
+      padding-left: 1.5rem;
+    }
+    .trend li {
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+    }
+    @media (max-width: 640px) {
+      .container { padding: 1rem; }
+      header h1 { font-size: 1.4rem; }
+      .paper { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔬 CVNN 复数神经网络文献调研</h1>
+      <p class="meta">调研日期：2026-05-11 | 过去30天 | 今日无新论文 · 补充2篇</p>
+      <p class="meta">分析师：Jarvis | 发布于：2026-05-11 04:00 AM (Asia/Shanghai)</p>
+    </header>
+
+    <div class="notice">
+      <p><strong>📢 今日无符合时间要求的新论文</strong>（2026-05-07 至 2026-05-11）。过去30天（2026-04-11 至 2026-05-11）的 CVNN 文献已由 05-08、05-09、05-10 日报全面覆盖（共计约 13 篇）。今日补充 2 篇此前未覆盖的相关研究。</p>
+    </div>
+
+    <div class="summary">
+      <h2>📋 论文概览</h2>
+      <p><strong>时间范围：</strong>2026-04-11 至 2026-05-11（过去30天）</p>
+      <p><strong>调研主题：</strong>复数神经网络（CVNN）、复数Transformer、复数神经网络在信号处理应用</p>
+      <p><strong>今日新论文：</strong>0篇 | <strong>补充论文：</strong>2篇（复数AMP非可分去噪理论 / 全纯物理信息神经网络）</p>
+    </div>
+
+    <!-- Paper 1 -->
+    <div class="paper">
+      <h2>1. Complex Approximate Message Passing with Non-separable Denoising</h2>
+      <p class="authors">Vishnu Teja Kunde, Alessandro Mirri, Jean-Francois Chamberland, Enrico Paolini | 2026-04-22 | eess.SP, stat.AP | Texas A&M University, University of Bologna</p>
+      <span class="badge">复数信号处理</span>
+      <span class="badge">近似消息传递</span>
+      <span class="badge">状态演化理论</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>近似消息传递（AMP）是压缩感知和高维推断中的核心迭代算法框架。近年来矩阵 AMP、复数 AMP 和非可分 AMP 分别取得进展，但复数 AMP 结合非可分去噪器的统一状态演化理论一直缺失，限制了其在联合结构约束复数恢复问题中的应用。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 研究动机</h3>
+        <p>在 OTFS（正交时频空间）通信系统的无源随机接入中，前导检测需要处理同时具有组稀疏和元素稀疏结构的复数信号。现有理论无法为这种联合结构约束提供性能预测，迫切需要建立统一的状态演化理论。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🔬 核心技术</h3>
+        <p>通过增广实值系统将问题提升到更高维空间，再通过多对一规范变换恢复复数域。Onsager 校正自然涉及 Wirtinger 导数，适应复数域的非解析特性。尽管去噪器是非可分的，状态演化仍简化为标量复数递推。框架扩展到矩阵值设置，可同时容纳多个特征向量。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>状态演化准确预测了数值实验性能。复数非可分去噪相比可分去噪和实值替代方案产生显著性能增益。在 OTFS 前导检测场景中验证了理论的有效性。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>首次建立复数非可分 AMP 的状态演化理论。为联合结构约束的复数恢复问题提供性能预测工具。直接适用于 6G 通信中的 OTFS 系统前导检测。</p>
+      </div>
+      
+      <div class="section">
+        <h3>⚠️ 局限性</h3>
+        <p>仅考虑了特定的非可分去噪函数族，更广泛的非线性去噪器仍需研究。矩阵值扩展的收敛速度分析可进一步优化。实际硬件实现中的量化效应尚未考虑。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📝 总结</h3>
+        <p>本文填补了复数 AMP 理论的重要空白，将状态演化理论扩展到非可分去噪设置。通过 Wirtinger 导数和增实值系统，实现了复数域与实数域理论的统一。对压缩感知、通信信号处理和复数神经网络的优化理论都有重要参考价值。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2604.21115" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <!-- Paper 2 -->
+    <div class="paper">
+      <h2>2. A Variational Kolosov-Muskhelishvili Network for Elasticity and Fracture</h2>
+      <p class="authors">Shuwei Zhou, Christian Häffner, Sophie Stebner, Niklas Fehlemann, Zhichao Wei, Sebastian Münstermann | 2026-05-04 | cs.CE | RWTH Aachen University</p>
+      <span class="badge">物理信息神经网络</span>
+      <span class="badge">全纯函数</span>
+      <span class="badge">断裂力学</span>
+      
+      <div class="section">
+        <h3>📖 研究背景</h3>
+        <p>物理信息神经网络（PINN）为固体力学提供了无网格求解框架。然而，现有方法大多直接学习位移场，未能显式利用二维弹性的解析结构。对于裂纹问题，裂纹面不连续性和裂纹尖端奇异性使得传统 PINN 面临边界条件平衡的挑战。</p>
+      </div>
+      
+      <div class="section">
+        <h3>💡 研究动机</h3>
+        <p>Kolosov-Muskhelishvili 公式是弹性力学的经典解析工具，利用两个全纯势函数可精确表示二维线弹性问题的解。将其嵌入神经网络框架，可以从构造上满足控制方程，仅需要边界点进行训练，大幅简化损失函数设计。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🔬 核心技术</h3>
+        <p>解由两个全纯 Kolosov-Muskhelishvili 势函数表示，自动满足平衡方程。基于最小总势能原理的能量损失函数，避免了传统 PINN 中多边界项的复杂残差构造。引入不连续应力势表示，将裂纹面条件和裂纹尖端奇异性直接嵌入解假设。结合 Williams 展开处理裂纹尖端奇异性。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📊 实验结果</h3>
+        <p>在一系列基准问题上与解析解和有限元方法对比验证。应力、位移场和应力强度因子的预测平均相对误差低于 1%，R² > 0.99。I 型和 II 型加载均表现优异。收敛速度显著快于传统神经网络模型。</p>
+      </div>
+      
+      <div class="section">
+        <h3>🎯 收益点</h3>
+        <p>控制方程由构造满足，仅需边界条件训练。误差低于 1%，与有限元方法高度一致。不连续表示直接嵌入，无需特殊网格处理。更简洁的损失构造和更快的收敛。</p>
+      </div>
+      
+      <div class="section">
+        <h3>⚠️ 局限性</h3>
+        <p>目前仅针对二维线弹性问题，三维扩展需要新的数学工具。非线性材料和动态问题尚未探索。复杂几何形状的全纯映射构造可能需要额外的计算开销。</p>
+      </div>
+      
+      <div class="section">
+        <h3>📝 总结</h3>
+        <p>本文将经典 Kolosov-Muskhelishvili 弹性理论与现代物理信息神经网络相结合，开创了变分全纯 PINN 的新方向。通过全纯势函数表示，实现了控制方程的自动满足和裂纹奇异性的精确处理。展示了复数域/全纯函数在科学计算中的强大潜力，为 CVNN 在物理建模中的应用提供了新的范式参考。</p>
+      </div>
+      
+      <a href="https://arxiv.org/abs/2605.02310" class="paper-link" target="_blank">📄 查看论文 →</a>
+    </div>
+
+    <div class="trend">
+      <h2>📊 本周趋势总结（2026-05-04 至 2026-05-11）</h2>
+      <ul>
+        <li><strong>信号处理主导：</strong>本周 CVNN 研究以信号处理应用为核心，涵盖雷达 IQ 信号识别（SEI-SHIELD）、波束成形（DUCoMP-BPS）、全息重建（MLE-Holography）、PolSAR 分类（DDF2Pol）等方向。</li>
+        <li><strong>理论突破：</strong>复数 SGD 收敛理论（无需解析性约束）和复数扩散映射（CDM）为 CVNN 优化与表示学习提供了新的数学工具。</li>
+        <li><strong>硬件协同：</strong>BayesCVNN 在 FPGA 上的加速实现（4.5x~13x 提速）标志着 CVNN 从算法到硬件部署的成熟路径。</li>
+        <li><strong>量子交叉：</strong>量子编码策略对复数 SAR 数据的实验表明，混合量子-经典模型与纯量子模型对相位信息的依赖程度截然不同。</li>
+        <li><strong>物理信息融合：</strong>Kolosov-Muskhelishvili 全纯 PINN 展示了复数函数在科学计算中的潜力，为 CVNN 在物理建模领域开辟了新路径。</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer style="text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.9rem;">
+    <p>© 2026 孙凯 | AI 研究院 | 文献调研 · 技术洞察 · 学术分享</p>
+  </footer>
+</body>
+</html>
