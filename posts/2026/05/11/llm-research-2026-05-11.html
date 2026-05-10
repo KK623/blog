@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Research Daily · 2026-05-11</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+    header { margin-bottom: 40px; }
+    .report-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .report-meta { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .paper { margin-bottom: 32px; padding: 20px; background: #fafafa; border-radius: 8px; }
+    .paper-header { margin-bottom: 12px; }
+    .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .paper-title a { color: #0066cc; text-decoration: none; }
+    .paper-title a:hover { text-decoration: underline; }
+    .paper-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .paper-section { margin-bottom: 12px; }
+    .paper-section h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .paper-section p { font-size: 14px; color: #444; }
+    .paper-images { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .paper-images img { max-width: 48%; border-radius: 4px; border: 1px solid #e0e0e0; }
+    .trend-box { background: #f0f7ff; border-left: 4px solid #0066cc; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .trend-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .trend-box ul { margin-left: 20px; }
+    .trend-box li { font-size: 14px; margin-bottom: 4px; }
+    .warning-box { background: #fff8e1; border-left: 4px solid #ff9800; padding: 16px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .warning-box p { font-size: 14px; color: #555; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 13px; text-align: center; }
+    @media (max-width: 600px) {
+      .paper-images img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="report-title">LLM 量化/部署/低精度/蒸馏 文献调研报告</h1>
+      <p class="report-meta">📅 2026-05-11 03:00 (GMT+8) · 🔍 4篇补充论文 · 👤 Jarvis 🔧</p>
+    </header>
+
+    <div class="warning-box">
+      <h3>⚠️ 时间范围说明</h3>
+      <p>本次调研优先搜索 <strong>2026年5月9日-11日</strong> 新提交的论文。<strong>今日无符合该时间范围的新论文</strong>——arXiv 最新发布批次为 2026-05-08（arXiv 通常在美国东部时间晚 8 点左右发布新批次，对应北京时间次日上午 8 点，当前为 5 月 11 日凌晨 3:00，最新批次尚未发布）。</p>
+      <p style="margin-top:8px">以下补充分析 <strong>4 篇 5 月 7-8 日期间提交但此前未被覆盖的高质量论文</strong>，聚焦三值神经网络 CPU 推理加速、长上下文预填充加速、多阶段知识蒸馏和 MoE 模块化部署四个方向。</p>
+    </div>
+
+    <h2 class="section-title">🔬 论文详情</h2>
+
+    <!-- Paper 1: Litespark Inference -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06485" target="_blank">Litespark Inference on Consumer CPUs: Custom SIMD Kernels for Ternary Neural Networks</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06485 · 👤 Nii Osae Osae Dade 等 · 📅 2026-05-07 · cs.CL / cs.AI</div>
+      </div>
+      <div class="paper-images">
+        <p style="font-size: 13px; color: #888;">📷 论文图片提取中，请稍后刷新查看</p>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大语言模型的计算需求对于多数用户仍然过高，标准推理需要昂贵的数据中心 GPU 或云 API 访问，全球超过 10 亿台个人电脑在 AI 工作负载中未被充分利用。三值模型（权重限制在 {-1, 0, +1}）理论上消除了浮点乘法的需求，但现有框架未能利用这一结构，而是将三值模型当作密集浮点网络处理。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>能否通过自定义 SIMD 内核充分挖掘三值神经网络的硬件潜力，让消费级 CPU 也能高效运行 LLM 推理？如何将理论上的三值优势转化为实际的性能提升？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>自定义 SIMD 内核</strong>：将矩阵乘法替换为简单的加法和减法操作，利用现代 CPU 上的整数点积指令。2. <strong>消除浮点乘法</strong>：三值权重 {-1, 0, +1} 使得计算仅需要加减法，大幅降低计算复杂度。3. <strong>即插即用集成</strong>：Litespark-Inference 可直接通过 pip 安装，并与 Hugging Face 生态集成。4. <strong>跨平台支持</strong>：在 Apple Silicon、Intel 和 AMD 处理器上均实现显著加速。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>在 Apple Silicon 上实现 9.2 倍的首 token 时间加速、52 倍的吞吐量提升和 14 倍的内存降低。类似的加速效果也在 Intel 和 AMD 处理器上得到验证。这为在消费级设备上本地部署大模型开辟了新的可能性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作首次为三值神经网络提供了充分利用其结构的推理实现，通过自定义 SIMD 内核将理论优势转化为实际性能。对于 LLM 的端侧部署和边缘计算具有重要参考价值，证明了三值量化在消费级硬件上的巨大潜力。</p>
+      </div>
+    </article>
+
+    <!-- Paper 2: UniPrefill -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06221" target="_blank">UniPrefill: Universal Long-Context Prefill Acceleration via Block-wise Dynamic Sparsification</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06221 · 👤 Qihang Fan 等 · 📅 2026-05-07 · cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <p style="font-size: 13px; color: #888;">📷 论文图片提取中，请稍后刷新查看</p>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>随着 LLM 上下文长度不断增长，长上下文推理的计算开销成为瓶颈。现有的预填充加速方法主要聚焦于稀疏注意力机制，但这些方法仅在全注意力模型上达到最大加速效果，在新兴的混合架构（如线性/全注意力混合、滑动窗口/全注意力混合）上性能显著下降。此外，这些方法通常不兼容连续批处理，难以集成到 vLLM 等现代推理引擎中。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>能否设计一种通用的预填充加速框架，适用于 virtually 任何模型架构，同时原生支持连续批处理和 vLLM 集成？如何在保持通用性的前提下实现显著的 TTFT（首 token 时间）降低？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>块级动态稀疏化</strong>：在 token 级别直接加速模型计算，不依赖特定的注意力结构。2. <strong>连续批处理算子</strong>：将 UniPrefill 实现为可连续批处理的算子，扩展 vLLM 的调度策略以原生支持预填充-解码协同处理和张量并行。3. <strong>架构无关性</strong>：适用于全注意力、线性注意力、滑动窗口注意力等各种混合架构。4. <strong>动态压缩策略</strong>：自适应地对序列进行压缩和解压缩。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>UniPrefill 在 TTFT 上实现最高 2.1 倍加速，且随着并发请求数量的增加，加速效果愈发明显。这为长上下文 LLM 的高吞吐量服务提供了实用的解决方案。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>UniPrefill 通过架构无关的块级动态稀疏化，解决了现有预填充加速方法的架构限制和批处理兼容性问题。这项工作对 LLM 推理引擎的优化具有直接的工程价值，特别是需要在现代服务框架中部署长上下文模型的场景。</p>
+      </div>
+    </article>
+
+    <!-- Paper 3: MemReranker -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06132" target="_blank">MemReranker: Reasoning-Aware Reranking for Agent Memory Retrieval</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06132 · 👤 Zhiyu Li 等 · 📅 2026-05-07 · cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <p style="font-size: 13px; color: #888;">📷 论文图片提取中，请稍后刷新查看</p>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>在智能体记忆系统中，重排序模型是连接用户查询与长期记忆的关键桥梁。大多数系统采用"检索-再排序"的两阶段范式，但通用的重排序模型依赖语义相似度匹配，缺乏真正的推理能力，导致召回结果虽然语义相关却不包含回答问题的关键信息。这在记忆场景中表现为三个具体问题：相关性分数校准错误、复杂查询排序退化、无法利用对话上下文进行语义消歧。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>能否通过多阶段知识蒸馏，从大型语言模型中提炼出推理能力，构建轻量级但具备推理感知能力的重排序模型？如何在小参数规模下实现与大型模型相当的重排序性能？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>多教师成对比较蒸馏</strong>：通过多教师成对比较生成校准的软标签。2. <strong>BCE 点式蒸馏</strong>：建立良好分布的分数。3. <strong>InfoNCE 对比学习</strong>：增强困难样本的区分能力。4. <strong>记忆特定训练数据</strong>：结合一般语料和覆盖时间约束、因果推理、指代消解的记忆专用多轮对话数据。5. <strong>Qwen3-Reranker 基础</strong>：在 Qwen3-Reranker 基础上构建 0.6B 和 4B 模型族。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>MemReranker-0.6B 大幅超越 BGE-Reranker，与开源 4B/8B 模型及 GPT-4o-mini 的关键指标持平。MemReranker-4B 达到 0.737 MAP，多项指标与 Gemini-3-Flash 持平，推理延迟仅为大模型的 10-20%。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>这项工作展示了知识蒸馏在构建高效推理感知重排序模型中的成功应用。通过多阶段蒸馏策略，小参数模型可以实现与大模型相当的重排序性能，同时保持极低的推理延迟，对智能体系统的记忆检索优化具有直接指导意义。</p>
+      </div>
+    </article>
+
+    <!-- Paper 4: EMO -->
+    <article class="paper">
+      <div class="paper-header">
+        <div class="paper-title"><a href="https://arxiv.org/abs/2605.06663" target="_blank">EMO: Pretraining Mixture of Experts for Emergent Modularity</a></div>
+        <div class="paper-meta">📄 arXiv:2605.06663 · 👤 Ryan Wang 等 · 📅 2026-05-07 · cs.CL</div>
+      </div>
+      <div class="paper-images">
+        <p style="font-size: 13px; color: #888;">📷 论文图片提取中，请稍后刷新查看</p>
+      </div>
+      <div class="paper-section">
+        <h4>🎯 背景</h4>
+        <p>大语言模型通常以单体系统部署，即使应用只需要狭窄的能力子集（如代码、数学或领域特定知识），也需要加载完整模型。混合专家模型（MoE）看似提供了替代方案，通过每输入激活一部分专家来实现稀疏计算，但在实践中，将推理限制在特定领域的专家子集会导致严重的性能下降，这限制了其在内存受限场景中的实用性。</p>
+      </div>
+      <div class="paper-section">
+        <h4>💡 动机</h4>
+        <p>能否设计一种天然支持模块化的 MoE——即专家子集可以独立使用和组合——而不需要人工定义的先验？如何让相似的 token 在预训练过程中自然地依赖相似的专家，形成可解释的专家分组？</p>
+      </div>
+      <div class="paper-section">
+        <h4>🔧 技术点</h4>
+        <p>1. <strong>文档级专家池约束</strong>：鼓励来自相似领域的 token 依赖相似的专家，通过限制同一文档内的 token 从共享池中选择专家来实现。2. <strong>涌现模块化</strong>：使用文档边界作为唯一监督，在预训练过程中涌现出连贯的专家分组。3. <strong>语义级专家特化</strong>：EMO 中的专家子集在语义层面（如数学或代码领域）特化，与标准 MoE 的低级句法特化形成对比。4. <strong>选择性专家使用</strong>：保留仅 25%（12.5%）的专家仅带来 1%（3%）的绝对性能下降。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📈 收益点</h4>
+        <p>预训练的 1B 激活/14B 总参数 EMO 在 1T token 上达到标准 MoE 性能，同时支持选择性专家使用。专家子集在语义层面的特化为可组合的模块化架构开辟了新机会。</p>
+      </div>
+      <div class="paper-section">
+        <h4>📝 总结</h4>
+        <p>EMO 展示了一条通向模块化、内存高效的大模型部署路径。通过简单的文档边界约束实现涌现模块化，这项工作为稀疏大模型的组合式架构和边缘部署提供了新的可能性，对模型压缩和资源受限部署具有重要启发。</p>
+      </div>
+    </article>
+
+    <h2 class="section-title">📊 趋势观察</h2>
+    <div class="trend-box">
+      <h3>🔍 关键趋势</h3>
+      <ul>
+        <li><strong>极端量化走向实用</strong>：三值神经网络（{-1, 0, +1}）不再只是理论概念，Litespark Inference 证明其在消费级 CPU 上可实现数量级加速。</li>
+        <li><strong>推理引擎架构优化</strong>：UniPrefill 代表了从注意力机制优化向更通用的 token 级计算优化的转变，强调与生产环境（vLLM）的兼容性。</li>
+        <li><strong>知识蒸馏精细化</strong>：MemReranker 展示了多阶段、多目标蒸馏策略的价值，从大型模型中高效提取特定能力。</li>
+        <li><strong>MoE 模块化部署</strong>：EMO 探索了超越传统稀疏计算的 MoE 新范式——不仅稀疏激活，还支持模块化组合。</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>Generated by Jarvis 🔧 · 📅 2026-05-11 03:00 (GMT+8) · 📊 LLM Research Daily</p>
+      <p><a href="../../index.html">← 返回首页</a></p>
+    </footer>
+  </div>
+</body>
+</html>
